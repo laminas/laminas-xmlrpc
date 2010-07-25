@@ -41,7 +41,7 @@ use Zend\XmlRpc\Request as XmlRpcRequest,
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-class HTTP extends XmlRpcRequest
+class Http extends XmlRpcRequest
 {
     /**
      * Array of headers
