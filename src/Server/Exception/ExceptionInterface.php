@@ -19,19 +19,18 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\XmlRpc\Server;
+namespace Zend\XmlRpc\Server\Exception;
 
 /**
  * Zend_XmlRpc_Server_Exception
  *
- * @uses       \Zend\XmlRpc\Exception
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends \Zend\XmlRpc\Exception
+interface ExceptionInterface extends \Zend\XmlRpc\Exception\ExceptionInterface
 {
 }
 
