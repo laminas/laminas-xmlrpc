@@ -14,33 +14,23 @@
  *
  * @category   Zend
  * @package    Zend_XmlRpc
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\XmlRpc;
+namespace Zend\XmlRpc\Client\Exception;
+
+use Zend\XmlRpc\Exception\ExceptionInterface as Exception;
 
 /**
- * XML generator adapter interface
+ * Base class for all Zend_XmlRpc_Client_* exceptions
+ *
+ * @category   Zend
+ * @package    Zend_XmlRpc
+ * @subpackage Client
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Generator
-{
-    public function getEncoding();
-    public function setEncoding($encoding);
-    public function openElement($name, $value = null);
-    public function closeElement($name);
-
-    /**
-     * Return XML as a string
-     *
-     * @return string
-     */
-    public function saveXML();
-
-    public function stripDeclaration($xml);
-    public function flush();
-    public function __toString();
-}
+interface ExceptionInterface extends Exception
+{}
