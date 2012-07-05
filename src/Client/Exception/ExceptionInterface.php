@@ -14,40 +14,24 @@
  *
  * @category   Zend
  * @package    Zend_XmlRpc
- * @subpackage Value
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\XmlRpc\Value;
+namespace Zend\XmlRpc\Client\Exception;
 
-use Zend\XmlRpc\Value as XmlRpcValue;
+use Zend\XmlRpc\Exception\ExceptionInterface as Exception;
 
 /**
- * @uses       Zend\XmlRpc\Value
+ * Base class for all Zend_XmlRpc_Client_* exceptions
+ *
  * @category   Zend
  * @package    Zend_XmlRpc
- * @subpackage Value
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Scalar extends XmlRpcValue
+interface ExceptionInterface extends Exception
 {
-    /**
-     * Generate the XML code that represent a scalar native MXL-RPC value
-     *
-     * @return void
-     */
-    protected function _generateXml()
-    {
-        $generator = $this->getGenerator();
-
-        $generator->openElement('value')
-                  ->openElement($this->_type, $this->_value)
-                  ->closeElement($this->_type)
-                  ->closeElement('value');
-    }
 }

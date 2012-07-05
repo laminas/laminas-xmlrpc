@@ -14,20 +14,36 @@
  *
  * @category   Zend
  * @package    Zend_XmlRpc
+ * @subpackage Value
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\XmlRpc;
+namespace Zend\XmlRpc\Value;
+
+use Zend\XmlRpc\AbstractValue;
 
 /**
  * @category   Zend
  * @package    Zend_XmlRpc
+ * @subpackage Value
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
-{}
+abstract class AbstractScalar extends AbstractValue
+{
+    /**
+     * Generate the XML code that represent a scalar native MXL-RPC value
+     *
+     * @return void
+     */
+    protected function _generateXml()
+    {
+        $generator = $this->getGenerator();
+
+        $generator->openElement('value')
+                  ->openElement($this->_type, $this->_value)
+                  ->closeElement($this->_type)
+                  ->closeElement('value');
+    }
+}
