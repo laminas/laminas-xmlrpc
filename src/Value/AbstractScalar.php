@@ -10,31 +10,27 @@
 
 namespace Zend\XmlRpc\Value;
 
-use Zend\Math\BigInteger\BigInteger as BigIntegerMath;
+use Zend\XmlRpc\AbstractValue;
 
 /**
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  */
-class BigInteger extends Integer
+abstract class AbstractScalar extends AbstractValue
 {
     /**
-     * @param mixed $value
-     */
-    public function __construct($value)
-    {
-        $this->_value = BigIntegerMath::factory()->init($value, 10);
-        $this->_type  = self::XMLRPC_TYPE_I8;
-    }
-
-    /**
-     * Return bigint value object
+     * Generate the XML code that represent a scalar native MXL-RPC value
      *
-     * @return string
+     * @return void
      */
-    public function getValue()
+    protected function _generateXml()
     {
-        return $this->_value;
+        $generator = $this->getGenerator();
+
+        $generator->openElement('value')
+                  ->openElement($this->_type, $this->_value)
+                  ->closeElement($this->_type)
+                  ->closeElement('value');
     }
 }
