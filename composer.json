@@ -15,7 +15,8 @@
         "php": ">=5.3.3",
         "zendframework/zend-http": "self.version",
         "zendframework/zend-math": "self.version",
-        "zendframework/zend-server": "self.version"
+        "zendframework/zend-server": "self.version",
+        "zendframework/zend-stdlib": "self.version"
     },
     "homepage": "https://github.com/zendframework/zend-xml-rpc",
     "autoload-dev": {
