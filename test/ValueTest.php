@@ -1,31 +1,20 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_XmlRpc
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_XmlRpc
  */
 
 namespace ZendTest\XmlRpc;
+
 use stdClass;
 use DateTime;
 use Zend\XmlRpc\AbstractValue;
 use Zend\XmlRpc\Value;
 use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
-use Zend\Math\BigInteger;
 
 /**
  * Test case for Value
@@ -33,8 +22,6 @@ use Zend\Math\BigInteger;
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_XmlRpc
  */
 class ValueTest extends \PHPUnit_Framework_TestCase
@@ -595,7 +582,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 
     public function testMarshalDateTimeFromInvalidString()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException', 
+        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException',
                                     "The timezone could not be found in the database");
         AbstractValue::getXmlRpcValue('foobarbaz', AbstractValue::XMLRPC_TYPE_DATETIME);
     }
