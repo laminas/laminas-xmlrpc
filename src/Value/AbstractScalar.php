@@ -10,31 +10,27 @@
 
 namespace Zend\XmlRpc\Value;
 
+use Zend\XmlRpc\AbstractValue;
+
 /**
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  */
-class Nil extends AbstractScalar
+abstract class AbstractScalar extends AbstractValue
 {
-
     /**
-     * Set the value of a nil native type
+     * Generate the XML code that represent a scalar native MXL-RPC value
      *
+     * @return void
      */
-    public function __construct()
+    protected function _generateXml()
     {
-        $this->type = self::XMLRPC_TYPE_NIL;
-        $this->value = null;
-    }
+        $generator = $this->getGenerator();
 
-    /**
-     * Return the value of this object, convert the XML-RPC native nill value into a PHP NULL
-     *
-     * @return null
-     */
-    public function getValue()
-    {
-        return null;
+        $generator->openElement('value')
+                  ->openElement($this->type, $this->value)
+                  ->closeElement($this->type)
+                  ->closeElement('value');
     }
 }
