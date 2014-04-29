@@ -6,6 +6,7 @@
         "zf2",
         "xmlrpc"
     ],
+    "homepage": "https://github.com/zendframework/zend-xml-rpc",
     "autoload": {
         "psr-4": {
             "Zend\\XmlRpc\\": "src/"
@@ -24,7 +25,6 @@
             "dev-develop": "2.4-dev"
         }
     },
-    "homepage": "https://github.com/zendframework/zend-xml-rpc",
     "autoload-dev": {
         "psr-4": {
             "ZendTest\\XmlRpc\\": "test/"
