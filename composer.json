@@ -6,13 +6,14 @@
         "zf2",
         "xmlrpc"
     ],
+    "homepage": "https://github.com/zendframework/zend-xml-rpc",
     "autoload": {
         "psr-4": {
             "Zend\\XmlRpc\\": "src/"
         }
     },
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.23",
         "zendframework/zend-http": "self.version",
         "zendframework/zend-math": "self.version",
         "zendframework/zend-server": "self.version",
@@ -20,11 +21,10 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.2-dev",
-            "dev-develop": "2.3-dev"
+            "dev-master": "2.3-dev",
+            "dev-develop": "2.4-dev"
         }
     },
-    "homepage": "https://github.com/zendframework/zend-xml-rpc",
     "autoload-dev": {
         "psr-4": {
             "ZendTest\\XmlRpc\\": "test/"
