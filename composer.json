@@ -14,10 +14,10 @@
     },
     "require": {
         "php": ">=5.3.23",
-        "zendframework/zend-http": "self.version",
-        "zendframework/zend-math": "self.version",
-        "zendframework/zend-server": "self.version",
-        "zendframework/zend-stdlib": "self.version",
+        "zendframework/zend-http": "~2.4",
+        "zendframework/zend-math": "~2.4",
+        "zendframework/zend-server": "~2.4",
+        "zendframework/zend-stdlib": "~2.4",
         "zendframework/zendxml": "1.*"
     },
     "suggest": {
