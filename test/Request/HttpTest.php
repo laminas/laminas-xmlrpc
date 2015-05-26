@@ -10,7 +10,7 @@
 namespace ZendTest\XmlRpc\Request;
 
 use Zend\XmlRpc\Request;
-use ZendTest\AllTests\StreamWrapper\PHPInput;
+use ZendTest\XmlRpc\PhpInputMock;
 
 /**
  * @group      Zend_XmlRpc
@@ -66,7 +66,7 @@ EOX;
         $_SERVER['HTTP_HOST']           = 'localhost';
         $_SERVER['HTTP_CONTENT_TYPE']   = 'text/xml';
         $_SERVER['HTTP_CONTENT_LENGTH'] = strlen($this->xml) + 1;
-        PHPInput::mockInput($this->xml);
+        PhpInputMock::mockInput($this->xml);
     }
 
     /**
@@ -76,7 +76,7 @@ EOX;
     {
         $_SERVER = $this->server;
         unset($this->request);
-        PHPInput::restoreDefault();
+        PhpInputMock::restoreDefault();
     }
 
     public function testGetRawRequest()
@@ -123,9 +123,9 @@ EOT;
 
     public function testHttpRequestReadsFromPhpInput()
     {
-        $this->assertNull(PHPInput::argumentsPassedTo('stream_open'));
+        $this->assertNull(PhpInputMock::argumentsPassedTo('stream_open'));
         $request = new Request\Http();
-        list($path, $mode) = PHPInput::argumentsPassedTo('stream_open');
+        list($path, $mode) = PhpInputMock::argumentsPassedTo('stream_open');
         $this->assertSame('php://input', $path);
         $this->assertSame('rb', $mode);
         $this->assertSame($this->xml, $request->getRawRequest());
@@ -133,7 +133,7 @@ EOT;
 
     public function testHttpRequestGeneratesFaultIfReadFromPhpInputFails()
     {
-        PHPInput::methodWillReturn('stream_open', false);
+        PhpInputMock::methodWillReturn('stream_open', false);
         $request = new Request\Http();
         $this->assertTrue($request->isFault());
         $this->assertSame(630, $request->getFault()->getCode());
