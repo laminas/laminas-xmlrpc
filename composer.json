@@ -6,7 +6,7 @@
         "zf2",
         "xmlrpc"
     ],
-    "homepage": "https://github.com/zendframework/zend-xml-rpc",
+    "homepage": "https://github.com/zendframework/zend-xmlrpc",
     "autoload": {
         "psr-4": {
             "Zend\\XmlRpc\\": "src/"
