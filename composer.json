@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": ">=5.3.23",
+        "php": ">=5.5",
         "zendframework/zend-http": "~2.5",
         "zendframework/zend-math": "~2.5",
         "zendframework/zend-server": "~2.5",
