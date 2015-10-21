@@ -400,26 +400,6 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         $val = AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
     }
 
-    /**
-     * @group ZF-5405
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
-     */
-    public function testMarshalNilInStructWrappedInArray(Generator $generator)
-    {
-        // SimpleXMLElement don't understand NIL
-        $this->markTestIncomplete('Code to test is not compatible with PHP >5.4');
-
-        AbstractValue::setGenerator($generator);
-        $expected = [['id' => '1', 'name' => 'vertebra, caudal', 'description' => null]];
-        $xml = '<value>'
-             . '<array><data><value><struct><member><name>id</name><value><string>1</string></value></member>'
-             . '<member><name>name</name><value><string>vertebra, caudal</string></value></member>'
-             . '<member><name>description</name><value><nil/></value></member></struct></value></data></array>'
-             . '</value>';
-        $val = AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
-        $this->assertSame($expected, $val->getValue());
-    }
-
     // Struct
 
     public function testFactoryAutodetectsStruct()
