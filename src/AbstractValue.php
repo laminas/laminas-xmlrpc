@@ -445,7 +445,8 @@ abstract class AbstractValue
             $namespaces = ['ex' => 'http://ws.apache.org/xmlrpc/namespaces/extensions'];
             foreach ($namespaces as $namespaceName => $namespaceUri) {
                 $namespaceXml = $xml->children($namespaceUri);
-                list($type, $value) = each($namespaceXml);
+                $namespaceXmlAsArray = (array) $namespaceXml;
+                list($type, $value) = each($namespaceXmlAsArray);
                 if ($type !== null) {
                     $type = $namespaceName . ':' . $type;
                     break;
