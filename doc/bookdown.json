@@ -1,0 +1,9 @@
+{
+    "title": "Zend\\Xmlrpc",
+    "target": "html/",
+    "content": [
+        "book/zend.xmlrpc.intro.md",
+        "book/zend.xmlrpc.client.md",
+        "book/zend.xmlrpc.server.md"
+    ]
+}
