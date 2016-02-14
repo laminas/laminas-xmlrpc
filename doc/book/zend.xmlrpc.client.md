@@ -68,6 +68,20 @@ Parameters may be passed to `call()` as native *PHP* variables, meaning as a `St
 `Float`, `Boolean`, `Array`, or an `Object`. In this case, each *PHP* native type will be
 auto-detected and converted into one of the *XML-RPC* types according to this table:
 
+PHP Native Type                   | XML-RPC Type
+--------------------------------- | ------------
+`integer`                         | int
+`Zend\Math\BigInteger\BigInteger` | i8
+`double`                          | double
+`boolean`                         | boolean
+`string`                          | string
+`null`                            | nil
+`array`                           | array
+`associative array`               | struct
+`object`                          | array
+`DateTime`                        | dateTime.iso8601
+`DateTime`                        | dateTime.iso8601
+
 > ## Note
 #### What type do empty arrays get cast to?
 Passing an empty array to an *XML-RPC* method is problematic, as it could represent either an array
@@ -100,6 +114,22 @@ parameter it will be auto-converted to an *XML-RPC* array since it's not an asso
 There are two ways to create a `Zend\XmlRpc\Value` object: instantiate one of the
 `Zend\XmlRpc\Value` subclasses directly, or use the static factory method
 `Zend\XmlRpc\AbstractValue::getXmlRpcValue()`.
+
+XML-RPC Type     | `Zend\XmlRpc\AbstractValue` Constant               | `Zend\XmlRpc\Value` Object
+---------------- | -------------------------------------------------- | --------------------------
+int              | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_INTEGER`   | `Zend\XmlRpc\Value\Integer`
+i4               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I4`        | `Zend\XmlRpc\Value\Integer`
+i8               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I8`        | `Zend\XmlRpc\Value\BigInteger`
+ex:i8            | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8`  | `Zend\XmlRpc\Value\BigInteger`
+double           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_DOUBLE`    | `Zend\XmlRpc\ValueDouble`
+boolean          | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_BOOLEAN`   | `Zend\XmlRpc\Value\Boolean`
+string           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_STRING`    | `Zend\XmlRpc\Value\Text`
+nil              | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_NIL`       | `Zend\XmlRpc\Value\Nil`
+ex:nil           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHENIL` | `Zend\XmlRpc\Value\Nil`
+base64           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_BASE64`    | `Zend\XmlRpc\Value\Base64`
+dateTime.iso8601 | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_DATETIME`  | `Zend\XmlRpc\Value\DateTime`
+array            | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_ARRAY`     | `Zend\XmlRpc\Value\Array`
+struct           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_STRUCT`    | `Zend\XmlRpc\Value\Struct`
 
 > ## Note
 #### Automatic Conversion
