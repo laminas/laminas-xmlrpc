@@ -89,11 +89,11 @@ $result = $client-call('foo.bar', array(array()));
 Parameters may also be created as `Zend\XmlRpc\Value` instances to specify an exact *XML-RPC* type.
 The primary reasons for doing this are:
 
-> -   When you want to make sure the correct parameter type is passed to the procedure (i.e. the
+* When you want to make sure the correct parameter type is passed to the procedure (i.e. the
 procedure requires an integer and you may get it from a database as a string)
-- When the procedure requires `base64` or `dateTime.iso8601` type (which doesn't exists as a *PHP*
+* When the procedure requires `base64` or `dateTime.iso8601` type (which doesn't exists as a *PHP*
 native type)
-- When auto-conversion may fail (i.e. you want to pass an empty *XML-RPC* struct as a parameter.
+* When auto-conversion may fail (i.e. you want to pass an empty *XML-RPC* struct as a parameter.
 Empty structs are represented as empty arrays in *PHP* but, if you give an empty array as a
 parameter it will be auto-converted to an *XML-RPC* array since it's not an associative array)
 
@@ -230,13 +230,13 @@ foreach ($introspector->listMethods() as $method) {
 
 The following methods are available for introspection:
 
-- `getSignatureForEachMethod`: Returns the signature for each method on the server
-- `getSignatureForEachMethodByMulticall($methods=null)`: Attempt to get the method signatures in one
+* `getSignatureForEachMethod`: Returns the signature for each method on the server
+* `getSignatureForEachMethodByMulticall($methods=null)`: Attempt to get the method signatures in one
 request via system.multicall(). Optionally pass an array of method names.
-- `getSignatureForEachMethodByLooping($methods=null)`: Get the method signatures for every method by
+* `getSignatureForEachMethodByLooping($methods=null)`: Get the method signatures for every method by
 successively calling system.methodSignature. Optionally pass an array of method names
-- `getMethodSignature($method)`: Get the method's signature for $method
-- `listMethods`: List all methods on the server
+* `getMethodSignature($method)`: Get the method's signature for $method
+* `listMethods`: List all methods on the server
 
 ## From Request to Response
 

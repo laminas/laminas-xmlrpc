@@ -71,9 +71,9 @@ to guess the appropriate type based on the values listed in @param and @return l
 types have no immediate *PHP* equivalent, however, and should be hinted using the *XML-RPC* type in
 the PHPDoc. These include:
 
-- **dateTime.iso8601**, a string formatted as '`YYYYMMDDTHH:mm:ss`'
-- **base64**, base64 encoded data
-- **struct**, any associative array
+* **dateTime.iso8601**, a string formatted as '`YYYYMMDDTHH:mm:ss`'
+* **base64**, base64 encoded data
+* **struct**, any associative array
 
 An example of how to hint follows:
 
@@ -125,9 +125,9 @@ dot-delimited namespaces. This helps prevent naming collisions between methods s
 classes. As an example, the *XML-RPC* server is expected to server several methods in the 'system'
 namespace:
 
-- system.listMethods
-- system.methodHelp
-- system.methodSignature
+* system.listMethods
+* system.methodHelp
+* system.methodSignature
 
 Internally, these map to the methods of the same name in `Zend\XmlRpc\Server`.
 
