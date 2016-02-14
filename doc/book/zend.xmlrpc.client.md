@@ -16,7 +16,7 @@ To call a remote method with the *XML-RPC* client, instantiate it and use the `c
 method. The code sample below uses a demonstration *XML-RPC* server on the Zend Framework website.
 You can use it for testing or exploring the `Zend\XmlRpc` components.
 
-**XML-RPC Method Call**
+### XML-RPC Method Call
 
 ```php
 $client = new Zend\XmlRpc\Client('http://framework.zend.com/xmlrpc');
@@ -34,7 +34,7 @@ The first parameter of the `call()` method receives the name of the remote metho
 remote method requires any parameters, these can be sent by supplying a second, optional parameter
 to `call()` with an `Array` of values to pass to the remote method:
 
-**XML-RPC Method Call with Parameters**
+### XML-RPC Method Call with Parameters
 
 ```php
 $client = new Zend\XmlRpc\Client('http://framework.zend.com/xmlrpc');
@@ -117,7 +117,7 @@ To instantiate a server proxy, call the `getProxy()` instance method of `Zend\Xm
 will return an instance of `Zend\XmlRpc\Client\ServerProxy`. Any method call on the server proxy
 object will be forwarded to the remote, and parameters may be passed like any other *PHP* method.
 
-**Proxy the Default Namespace**
+### Proxy the Default Namespace
 
 ```php
 $client = new Zend\XmlRpc\Client('http://framework.zend.com/xmlrpc');
@@ -131,7 +131,7 @@ The `getProxy()` method receives an optional argument specifying which namespace
 server to proxy. If it does not receive a namespace, the default namespace will be proxied. In the
 next example, the 'test' namespace will be proxied:
 
-**Proxy Any Namespace**
+### Proxy Any Namespace
 
 ```php
 $client = new Zend\XmlRpc\Client('http://framework.zend.com/xmlrpc');
@@ -156,7 +156,7 @@ independently.
 If any *HTTP* error occurs, such as the remote *HTTP* server returns a **404 Not Found**, a
 `Zend\XmlRpc\Client\Exception\HttpException` will be thrown.
 
-**Handling HTTP Errors**
+#### Handling HTTP Errors
 
 ```php
 $client = new Zend\XmlRpc\Client('http://foo/404');
@@ -186,7 +186,7 @@ When the `call()` method or the server proxy object is used, an *XML-RPC* fault 
 `Zend\XmlRpc\Client\Exception\FaultException` being thrown. The code and message of the exception
 will map directly to their respective values in the original *XML-RPC* fault response.
 
-**Handling XML-RPC Faults**
+#### Handling XML-RPC Faults
 
 ```php
 $client = new Zend\XmlRpc\Client('http://framework.zend.com/xmlrpc');
@@ -246,7 +246,7 @@ object (`Zend\XmlRpc\Response`).
 
 The `doRequest()` method is also available for use directly:
 
-**Processing Request to Response**
+### Processing Request to Response
 
 ```php
 $client = new Zend\XmlRpc\Client('http://framework.zend.com/xmlrpc');

@@ -228,7 +228,7 @@ instance, and then attempts to create a new cache file with the server definitio
 Below are several usage examples, showing the full spectrum of options available to developers.
 Usage examples will each build on the previous example provided.
 
-**Basic Usage**
+### Basic Usage
 
 The example below attaches a function as a dispatchable *XML-RPC* method and handles incoming calls.
 
@@ -249,7 +249,7 @@ $server->addFunction('md5Value');
 echo $server->handle();
 ```
 
-**Attaching a class**
+### Attaching a class
 
 The example below illustrates attaching a class' public methods as dispatchable *XML-RPC* methods.
 
@@ -261,7 +261,7 @@ $server->setClass('Services\Comb');
 echo $server->handle();
 ```
 
-**Attaching a class with arguments**
+### Attaching a class with arguments
 
 The following example illustrates how to attach a class' public methods and passing arguments to its
 methods. This can be used to specify certain defaults when registering service classes.
@@ -297,7 +297,7 @@ The arguments passed at `setClass()` at server construction time are injected in
 `pricing.calculate()` on remote invokation. In the example above, only the argument `$purchaseId` is
 expected from the client.
 
-**Passing arguments only to constructor**
+### Passing arguments only to constructor
 
 `Zend\XmlRpc\Server` allows to restrict argument passing to constructors only. This can be used for
 constructor dependency injection. To limit injection to constructors, call
@@ -339,13 +339,13 @@ $server->setClass('Services\PricingService2',
                   new PurchaseRepository());
 ```
 
-**Attaching a class instance**
+### Attaching a class instance
 
 `setClass()` allows to register a previously instantiated class at the server. Just pass an instance
 instead of the class name. Obviously passing arguments to the constructor is not possible with
 pre-instantiated classes.
 
-**Attaching several classes using namespaces**
+### Attaching several classes using namespaces
 
 The example below illustrates attaching several classes, each with their own namespace.
 
@@ -361,7 +361,7 @@ $server->setClass('Services\Pick', 'pick');   // methods called as pick.*
 echo $server->handle();
 ```
 
-**Specifying exceptions to use as valid fault responses**
+### Specifying exceptions to use as valid fault responses
 
 The example below allows any `Services\Exception`-derived class to report its code and message in
 the fault response.
@@ -382,7 +382,7 @@ $server->setClass('Services\Pick', 'pick');   // methods called as pick.*
 echo $server->handle();
 ```
 
-**Utilizing custom request and response objects**
+### Utilizing custom request and response objects
 
 Some use cases require to utilize a custom request object. For example, *XML/RPC* is not bound to
 *HTTP* as a transfer protocol. It is possible to use other transfer protocols like *SSH* or telnet
@@ -413,7 +413,7 @@ $request = new Services\Request();
 echo $server->handle($request);
 ```
 
-**Specifying a custom response class**
+### Specifying a custom response class
 
 The example below illustrates specifying a custom response class for the returned response.
 
@@ -444,7 +444,7 @@ echo $server->handle($request);
 
 ## Performance optimization
 
-**Cache server definitions between requests**
+### Cache server definitions between requests
 
 The example below illustrates caching server definitions between requests.
 
@@ -486,7 +486,7 @@ echo $server->handle($request);
 > ## Note
 The server cache file should be located outside the document root.
 
-**Optimizing XML generation**
+### Optimizing XML generation
 
 `Zend\XmlRpc\Server` uses `DOMDocument` of *PHP* extension **ext/dom** to generate it's *XML*
 output. While **ext/dom** is available on a lot of hosts it is not exactly the fastest. Benchmarks
