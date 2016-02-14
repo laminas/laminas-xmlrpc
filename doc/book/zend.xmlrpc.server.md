@@ -79,13 +79,13 @@ An example of how to hint follows:
 
 ```php
 /**
-* This is a sample function
-*
-* @param base64 $val1 Base64-encoded data
-* @param dateTime.iso8601 $val2 An ISO date
-* @param struct $val3 An associative array
-* @return struct
-*/
+ * This is a sample function
+ *
+ * @param base64 $val1 Base64-encoded data
+ * @param dateTime.iso8601 $val2 An ISO date
+ * @param struct $val3 An associative array
+ * @return struct
+ */
 function myFunc($val1, $val2, $val3)
 {
 }
@@ -102,13 +102,13 @@ as you normally would with PhpDocumentor, using the '|' operator:
 
 ```php
 /**
-* This is a sample function
-*
-* @param string|base64 $val1 String or base64-encoded data
-* @param string|dateTime.iso8601 $val2 String or an ISO date
-* @param array|struct $val3 Normal indexed array or an associative array
-* @return boolean|struct
-*/
+ * This is a sample function
+ *
+ * @param string|base64 $val1 String or base64-encoded data
+ * @param string|dateTime.iso8601 $val2 String or an ISO date
+ * @param array|struct $val3 Normal indexed array or an associative array
+ * @return boolean|struct
+ */
 function myFunc($val1, $val2, $val3)
 {
 }
