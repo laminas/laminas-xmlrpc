@@ -68,21 +68,40 @@ Parameters may be passed to `call()` as native *PHP* variables, meaning as a `St
 `Float`, `Boolean`, `Array`, or an `Object`. In this case, each *PHP* native type will be
 auto-detected and converted into one of the *XML-RPC* types according to this table:
 
-> ### Note
-#### What type do empty arrays get cast to?
-Passing an empty array to an *XML-RPC* method is problematic, as it could represent either an array
-or a struct. `Zend\XmlRpc\Client` detects such conditions and makes a request to the server's
-`system.methodSignature` method to determine the appropriate *XML-RPC* type to cast to.
-However, this in itself can lead to issues. First off, servers that do not support
-`system.methodSignature` will log failed requests, and `Zend\XmlRpc\Client` will resort to casting
-the value to an *XML-RPC* array type. Additionally, this means that any call with array arguments
-will result in an additional call to the remote server.
-To disable the lookup entirely, you can call the `setSkipSystemLookup()` method prior to making your
-*XML-RPC* call:
-```php
-$client-setSkipSystemLookup(true);
-$result = $client-call('foo.bar', array(array()));
-```
+PHP Native Type                   | XML-RPC Type
+--------------------------------- | ------------
+`integer`                         | int
+`Zend\Math\BigInteger\BigInteger` | i8
+`double`                          | double
+`boolean`                         | boolean
+`string`                          | string
+`null`                            | nil
+`array`                           | array
+`associative array`               | struct
+`object`                          | array
+`DateTime`                        | dateTime.iso8601
+`DateTime`                        | dateTime.iso8601
+
+> #### What type do empty arrays get cast to?
+>
+> Passing an empty array to an XML-RPC method is problematic, as it could
+> represent either an array or a struct. `Zend\XmlRpc\Client` detects such
+> conditions and makes a request to the server's `system.methodSignature` method
+> to determine the appropriate XML-RPC type to cast to.
+>
+> However, this in itself can lead to issues. First off, servers that do not
+> support `system.methodSignature` will log failed requests, and
+> `Zend\XmlRpc\Client` will resort to casting the value to an XML-RPC array
+> type. Additionally, this means that any call with array arguments will result
+> in an additional call to the remote server.
+>
+> To disable the lookup entirely, you can call the `setSkipSystemLookup()`
+> method prior to making your XML-RPC call:
+>
+> ```php
+> $client-setSkipSystemLookup(true);
+> $result = $client-call('foo.bar', array(array()));
+> ```
 
 ### Zend\\XmlRpc\\Value Objects as Parameters
 
@@ -101,11 +120,28 @@ There are two ways to create a `Zend\XmlRpc\Value` object: instantiate one of th
 `Zend\XmlRpc\Value` subclasses directly, or use the static factory method
 `Zend\XmlRpc\AbstractValue::getXmlRpcValue()`.
 
-> ### Note
-#### Automatic Conversion
-When building a new `Zend\XmlRpc\Value` object, its value is set by a *PHP* type. The *PHP* type
-will be converted to the specified type using *PHP* casting. For example, if a string is given as a
-value to the `Zend\XmlRpc\Value\Integer` object, it will be converted using `(int) $value`.
+XML-RPC Type     | `Zend\XmlRpc\AbstractValue` Constant               | `Zend\XmlRpc\Value` Object
+---------------- | -------------------------------------------------- | --------------------------
+int              | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_INTEGER`   | `Zend\XmlRpc\Value\Integer`
+i4               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I4`        | `Zend\XmlRpc\Value\Integer`
+i8               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I8`        | `Zend\XmlRpc\Value\BigInteger`
+ex:i8            | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8`  | `Zend\XmlRpc\Value\BigInteger`
+double           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_DOUBLE`    | `Zend\XmlRpc\ValueDouble`
+boolean          | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_BOOLEAN`   | `Zend\XmlRpc\Value\Boolean`
+string           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_STRING`    | `Zend\XmlRpc\Value\Text`
+nil              | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_NIL`       | `Zend\XmlRpc\Value\Nil`
+ex:nil           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHENIL` | `Zend\XmlRpc\Value\Nil`
+base64           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_BASE64`    | `Zend\XmlRpc\Value\Base64`
+dateTime.iso8601 | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_DATETIME`  | `Zend\XmlRpc\Value\DateTime`
+array            | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_ARRAY`     | `Zend\XmlRpc\Value\Array`
+struct           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_STRUCT`    | `Zend\XmlRpc\Value\Struct`
+
+> #### Automatic Conversion
+>
+> When building a new `Zend\XmlRpc\Value` object, its value is set by a PHP
+> type. The PHP type will be converted to the specified type using PHP casting.
+> For example, if a string is given as a value to the
+> `Zend\XmlRpc\Value\Integer` object, it will be converted using `(int) $value`.
 
 ## Server Proxy Object
 
