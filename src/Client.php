@@ -304,7 +304,7 @@ class Client implements ServerClient
             }
         }
 
-        $request = $this->_createRequest($method, $params);
+        $request = $this->createRequest($method, $params);
 
         $this->doRequest($request);
 
@@ -329,7 +329,7 @@ class Client implements ServerClient
      * @param array $params
      * @return \Zend\XmlRpc\Request
      */
-    protected function _createRequest($method, $params)
+    protected function createRequest($method, $params)
     {
         return new Request($method, $params);
     }

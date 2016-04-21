@@ -26,7 +26,7 @@ class XmlWriter extends AbstractGenerator
      *
      * @return void
      */
-    protected function _init()
+    protected function init()
     {
         $this->xmlWriter = new \XMLWriter();
         $this->xmlWriter->openMemory();
@@ -39,7 +39,7 @@ class XmlWriter extends AbstractGenerator
      * @param string $name XML element name
      * @return void
      */
-    protected function _openElement($name)
+    protected function openXmlElement($name)
     {
         $this->xmlWriter->startElement($name);
     }
@@ -50,7 +50,7 @@ class XmlWriter extends AbstractGenerator
      * @param string $text XML text data
      * @return void
      */
-    protected function _writeTextData($text)
+    protected function writeTextData($text)
     {
         $this->xmlWriter->text($text);
     }
@@ -61,7 +61,7 @@ class XmlWriter extends AbstractGenerator
      * @param string $name
      * @return XmlWriter
      */
-    protected function _closeElement($name)
+    protected function closeXmlElement($name)
     {
         $this->xmlWriter->endElement();
 

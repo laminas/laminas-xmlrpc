@@ -15,7 +15,10 @@
     "autoload-dev": {
         "psr-4": {
             "ZendTest\\XmlRpc\\": "test/"
-        }
+        },
+        "files": [
+            "test/TestAsset/functions.php"
+        ]
     },
     "require": {
         "php": "^5.5 || ^7.0",

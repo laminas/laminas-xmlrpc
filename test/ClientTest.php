@@ -609,7 +609,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures()
     {
         $introspector = new Client\ServerIntrospection(
-            new TestClient('http://localhost/')
+            new TestAsset\TestClient('http://localhost/')
         );
 
         $this->setExpectedException(
@@ -721,29 +721,5 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->mockedHttpClient = $this->getMock('Zend\\Http\\Client');
         $this->xmlrpcClient->setHttpClient($this->mockedHttpClient);
-    }
-}
-
-/** related to ZF-8478 */
-class PythonSimpleXMLRPCServerWithUnsupportedIntrospection extends Client\ServerProxy
-{
-    public function __call($method, $args)
-    {
-        if ($method == 'methodSignature') {
-            return 'signatures not supported';
-        }
-        return parent::__call($method, $args);
-    }
-}
-
-/** related to ZF-8478 */
-class TestClient extends Client
-{
-    public function getProxy($namespace = '')
-    {
-        if (empty($this->proxyCache[$namespace])) {
-            $this->proxyCache[$namespace] = new PythonSimpleXMLRPCServerWithUnsupportedIntrospection($this, $namespace);
-        }
-        return parent::getProxy($namespace);
     }
 }

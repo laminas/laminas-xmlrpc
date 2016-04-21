@@ -109,7 +109,7 @@ class Response
      *
      * @return \Zend\XmlRpc\AbstractValue
      */
-    protected function _getXmlRpcReturn()
+    protected function getXmlRpcReturn()
     {
         return AbstractValue::getXmlRpcValue($this->return);
     }
@@ -199,7 +199,7 @@ class Response
      */
     public function saveXml()
     {
-        $value = $this->_getXmlRpcReturn();
+        $value = $this->getXmlRpcReturn();
         $generator = AbstractValue::getGenerator();
         $generator->openElement('methodResponse')
                   ->openElement('params')
