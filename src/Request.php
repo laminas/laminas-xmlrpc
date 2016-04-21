@@ -383,7 +383,7 @@ class Request
      *
      * @return array
      */
-    protected function _getXmlRpcParams()
+    protected function getXmlRpcParams()
     {
         $params = [];
         if (is_array($this->xmlRpcParams)) {
@@ -408,7 +408,7 @@ class Request
      */
     public function saveXml()
     {
-        $args   = $this->_getXmlRpcParams();
+        $args   = $this->getXmlRpcParams();
         $method = $this->getMethod();
 
         $generator = AbstractValue::getGenerator();

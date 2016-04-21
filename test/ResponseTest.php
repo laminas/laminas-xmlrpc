@@ -9,6 +9,7 @@
 
 namespace ZendTest\XmlRpc;
 
+use SimpleXMLElement;
 use Zend\XmlRpc\Response;
 use Zend\XmlRpc\AbstractValue;
 
@@ -21,19 +22,19 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      * Response object
      * @var Response
      */
-    protected $_response;
+    protected $response;
 
     /**
      * @var bool
      */
-    protected $_errorOccurred = false;
+    protected $errorOccurred = false;
 
     /**
      * Setup environment
      */
     public function setUp()
     {
-        $this->_response = new Response();
+        $this->response = new Response();
     }
 
     /**
@@ -41,15 +42,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->_response);
-    }
-
-    /**
-     * __construct() test
-     */
-    public function test__construct()
-    {
-        $this->assertInstanceOf('Zend\XmlRpc\Response', $this->_response);
+        unset($this->response);
     }
 
     /**
@@ -57,11 +50,11 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnValue()
     {
-        $this->_response->setReturnValue('string');
-        $this->assertEquals('string', $this->_response->getReturnValue());
+        $this->response->setReturnValue('string');
+        $this->assertEquals('string', $this->response->getReturnValue());
 
-        $this->_response->setReturnValue(['one', 'two']);
-        $this->assertSame(['one', 'two'], $this->_response->getReturnValue());
+        $this->response->setReturnValue(['one', 'two']);
+        $this->assertSame(['one', 'two'], $this->response->getReturnValue());
     }
 
     /**
@@ -73,9 +66,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsFault()
     {
-        $this->assertFalse($this->_response->isFault());
-        $this->_response->loadXml('foo');
-        $this->assertTrue($this->_response->isFault());
+        $this->assertFalse($this->response->isFault());
+        $this->response->loadXml('foo');
+        $this->assertTrue($this->response->isFault());
     }
 
     /**
@@ -83,9 +76,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFault()
     {
-        $this->assertNull($this->_response->getFault());
-        $this->_response->loadXml('foo');
-        $this->assertInstanceOf('Zend\\XmlRpc\\Fault', $this->_response->getFault());
+        $this->assertNull($this->response->getFault());
+        $this->response->loadXml('foo');
+        $this->assertInstanceOf('Zend\\XmlRpc\\Fault', $this->response->getFault());
     }
 
     /**
@@ -109,16 +102,16 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
         $xml = $dom->saveXml();
 
-        $parsed = $this->_response->loadXml($xml);
+        $parsed = $this->response->loadXml($xml);
         $this->assertTrue($parsed, $xml);
-        $this->assertEquals('Return value', $this->_response->getReturnValue());
+        $this->assertEquals('Return value', $this->response->getReturnValue());
     }
 
     public function testLoadXmlWithInvalidValue()
     {
-        $this->assertFalse($this->_response->loadXml(new \stdClass()));
-        $this->assertTrue($this->_response->isFault());
-        $this->assertSame(650, $this->_response->getFault()->getCode());
+        $this->assertFalse($this->response->loadXml(new \stdClass()));
+        $this->assertTrue($this->response->isFault());
+        $this->assertSame(650, $this->response->getFault()->getCode());
     }
 
     /**
@@ -129,9 +122,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         set_error_handler([$this, 'trackError']);
         $invalidResponse = 'foo';
         $response = new Response();
-        $this->assertFalse($this->_errorOccurred);
+        $this->assertFalse($this->errorOccurred);
         $this->assertFalse($response->loadXml($invalidResponse));
-        $this->assertFalse($this->_errorOccurred);
+        $this->assertFalse($this->errorOccurred);
     }
 
     /**
@@ -139,9 +132,11 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testNilResponseFromXmlRpcServer()
     {
+        // @codingStandardsIgnoreStart
         $rawResponse = <<<EOD
 <methodResponse><params><param><value><array><data><value><struct><member><name>id</name><value><string>1</string></value></member><member><name>name</name><value><string>birdy num num!</string></value></member><member><name>description</name><value><nil/></value></member></struct></value></data></array></value></param></params></methodResponse>
 EOD;
+        // @codingStandardsIgnoreEnd
 
         $response = new Response();
         $ret      = $response->loadXml($rawResponse);
@@ -162,9 +157,9 @@ EOD;
      * @param string $xml
      * @return void
      */
-    protected function _testXmlResponse($xml)
+    protected function assertXmlResponse($xml)
     {
-        $sx = new \SimpleXMLElement($xml);
+        $sx = new SimpleXMLElement($xml);
 
         $this->assertNotFalse($sx->params);
         $this->assertNotFalse($sx->params->param);
@@ -178,19 +173,19 @@ EOD;
      */
     public function testSaveXML()
     {
-        $this->_response->setReturnValue('return value');
-        $xml = $this->_response->saveXml();
-        $this->_testXmlResponse($xml);
+        $this->response->setReturnValue('return value');
+        $xml = $this->response->saveXml();
+        $this->assertXmlResponse($xml);
     }
 
     /**
      * __toString() test
      */
-    public function test__toString()
+    public function testCanCastResponseToString()
     {
-        $this->_response->setReturnValue('return value');
-        $xml = $this->_response->__toString();
-        $this->_testXmlResponse($xml);
+        $this->response->setReturnValue('return value');
+        $xml = $this->response->__toString();
+        $this->assertXmlResponse($xml);
     }
 
     /**
@@ -198,47 +193,49 @@ EOD;
      */
     public function testSetGetEncoding()
     {
-        $this->assertEquals('UTF-8', $this->_response->getEncoding());
+        $this->assertEquals('UTF-8', $this->response->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
-        $this->assertSame($this->_response, $this->_response->setEncoding('ISO-8859-1'));
-        $this->assertEquals('ISO-8859-1', $this->_response->getEncoding());
+        $this->assertSame($this->response, $this->response->setEncoding('ISO-8859-1'));
+        $this->assertEquals('ISO-8859-1', $this->response->getEncoding());
         $this->assertEquals('ISO-8859-1', AbstractValue::getGenerator()->getEncoding());
     }
 
     public function testLoadXmlCreatesFaultWithMissingNodes()
     {
-        $sxl = new \SimpleXMLElement('<?xml version="1.0"?><methodResponse><params><param>foo</param></params></methodResponse>');
+        $sxl = new SimpleXMLElement(
+            '<?xml version="1.0"?><methodResponse><params><param>foo</param></params></methodResponse>'
+        );
 
-        $this->assertFalse($this->_response->loadXml($sxl->asXML()));
-        $this->assertTrue($this->_response->isFault());
-        $fault = $this->_response->getFault();
+        $this->assertFalse($this->response->loadXml($sxl->asXML()));
+        $this->assertTrue($this->response->isFault());
+        $fault = $this->response->getFault();
         $this->assertEquals(653, $fault->getCode());
     }
 
     public function testLoadXmlCreatesFaultWithMissingNodes2()
     {
-        $sxl = new \SimpleXMLElement('<?xml version="1.0"?><methodResponse><params>foo</params></methodResponse>');
+        $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><params>foo</params></methodResponse>');
 
-        $this->assertFalse($this->_response->loadXml($sxl->asXML()));
-        $this->assertTrue($this->_response->isFault());
-        $fault = $this->_response->getFault();
+        $this->assertFalse($this->response->loadXml($sxl->asXML()));
+        $this->assertTrue($this->response->isFault());
+        $fault = $this->response->getFault();
         $this->assertEquals(653, $fault->getCode());
     }
 
     public function testLoadXmlThrowsExceptionWithMissingNodes3()
     {
-        $sxl = new \SimpleXMLElement('<?xml version="1.0"?><methodResponse><bar>foo</bar></methodResponse>');
+        $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><bar>foo</bar></methodResponse>');
 
-        $this->assertFalse($this->_response->loadXml($sxl->asXML()));
-        $this->assertTrue($this->_response->isFault());
-        $fault = $this->_response->getFault();
+        $this->assertFalse($this->response->loadXml($sxl->asXML()));
+        $this->assertTrue($this->response->isFault());
+        $fault = $this->response->getFault();
         $this->assertEquals(652, $fault->getCode());
     }
 
 
     public function trackError($error)
     {
-        $this->_errorOccurred = true;
+        $this->errorOccurred = true;
     }
 
     /**
@@ -248,8 +245,8 @@ EOD;
     {
         $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-response.xml');
         $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
-        $this->_response->loadXml($payload);
-        $value = $this->_response->getReturnValue();
+        $this->response->loadXml($payload);
+        $value = $this->response->getReturnValue();
         $this->assertEmpty($value);
         if (is_string($value)) {
             $this->assertNotContains('Local file inclusion', $value);
@@ -260,6 +257,6 @@ EOD;
     {
         $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-response.xml');
         $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
-        $this->assertFalse($this->_response->loadXml($payload));
+        $this->assertFalse($this->response->loadXml($payload));
     }
 }

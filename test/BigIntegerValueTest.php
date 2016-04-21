@@ -99,7 +99,9 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
 
         $bigIntegerValue = (string)(PHP_INT_MAX + 42);
         $bigInteger = new BigInteger($bigIntegerValue);
-        $bigIntegerXml = '<value><ex:i8 xmlns:ex="http://ws.apache.org/xmlrpc/namespaces/extensions">' . $bigIntegerValue . '</ex:i8></value>';
+        $bigIntegerXml = '<value><ex:i8 xmlns:ex="http://ws.apache.org/xmlrpc/namespaces/extensions">'
+            . $bigIntegerValue
+            . '</ex:i8></value>';
 
         $value = AbstractValue::getXmlRpcValue(
             $bigIntegerXml,

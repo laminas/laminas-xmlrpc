@@ -20,7 +20,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     /**
      * @var XmlRpc\Fault
      */
-    protected $_fault;
+    protected $fault;
 
     /**
      * Setup environment
@@ -28,7 +28,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         AbstractValue::setGenerator(null);
-        $this->_fault = new XmlRpc\Fault();
+        $this->fault = new XmlRpc\Fault();
     }
 
     /**
@@ -36,7 +36,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->_fault);
+        unset($this->fault);
     }
 
     /**
@@ -44,9 +44,9 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $this->assertInstanceOf('Zend\XmlRpc\Fault', $this->_fault);
-        $this->assertEquals(404, $this->_fault->getCode());
-        $this->assertEquals('Unknown Error', $this->_fault->getMessage());
+        $this->assertInstanceOf('Zend\XmlRpc\Fault', $this->fault);
+        $this->assertEquals(404, $this->fault->getCode());
+        $this->assertEquals('Unknown Error', $this->fault->getMessage());
     }
 
     /**
@@ -54,8 +54,8 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testCode()
     {
-        $this->_fault->setCode('1000');
-        $this->assertEquals(1000, $this->_fault->getCode());
+        $this->fault->setCode('1000');
+        $this->assertEquals(1000, $this->fault->getCode());
     }
 
     /**
@@ -63,11 +63,11 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessage()
     {
-        $this->_fault->setMessage('Message');
-        $this->assertEquals('Message', $this->_fault->getMessage());
+        $this->fault->setMessage('Message');
+        $this->assertEquals('Message', $this->fault->getMessage());
     }
 
-    protected function _createXml()
+    protected function createXml()
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
@@ -88,7 +88,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
         return $dom->saveXml();
     }
 
-    protected function _createNonStandardXml()
+    protected function createNonStandardXml()
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
@@ -113,33 +113,36 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadXml()
     {
-        $xml = $this->_createXml();
+        $xml = $this->createXml();
 
-        $parsed = $this->_fault->loadXml($xml);
+        $parsed = $this->fault->loadXml($xml);
         $this->assertTrue($parsed, $xml);
 
-        $this->assertEquals(1000, $this->_fault->getCode());
-        $this->assertEquals('Error string', $this->_fault->getMessage());
+        $this->assertEquals(1000, $this->fault->getCode());
+        $this->assertEquals('Error string', $this->fault->getMessage());
 
-        $this->assertFalse($this->_fault->loadXml('<wellformedButInvalid/>'));
+        $this->assertFalse($this->fault->loadXml('<wellformedButInvalid/>'));
 
-        $this->_fault->loadXml('<methodResponse><fault><value><struct>'
-                . '<member><name>faultString</name><value><string>str</string></value></member>'
-                . '</struct></value></fault></methodResponse>');
-        $this->assertSame(404, $this->_fault->getCode(), 'If no fault code is given, use 404 as a default');
+        $this->fault->loadXml('<methodResponse><fault><value><struct>'
+            . '<member><name>faultString</name><value><string>str</string></value></member>'
+            . '</struct></value></fault></methodResponse>');
+        $this->assertSame(404, $this->fault->getCode(), 'If no fault code is given, use 404 as a default');
 
-        $this->_fault->loadXml('<methodResponse><fault><value><struct>'
-                . '<member><name>faultCode</name><value><int>610</int></value></member>'
-                . '</struct></value></fault></methodResponse>');
+        $this->fault->loadXml('<methodResponse><fault><value><struct>'
+            . '<member><name>faultCode</name><value><int>610</int></value></member>'
+            . '</struct></value></fault></methodResponse>');
         $this->assertSame(
-            'Invalid method class', $this->_fault->getMessage(), 'If empty fault string is given, resolve the code');
+            'Invalid method class',
+            $this->fault->getMessage(),
+            'If empty fault string is given, resolve the code'
+        );
 
-        $this->_fault->loadXml('<methodResponse><fault><value><struct>'
+        $this->fault->loadXml('<methodResponse><fault><value><struct>'
                 . '<member><name>faultCode</name><value><int>1234</int></value></member>'
                 . '</struct></value></fault></methodResponse>');
         $this->assertSame(
             'Unknown Error',
-            $this->_fault->getMessage(),
+            $this->fault->getMessage(),
             'If code resolval failed, use "Unknown Error"'
         );
     }
@@ -147,25 +150,25 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     public function testLoadXmlThrowsExceptionOnInvalidInput()
     {
         $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Failed to parse XML fault');
-        $parsed = $this->_fault->loadXml('foo');
+        $parsed = $this->fault->loadXml('foo');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput2()
     {
         $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
-        $this->assertFalse($this->_fault->loadXml('<methodResponse><fault/></methodResponse>'));
+        $this->assertFalse($this->fault->loadXml('<methodResponse><fault/></methodResponse>'));
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput3()
     {
         $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
-        $this->_fault->loadXml('<methodResponse><fault/></methodResponse>');
+        $this->fault->loadXml('<methodResponse><fault/></methodResponse>');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput4()
     {
         $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Fault code and string required');
-        $this->_fault->loadXml('<methodResponse><fault><value><struct/></value></fault></methodResponse>');
+        $this->fault->loadXml('<methodResponse><fault><value><struct/></value></fault></methodResponse>');
     }
 
     /**
@@ -173,7 +176,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsFault()
     {
-        $xml = $this->_createXml();
+        $xml = $this->createXml();
 
         $this->assertTrue(XmlRpc\Fault::isFault($xml), $xml);
         $this->assertFalse(XmlRpc\Fault::isFault('foo'));
@@ -186,7 +189,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      * @param string $xml
      * @return void
      */
-    protected function _testXmlFault($xml)
+    protected function assertXmlFault($xml)
     {
         $sx = new \SimpleXMLElement($xml);
 
@@ -216,21 +219,21 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveXML()
     {
-        $this->_fault->setCode(1000);
-        $this->_fault->setMessage('Fault message');
-        $xml = $this->_fault->saveXml();
-        $this->_testXmlFault($xml);
+        $this->fault->setCode(1000);
+        $this->fault->setMessage('Fault message');
+        $xml = $this->fault->saveXml();
+        $this->assertXmlFault($xml);
     }
 
     /**
      * __toString() test
      */
-    public function test__toString()
+    public function testCanCastFaultToString()
     {
-        $this->_fault->setCode(1000);
-        $this->_fault->setMessage('Fault message');
-        $xml = $this->_fault->__toString();
-        $this->_testXmlFault($xml);
+        $this->fault->setCode(1000);
+        $this->fault->setMessage('Fault message');
+        $xml = $this->fault->__toString();
+        $this->assertXmlFault($xml);
     }
 
     /**
@@ -238,10 +241,10 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetEncoding()
     {
-        $this->assertEquals('UTF-8', $this->_fault->getEncoding());
+        $this->assertEquals('UTF-8', $this->fault->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
-        $this->_fault->setEncoding('ISO-8859-1');
-        $this->assertEquals('ISO-8859-1', $this->_fault->getEncoding());
+        $this->fault->setEncoding('ISO-8859-1');
+        $this->assertEquals('ISO-8859-1', $this->fault->getEncoding());
         $this->assertEquals('ISO-8859-1', AbstractValue::getGenerator()->getEncoding());
     }
 
@@ -254,10 +257,10 @@ class FaultTest extends \PHPUnit_Framework_TestCase
 
     public function testFaultStringWithoutStringTypeDeclaration()
     {
-        $xml = $this->_createNonStandardXml();
+        $xml = $this->createNonStandardXml();
 
-        $parsed = $this->_fault->loadXml($xml);
+        $parsed = $this->fault->loadXml($xml);
         $this->assertTrue($parsed, $xml);
-        $this->assertEquals('Error string', $this->_fault->getMessage());
+        $this->assertEquals('Error string', $this->fault->getMessage());
     }
 }

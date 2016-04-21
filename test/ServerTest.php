@@ -26,15 +26,15 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      * Server object
      * @var Server
      */
-    protected $_server;
+    protected $server;
 
     /**
      * Setup environment
      */
     public function setUp()
     {
-        $this->_server = new Server();
-        $this->_server->setReturnResponse(true);
+        $this->server = new Server();
+        $this->server->setReturnResponse(true);
     }
 
     /**
@@ -42,19 +42,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->_server);
-    }
-
-    /**
-     * __construct() test
-     *
-     * Call as method call
-     *
-     * Returns: void
-     */
-    public function test__construct()
-    {
-        $this->assertInstanceOf('Zend\XmlRpc\Server', $this->_server);
+        unset($this->server);
     }
 
     public function suppressNotFoundWarnings($errno, $errstr)
@@ -77,29 +65,32 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddFunction()
     {
-        $this->_server->addFunction('ZendTest\\XmlRpc\\testFunction', 'zsr');
+        $this->server->addFunction('ZendTest\\XmlRpc\\TestAsset\\testFunction', 'zsr');
 
-        $methods = $this->_server->listMethods();
-        $this->assertContains('zsr.ZendTest\\XmlRpc\\testFunction', $methods, var_export($methods, 1));
+        $methods = $this->server->listMethods();
+        $this->assertContains('zsr.ZendTest\\XmlRpc\\TestAsset\\testFunction', $methods, var_export($methods, 1));
 
-        $methods = $this->_server->listMethods();
-        $this->assertContains('zsr.ZendTest\\XmlRpc\\testFunction', $methods);
-        $this->assertNotContains('zsr.ZendTest\\XmlRpc\\testFunction2', $methods, var_export($methods, 1));
+        $methods = $this->server->listMethods();
+        $this->assertContains('zsr.ZendTest\\XmlRpc\\TestAsset\\testFunction', $methods);
+        $this->assertNotContains('zsr.ZendTest\\XmlRpc\\TestAsset\\testFunction2', $methods, var_export($methods, 1));
     }
 
     public function testAddFunctionThrowsExceptionOnInvalidInput()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to attach function; invalid');
-        $this->_server->addFunction('nosuchfunction');
+        $this->setExpectedException(
+            'Zend\XmlRpc\Server\Exception\InvalidArgumentException',
+            'Unable to attach function; invalid'
+        );
+        $this->server->addFunction('nosuchfunction');
     }
 
     public function testAddFunctionThrowsExceptionOnInvalidArrayInput()
     {
         //$this->setExpectedException('XXX', 'xxx');
-        $this->_server->addFunction(
+        $this->server->addFunction(
             [
-                'ZendTest\\XmlRpc\\testFunction',
-                'ZendTest\\XmlRpc\\testFunction2',
+                'ZendTest\\XmlRpc\\TestAsset\\testFunction',
+                'ZendTest\\XmlRpc\\TestAsset\\testFunction2',
             ],
             'zsr'
         );
@@ -120,9 +111,9 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFunctions()
     {
-        $expected = $this->_server->listMethods();
+        $expected = $this->server->listMethods();
 
-        $functions = $this->_server->getFunctions();
+        $functions = $this->server->getFunctions();
         $server = new Server();
         $server->loadFunctions($functions);
         $actual = $server->listMethods();
@@ -135,11 +126,11 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetClass()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test');
-        $methods = $this->_server->listMethods();
+        $this->server->setClass(TestAsset\TestClass::class, 'test');
+        $methods = $this->server->listMethods();
         $this->assertContains('test.test1', $methods);
         $this->assertContains('test.test2', $methods);
-        $this->assertNotContains('test._test3', $methods);
+        $this->assertNotContains('test.test3', $methods);
         $this->assertNotContains('test.__construct', $methods);
     }
 
@@ -148,29 +139,29 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSettingClassWithArguments()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test', 'argv-argument');
-        $this->assertTrue($this->_server->sendArgumentsToAllMethods());
+        $this->server->setClass(TestAsset\TestClass::class, 'test', 'argv-argument');
+        $this->assertTrue($this->server->sendArgumentsToAllMethods());
         $request = new Request();
         $request->setMethod('test.test4');
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertNotInstanceOf('Zend\\XmlRpc\\Fault', $response);
-        $this->assertSame(
-            ['test1' => 'argv-argument',
-                'test2' => null,
-                'arg' => ['argv-argument']],
-            $response->getReturnValue());
+        $this->assertSame([
+            'test1' => 'argv-argument',
+            'test2' => null,
+            'arg' => ['argv-argument']
+        ], $response->getReturnValue());
     }
 
     public function testSettingClassWithArgumentsOnlyPassingToConstructor()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test', 'a1', 'a2');
-        $this->_server->sendArgumentsToAllMethods(false);
-        $this->assertFalse($this->_server->sendArgumentsToAllMethods());
+        $this->server->setClass(TestAsset\TestClass::class, 'test', 'a1', 'a2');
+        $this->server->sendArgumentsToAllMethods(false);
+        $this->assertFalse($this->server->sendArgumentsToAllMethods());
 
         $request = new Request();
         $request->setMethod('test.test4');
         $request->setParams(['foo']);
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertNotInstanceOf('Zend\\XmlRpc\\Fault', $response);
         $this->assertSame(['test1' => 'a1', 'test2' => 'a2', 'arg' => ['foo']], $response->getReturnValue());
     }
@@ -180,12 +171,12 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFault()
     {
-        $fault = $this->_server->fault('This is a fault', 411);
+        $fault = $this->server->fault('This is a fault', 411);
         $this->assertInstanceOf('Zend\XmlRpc\Server\Fault', $fault);
         $this->assertEquals(411, $fault->getCode());
         $this->assertEquals('This is a fault', $fault->getMessage());
 
-        $fault = $this->_server->fault(new Server\Exception\RuntimeException('Exception fault', 511));
+        $fault = $this->server->fault(new Server\Exception\RuntimeException('Exception fault', 511));
         $this->assertInstanceOf('Zend\XmlRpc\Server\Fault', $fault);
         $this->assertEquals(511, $fault->getCode());
         $this->assertEquals('Exception fault', $fault->getMessage());
@@ -198,15 +189,15 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->setMethod('system.listMethods');
-        $this->_server->setReturnResponse(false);
+        $this->server->setReturnResponse(false);
         ob_start();
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $output = ob_get_contents();
         ob_end_clean();
-        $this->_server->setReturnResponse(true);
+        $this->server->setReturnResponse(true);
 
         $this->assertFalse(isset($response));
-        $response = $this->_server->getResponse();
+        $response = $this->server->getResponse();
         $this->assertInstanceOf('Zend\XmlRpc\Response', $response);
         $this->assertSame($response->__toString(), $output);
         $return = $response->getReturnValue();
@@ -228,7 +219,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->setMethod('system.listMethods');
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
 
         $this->assertInstanceOf('Zend\XmlRpc\Response', $response);
         $return = $response->getReturnValue();
@@ -243,7 +234,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->setMethod('system.methodHelp');
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
 
         $this->assertInstanceOf('Zend\XmlRpc\Fault', $response);
         $this->assertEquals(623, $response->getCode());
@@ -253,7 +244,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->setMethod('invalid');
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertInstanceOf('Zend\\XmlRpc\\Fault', $response);
         $this->assertSame('Method "invalid" does not exist', $response->getMessage());
         $this->assertSame(620, $response->getCode());
@@ -272,13 +263,13 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetResponseClass()
     {
-        $this->assertTrue($this->_server->setResponseClass('ZendTest\\XmlRpc\\TestResponse'));
+        $this->assertTrue($this->server->setResponseClass(TestAsset\TestResponse::class));
         $request = new Request();
         $request->setMethod('system.listMethods');
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
 
         $this->assertInstanceOf('Zend\XmlRpc\Response', $response);
-        $this->assertInstanceOf('ZendTest\XmlRpc\TestResponse', $response);
+        $this->assertInstanceOf(TestAsset\TestResponse::class, $response);
     }
 
     /**
@@ -290,7 +281,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testListMethods()
     {
-        $methods = $this->_server->listMethods();
+        $methods = $this->server->listMethods();
         $this->assertInternalType('array', $methods);
         $this->assertContains('system.listMethods', $methods);
         $this->assertContains('system.methodHelp', $methods);
@@ -310,11 +301,14 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMethodHelp()
     {
-        $help = $this->_server->methodHelp('system.methodHelp', 'system.listMethods');
+        $help = $this->server->methodHelp('system.methodHelp', 'system.listMethods');
         $this->assertContains('Display help message for an XMLRPC method', $help);
 
-        $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Method "foo" does not exist');
-        $this->_server->methodHelp('foo');
+        $this->setExpectedException(
+            'Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface',
+            'Method "foo" does not exist'
+        );
+        $this->server->methodHelp('foo');
     }
 
     /**
@@ -329,12 +323,12 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMethodSignature()
     {
-        $sig = $this->_server->methodSignature('system.methodSignature');
+        $sig = $this->server->methodSignature('system.methodSignature');
         $this->assertInternalType('array', $sig);
         $this->assertEquals(1, count($sig), var_export($sig, 1));
 
         $this->setExpectedException('Zend\XmlRpc\Server\Exception\ExceptionInterface', 'Method "foo" does not exist');
-        $this->_server->methodSignature('foo');
+        $this->server->methodSignature('foo');
     }
 
     /**
@@ -362,9 +356,13 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setMethod('system.multicall');
         $request->addParam($struct);
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
 
-        $this->assertInstanceOf('Zend\XmlRpc\Response', $response, $response->__toString() . "\n\n" . $request->__toString());
+        $this->assertInstanceOf(
+            'Zend\XmlRpc\Response',
+            $response,
+            $response->__toString() . "\n\n" . $request->__toString()
+        );
         $returns = $response->getReturnValue();
         $this->assertInternalType('array', $returns);
         $this->assertEquals(2, count($returns), var_export($returns, 1));
@@ -390,16 +388,21 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setMethod('system.multicall');
         $request->addParam($struct);
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
 
-        $this->assertInstanceOf('Zend\XmlRpc\Response', $response, $response->__toString() . "\n\n" . $request->__toString());
+        $this->assertInstanceOf(
+            'Zend\XmlRpc\Response',
+            $response,
+            $response->__toString() . "\n\n" . $request->__toString()
+        );
         $returns = $response->getReturnValue();
         $this->assertInternalType('array', $returns);
         $this->assertEquals(2, count($returns), var_export($returns, 1));
         $this->assertInternalType('array', $returns[0], var_export($returns[0], 1));
         $this->assertSame([
-            'faultCode' => 620, 'faultString' => 'Method "undefined" does not exist'],
-            $returns[1], var_export($returns[1], 1));
+            'faultCode' => 620,
+            'faultString' => 'Method "undefined" does not exist'
+        ], $returns[1], var_export($returns[1], 1));
     }
 
     /**
@@ -407,10 +410,10 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetEncoding()
     {
-        $this->assertEquals('UTF-8', $this->_server->getEncoding());
+        $this->assertEquals('UTF-8', $this->server->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
-        $this->assertSame($this->_server, $this->_server->setEncoding('ISO-8859-1'));
-        $this->assertEquals('ISO-8859-1', $this->_server->getEncoding());
+        $this->assertSame($this->server, $this->server->setEncoding('ISO-8859-1'));
+        $this->assertEquals('ISO-8859-1', $this->server->getEncoding());
         $this->assertEquals('ISO-8859-1', AbstractValue::getGenerator()->getEncoding());
     }
 
@@ -419,8 +422,8 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestResponseEncoding()
     {
-        $response = $this->_server->handle();
-        $request  = $this->_server->getRequest();
+        $response = $this->server->handle();
+        $request  = $this->server->getRequest();
 
         $this->assertEquals('UTF-8', $request->getEncoding());
         $this->assertEquals('UTF-8', $response->getEncoding());
@@ -431,9 +434,9 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestResponseEncoding2()
     {
-        $this->_server->setEncoding('ISO-8859-1');
-        $response = $this->_server->handle();
-        $request  = $this->_server->getRequest();
+        $this->server->setEncoding('ISO-8859-1');
+        $response = $this->server->handle();
+        $request  = $this->server->getRequest();
 
         $this->assertEquals('ISO-8859-1', $request->getEncoding());
         $this->assertEquals('ISO-8859-1', $response->getEncoding());
@@ -441,29 +444,38 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFunctionWithExtraArgs()
     {
-        $this->_server->addFunction('ZendTest\\XmlRpc\\testFunction', 'test', 'arg1');
-        $methods = $this->_server->listMethods();
-        $this->assertContains('test.ZendTest\\XmlRpc\\testFunction', $methods);
+        $this->server->addFunction('ZendTest\\XmlRpc\\TestAsset\\testFunction', 'test', 'arg1');
+        $methods = $this->server->listMethods();
+        $this->assertContains('test.ZendTest\\XmlRpc\\TestAsset\\testFunction', $methods);
     }
 
     public function testAddFunctionThrowsExceptionWithBadData()
     {
         $o = new \stdClass();
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to attach function; invalid');
-        $this->_server->addFunction($o);
+        $this->setExpectedException(
+            'Zend\XmlRpc\Server\Exception\InvalidArgumentException',
+            'Unable to attach function; invalid'
+        );
+        $this->server->addFunction($o);
     }
 
     public function testLoadFunctionsThrowsExceptionWithBadData()
     {
         $o = new \stdClass();
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to load server definition; must be an array or Zend\Server\Definition, received stdClass');
-        $this->_server->loadFunctions($o);
+        $this->setExpectedException(
+            'Zend\XmlRpc\Server\Exception\InvalidArgumentException',
+            'Unable to load server definition; must be an array or Zend\Server\Definition, received stdClass'
+        );
+        $this->server->loadFunctions($o);
     }
 
     public function testLoadFunctionsThrowsExceptionsWithBadData2()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to load server definition; must be an array or Zend\Server\Definition, received string');
-        $this->_server->loadFunctions('foo');
+        $this->setExpectedException(
+            'Zend\XmlRpc\Server\Exception\InvalidArgumentException',
+            'Unable to load server definition; must be an array or Zend\Server\Definition, received string'
+        );
+        $this->server->loadFunctions('foo');
     }
 
     public function testLoadFunctionsThrowsExceptionsWithBadData3()
@@ -472,31 +484,44 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $o = [$o];
 
         $this->setExpectedException('Zend\Server\Exception\InvalidArgumentException', 'Invalid method provided');
-        $this->_server->loadFunctions($o);
+        $this->server->loadFunctions($o);
     }
 
     public function testLoadFunctionsReadsMethodsFromServerDefinitionObjects()
     {
-        $mockedMethod = $this->getMock('Zend\\Server\\Method\\Definition', [], [], '', false,
-            false);
-        $mockedDefinition = $this->getMock('Zend\\Server\\Definition', [], [], '', false, false);
+        $mockedMethod = $this->getMock(
+            'Zend\\Server\\Method\\Definition',
+            [],
+            [],
+            '',
+            false,
+            false
+        );
+        $mockedDefinition = $this->getMock(
+            'Zend\\Server\\Definition',
+            [],
+            [],
+            '',
+            false,
+            false
+        );
         $mockedDefinition->expects($this->once())
-                         ->method('getMethods')
-                         ->will($this->returnValue(['bar' => $mockedMethod]));
-        $this->_server->loadFunctions($mockedDefinition);
+            ->method('getMethods')
+            ->will($this->returnValue(['bar' => $mockedMethod]));
+        $this->server->loadFunctions($mockedDefinition);
     }
 
     public function testSetClassThrowsExceptionWithInvalidClass()
     {
         $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid method class');
-        $this->_server->setClass('mybogusclass');
+        $this->server->setClass('mybogusclass');
     }
 
     public function testSetRequestUsingString()
     {
-        $this->_server->setRequest('ZendTest\\XmlRpc\\TestRequest');
-        $req = $this->_server->getRequest();
-        $this->assertInstanceOf('ZendTest\XmlRpc\TestRequest', $req);
+        $this->server->setRequest(TestAsset\TestRequest::class);
+        $req = $this->server->getRequest();
+        $this->assertInstanceOf(TestAsset\TestRequest::class, $req);
     }
 
     /**
@@ -505,44 +530,44 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     public function testSetRequestThrowsExceptionOnBadClassName()
     {
         $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid request object');
-        $this->_server->setRequest('ZendTest\\XmlRpc\\TestRequest2');
+        $this->server->setRequest('ZendTest\\XmlRpc\\TestRequest2');
     }
 
     public function testSetRequestThrowsExceptionOnBadObject()
     {
         $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid request object');
-        $this->_server->setRequest($this);
+        $this->server->setRequest($this);
     }
 
     public function testHandleObjectMethod()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass');
+        $this->server->setClass(TestAsset\TestClass::class);
         $request = new Request();
         $request->setMethod('test1');
         $request->addParam('value');
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertNotInstanceOf('Zend\XmlRpc\Fault', $response);
         $this->assertEquals('String: value', $response->getReturnValue());
     }
 
     public function testHandleClassStaticMethod()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass');
+        $this->server->setClass(TestAsset\TestClass::class);
         $request = new Request();
         $request->setMethod('test2');
         $request->addParam(['value1', 'value2']);
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertNotInstanceOf('Zend\XmlRpc\Fault', $response);
         $this->assertEquals('value1; value2', $response->getReturnValue());
     }
 
     public function testHandleFunction()
     {
-        $this->_server->addFunction('ZendTest\\XmlRpc\\testFunction');
+        $this->server->addFunction('ZendTest\\XmlRpc\\TestAsset\\testFunction');
         $request = new Request();
-        $request->setMethod('ZendTest\\XmlRpc\\testFunction');
+        $request->setMethod('ZendTest\\XmlRpc\\TestAsset\\testFunction');
         $request->setParams([['value1'], 'key']);
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertNotInstanceOf('Zend\XmlRpc\Fault', $response);
         $this->assertEquals('key: value1', $response->getReturnValue());
     }
@@ -567,7 +592,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
                 'params'     => []
             ]
         ];
-        $returned = $this->_server->multicall($try);
+        $returned = $this->server->multicall($try);
         $this->assertInternalType('array', $returned);
         $this->assertEquals(5, count($returned));
 
@@ -602,12 +627,12 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanMarshalBase64Requests()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test');
+        $this->server->setClass(TestAsset\TestClass::class, 'test');
         $data    = base64_encode('this is the payload');
         $param   = ['type' => 'base64', 'value' => $data];
         $request = new Request('test.base64', [$param]);
 
-        $response = $this->_server->handle($request);
+        $response = $this->server->handle($request);
         $this->assertNotInstanceOf('Zend\XmlRpc\Fault', $response);
         $this->assertEquals($data, $response->getReturnValue());
     }
@@ -618,7 +643,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     public function testPrototypeReturnValueMustReflectDocBlock()
     {
         $server = new Server();
-        $server->setClass('ZendTest\\XmlRpc\\TestClass');
+        $server->setClass(TestAsset\TestClass::class);
         $table = $server->getDispatchTable();
         $method = $table->getMethod('test1');
         foreach ($method->getPrototypes() as $prototype) {
@@ -628,141 +653,35 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testCallingUnregisteredMethod()
     {
-        $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface',
-            'Unknown instance method called on server: foobarbaz');
-        $this->_server->foobarbaz();
+        $this->setExpectedException(
+            'Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface',
+            'Unknown instance method called on server: foobarbaz'
+        );
+        $this->server->foobarbaz();
     }
 
     public function testSetPersistenceDoesNothing()
     {
-        $this->assertNull($this->_server->setPersistence('foo'));
-        $this->assertNull($this->_server->setPersistence('whatever'));
+        $this->assertNull($this->server->setPersistence('foo'));
+        $this->assertNull($this->server->setPersistence('whatever'));
     }
 
     public function testPassingInvalidRequestClassThrowsException()
     {
         $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Invalid request class');
-        $this->_server->setRequest('stdClass');
+        $this->server->setRequest('stdClass');
     }
 
     public function testPassingInvalidResponseClassThrowsException()
     {
         $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Invalid response class');
-        $this->_server->setResponseClass('stdClass');
+        $this->server->setResponseClass('stdClass');
     }
 
     public function testCreatingFaultWithEmptyMessageResultsInUnknownError()
     {
-        $fault = $this->_server->fault('', 123);
+        $fault = $this->server->fault('', 123);
         $this->assertSame('Unknown Error', $fault->getMessage());
         $this->assertSame(123, $fault->getCode());
     }
-}
-
-/**
- * testFunction
- *
- * Function for use with xmlrpc server unit tests
- *
- * @param array $var1
- * @param string $var2
- * @return string
- */
-function testFunction($var1, $var2 = 'optional')
-{
-    return $var2 . ': ' . implode(',', (array) $var1);
-}
-
-/**
- * testFunction2
- *
- * Function for use with xmlrpc server unit tests
- *
- * @return string
- */
-function testFunction2()
-{
-    return 'function2';
-}
-
-
-class TestClass
-{
-    private $_value1;
-    private $_value2;
-
-    /**
-     * Constructor
-     *
-     */
-    public function __construct($value1 = null, $value2 = null)
-    {
-        $this->_value1 = $value1;
-        $this->_value2 = $value2;
-    }
-
-    /**
-     * Test1
-     *
-     * Returns 'String: ' . $string
-     *
-     * @param string $string
-     * @return string
-     */
-    public function test1($string)
-    {
-        return 'String: ' . (string) $string;
-    }
-
-    /**
-     * Test2
-     *
-     * Returns imploded array
-     *
-     * @param array $array
-     * @return string
-     */
-    public static function test2($array)
-    {
-        return implode('; ', (array) $array);
-    }
-
-    /**
-     * Test3
-     *
-     * Should not be available...
-     *
-     * @return void
-     */
-    protected function _test3()
-    {
-    }
-
-    /**
-     * @param string $arg
-     * @return struct
-     */
-    public function test4($arg)
-    {
-        return ['test1' => $this->_value1, 'test2' => $this->_value2, 'arg' => func_get_args()];
-    }
-
-    /**
-     * Test base64 encoding in request and response
-     *
-     * @param  base64 $data
-     * @return base64
-     */
-    public function base64($data)
-    {
-        return $data;
-    }
-}
-
-class TestResponse extends Response
-{
-}
-
-class TestRequest extends Request
-{
 }
