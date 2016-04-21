@@ -114,7 +114,7 @@ function myFunc($val1, $val2, $val3)
 }
 ```
 
-> ## Note
+> ### Note
 Allowing multiple signatures can lead to confusion for developers using the services; to keep things
 simple, a *XML-RPC* service method should only have a single signature.
 
@@ -483,7 +483,7 @@ $server->setResponseClass('Services\Response');
 echo $server->handle($request);
 ```
 
-> ## Note
+> ### Note
 The server cache file should be located outside the document root.
 
 ### Optimizing XML generation
@@ -504,14 +504,14 @@ $server = new XmlRpc\Server();
 ...
 ```
 
-> ## Note
+> ### Note
 #### Benchmark your application
 Performance is determined by a lot of parameters and benchmarks only apply for the specific test
 case. Differences come from *PHP* version, installed extensions, webserver and operating system just
 to name a few. Please make sure to benchmark your application on your own and decide which generator
 to use based on **your** numbers.
 
-> ## Note
+> ### Note
 #### Benchmark your client
 This optimization makes sense for the client side too. Just select the alternate *XML* generator
 before doing any work with `Zend\XmlRpc\Client`.

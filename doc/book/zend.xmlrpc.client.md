@@ -68,7 +68,7 @@ Parameters may be passed to `call()` as native *PHP* variables, meaning as a `St
 `Float`, `Boolean`, `Array`, or an `Object`. In this case, each *PHP* native type will be
 auto-detected and converted into one of the *XML-RPC* types according to this table:
 
-> ## Note
+> ### Note
 #### What type do empty arrays get cast to?
 Passing an empty array to an *XML-RPC* method is problematic, as it could represent either an array
 or a struct. `Zend\XmlRpc\Client` detects such conditions and makes a request to the server's
@@ -101,7 +101,7 @@ There are two ways to create a `Zend\XmlRpc\Value` object: instantiate one of th
 `Zend\XmlRpc\Value` subclasses directly, or use the static factory method
 `Zend\XmlRpc\AbstractValue::getXmlRpcValue()`.
 
-> ## Note
+> ### Note
 #### Automatic Conversion
 When building a new `Zend\XmlRpc\Value` object, its value is set by a *PHP* type. The *PHP* type
 will be converted to the specified type using *PHP* casting. For example, if a string is given as a

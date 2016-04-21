@@ -36,7 +36,7 @@ $server->setClass('Greeter', 'greeter');
 $server->handle();
 ```
 
-> ## Note
+> ### Note
 It is necessary to write function and method docblocks for the services which are to be exposed via
 `Zend\XmlRpc\Server`, as it will be used to validate parameters provided to the methods, and also to
 determine the method help text and method signatures.
