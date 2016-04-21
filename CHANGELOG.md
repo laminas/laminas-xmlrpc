@@ -25,4 +25,5 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#17](https://github.com/zendframework/zend-xmlrpc/pull/17) updates
+  dependencies to allow zend-stdlib v3 releases.

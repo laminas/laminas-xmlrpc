@@ -18,13 +18,14 @@ abstract class AbstractScalar extends AbstractValue
      *
      * @return void
      */
-    protected function _generateXml()
+    protected function generate()
     {
         $generator = $this->getGenerator();
 
-        $generator->openElement('value')
-                  ->openElement($this->type, $this->value)
-                  ->closeElement($this->type)
-                  ->closeElement('value');
+        $generator
+            ->openElement('value')
+            ->openElement($this->type, $this->value)
+            ->closeElement($this->type)
+            ->closeElement('value');
     }
 }

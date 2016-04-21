@@ -506,6 +506,7 @@ class Server extends AbstractServer
         return $this;
     }
 
+    // @codingStandardsIgnoreStart
     /**
      * Map PHP type to XML-RPC type
      *
@@ -519,6 +520,7 @@ class Server extends AbstractServer
         }
         return 'void';
     }
+    // @codingStandardsIgnoreEnd
 
     /**
      * Handle an xmlrpc call (actual work)

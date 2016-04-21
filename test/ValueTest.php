@@ -771,7 +771,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
      */
     public function testMarshalSerializedObjectAsBase64()
     {
-        $o = new SerializableTestClass();
+        $o = new TestAsset\SerializableTestClass();
         $o->setProperty('foobar');
         $serialized = serialize($o);
         $val = AbstractValue::getXmlRpcValue(
@@ -909,19 +909,5 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     public function wrapXml($xml)
     {
         return $xml . "\n";
-    }
-}
-
-class SerializableTestClass
-{
-    protected $property;
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-    public function getProperty()
-    {
-        return $this->property;
     }
 }

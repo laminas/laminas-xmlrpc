@@ -116,7 +116,7 @@ EOT;
 
     public function testExtendingClassShouldBeAbleToReceiveMethodAndParams()
     {
-        $request = new HTTPTestExtension('foo', ['bar', 'baz']);
+        $request = new TestAsset\HTTPTestExtension('foo', ['bar', 'baz']);
         $this->assertEquals('foo', $request->getMethod());
         $this->assertEquals(['bar', 'baz'], $request->getParams());
     }
@@ -137,14 +137,5 @@ EOT;
         $request = new Request\Http();
         $this->assertTrue($request->isFault());
         $this->assertSame(630, $request->getFault()->getCode());
-    }
-}
-
-class HTTPTestExtension extends Request\Http
-{
-    public function __construct($method = null, $params = null)
-    {
-        $this->method = $method;
-        $this->params = (array) $params;
     }
 }

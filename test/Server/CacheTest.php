@@ -9,33 +9,31 @@
 
 namespace ZendTest\XmlRpc\Server;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use Zend\XmlRpc\Server;
 
-/**
- * @group      Zend_XmlRpc
- */
-class CacheTest extends \PHPUnit_Framework_TestCase
+class CacheTest extends TestCase
 {
     /**
      * Server object
      * @var Server
      */
-    protected $_server;
+    protected $server;
 
     /**
      * Local file for caching
      * @var string
      */
-    protected $_file;
+    protected $file;
 
     /**
      * Setup environment
      */
     public function setUp()
     {
-        $this->_file = realpath(__DIR__) . '/xmlrpc.cache';
-        $this->_server = new Server();
-        $this->_server->setClass('Zend\\XmlRpc\\Server\\Cache', 'cache');
+        $this->file = realpath(__DIR__) . '/xmlrpc.cache';
+        $this->server = new Server();
+        $this->server->setClass('Zend\\XmlRpc\\Server\\Cache', 'cache');
     }
 
     /**
@@ -43,10 +41,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        if (file_exists($this->_file)) {
-            unlink($this->_file);
+        if (file_exists($this->file)) {
+            unlink($this->file);
         }
-        unset($this->_server);
+        unset($this->server);
     }
 
     /**
@@ -58,10 +56,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             $this->markTestIncomplete('Directory no writable');
         }
 
-        $this->assertTrue(Server\Cache::save($this->_file, $this->_server));
-        $expected = $this->_server->listMethods();
+        $this->assertTrue(Server\Cache::save($this->file, $this->server));
+        $expected = $this->server->listMethods();
         $server = new Server();
-        $this->assertTrue(Server\Cache::get($this->_file, $server));
+        $this->assertTrue(Server\Cache::get($this->file, $server));
         $actual = $server->listMethods();
 
         $this->assertSame($expected, $actual);
@@ -76,8 +74,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             $this->markTestIncomplete('Directory no writable');
         }
 
-        $this->assertTrue(Server\Cache::save($this->_file, $this->_server));
-        $this->assertTrue(Server\Cache::delete($this->_file));
+        $this->assertTrue(Server\Cache::save($this->file, $this->server));
+        $this->assertTrue(Server\Cache::delete($this->file));
     }
 
     public function testShouldReturnFalseWithInvalidCache()
@@ -86,8 +84,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             $this->markTestIncomplete('Directory no writable');
         }
 
-        file_put_contents($this->_file, 'blahblahblah');
+        file_put_contents($this->file, 'blahblahblah');
         $server = new Server();
-        $this->assertFalse(Server\Cache::get($this->_file, $server));
+        $this->assertFalse(Server\Cache::get($this->file, $server));
     }
 }

@@ -1,9 +1,7 @@
-<?php
+<?php // @codingStandardsIgnoreFile
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-xmlrpc for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -35,26 +33,26 @@ namespace ZendTest\XmlRpc;
  */
 class PhpInputMock
 {
-    protected static $_data;
+    protected static $data;
 
-    protected static $_returnValues = [];
+    protected static $returnValues = [];
 
-    protected static $_arguments = [];
+    protected static $arguments = [];
 
-    protected $_position = 0;
+    protected $position = 0;
 
     public static function mockInput($data)
     {
         stream_wrapper_unregister('php');
         stream_wrapper_register('php', 'ZendTest\XmlRpc\PhpInputMock');
-        static::$_data = $data;
+        static::$data = $data;
     }
 
     public static function restoreDefault()
     {
         // Reset static values
-        static::$_returnValues = [];
-        static::$_arguments = [];
+        static::$returnValues = [];
+        static::$arguments = [];
 
         // Restore original stream wrapper
         stream_wrapper_restore('php');
@@ -63,14 +61,14 @@ class PhpInputMock
     public static function methodWillReturn($methodName, $returnValue)
     {
         $methodName = strtolower($methodName);
-        static::$_returnValues[$methodName] = $returnValue;
+        static::$returnValues[$methodName] = $returnValue;
     }
 
     public static function argumentsPassedTo($methodName)
     {
         $methodName = strtolower($methodName);
-        if (isset(static::$_arguments[$methodName])) {
-            return static::$_arguments[$methodName];
+        if (isset(static::$arguments[$methodName])) {
+            return static::$arguments[$methodName];
         }
 
         return;
@@ -78,10 +76,10 @@ class PhpInputMock
 
     public function stream_open()
     {
-        static::$_arguments[__FUNCTION__] = func_get_args();
+        static::$arguments[__FUNCTION__] = func_get_args();
 
-        if (array_key_exists(__FUNCTION__, static::$_returnValues)) {
-            return static::$_returnValues[__FUNCTION__];
+        if (array_key_exists(__FUNCTION__, static::$returnValues)) {
+            return static::$returnValues[__FUNCTION__];
         }
 
         return true;
@@ -89,41 +87,41 @@ class PhpInputMock
 
     public function stream_eof()
     {
-        static::$_arguments[__FUNCTION__] = func_get_args();
+        static::$arguments[__FUNCTION__] = func_get_args();
 
-        if (array_key_exists(__FUNCTION__, static::$_returnValues)) {
-            return static::$_returnValues[__FUNCTION__];
+        if (array_key_exists(__FUNCTION__, static::$returnValues)) {
+            return static::$returnValues[__FUNCTION__];
         }
 
-        return (0 == strlen(static::$_data));
+        return (0 == strlen(static::$data));
     }
 
     public function stream_read($count)
     {
-        static::$_arguments[__FUNCTION__] = func_get_args();
+        static::$arguments[__FUNCTION__] = func_get_args();
 
-        if (array_key_exists(__FUNCTION__, static::$_returnValues)) {
-            return static::$_returnValues[__FUNCTION__];
+        if (array_key_exists(__FUNCTION__, static::$returnValues)) {
+            return static::$returnValues[__FUNCTION__];
         }
 
         // To match the behavior of php://input, we need to clear out the data
         // as it is read
-        if ($count > strlen(static::$_data)) {
-            $data = static::$_data;
-            static::$_data = '';
+        if ($count > strlen(static::$data)) {
+            $data = static::$data;
+            static::$data = '';
         } else {
-            $data = substr(static::$_data, 0, $count);
-            static::$_data = substr(static::$_data, $count);
+            $data = substr(static::$data, 0, $count);
+            static::$data = substr(static::$data, $count);
         }
         return $data;
     }
 
     public function stream_stat()
     {
-        static::$_arguments[__FUNCTION__] = func_get_args();
+        static::$arguments[__FUNCTION__] = func_get_args();
 
-        if (array_key_exists(__FUNCTION__, static::$_returnValues)) {
-            return static::$_returnValues[__FUNCTION__];
+        if (array_key_exists(__FUNCTION__, static::$returnValues)) {
+            return static::$returnValues[__FUNCTION__];
         }
 
         return [];

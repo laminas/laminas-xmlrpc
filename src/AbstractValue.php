@@ -10,6 +10,7 @@
 namespace Zend\XmlRpc;
 
 use DateTime;
+use SimpleXMLElement;
 
 /**
  * Represent a native XML-RPC value entity, used as parameters for the methods
@@ -155,7 +156,7 @@ abstract class AbstractValue
      */
     public function generateXml()
     {
-        $this->_generateXml();
+        $this->generate();
     }
 
     /**
@@ -178,11 +179,11 @@ abstract class AbstractValue
         switch ($type) {
             case self::AUTO_DETECT_TYPE:
                 // Auto detect the XML-RPC native type from the PHP type of $value
-                return static::_phpVarToNativeXmlRpc($value);
+                return static::phpVarToNativeXmlRpc($value);
 
             case self::XML_STRING:
                 // Parse the XML string given in $value and get the XML-RPC value in it
-                return static::_xmlStringToNativeXmlRpc($value);
+                return static::xmlStringToNativeXmlRpc($value);
 
             case self::XMLRPC_TYPE_I4:
                 // fall through to the next case
@@ -273,7 +274,7 @@ abstract class AbstractValue
      * @return AbstractValue
      * @static
      */
-    protected static function _phpVarToNativeXmlRpc($value)
+    protected static function phpVarToNativeXmlRpc($value)
     {
         // @see http://framework.zend.com/issues/browse/ZF-8623
         if ($value instanceof AbstractValue) {
@@ -320,11 +321,11 @@ abstract class AbstractValue
      * @return \Zend\XmlRpc\AbstractValue
      * @static
      */
-    protected static function _xmlStringToNativeXmlRpc($xml)
+    protected static function xmlStringToNativeXmlRpc($xml)
     {
-        static::_createSimpleXMLElement($xml);
+        static::createSimpleXMLElement($xml);
 
-        static::_extractTypeAndValue($xml, $type, $value);
+        static::extractTypeAndValue($xml, $type, $value);
 
         switch ($type) {
             // All valid and known XML-RPC native values
@@ -381,7 +382,7 @@ abstract class AbstractValue
                 // Parse all the elements of the array from the XML string
                 // (simple xml element) to Value objects
                 foreach ($data->value as $element) {
-                    $values[] = static::_xmlStringToNativeXmlRpc($element);
+                    $values[] = static::xmlStringToNativeXmlRpc($element);
                 }
                 $xmlrpcValue = new Value\ArrayValue($values);
                 break;
@@ -395,7 +396,7 @@ abstract class AbstractValue
                     if (!isset($member->value) or !isset($member->name)) {
                         continue;
                     }
-                    $values[(string) $member->name] = static::_xmlStringToNativeXmlRpc($member->value);
+                    $values[(string) $member->name] = static::xmlStringToNativeXmlRpc($member->value);
                 }
                 $xmlrpcValue = new Value\Struct($values);
                 break;
@@ -405,19 +406,19 @@ abstract class AbstractValue
                 );
                 break;
         }
-        $xmlrpcValue->_setXML($xml->asXML());
+        $xmlrpcValue->setXML($xml->asXML());
 
         return $xmlrpcValue;
     }
 
-    protected static function _createSimpleXMLElement(&$xml)
+    protected static function createSimpleXMLElement(&$xml)
     {
-        if ($xml instanceof \SimpleXMLElement) {
+        if ($xml instanceof SimpleXMLElement) {
             return;
         }
 
         try {
-            $xml = new \SimpleXMLElement($xml);
+            $xml = new SimpleXMLElement($xml);
         } catch (\Exception $e) {
             // The given string is not a valid XML
             throw new Exception\ValueException(
@@ -436,7 +437,7 @@ abstract class AbstractValue
      * @param string &$value Value bind variable
      * @return void
      */
-    protected static function _extractTypeAndValue(\SimpleXMLElement $xml, &$type, &$value)
+    protected static function extractTypeAndValue(\SimpleXMLElement $xml, &$type, &$value)
     {
         // Casting is necessary to work with strict-typed systems
         $xmlAsArray = (array) $xml;
@@ -467,7 +468,7 @@ abstract class AbstractValue
      * @param $xml
      * @return void
      */
-    protected function _setXML($xml)
+    protected function setXML($xml)
     {
         $this->xml = $this->getGenerator()->stripDeclaration($xml);
     }

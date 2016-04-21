@@ -27,20 +27,23 @@ class ArrayValue extends AbstractCollection
      *
      * @return void
      */
-    protected function _generateXml()
+    protected function generate()
     {
         $generator = $this->getGenerator();
-        $generator->openElement('value')
-                  ->openElement('array')
-                  ->openElement('data');
+        $generator
+            ->openElement('value')
+            ->openElement('array')
+            ->openElement('data');
 
         if (is_array($this->value)) {
             foreach ($this->value as $val) {
                 $val->generateXml();
             }
         }
-        $generator->closeElement('data')
-                  ->closeElement('array')
-                  ->closeElement('value');
+
+        $generator
+            ->closeElement('data')
+            ->closeElement('array')
+            ->closeElement('value');
     }
 }

@@ -32,17 +32,17 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testAttachFaultException()
     {
-        Server\Fault::attachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
-        $e = new Exception('test exception', 411);
+        Server\Fault::attachFaultException(TestAsset\Exception::class);
+        $e = new TestAsset\Exception('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
-        Server\Fault::detachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::detachFaultException(TestAsset\Exception::class);
 
         $exceptions = [
-            'ZendTest\\XmlRpc\\Server\\Exception',
-            'ZendTest\\XmlRpc\\Server\\Exception2',
-            'ZendTest\\XmlRpc\\Server\\Exception3',
+            TestAsset\Exception::class,
+            TestAsset\Exception2::class,
+            TestAsset\Exception3::class,
         ];
         Server\Fault::attachFaultException($exceptions);
         foreach ($exceptions as $class) {
@@ -60,12 +60,12 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses()
     {
-        Server\Fault::attachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
-        $e = new Exception4('test exception', 411);
+        Server\Fault::attachFaultException(TestAsset\Exception::class);
+        $e = new TestAsset\Exception4('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
-        Server\Fault::detachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::detachFaultException(TestAsset\Exception::class);
     }
 
     /**
@@ -73,21 +73,21 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testDetachFaultException()
     {
-        Server\Fault::attachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
-        $e = new Exception('test exception', 411);
+        Server\Fault::attachFaultException(TestAsset\Exception::class);
+        $e = new TestAsset\Exception('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
-        Server\Fault::detachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::detachFaultException(TestAsset\Exception::class);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('Unknown error', $fault->getMessage());
         $this->assertEquals(404, $fault->getCode());
 
 
         $exceptions = [
-            'ZendTest\\XmlRpc\\Server\\Exception',
-            'ZendTest\\XmlRpc\\Server\\Exception2',
-            'ZendTest\\XmlRpc\\Server\\Exception3'
+            TestAsset\Exception::class,
+            TestAsset\Exception2::class,
+            TestAsset\Exception3::class,
         ];
         Server\Fault::attachFaultException($exceptions);
         foreach ($exceptions as $class) {
@@ -110,12 +110,12 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testAttachObserver()
     {
-        Server\Fault::attachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        Server\Fault::attachObserver(TestAsset\Observer::class);
         $e = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
-        $observed = Observer::getObserved();
-        Observer::clearObserved();
-        Server\Fault::detachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        $observed = TestAsset\Observer::getObserved();
+        TestAsset\Observer::clearObserved();
+        Server\Fault::detachObserver(TestAsset\Observer::class);
 
         $this->assertNotEmpty($observed);
         $f = array_shift($observed);
@@ -131,15 +131,15 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testDetachObserver()
     {
-        Server\Fault::attachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        Server\Fault::attachObserver(TestAsset\Observer::class);
         $e = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
-        Observer::clearObserved();
-        Server\Fault::detachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        TestAsset\Observer::clearObserved();
+        Server\Fault::detachObserver(TestAsset\Observer::class);
 
         $e = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
-        $observed = Observer::getObserved();
+        $observed = TestAsset\Observer::getObserved();
         $this->assertEmpty($observed);
 
         $this->assertFalse(Server\Fault::detachObserver('foo'));
@@ -181,7 +181,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     /**
      * __toString() test
      */
-    public function test__toString()
+    public function testCastsFaultsToString()
     {
         $dom  = new \DOMDocument('1.0', 'UTF-8');
         $r    = $dom->appendChild($dom->createElement('methodResponse'));
@@ -206,53 +206,5 @@ class FaultTest extends \PHPUnit_Framework_TestCase
         $fault->setEncoding('UTF-8');
 
         $this->assertEquals(trim($xml), trim($fault->__toString()));
-    }
-}
-
-class Exception extends \Exception
-{
-}
-class Exception2 extends \Exception
-{
-}
-class Exception3 extends \Exception
-{
-}
-class Exception4 extends Exception
-{
-}
-
-class Observer
-{
-    private static $_instance = false;
-
-    public $observed = [];
-
-    private function __construct()
-    {
-    }
-
-    public static function getInstance()
-    {
-        if (!static::$_instance) {
-            static::$_instance = new self();
-        }
-
-        return static::$_instance;
-    }
-
-    public static function observe(Server\Fault $fault)
-    {
-        self::getInstance()->observed[] = $fault;
-    }
-
-    public static function clearObserved()
-    {
-        self::getInstance()->observed = [];
-    }
-
-    public static function getObserved()
-    {
-        return self::getInstance()->observed;
     }
 }
