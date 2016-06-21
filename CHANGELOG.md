@@ -2,30 +2,12 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.6.0 - TBD
+## 2.6.0 - 2016-06-21
 
 ### Added
 
 - [#19](https://github.com/zendframework/zend-xmlrpc/pull/19) adds support for
   zend-math v3.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 2.5.3 - TBD
-
-### Added
-
-- Nothing.
 
 ### Deprecated
 
