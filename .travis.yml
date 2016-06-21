@@ -15,25 +15,47 @@ cache:
 
 env:
   global:
-    - SITE_URL: https://zendframework.github.io/zend-xmlrpc
-    - GH_USER_NAME: "Matthew Weier O'Phinney"
-    - GH_USER_EMAIL: matthew@weierophinney.net
-    - GH_REF: github.com/zendframework/zend-xmlrpc.git
+    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - SITE_URL=https://zendframework.github.io/zend-xmlrpc
+    - GH_USER_NAME="Matthew Weier O'Phinney"
+    - GH_USER_EMAIL=matthew@weierophinney.net
+    - GH_REF=github.com/zendframework/zend-xmlrpc.git
     - secure: "tE/9gTe0U+QN1mlCC7Wr70RaOHn3Mtn8ZZTjN0LuhDhXTe3Hs197DNNv3vxNSXRavIRuLi1mIEiEu1uzV4qlnUx01Uj+G+jCshYLrZIQ8TxVJEXB1r1tFrNosg4s1hpxDQn7O5O0VzOEB8G01PobCUmPNTDPGi77xj8HyE+SCLQPnnNPwp4gJtifS+bBOmAe//A0aOA14ArzJLi4xfEKCC2yoSUawob8xX9LbMfLwq8/IEPYtLqN9rvk5qpc2/uhb7Hrqk7Nq8Xt6Gv2ixgDkfYup7BswAamtT5M4m02mXBneYqC2OYDeuStv8kkaIIjTCKxOOPzseRgHJgXLxnRNbJjG7fLaTpWYtl4ZqevGZlp+GrRGHMsQO4wxXMAM0U476nLzNlQDw3xEH9dKpf/QRM1bsP2b45fxHRklRjek+KXIF0bE7q5+jkOeHzg/z05CF6EMSjZuuI+qoUrdZub/R6pTxwhqBzDzUxZjTY3gj5+qlTlvn/B18tCXNsHjsFX75Boy1ST45ai/6ow1veyaWk9H/wIJEqEk54gWDsonpwpGgQjQcoZ58QRi9SKxv0hBFB+No+k2fFnQc0pvTJKa/3Pk+k2I77BvaqtZxC6eqXHKOiDvaR/ywBAIPLBEHL7Fm4Xeu80voNAPlcRV+5qD7ptPaV6gxqeNm1rM81SZHA="
 
 matrix:
   fast_finish: true
   include:
-    - php: 5.5
-      env:
-        - CS_CHECK=true
     - php: 5.6
       env:
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=locked
         - TEST_COVERAGE=true
         - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
         - PATH="$HOME/.local/bin:$PATH"
+    - php: 5.6
+      env:
+        - DEPS=latest
     - php: 7
+      env:
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=locked
+        - CS_CHECK=true
+    - php: 7
+      env:
+        - DEPS=latest
     - php: hhvm 
+      env:
+        - DEPS=lowest
+    - php: hhvm 
+      env:
+        - DEPS=locked
+    - php: hhvm 
+      env:
+        - DEPS=latest
   allow_failures:
     - php: hhvm
 
@@ -46,8 +68,11 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0 ; fi
+  - travis_retry composer install $COMPOSER_ARGS
+  - composer show
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
