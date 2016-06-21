@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#19](https://github.com/zendframework/zend-xmlrpc/pull/19) adds support for
+  zend-math v3.
 
 ### Deprecated
 
