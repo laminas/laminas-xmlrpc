@@ -127,7 +127,7 @@ class ServerIntrospection
     public function getMethodSignature($method)
     {
         $signature = $this->system->methodSignature($method);
-        if (!is_array($signature)) {
+        if (! is_array($signature)) {
             $error = 'Invalid signature for method "' . $method . '"';
             throw new Exception\IntrospectException($error);
         }

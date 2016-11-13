@@ -47,7 +47,7 @@ class Http extends XmlRpcRequest
         ErrorHandler::start();
         $xml = file_get_contents('php://input');
         ErrorHandler::stop();
-        if (!$xml) {
+        if (! $xml) {
             $this->fault = new Fault(630);
             return;
         }

@@ -47,7 +47,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function suppressNotFoundWarnings($errno, $errstr)
     {
-        if (!strstr($errstr, 'failed')) {
+        if (! strstr($errstr, 'failed')) {
             return false;
         }
     }

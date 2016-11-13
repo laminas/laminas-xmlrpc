@@ -23,7 +23,7 @@ class Http extends XmlRpcResponse
      */
     public function __toString()
     {
-        if (!headers_sent()) {
+        if (! headers_sent()) {
             header('Content-Type: text/xml; charset=' . strtolower($this->getEncoding()));
         }
 

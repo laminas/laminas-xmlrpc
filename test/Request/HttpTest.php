@@ -22,7 +22,7 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->xml =<<<EOX
+        $this->xml = <<<EOX
 <?xml version="1.0" encoding="UTF-8"?>
 <methodCall>
     <methodName>test.userUpdate</methodName>
@@ -97,7 +97,7 @@ EOX;
 
     public function testGetFullRequest()
     {
-        $expected =<<<EOT
+        $expected = <<<EOT
 User-Agent: Zend_XmlRpc_Client
 Host: localhost
 Content-Type: text/xml

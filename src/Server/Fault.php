@@ -64,7 +64,7 @@ class Fault extends \Zend\XmlRpc\Fault
         parent::__construct($code, $message);
 
         // Notify exception observers, if present
-        if (!empty(static::$observers)) {
+        if (! empty(static::$observers)) {
             foreach (array_keys(static::$observers) as $observer) {
                 $observer::observe($this);
             }
@@ -90,7 +90,7 @@ class Fault extends \Zend\XmlRpc\Fault
      */
     public static function attachFaultException($classes)
     {
-        if (!is_array($classes)) {
+        if (! is_array($classes)) {
             $classes = (array) $classes;
         }
 
@@ -109,7 +109,7 @@ class Fault extends \Zend\XmlRpc\Fault
      */
     public static function detachFaultException($classes)
     {
-        if (!is_array($classes)) {
+        if (! is_array($classes)) {
             $classes = (array) $classes;
         }
 
@@ -134,11 +134,11 @@ class Fault extends \Zend\XmlRpc\Fault
      */
     public static function attachObserver($class)
     {
-        if (!is_string($class) || !class_exists($class) || !is_callable([$class, 'observe'])) {
+        if (! is_string($class) || ! class_exists($class) || ! is_callable([$class, 'observe'])) {
             return false;
         }
 
-        if (!isset(static::$observers[$class])) {
+        if (! isset(static::$observers[$class])) {
             static::$observers[$class] = true;
         }
 
@@ -153,7 +153,7 @@ class Fault extends \Zend\XmlRpc\Fault
      */
     public static function detachObserver($class)
     {
-        if (!isset(static::$observers[$class])) {
+        if (! isset(static::$observers[$class])) {
             return false;
         }
 

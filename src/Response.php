@@ -147,7 +147,7 @@ class Response
      */
     public function loadXml($response)
     {
-        if (!is_string($response)) {
+        if (! is_string($response)) {
             $this->fault = new Fault(650);
             $this->fault->setEncoding($this->getEncoding());
             return false;
@@ -161,7 +161,7 @@ class Response
             return false;
         }
 
-        if (!empty($xml->fault)) {
+        if (! empty($xml->fault)) {
             // fault response
             $this->fault = new Fault();
             $this->fault->setEncoding($this->getEncoding());
@@ -177,7 +177,7 @@ class Response
         }
 
         try {
-            if (!isset($xml->params) || !isset($xml->params->param) || !isset($xml->params->param->value)) {
+            if (! isset($xml->params) || ! isset($xml->params->param) || ! isset($xml->params->param->value)) {
                 throw new Exception\ValueException('Missing XML-RPC value in XML');
             }
             $valueXml = $xml->params->param->value->asXML();
