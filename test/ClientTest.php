@@ -615,7 +615,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->setServerResponseTo(true);
         $this->assertTrue($this->xmlrpcClient->call('method'));
-        $this->assertSame($expectedContentType, $this->httpClient->getHeader(''));
+        $this->assertSame($expectedContentType, $this->httpClient->getHeader('Content-Type'));
     }
 
     public function testAcceptAutomaticallySet()
@@ -630,7 +630,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->setServerResponseTo(true);
         $this->assertTrue($this->xmlrpcClient->call('method'));
-        $this->assertSame($expectedAccept, $this->httpClient->getHeader(''));
+        $this->assertSame($expectedAccept, $this->httpClient->getHeader('Accept'));
     }
 
     /**
