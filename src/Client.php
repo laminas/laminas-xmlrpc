@@ -205,11 +205,11 @@ class Client implements ServerClient
         }
 
         $headers = $httpRequest->getHeaders();
-        
+
         if (!$headers->get('Content-Type')) {
             $headers->addHeaderLine('Content-Type', 'text/xml; charset=utf-8');
         }
-        
+
         if (!$headers->get('Accept')) {
             $headers->addHeaderLine('Accept', 'text/xml');
         }

@@ -603,6 +603,36 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedUserAgent, $this->httpClient->getHeader('user-agent'));
     }
 
+    public function testContentTypeAutomaticallySet()
+    {
+        $this->assertFalse(
+            $this->httpClient->getHeader('Content-Type'),
+            'Content-Type is null if no request was made'
+        );
+
+        $expectedContentType = 'text/xml; charset=utf-8';
+        $this->httpClient->setHeaders(['Content-Type' => $expectedContentType]);
+
+        $this->setServerResponseTo(true);
+        $this->assertTrue($this->xmlrpcClient->call('method'));
+        $this->assertSame($expectedContentType, $this->httpClient->getHeader(''));
+    }
+
+    public function testAcceptAutomaticallySet()
+    {
+        $this->assertFalse(
+            $this->httpClient->getHeader('Accept'),
+            'Accept header is null if no request was made'
+        );
+
+        $expectedAccept = 'text/xml';
+        $this->httpClient->setHeaders(['Accept' => $expectedAccept]);
+
+        $this->setServerResponseTo(true);
+        $this->assertTrue($this->xmlrpcClient->call('method'));
+        $this->assertSame($expectedAccept, $this->httpClient->getHeader(''));
+    }
+
     /**
      * @group ZF-8478
      */
