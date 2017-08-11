@@ -181,10 +181,13 @@ class Client implements ServerClient
     /**
      * Perform an XML-RPC request and return a response.
      *
-     * @param \Zend\XmlRpc\Request $request
+     * @param \Zend\XmlRpc\Request       $request
      * @param null|\Zend\XmlRpc\Response $response
-     * @return void
+     *
+     * @throws \Zend\Http\Exception\InvalidArgumentException
      * @throws \Zend\XmlRpc\Client\Exception\HttpException
+     *
+     * @return void
      */
     public function doRequest($request, $response = null)
     {
