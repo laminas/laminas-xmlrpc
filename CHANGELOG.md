@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.6.1 - TBD
+## 2.6.2 - TBD
 
 ### Added
 
@@ -37,6 +37,26 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Fixed
 
 - Nothing.
+
+## 2.6.1 - 2017-08-11
+
+### Added
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#27](https://github.com/zendframework/zend-xmlrpc/pull/19) fixed a memory leak
+  caused by repetitive addition of `Accept` and `Content-Type` headers on subsequent
+  HTTP requests produced by the `Zend\XmlRpc\Client`.
 
 ## 2.6.0 - 2016-06-21
 
