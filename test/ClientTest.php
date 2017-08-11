@@ -603,7 +603,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedUserAgent, $this->httpClient->getHeader('user-agent'));
     }
 
-    public function testContentTypeAutomaticallySet()
+    public function testContentTypeIsNotReplaced()
     {
         $this->assertFalse(
             $this->httpClient->getHeader('Content-Type'),
@@ -618,7 +618,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedContentType, $this->httpClient->getHeader('Content-Type'));
     }
 
-    public function testAcceptAutomaticallySet()
+    public function testAcceptIsNotReplaced()
     {
         $this->assertFalse(
             $this->httpClient->getHeader('Accept'),
