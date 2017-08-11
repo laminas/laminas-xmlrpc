@@ -604,6 +604,42 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group #27
+     */
+    public function testContentTypeIsNotReplaced()
+    {
+        $this->assertFalse(
+            $this->httpClient->getHeader('Content-Type'),
+            'Content-Type is null if no request was made'
+        );
+
+        $expectedContentType = 'text/xml; charset=utf-8';
+        $this->httpClient->setHeaders(['Content-Type' => $expectedContentType]);
+
+        $this->setServerResponseTo(true);
+        $this->assertTrue($this->xmlrpcClient->call('method'));
+        $this->assertSame($expectedContentType, $this->httpClient->getHeader('Content-Type'));
+    }
+
+    /**
+     * @group #27
+     */
+    public function testAcceptIsNotReplaced()
+    {
+        $this->assertFalse(
+            $this->httpClient->getHeader('Accept'),
+            'Accept header is null if no request was made'
+        );
+
+        $expectedAccept = 'text/xml';
+        $this->httpClient->setHeaders(['Accept' => $expectedAccept]);
+
+        $this->setServerResponseTo(true);
+        $this->assertTrue($this->xmlrpcClient->call('method'));
+        $this->assertSame($expectedAccept, $this->httpClient->getHeader('Accept'));
+    }
+
+    /**
      * @group ZF-8478
      */
     public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures()
