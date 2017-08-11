@@ -185,7 +185,9 @@ class Client implements ServerClient
      * @param null|\Zend\XmlRpc\Response $response
      *
      * @throws \Zend\Http\Exception\InvalidArgumentException
+     * @throws \Zend\Http\Client\Exception\RuntimeException
      * @throws \Zend\XmlRpc\Client\Exception\HttpException
+     * @throws \Zend\XmlRpc\Exception\ValueException
      *
      * @return void
      */
