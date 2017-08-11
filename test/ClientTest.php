@@ -603,6 +603,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedUserAgent, $this->httpClient->getHeader('user-agent'));
     }
 
+    /**
+     * @group #27
+     */
     public function testContentTypeIsNotReplaced()
     {
         $this->assertFalse(
@@ -618,6 +621,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedContentType, $this->httpClient->getHeader('Content-Type'));
     }
 
+    /**
+     * @group #27
+     */
     public function testAcceptIsNotReplaced()
     {
         $this->assertFalse(
