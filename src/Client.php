@@ -181,10 +181,15 @@ class Client implements ServerClient
     /**
      * Perform an XML-RPC request and return a response.
      *
-     * @param \Zend\XmlRpc\Request $request
+     * @param \Zend\XmlRpc\Request       $request
      * @param null|\Zend\XmlRpc\Response $response
-     * @return void
+     *
+     * @throws \Zend\Http\Exception\InvalidArgumentException
+     * @throws \Zend\Http\Client\Exception\RuntimeException
      * @throws \Zend\XmlRpc\Client\Exception\HttpException
+     * @throws \Zend\XmlRpc\Exception\ValueException
+     *
+     * @return void
      */
     public function doRequest($request, $response = null)
     {
@@ -205,12 +210,16 @@ class Client implements ServerClient
         }
 
         $headers = $httpRequest->getHeaders();
-        $headers->addHeaders([
-            'Content-Type: text/xml; charset=utf-8',
-            'Accept: text/xml',
-        ]);
 
-        if (!$headers->get('user-agent')) {
+        if (!$headers->has('Content-Type')) {
+            $headers->addHeaderLine('Content-Type', 'text/xml; charset=utf-8');
+        }
+
+        if (!$headers->has('Accept')) {
+            $headers->addHeaderLine('Accept', 'text/xml');
+        }
+
+        if (!$headers->has('user-agent')) {
             $headers->addHeaderLine('user-agent', 'Zend_XmlRpc_Client');
         }
 
