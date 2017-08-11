@@ -206,15 +206,15 @@ class Client implements ServerClient
 
         $headers = $httpRequest->getHeaders();
 
-        if (!$headers->get('Content-Type')) {
+        if (!$headers->has('Content-Type')) {
             $headers->addHeaderLine('Content-Type', 'text/xml; charset=utf-8');
         }
 
-        if (!$headers->get('Accept')) {
+        if (!$headers->has('Accept')) {
             $headers->addHeaderLine('Accept', 'text/xml');
         }
 
-        if (!$headers->get('user-agent')) {
+        if (!$headers->has('user-agent')) {
             $headers->addHeaderLine('user-agent', 'Zend_XmlRpc_Client');
         }
 
