@@ -16,7 +16,6 @@ env:
     - COMPOSER_ARGS="--no-interaction"
 
 matrix:
-  fast_finish: true
   include:
     - php: 5.6
       env:
@@ -24,11 +23,11 @@ matrix:
     - php: 5.6
       env:
         - DEPS=locked
-        - TEST_COVERAGE=true
         - LEGACY_DEPS="phpunit/phpunit zendframework/zend-code"
     - php: 5.6
       env:
         - DEPS=latest
+        - TEST_COVERAGE=true
     - php: 7
       env:
         - DEPS=lowest
@@ -85,8 +84,7 @@ install:
   - stty cols 120 && composer show
 
 script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
-  - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
 
 after_script:
