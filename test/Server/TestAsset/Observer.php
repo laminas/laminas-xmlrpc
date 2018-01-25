@@ -21,7 +21,7 @@ class Observer
 
     public static function getInstance()
     {
-        if (!static::$instance) {
+        if (! static::$instance) {
             static::$instance = new self();
         }
 

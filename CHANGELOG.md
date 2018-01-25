@@ -20,11 +20,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.6.2 - TBD
+## 2.6.2 - 2018-01-25
 
 ### Added
 
-- Nothing.
+- [#29](https://github.com/zendframework/zend-xmlrpc/pull/29) adds support for
+  PHP 7.2, by replacing deprecated `list`/`each` syntax with a functional
+  equivalent.
 
 ### Deprecated
 

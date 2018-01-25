@@ -9,6 +9,7 @@
 
 namespace ZendTest\XmlRpc;
 
+use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 use Zend\XmlRpc\Response;
 use Zend\XmlRpc\AbstractValue;
@@ -16,7 +17,7 @@ use Zend\XmlRpc\AbstractValue;
 /**
  * @group      Zend_XmlRpc
  */
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     /**
      * Response object

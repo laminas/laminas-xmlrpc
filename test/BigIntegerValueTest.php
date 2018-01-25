@@ -9,6 +9,7 @@
 
 namespace ZendTest\XmlRpc;
 
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\AbstractValue;
 use Zend\XmlRpc\Value\BigInteger;
 use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
@@ -16,7 +17,7 @@ use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
 /**
  * @group      Zend_XmlRpc
  */
-class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
+class BigIntegerValueTest extends TestCase
 {
     public function setUp()
     {

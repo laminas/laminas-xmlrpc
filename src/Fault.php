@@ -177,7 +177,7 @@ class Fault
      */
     public function loadXml($fault)
     {
-        if (!is_string($fault)) {
+        if (! is_string($fault)) {
             throw new Exception\InvalidArgumentException('Invalid XML provided to fault');
         }
 
@@ -188,7 +188,7 @@ class Fault
             // Unsecure XML
             throw new Exception\RuntimeException('Failed to parse XML fault: ' .  $e->getMessage(), 500, $e);
         }
-        if (!$xml instanceof SimpleXMLElement) {
+        if (! $xml instanceof SimpleXMLElement) {
             $errors = libxml_get_errors();
             $errors = array_reduce($errors, function ($result, $item) {
                 if (empty($result)) {
@@ -202,12 +202,12 @@ class Fault
         libxml_use_internal_errors($xmlErrorsFlag);
 
         // Check for fault
-        if (!$xml->fault) {
+        if (! $xml->fault) {
             // Not a fault
             return false;
         }
 
-        if (!$xml->fault->value->struct) {
+        if (! $xml->fault->value->struct) {
             // not a proper fault
             throw new Exception\InvalidArgumentException('Invalid fault structure', 500);
         }

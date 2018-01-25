@@ -9,20 +9,21 @@
 
 namespace ZendTest\XmlRpc\Request;
 
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\Request;
 use ZendTest\XmlRpc\PhpInputMock;
 
 /**
  * @group      Zend_XmlRpc
  */
-class HTTPTest extends \PHPUnit_Framework_TestCase
+class HttpTest extends TestCase
 {
     /**
      * Setup environment
      */
     public function setUp()
     {
-        $this->xml =<<<EOX
+        $this->xml = <<<EOX
 <?xml version="1.0" encoding="UTF-8"?>
 <methodCall>
     <methodName>test.userUpdate</methodName>
@@ -97,7 +98,7 @@ EOX;
 
     public function testGetFullRequest()
     {
-        $expected =<<<EOT
+        $expected = <<<EOT
 User-Agent: Zend_XmlRpc_Client
 Host: localhost
 Content-Type: text/xml
@@ -107,11 +108,6 @@ EOT;
         $expected .= $this->xml;
 
         $this->assertEquals($expected, $this->request->getFullRequest());
-    }
-
-    public function testCanPassInMethodAndParams()
-    {
-        $request = new Request\Http('foo', ['bar', 'baz']);
     }
 
     public function testExtendingClassShouldBeAbleToReceiveMethodAndParams()

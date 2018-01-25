@@ -38,13 +38,13 @@ class Stdin extends XmlRpcRequest
     public function __construct()
     {
         $fh = fopen('php://stdin', 'r');
-        if (!$fh) {
+        if (! $fh) {
             $this->fault = new Fault(630);
             return;
         }
 
         $xml = '';
-        while (!feof($fh)) {
+        while (! feof($fh)) {
             $xml .= fgets($fh);
         }
         fclose($fh);

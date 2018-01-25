@@ -9,12 +9,13 @@
 
 namespace ZendTest\XmlRpc\Server;
 
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\Server;
 
 /**
  * @group      Zend_XmlRpc
  */
-class FaultTest extends \PHPUnit_Framework_TestCase
+class FaultTest extends TestCase
 {
     /**
      * Zend\XmlRpc\Server\Fault::getInstance() test
