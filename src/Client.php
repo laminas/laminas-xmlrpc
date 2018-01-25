@@ -211,15 +211,15 @@ class Client implements ServerClient
 
         $headers = $httpRequest->getHeaders();
 
-        if (!$headers->has('Content-Type')) {
+        if (! $headers->has('Content-Type')) {
             $headers->addHeaderLine('Content-Type', 'text/xml; charset=utf-8');
         }
 
-        if (!$headers->has('Accept')) {
+        if (! $headers->has('Accept')) {
             $headers->addHeaderLine('Accept', 'text/xml');
         }
 
-        if (!$headers->has('user-agent')) {
+        if (! $headers->has('user-agent')) {
             $headers->addHeaderLine('user-agent', 'Zend_XmlRpc_Client');
         }
 
@@ -227,7 +227,7 @@ class Client implements ServerClient
         $http->setRawBody($xml);
         $httpResponse = $http->setMethod('POST')->send();
 
-        if (!$httpResponse->isSuccess()) {
+        if (! $httpResponse->isSuccess()) {
             /**
              * Exception thrown when an HTTP error occurs
              */
@@ -255,7 +255,7 @@ class Client implements ServerClient
      */
     public function call($method, $params = [])
     {
-        if (!$this->skipSystemLookup() && ('system.' != substr($method, 0, 7))) {
+        if (! $this->skipSystemLookup() && ('system.' != substr($method, 0, 7))) {
             // Ensure empty array/struct params are cast correctly
             // If system.* methods are not available, bypass. (ZF-2978)
             $success = true;
@@ -278,7 +278,7 @@ class Client implements ServerClient
                     AbstractValue::XMLRPC_TYPE_STRUCT,
                 ];
 
-                if (!is_array($params)) {
+                if (! is_array($params)) {
                     $params = [$params];
                 }
                 foreach ($params as $key => $param) {
@@ -289,7 +289,7 @@ class Client implements ServerClient
                     if (count($signatures) > 1) {
                         $type = AbstractValue::getXmlRpcTypeByValue($param);
                         foreach ($signatures as $signature) {
-                            if (!is_array($signature)) {
+                            if (! is_array($signature)) {
                                 continue;
                             }
                             if (isset($signature['parameters'][$key])) {
@@ -304,7 +304,7 @@ class Client implements ServerClient
                         $type = null;
                     }
 
-                    if (empty($type) || !in_array($type, $validTypes)) {
+                    if (empty($type) || ! in_array($type, $validTypes)) {
                         $type = AbstractValue::AUTO_DETECT_TYPE;
                     }
 

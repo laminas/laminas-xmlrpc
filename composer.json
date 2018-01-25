@@ -29,8 +29,8 @@
         "zendframework/zendxml": "^1.0.2"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "^4.8",
-        "squizlabs/php_codesniffer": "^2.3.1"
+        "phpunit/PHPUnit": "^5.7.25 || ^6.4.4",
+        "zendframework/zend-coding-standard": "~1.0.0"
     },
     "suggest": {
         "zendframework/zend-cache": "To support Zend\\XmlRpc\\Server\\Cache usage"

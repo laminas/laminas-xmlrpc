@@ -9,6 +9,7 @@
 
 namespace ZendTest\XmlRpc;
 
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\Request;
 use Zend\XmlRpc\AbstractValue;
 use Zend\XmlRpc\Value;
@@ -16,7 +17,7 @@ use Zend\XmlRpc\Value;
 /**
  * @group      Zend_XmlRpc
  */
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
     /**
      * \Zend\XmlRpc\Request object

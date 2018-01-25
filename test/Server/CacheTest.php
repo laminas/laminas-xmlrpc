@@ -9,7 +9,7 @@
 
 namespace ZendTest\XmlRpc\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\Server;
 
 class CacheTest extends TestCase
@@ -52,7 +52,7 @@ class CacheTest extends TestCase
      */
     public function testGetSave()
     {
-        if (!is_writeable('./')) {
+        if (! is_writeable('./')) {
             $this->markTestIncomplete('Directory no writable');
         }
 
@@ -70,7 +70,7 @@ class CacheTest extends TestCase
      */
     public function testDelete()
     {
-        if (!is_writeable('./')) {
+        if (! is_writeable('./')) {
             $this->markTestIncomplete('Directory no writable');
         }
 
@@ -80,7 +80,7 @@ class CacheTest extends TestCase
 
     public function testShouldReturnFalseWithInvalidCache()
     {
-        if (!is_writeable('./')) {
+        if (! is_writeable('./')) {
             $this->markTestIncomplete('Directory no writable');
         }
 

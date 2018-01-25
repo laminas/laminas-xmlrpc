@@ -92,7 +92,7 @@ abstract class AbstractValue
      */
     public static function getGenerator()
     {
-        if (!static::$generator) {
+        if (! static::$generator) {
             if (extension_loaded('xmlwriter')) {
                 static::$generator = new Generator\XmlWriter();
             } else {
@@ -142,7 +142,7 @@ abstract class AbstractValue
      */
     public function saveXml()
     {
-        if (!$this->xml) {
+        if (! $this->xml) {
             $this->generateXml();
             $this->xml = (string) $this->getGenerator();
         }
@@ -244,7 +244,7 @@ abstract class AbstractValue
             }
             return static::getXmlRpcTypeByValue(get_object_vars($value));
         } elseif (is_array($value)) {
-            if (!empty($value) && is_array($value) && (array_keys($value) !== range(0, count($value) - 1))) {
+            if (! empty($value) && is_array($value) && (array_keys($value) !== range(0, count($value) - 1))) {
                 return self::XMLRPC_TYPE_STRUCT;
             }
             return self::XMLRPC_TYPE_ARRAY;
@@ -393,7 +393,7 @@ abstract class AbstractValue
                 foreach ($value->member as $member) {
                     // @todo? If a member doesn't have a <value> tag, we don't add it to the struct
                     // Maybe we want to throw an exception here ?
-                    if (!isset($member->value) or !isset($member->name)) {
+                    if (! isset($member->value) or ! isset($member->name)) {
                         continue;
                     }
                     $values[(string) $member->name] = static::xmlStringToNativeXmlRpc($member->value);
@@ -443,7 +443,7 @@ abstract class AbstractValue
         foreach ((array) $xml as $type => $value) {
             break;
         }
-        if (!$type and $value === null) {
+        if (! $type and $value === null) {
             $namespaces = ['ex' => 'http://ws.apache.org/xmlrpc/namespaces/extensions'];
             foreach ($namespaces as $namespaceName => $namespaceUri) {
                 foreach ((array)$xml->children($namespaceUri) as $type => $value) {
@@ -457,7 +457,7 @@ abstract class AbstractValue
         }
 
         // If no type was specified, the default is string
-        if (!$type) {
+        if (! $type) {
             $type = self::XMLRPC_TYPE_STRING;
             if (empty($value) and preg_match('#^<value>.*</value>$#', $xml->asXML())) {
                 $value = str_replace(['<value>', '</value>'], '', $xml->asXML());
