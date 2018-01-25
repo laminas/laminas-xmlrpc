@@ -263,17 +263,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $sx = new \SimpleXMLElement($xml);
 
         $result = $sx->xpath('//methodName');
-        $count = 0;
-        while (list(, $node) = each($result)) {
-            ++$count;
-        }
+        $count = count($result);
         $this->assertEquals(1, $count, $xml);
 
         $result = $sx->xpath('//params');
-        $count = 0;
-        while (list(, $node) = each($result)) {
-            ++$count;
-        }
+        $count = count($result);
         $this->assertEquals(1, $count, $xml);
 
         $methodName = (string) $sx->methodName;

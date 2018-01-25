@@ -440,14 +440,11 @@ abstract class AbstractValue
     protected static function extractTypeAndValue(\SimpleXMLElement $xml, &$type, &$value)
     {
         // Casting is necessary to work with strict-typed systems
-        $xmlAsArray = (array) $xml;
-        list($type, $value) = each($xmlAsArray);
+        foreach((array) $xml as $type => $value) break;
         if (!$type and $value === null) {
             $namespaces = ['ex' => 'http://ws.apache.org/xmlrpc/namespaces/extensions'];
             foreach ($namespaces as $namespaceName => $namespaceUri) {
-                $namespaceXml = $xml->children($namespaceUri);
-                $namespaceXmlAsArray = (array) $namespaceXml;
-                list($type, $value) = each($namespaceXmlAsArray);
+                foreach ((array)$xml->children($namespaceUri) as $type => $value) break;
                 if ($type !== null) {
                     $type = $namespaceName . ':' . $type;
                     break;
