@@ -52,7 +52,7 @@ class System
     public function methodHelp($method)
     {
         $table = $this->server->getDispatchTable();
-        if (!$table->hasMethod($method)) {
+        if (! $table->hasMethod($method)) {
             throw new Exception\InvalidArgumentException('Method "' . $method . '" does not exist', 640);
         }
 
@@ -69,7 +69,7 @@ class System
     public function methodSignature($method)
     {
         $table = $this->server->getDispatchTable();
-        if (!$table->hasMethod($method)) {
+        if (! $table->hasMethod($method)) {
             throw new Exception\InvalidArgumentException('Method "' . $method . '" does not exist', 640);
         }
         $method = $table->getMethod($method)->toArray();
@@ -98,13 +98,13 @@ class System
         $responses = [];
         foreach ($methods as $method) {
             $fault = false;
-            if (!is_array($method)) {
+            if (! is_array($method)) {
                 $fault = $this->server->fault('system.multicall expects each method to be a struct', 601);
-            } elseif (!isset($method['methodName'])) {
+            } elseif (! isset($method['methodName'])) {
                 $fault = $this->server->fault('Missing methodName: ' . var_export($methods, 1), 602);
-            } elseif (!isset($method['params'])) {
+            } elseif (! isset($method['params'])) {
                 $fault = $this->server->fault('Missing params', 603);
-            } elseif (!is_array($method['params'])) {
+            } elseif (! is_array($method['params'])) {
                 $fault = $this->server->fault('Params must be an array', 604);
             } else {
                 if ('system.multicall' == $method['methodName']) {
@@ -113,7 +113,7 @@ class System
                 }
             }
 
-            if (!$fault) {
+            if (! $fault) {
                 try {
                     $request = new \Zend\XmlRpc\Request();
                     $request->setMethod($method['methodName']);

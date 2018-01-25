@@ -9,13 +9,15 @@
 
 namespace ZendTest\XmlRpc;
 
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc;
+use Zend\XmlRpc\Exception;
+use Zend\XmlRpc\Fault;
 
 /**
  * @group      Zend_XmlRpc
  */
-class FaultTest extends \PHPUnit_Framework_TestCase
+class FaultTest extends TestCase
 {
     /**
      * @var XmlRpc\Fault
@@ -28,7 +30,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         AbstractValue::setGenerator(null);
-        $this->fault = new XmlRpc\Fault();
+        $this->fault = new Fault();
     }
 
     /**
@@ -149,25 +151,29 @@ class FaultTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadXmlThrowsExceptionOnInvalidInput()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Failed to parse XML fault');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Failed to parse XML fault');
         $parsed = $this->fault->loadXml('foo');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput2()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid fault structure');
         $this->assertFalse($this->fault->loadXml('<methodResponse><fault/></methodResponse>'));
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput3()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid fault structure');
         $this->fault->loadXml('<methodResponse><fault/></methodResponse>');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput4()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Fault code and string required');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Fault code and string required');
         $this->fault->loadXml('<methodResponse><fault><value><struct/></value></fault></methodResponse>');
     }
 
@@ -178,9 +184,9 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     {
         $xml = $this->createXml();
 
-        $this->assertTrue(XmlRpc\Fault::isFault($xml), $xml);
-        $this->assertFalse(XmlRpc\Fault::isFault('foo'));
-        $this->assertFalse(XmlRpc\Fault::isFault(['foo']));
+        $this->assertTrue(Fault::isFault($xml), $xml);
+        $this->assertFalse(Fault::isFault('foo'));
+        $this->assertFalse(Fault::isFault(['foo']));
     }
 
     /**
@@ -250,7 +256,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
 
     public function testUnknownErrorIsUsedIfUnknownErrorCodeEndEmptyMessageIsPassed()
     {
-        $fault = new XmlRpc\Fault(1234);
+        $fault = new Fault(1234);
         $this->assertSame(1234, $fault->getCode());
         $this->assertSame('Unknown Error', $fault->getMessage());
     }

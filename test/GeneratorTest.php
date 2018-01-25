@@ -9,12 +9,14 @@
 
 namespace ZendTest\XmlRpc;
 
+use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
 
 /**
  * @group      Zend_XmlRpc
  */
-class GeneratorTest extends \PHPUnit_Framework_TestCase
+class GeneratorTest extends TestCase
 {
     /**
      * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
@@ -74,7 +76,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         $variant2 = '<element>&lt;&gt;&amp;&quot;\'€</element>';
         try {
             $this->assertXml($variant1, $generator);
-        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+        } catch (ExpectationFailedException $e) {
             $this->assertXml($variant2, $generator);
         }
     }

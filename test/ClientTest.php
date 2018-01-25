@@ -9,18 +9,20 @@
 
 namespace ZendTest\XmlRpc;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter;
-use Zend\Http;
 use Zend\Http\Response as HttpResponse;
-use Zend\XmlRpc\Client;
 use Zend\XmlRpc\AbstractValue;
+use Zend\XmlRpc\Client;
+use Zend\XmlRpc\Fault;
+use Zend\XmlRpc\Response;
 use Zend\XmlRpc\Value;
-use Zend\XmlRpc;
 
 /**
  * @group      Zend_XmlRpc
  */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var \Zend\Http\Client\Adapter\AdapterInterface
@@ -40,7 +42,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->httpAdapter = new Adapter\Test();
-        $this->httpClient = new Http\Client(
+        $this->httpClient = new HttpClient(
             'http://foo',
             ['adapter' => $this->httpAdapter]
         );
@@ -62,7 +64,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSettingAndGettingHttpClient()
     {
         $xmlrpcClient = new Client('http://foo');
-        $httpClient = new Http\Client('http://foo');
+        $httpClient = new HttpClient('http://foo');
         $this->assertNotSame($httpClient, $xmlrpcClient->getHttpClient());
 
         $xmlrpcClient->setHttpClient($httpClient);
@@ -298,7 +300,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response = $this->makeHttpResponseFrom($body, $status, $message);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\HttpException', $message, $status);
+        $this->expectException(Client\Exception\HttpException::class);
+        $this->expectExceptionMessage($message);
+        $this->expectExceptionCode($status);
         $this->xmlrpcClient->call('foo');
     }
 
@@ -307,13 +311,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $code = 9;
         $message = 'foo';
 
-        $fault = new XmlRpc\Fault($code, $message);
+        $fault = new Fault($code, $message);
         $xml = $fault->saveXml();
 
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\FaultException', $message, $code);
+        $this->expectException(Client\Exception\FaultException::class);
+        $this->expectExceptionMessage($message);
+        $this->expectExceptionCode($code);
         $this->xmlrpcClient->call('foo');
     }
 
@@ -490,10 +496,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $i = $this->xmlrpcClient->getIntrospector();
 
-        $this->setExpectedException(
-            'Zend\XmlRpc\Client\Exception\IntrospectException',
-            'Bad number of signatures received from multicall'
-        );
+        $this->expectException(Client\Exception\IntrospectException::class);
+        $this->expectExceptionMessage('Bad number of signatures received from multicall');
         $i->getSignatureForEachMethodByMulticall();
     }
 
@@ -512,10 +516,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $i = $this->xmlrpcClient->getIntrospector();
 
-        $this->setExpectedException(
-            'Zend\XmlRpc\Client\Exception\IntrospectException',
-            'Multicall return is malformed.  Expected array, got integer'
-        );
+        $this->expectException(Client\Exception\IntrospectException::class);
+        $this->expectExceptionMessage('Multicall return is malformed.  Expected array, got integer');
         $i->getSignatureForEachMethodByMulticall();
     }
 
@@ -565,7 +567,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $baseUri = 'http://foo:80/';
         $this->httpAdapter = new Adapter\Test();
-        $this->httpClient = new Http\Client(null, ['adapter' => $this->httpAdapter]);
+        $this->httpClient = new HttpClient(null, ['adapter' => $this->httpAdapter]);
 
         $this->xmlrpcClient = new Client($baseUri);
         $this->xmlrpcClient->setHttpClient($this->httpClient);
@@ -648,10 +650,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             new TestAsset\TestClient('http://localhost/')
         );
 
-        $this->setExpectedException(
-            'Zend\XmlRpc\Client\Exception\IntrospectException',
-            'Invalid signature for method "add"'
-        );
+        $this->expectException(Client\Exception\IntrospectException::class);
+        $this->expectExceptionMessage('Invalid signature for method "add"');
         $signature = $introspector->getMethodSignature('add');
     }
 
@@ -696,7 +696,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $baseUri = "http://foo:80";
         $this->httpAdapter = new Adapter\Test();
-        $this->httpClient = new Http\Client(null, ['adapter' => $this->httpAdapter]);
+        $this->httpClient = new HttpClient(null, ['adapter' => $this->httpAdapter]);
 
         $respBody = file_get_contents(dirname(__FILE__) . "/_files/ZF1897-response-chunked.txt");
         $this->httpAdapter->setResponse($respBody);
@@ -716,7 +716,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function getServerResponseFor($nativeVars)
     {
-        $response = new XmlRpc\Response();
+        $response = new Response();
         $response->setReturnValue($nativeVars);
         $xml = $response->saveXml();
 
@@ -742,20 +742,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function mockIntrospector()
     {
-        $this->mockedIntrospector = $this->getMock(
-            'Zend\\XmlRpc\\Client\\ServerIntrospection',
-            [],
-            [],
-            '',
-            false,
-            false
-        );
+        $this->mockedIntrospector = $this->getMockBuilder(Client\ServerIntrospection::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->getMock();
         $this->xmlrpcClient->setIntrospector($this->mockedIntrospector);
     }
 
     public function mockHttpClient()
     {
-        $this->mockedHttpClient = $this->getMock('Zend\\Http\\Client');
+        $this->mockedHttpClient = $this->createMock(HttpClient::class);
         $this->xmlrpcClient->setHttpClient($this->mockedHttpClient);
     }
 }
