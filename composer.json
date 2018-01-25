@@ -17,6 +17,7 @@
             "ZendTest\\XmlRpc\\": "test/"
         },
         "files": [
+            "test/autoload.php",
             "test/TestAsset/functions.php"
         ]
     },
