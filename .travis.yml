@@ -57,17 +57,6 @@ matrix:
     - php: 7.2
       env:
         - DEPS=latest
-    - php: hhvm 
-      env:
-        - DEPS=lowest
-    - php: hhvm 
-      env:
-        - DEPS=locked
-    - php: hhvm 
-      env:
-        - DEPS=latest
-  allow_failures:
-    - php: hhvm
 
 notifications:
   email: false
