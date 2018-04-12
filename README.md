@@ -12,4 +12,4 @@ processed and returned.”
 building new XML-RPC servers.
 
 - File issues at https://github.com/zendframework/zend-xmlrpc/issues
-- Documentation is at https://zendframework.github.io/zend-xmlrpc/
+- Documentation is at https://docs.zendframework.com/zend-xmlrpc/
