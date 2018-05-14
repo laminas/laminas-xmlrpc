@@ -38,7 +38,7 @@ responses, allowing them to be directly echoed.
 
 For maximum performance it is recommended to use a simple bootstrap file for the
 server component.  Using `Zend\XmlRpc\Server` inside a
-[Zend\\Mvc\\Controller](https://zendframework.github.io/zend-mvc/) is strongly
+[Zend\\Mvc\\Controller](https://docs.zendframework.com/zend-mvc/) is strongly
 discouraged to avoid the overhead.
 
 Services change over time and while webservices are generally less change
