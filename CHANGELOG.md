@@ -82,7 +82,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#27](https://github.com/zendframework/zend-xmlrpc/pull/19) fixed a memory leak
+- [#27](https://github.com/zendframework/zend-xmlrpc/pull/27) fixed a memory leak
   caused by repetitive addition of `Accept` and `Content-Type` headers on subsequent
   HTTP requests produced by the `Zend\XmlRpc\Client`.
 
