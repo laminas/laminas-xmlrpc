@@ -1,12 +1,11 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
-    - index.md
-    - Intro: intro.md
+nav:
+    - Home: index.md
+    - Introduction: intro.md
     - Reference:
         - "XML-RPC Clients": client.md
         - "XML-RPC Servers": server.md
 site_name: zend-xmlrpc
-site_description: zend-xmlrpc
+site_description: "Fully-featured XML-RPC server and client implementations"
 repo_url: 'https://github.com/zendframework/zend-xmlrpc'
-copyright: 'Copyright (c) 2005-2018 <a href="https://www.zend.com/">Zend Technologies USA Inc.</a>'
