@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.8.0 - TBD
+## 2.8.0 - 2019-10-19
 
 ### Added
 
@@ -19,28 +19,6 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Removed
 
 - [#38](https://github.com/zendframework/zend-xmlrpc/pull/38) removes support for zend-stdlib v2 releases.
-
-### Fixed
-
-- Nothing.
-
-## 2.7.1 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
 
 ### Fixed
 
