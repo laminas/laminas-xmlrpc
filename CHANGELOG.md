@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+Disables use of BigInteger for XMLRPC i8 type if host machine is 64-bit.
 
 ### Deprecated
 

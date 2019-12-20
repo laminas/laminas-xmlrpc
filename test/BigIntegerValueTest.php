@@ -21,6 +21,7 @@ class BigIntegerValueTest extends TestCase
 {
     public function setUp()
     {
+        AbstractValue::$USE_BIGINT_FOR_I8 = true;
         if (extension_loaded('gmp')) {
             $this->markTestSkipped('gmp causes test failure');
         }

@@ -133,8 +133,8 @@ XML-RPC Type     | `Zend\XmlRpc\AbstractValue` Constant               | `Zend\Xm
 ---------------- | -------------------------------------------------- | --------------------------
 int              | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_INTEGER`   | `Zend\XmlRpc\Value\Integer`
 i4               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I4`        | `Zend\XmlRpc\Value\Integer`
-i8               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I8`        | `Zend\XmlRpc\Value\BigInteger`
-ex:i8            | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8`  | `Zend\XmlRpc\Value\BigInteger`
+i8               | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_I8`        | `Zend\XmlRpc\Value\BigInteger` or `Zend\XmlRpc\Value\Integer` if machine is 64-bit
+ex:i8            | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8`  | `Zend\XmlRpc\Value\BigInteger` or `Zend\XmlRpc\Value\Integer` if machine is 64-bit
 double           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_DOUBLE`    | `Zend\XmlRpc\ValueDouble`
 boolean          | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_BOOLEAN`   | `Zend\XmlRpc\Value\Boolean`
 string           | `Zend\XmlRpc\AbstractValue::XMLRPC_TYPE_STRING`    | `Zend\XmlRpc\Value\Text`
