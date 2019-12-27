@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
+- [#40](https://github.com/zendframework/zend-xmlrpc/pull/40) modifies detection of integer values on 64-bit systems. Previously, i8 values parsed by the client were always cast to BigInteger values. Now, on 64-bit systems, they are cast to integers.
+
 Disables use of BigInteger for XMLRPC i8 type if host machine is 64-bit.
 
 ### Deprecated
