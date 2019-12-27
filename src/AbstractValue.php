@@ -44,14 +44,17 @@ abstract class AbstractValue
     protected $xml;
 
     /**
+     * True if BigInteger should be used for XMLRPC i8 types
+     *
+     * @internal
+     * @var bool
+     */
+    public static $USE_BIGINT_FOR_I8 = PHP_INT_SIZE < 8;
+
+    /**
      * @var \Zend\XmlRpc\Generator\GeneratorInterface
      */
     protected static $generator;
-
-    /**
-     * True if BigInteger should be used for XMLRPC i8 types
-     */
-    public static $USE_BIGINT_FOR_I8 = PHP_INT_SIZE < 8;
 
     /**
      * Specify that the XML-RPC native type will be auto detected from a PHP variable type

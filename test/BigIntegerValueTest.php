@@ -12,6 +12,7 @@ namespace ZendTest\XmlRpc;
 use PHPUnit\Framework\TestCase;
 use Zend\XmlRpc\AbstractValue;
 use Zend\XmlRpc\Value\BigInteger;
+use Zend\XmlRpc\Value\Integer;
 use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
 
 /**
@@ -19,9 +20,14 @@ use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
  */
 class BigIntegerValueTest extends TestCase
 {
+    /** @var null|bool */
+    protected $useBigIntForI8Flag;
+
     public function setUp()
     {
+        $this->useBigIntForI8Flag = AbstractValue::$USE_BIGINT_FOR_I8;
         AbstractValue::$USE_BIGINT_FOR_I8 = true;
+
         if (extension_loaded('gmp')) {
             $this->markTestSkipped('gmp causes test failure');
         }
@@ -30,6 +36,12 @@ class BigIntegerValueTest extends TestCase
         } catch (\Zend\Math\Exception $e) {
             $this->markTestSkipped($e->getMessage());
         }
+    }
+
+    public function tearDown()
+    {
+        AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;
+        $this->useBigIntForI8Flag = null;
     }
 
     // BigInteger
@@ -136,5 +148,23 @@ class BigIntegerValueTest extends TestCase
     public function wrapXml($xml)
     {
         return $xml . "\n";
+    }
+
+    public function testMarshalsIntegerForI8ValueByDefaultIfSystemIs64Bit()
+    {
+        if ($this->useBigIntForI8Flag) {
+            $this->markTestSkipped('Test only valid for 64bit systems');
+        }
+        
+        AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;
+        $integerValue = PHP_INT_MAX;
+
+        $value = AbstractValue::getXmlRpcValue(
+            $integerValue,
+            AbstractValue::XMLRPC_TYPE_I8
+        );
+
+        $this->assertEquals(AbstractValue::XMLRPC_TYPE_INTEGER, $value->getType());
+        $this->assertSame($integerValue, $value->getValue());
     }
 }
