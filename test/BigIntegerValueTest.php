@@ -155,7 +155,7 @@ class BigIntegerValueTest extends TestCase
         if ($this->useBigIntForI8Flag) {
             $this->markTestSkipped('Test only valid for 64bit systems');
         }
-        
+
         AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;
         $integerValue = PHP_INT_MAX;
 
