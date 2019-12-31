@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc\Request;
+namespace LaminasTest\XmlRpc\Request;
 
+use Laminas\XmlRpc\Request;
+use LaminasTest\XmlRpc\PhpInputMock;
 use PHPUnit\Framework\TestCase;
-use Zend\XmlRpc\Request;
-use ZendTest\XmlRpc\PhpInputMock;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class HttpTest extends TestCase
 {
@@ -47,7 +46,7 @@ class HttpTest extends TestCase
                 </member>
                 <member>
                     <name>company</name>
-                    <value><string>Zend Technologies, Inc.</string></value>
+                    <value><string>Laminas Technologies, Inc.</string></value>
                 </member>
             </struct></value>
         </param>
@@ -63,7 +62,7 @@ EOX;
                 unset($_SERVER[$key]);
             }
         }
-        $_SERVER['HTTP_USER_AGENT']     = 'Zend_XmlRpc_Client';
+        $_SERVER['HTTP_USER_AGENT']     = 'Laminas_XmlRpc_Client';
         $_SERVER['HTTP_HOST']           = 'localhost';
         $_SERVER['HTTP_CONTENT_TYPE']   = 'text/xml';
         $_SERVER['HTTP_CONTENT_LENGTH'] = strlen($this->xml) + 1;
@@ -88,10 +87,10 @@ EOX;
     public function testGetHeaders()
     {
         $expected = [
-            'User-Agent'     => 'Zend_XmlRpc_Client',
+            'User-Agent'     => 'Laminas_XmlRpc_Client',
             'Host'           => 'localhost',
             'Content-Type'   => 'text/xml',
-            'Content-Length' => 958
+            'Content-Length' => 961
         ];
         $this->assertEquals($expected, $this->request->getHeaders());
     }
@@ -99,10 +98,10 @@ EOX;
     public function testGetFullRequest()
     {
         $expected = <<<EOT
-User-Agent: Zend_XmlRpc_Client
+User-Agent: Laminas_XmlRpc_Client
 Host: localhost
 Content-Type: text/xml
-Content-Length: 958
+Content-Length: 961
 
 EOT;
         $expected .= $this->xml;

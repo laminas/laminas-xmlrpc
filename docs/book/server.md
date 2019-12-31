@@ -1,6 +1,6 @@
-# Zend\\XmlRpc\\Server
+# Laminas\\XmlRpc\\Server
 
-`Zend\XmlRpc\Server` is a fully-featured XML-RPC server, following
+`Laminas\XmlRpc\Server` is a fully-featured XML-RPC server, following
 [the specifications outlined at www.xmlrpc.com](http://www.xmlrpc.com/spec).
 Additionally, it implements the `system.multicall()` method, allowing boxcarring
 of requests.
@@ -8,27 +8,27 @@ of requests.
 ## Basic Usage
 
 ```php
-$server = new Zend\XmlRpc\Server();
+$server = new Laminas\XmlRpc\Server();
 $server->setClass('My\Service\Class');
 echo $server->handle();
 ```
 
 ## Server Structure
 
-`Zend\XmlRpc\Server` is composed of a variety of components, ranging from the
+`Laminas\XmlRpc\Server` is composed of a variety of components, ranging from the
 server itself to request, response, and fault objects.
 
-To bootstrap `Zend\XmlRpc\Server`, the developer must attach one or more classes
+To bootstrap `Laminas\XmlRpc\Server`, the developer must attach one or more classes
 or functions to the server, via the `setClass()` and `addFunction()` methods.
 
-Once done, you may either pass a `Zend\XmlRpc\Request` object to
-`Zend\XmlRpc\Server::handle()`, or it will instantiate a
-`Zend\XmlRpc\Request\Http` object if none is provided, thus grabbing the request
+Once done, you may either pass a `Laminas\XmlRpc\Request` object to
+`Laminas\XmlRpc\Server::handle()`, or it will instantiate a
+`Laminas\XmlRpc\Request\Http` object if none is provided, thus grabbing the request
 from `php://input`.
 
-`Zend\XmlRpc\Server::handle()` then attempts to dispatch to the appropriate
+`Laminas\XmlRpc\Server::handle()` then attempts to dispatch to the appropriate
 handler based on the method requested. It then returns either a
-`Zend\XmlRpc\Response`-based object or a `Zend\XmlRpc\Server\Fault` object.
+`Laminas\XmlRpc\Response`-based object or a `Laminas\XmlRpc\Server\Fault` object.
 These objects both have `__toString()` methods that create valid XML-RPC XML
 responses, allowing them to be directly echoed.
 
@@ -37,8 +37,8 @@ responses, allowing them to be directly echoed.
 ### General considerations
 
 For maximum performance it is recommended to use a simple bootstrap file for the
-server component.  Using `Zend\XmlRpc\Server` inside a
-[Zend\\Mvc\\Controller](https://docs.zendframework.com/zend-mvc/) is strongly
+server component.  Using `Laminas\XmlRpc\Server` inside a
+[Laminas\\Mvc\\Controller](https://docs.laminas.dev/laminas-mvc/) is strongly
 discouraged to avoid the overhead.
 
 Services change over time and while webservices are generally less change
@@ -64,8 +64,8 @@ groups verbose operations into smaller ones.
 
 ## Conventions
 
-`Zend\XmlRpc\Server` allows the developer to attach functions and class method
-calls as dispatchable XML-RPC methods. Via `Zend\Server\Reflection`, it does
+`Laminas\XmlRpc\Server` allows the developer to attach functions and class method
+calls as dispatchable XML-RPC methods. Via `Laminas\Server\Reflection`, it does
 introspection on all attached methods, using the function and method docblocks
 to determine the method help text and method signatures.
 
@@ -137,7 +137,7 @@ an example, the XML-RPC server is expected to server several methods in the
 - `system.methodHelp`
 - `system.methodSignature`
 
-Internally, these map to the methods of the same name in `Zend\XmlRpc\Server`.
+Internally, these map to the methods of the same name in `Laminas\XmlRpc\Server`.
 
 If you want to add namespaces to the methods you serve, simply provide a
 namespace to the appropriate method when attaching a function or class:
@@ -154,28 +154,28 @@ $server->addFunction('somefunc', 'funcs');
 ## Custom Request Objects
 
 Most of the time, you'll simply use the default request type included with
-`Zend\XmlRpc\Server`, `Zend\XmlRpc\Request\Http`. However, there may be times
+`Laminas\XmlRpc\Server`, `Laminas\XmlRpc\Request\Http`. However, there may be times
 when you need XML-RPC to be available via the CLI, a GUI, or other environment,
 or want to log incoming requests. To do so, you may create a custom request
-object that extends `Zend\XmlRpc\Request`. The most important thing to remember
+object that extends `Laminas\XmlRpc\Request`. The most important thing to remember
 is to ensure that the `getMethod()` and `getParams()` methods are implemented so
 that the XML-RPC server can retrieve that information in order to dispatch the
 request.
 
 ## Custom Responses
 
-Similar to request objects, `Zend\XmlRpc\Server` can return custom response
-objects; by default, a `Zend\XmlRpc\Response\Http` object is returned, which
+Similar to request objects, `Laminas\XmlRpc\Server` can return custom response
+objects; by default, a `Laminas\XmlRpc\Response\Http` object is returned, which
 sends an appropriate `Content-Type` HTTP header for use with XML-RPC. Possible
 uses of a custom object would be to log responses, or to send responses back to
 `STDOUT`.
 
-To use a custom response class, use `Zend\XmlRpc\Server::setResponseClass()`
+To use a custom response class, use `Laminas\XmlRpc\Server::setResponseClass()`
 prior to calling `handle()`.
 
 ## Handling Exceptions via Faults
 
-`Zend\XmlRpc\Server` catches Exceptions generated by a dispatched method, and
+`Laminas\XmlRpc\Server` catches Exceptions generated by a dispatched method, and
 generates an XML-RPC fault response when such an exception is caught. By
 default, however, the exception messages and codes are not used in a fault
 response. This is an intentional decision to protect your code; many exceptions
@@ -183,16 +183,16 @@ expose more information about the code or environment than a developer would
 necessarily intend (a prime example includes database exceptions).
 
 Exception classes can be whitelisted to be used as fault responses, however. To
-do so, call `Zend\XmlRpc\Server\Fault::attachFaultException()` and pass an
+do so, call `Laminas\XmlRpc\Server\Fault::attachFaultException()` and pass an
 exception class to whitelist:
 
 ```php
-Zend\XmlRpc\Server\Fault::attachFaultException('My\Project\Exception');
+Laminas\XmlRpc\Server\Fault::attachFaultException('My\Project\Exception');
 ```
 
 If you utilize an exception class that your other project exceptions inherit,
 you can then whitelist a whole family of exceptions at a time.
-`Zend\XmlRpc\Server\Exception`s are always whitelisted, to allow reporting
+`Laminas\XmlRpc\Server\Exception`s are always whitelisted, to allow reporting
 specific internal errors (undefined methods, etc.).
 
 Any exception not specifically whitelisted will generate a fault response with a
@@ -202,17 +202,17 @@ code of '404' and a message of 'Unknown error'.
 
 Attaching many classes to an XML-RPC server instance can utilize a lot of
 resources; each class must introspect using the Reflection API (via
-`Zend\Server\Reflection`), which in turn generates a list of all possible method
+`Laminas\Server\Reflection`), which in turn generates a list of all possible method
 signatures to provide to the server class.
 
-To reduce this performance hit somewhat, `Zend\XmlRpc\Server\Cache` can be used
+To reduce this performance hit somewhat, `Laminas\XmlRpc\Server\Cache` can be used
 to cache the server definition between requests.
 
 An sample usage follows:
 
 ```php
 use My\Service as s;
-use Zend\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server as XmlRpcServer;
 
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 $server = new XmlRpcServer();
@@ -256,7 +256,7 @@ function md5Value($value)
     return md5($value);
 }
 
-$server = new Zend\XmlRpc\Server();
+$server = new Laminas\XmlRpc\Server();
 $server->addFunction('md5Value');
 echo $server->handle();
 ```
@@ -269,7 +269,7 @@ XML-RPC methods.
 ```php
 require_once 'Services/Comb.php';
 
-$server = new Zend\XmlRpc\Server();
+$server = new Laminas\XmlRpc\Server();
 $server->setClass('Services\Comb');
 echo $server->handle();
 ```
@@ -301,7 +301,7 @@ class PricingService
     }
 }
 
-$server = new Zend\XmlRpc\Server();
+$server = new Laminas\XmlRpc\Server();
 $server->setClass(
     'Services\PricingService',
     'pricing',
@@ -316,7 +316,7 @@ argument `$productId` is expected from the client.
 
 ### Passing arguments only to constructor
 
-`Zend\XmlRpc\Server` allows providing constructor arguments when specifying
+`Laminas\XmlRpc\Server` allows providing constructor arguments when specifying
 classes, instead of when invoking methods.
 
 To limit injection to constructors, call `sendArgumentsToAllMethods` and pass
@@ -351,7 +351,7 @@ class Services\PricingService2
     }
 }
 
-$server = new Zend\XmlRpc\Server();
+$server = new Laminas\XmlRpc\Server();
 
 // Tell the server to pass arguments to constructors instead of at invocation:
 $server->sendArgumentsToAllMethods(false);
@@ -378,7 +378,7 @@ namespace.
 
 ```php
 use Services as s;
-use Zend\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server as XmlRpcServer;
 
 $server = new XmlRpcServer();
 $server->setClass(s\Comb::class, 'comb');   // methods called as comb.*
@@ -394,8 +394,8 @@ code and message in the fault response.
 
 ```php
 use Services as s;
-use Zend\XmlRpc\Server as XmlRpcServer;
-use Zend\XmlRpc\Server\Fault as XmlRpcFault;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
 // Allow Services_Exceptions to report as fault responses
 XmlRpcFault::attachFaultException(s\Exception::class);
@@ -420,8 +420,8 @@ server to handle.
 
 ```php
 use Services as s;
-use Zend\XmlRpc\Server as XmlRpcServer;
-use Zend\XmlRpc\Server\Fault as XmlRpcFault;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
 // Allow Services_Exceptions to report as fault responses
 XmlRpcFault::attachFaultException(s\Exception::class);
@@ -443,8 +443,8 @@ The example below illustrates specifying a custom response class for the returne
 
 ```php
 use Services as s;
-use Zend\XmlRpc\Server as XmlRpcServer;
-use Zend\XmlRpc\Server\Fault as XmlRpcFault;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
 // Allow Services_Exceptions to report as fault responses
 XmlRpcFault::attachFaultException(s\Exception::class);
@@ -471,8 +471,8 @@ The example below illustrates caching server definitions between requests.
 
 ```php
 use Services as s;
-use Zend\XmlRpc\Server as XmlRpcServer;
-use Zend\XmlRpc\Server\Fault as XmlRpcFault;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
 // Specify a cache file
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
@@ -507,7 +507,7 @@ echo $server->handle($request);
 
 ### Optimizing XML generation
 
-`Zend\XmlRpc\Server` uses `DOMDocument` to generate it's XML output. While this
+`Laminas\XmlRpc\Server` uses `DOMDocument` to generate it's XML output. While this
 functionality is available on most hosts, it's not always the most performant
 solution; benchmarks have shown that `XmlWriter` performs better.
 
@@ -515,7 +515,7 @@ If `ext/xmlwriter` is available on your host, you can select the
 `XmlWriter`-based generator to leverage the performance differences.
 
 ```php
-use Zend\XmlRpc;
+use Laminas\XmlRpc;
 
 XmlRpc\AbstractValue::setGenerator(new XmlRpc\Generator\XmlWriter());
 
@@ -533,4 +533,4 @@ $server = new XmlRpc\Server();
 > #### Benchmark your client
 >
 > Optimization makes sense for the client side too. Just select the alternate
-> XML generator before doing any work with `Zend\XmlRpc\Client`.
+> XML generator before doing any work with `Laminas\XmlRpc\Client`.
