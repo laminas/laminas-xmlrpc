@@ -1,13 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
 /**
  * XmlRpc Response
@@ -36,7 +35,7 @@ class Response
 
     /**
      * Fault, if response is a fault response
-     * @var null|\Zend\XmlRpc\Fault
+     * @var null|\Laminas\XmlRpc\Fault
      */
     protected $fault = null;
 
@@ -58,7 +57,7 @@ class Response
      * Set encoding to use in response
      *
      * @param string $encoding
-     * @return \Zend\XmlRpc\Response
+     * @return \Laminas\XmlRpc\Response
      */
     public function setEncoding($encoding)
     {
@@ -105,7 +104,7 @@ class Response
     /**
      * Retrieve the XMLRPC value for the return value
      *
-     * @return \Zend\XmlRpc\AbstractValue
+     * @return \Laminas\XmlRpc\AbstractValue
      */
     protected function _getXmlRpcReturn()
     {
@@ -125,7 +124,7 @@ class Response
     /**
      * Returns the fault, if any.
      *
-     * @return null|\Zend\XmlRpc\Fault
+     * @return null|\Laminas\XmlRpc\Fault
      */
     public function getFault()
     {
@@ -151,7 +150,7 @@ class Response
             return false;
         }
 
-        // @see ZF-12293 - disable external entities for security purposes
+        // @see Laminas-12293 - disable external entities for security purposes
         $loadEntities         = libxml_disable_entity_loader(true);
         $useInternalXmlErrors = libxml_use_internal_errors(true);
         try {
