@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Value;
+namespace Laminas\XmlRpc\Value;
 
-use Zend\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\AbstractValue;
 
 /**
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage Value
  */
 abstract class AbstractCollection extends AbstractValue
@@ -29,7 +27,7 @@ abstract class AbstractCollection extends AbstractValue
     {
         $values = (array)$value;   // Make sure that the value is an array
         foreach ($values as $key => $value) {
-            // If the elements of the given array are not Zend_XmlRpc_Value objects,
+            // If the elements of the given array are not Laminas_XmlRpc_Value objects,
             // we need to convert them as such (using auto-detection from PHP value)
             if (!$value instanceof parent) {
                 $value = static::getXmlRpcValue($value, self::AUTO_DETECT_TYPE);

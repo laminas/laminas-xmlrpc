@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Value;
+namespace Laminas\XmlRpc\Value;
 
-use Zend\Math\BigInteger\BigInteger as BigIntegerMath;
+use Laminas\Math\BigInteger\BigInteger as BigIntegerMath;
 
 /**
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage Value
  */
 class BigInteger extends Integer
