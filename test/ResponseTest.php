@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Response;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
-use Zend\XmlRpc\Response;
-use Zend\XmlRpc\AbstractValue;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class ResponseTest extends TestCase
 {
@@ -79,7 +78,7 @@ class ResponseTest extends TestCase
     {
         $this->assertNull($this->response->getFault());
         $this->response->loadXml('foo');
-        $this->assertInstanceOf('Zend\\XmlRpc\\Fault', $this->response->getFault());
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Fault', $this->response->getFault());
     }
 
     /**
@@ -116,7 +115,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @group ZF-9039
+     * @group Laminas-9039
      */
     public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer()
     {
@@ -129,7 +128,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @group ZF-5404
+     * @group Laminas-5404
      */
     public function testNilResponseFromXmlRpcServer()
     {
@@ -240,12 +239,12 @@ EOD;
     }
 
     /**
-     * @group ZF-12293
+     * @group Laminas-12293
      */
     public function testDoesNotAllowExternalEntities()
     {
-        $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-response.xml');
-        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
+        $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-response.xml');
+        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
         $this->response->loadXml($payload);
         $value = $this->response->getReturnValue();
         $this->assertEmpty($value);
@@ -256,8 +255,8 @@ EOD;
 
     public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading()
     {
-        $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-response.xml');
-        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
+        $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-response.xml');
+        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
         $this->assertFalse($this->response->loadXml($payload));
     }
 }

@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Client;
+namespace Laminas\XmlRpc\Client;
 
-use Zend\XmlRpc\Client as XMLRPCClient;
+use Laminas\XmlRpc\Client as XMLRPCClient;
 
 /**
  * Wraps the XML-RPC system.* introspection methods
@@ -17,12 +16,12 @@ use Zend\XmlRpc\Client as XMLRPCClient;
 class ServerIntrospection
 {
     /**
-     * @var \Zend\XmlRpc\Client\ServerProxy
+     * @var \Laminas\XmlRpc\Client\ServerProxy
      */
     private $system = null;
 
     /**
-     * @param \Zend\XmlRpc\Client $client
+     * @param \Laminas\XmlRpc\Client $client
      */
     public function __construct(XMLRPCClient $client)
     {
