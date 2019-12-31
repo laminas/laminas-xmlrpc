@@ -1,13 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Server;
+namespace Laminas\XmlRpc\Server;
 
 /**
  * XMLRPC Server Faults
@@ -22,9 +21,9 @@ namespace Zend\XmlRpc\Server;
  * need only implement a static 'observe' method.
  *
  * To allow method chaining, you may use the {@link getInstance()} factory
- * to instantiate a Zend\XmlRpc\Server\Fault.
+ * to instantiate a Laminas\XmlRpc\Server\Fault.
  */
-class Fault extends \Zend\XmlRpc\Fault
+class Fault extends \Laminas\XmlRpc\Fault
 {
     /**
      * @var \Exception
@@ -34,7 +33,7 @@ class Fault extends \Zend\XmlRpc\Fault
     /**
      * @var array Array of exception classes that may define xmlrpc faults
      */
-    protected static $faultExceptionClasses = array('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface' => true);
+    protected static $faultExceptionClasses = array('Laminas\\XmlRpc\\Server\\Exception\\ExceptionInterface' => true);
 
     /**
      * @var array Array of fault observers
@@ -72,7 +71,7 @@ class Fault extends \Zend\XmlRpc\Fault
     }
 
     /**
-     * Return Zend\XmlRpc\Server\Fault instance
+     * Return Laminas\XmlRpc\Server\Fault instance
      *
      * @param \Exception $e
      * @return Fault
