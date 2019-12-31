@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
+use Laminas\Xml\Security as XmlSecurity;
 use SimpleXMLElement;
-use ZendXml\Security as XmlSecurity;
 
 /**
  * XMLRPC Faults
@@ -20,7 +19,7 @@ use ZendXml\Security as XmlSecurity;
  * fault, as well as generating the XML for an XMLRPC fault response.
  *
  * To allow method chaining, you may only use the {@link getInstance()} factory
- * to instantiate a Zend\XmlRpc\Server\Fault.
+ * to instantiate a Laminas\XmlRpc\Server\Fault.
  */
 class Fault
 {
@@ -182,7 +181,7 @@ class Fault
         $xmlErrorsFlag = libxml_use_internal_errors(true);
         try {
             $xml = XmlSecurity::scan($fault);
-        } catch (\ZendXml\Exception\RuntimeException $e) {
+        } catch (\Laminas\Xml\Exception\RuntimeException $e) {
             // Unsecure XML
             throw new Exception\RuntimeException('Failed to parse XML fault: ' .  $e->getMessage(), 500, $e);
         }
