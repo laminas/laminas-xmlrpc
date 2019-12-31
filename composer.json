@@ -1,22 +1,22 @@
 {
-    "name": "zendframework/zend-xmlrpc",
+    "name": "laminas/laminas-xmlrpc",
     "description": " ",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "xmlrpc"
     ],
-    "autoload": {
-        "psr-4": {
-            "Zend\\XmlRpc\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-xmlrpc/",
+        "issues": "https://github.com/laminas/laminas-xmlrpc/issues",
+        "source": "https://github.com/laminas/laminas-xmlrpc",
+        "rss": "https://github.com/laminas/laminas-xmlrpc/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.23",
-        "zendframework/zend-http": "self.version",
-        "zendframework/zend-math": "self.version",
-        "zendframework/zend-server": "self.version",
-        "zendframework/zend-stdlib": "self.version"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -24,15 +24,30 @@
             "dev-develop": "2.3-dev"
         }
     },
-    "homepage": "https://github.com/zendframework/zend-xml-rpc",
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\XmlRpc\\": "test/"
-        }
+    "require": {
+        "php": ">=5.3.23",
+        "laminas/laminas-http": "self.version",
+        "laminas/laminas-math": "self.version",
+        "laminas/laminas-server": "self.version",
+        "laminas/laminas-stdlib": "self.version",
+        "laminas/laminas-zendframework-bridge": "^1.0"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\XmlRpc\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\XmlRpc\\": "test/"
+        }
+    },
+    "replace": {
+        "zendframework/zend-xmlrpc": "self.version"
     }
 }

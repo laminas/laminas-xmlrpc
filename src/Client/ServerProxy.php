@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Client;
+namespace Laminas\XmlRpc\Client;
 
-use Zend\XmlRpc\Client as XMLRPCClient;
+use Laminas\XmlRpc\Client as XMLRPCClient;
 
 /**
  * The namespace decorator enables object chaining to permit
@@ -19,7 +18,7 @@ use Zend\XmlRpc\Client as XMLRPCClient;
 class ServerProxy
 {
     /**
-     * @var \Zend\XmlRpc\Client
+     * @var \Laminas\XmlRpc\Client
      */
     private $client = null;
 
@@ -30,7 +29,7 @@ class ServerProxy
 
 
     /**
-     * @var array of \Zend\XmlRpc\Client\ServerProxy
+     * @var array of \Laminas\XmlRpc\Client\ServerProxy
      */
     private $cache = array();
 
@@ -38,7 +37,7 @@ class ServerProxy
     /**
      * Class constructor
      *
-     * @param \Zend\XmlRpc\Client $client
+     * @param \Laminas\XmlRpc\Client $client
      * @param string             $namespace
      */
     public function __construct(XMLRPCClient $client, $namespace = '')
@@ -52,7 +51,7 @@ class ServerProxy
      * Get the next successive namespace
      *
      * @param string $namespace
-     * @return \Zend\XmlRpc\Client\ServerProxy
+     * @return \Laminas\XmlRpc\Client\ServerProxy
      */
     public function __get($namespace)
     {

@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\XmlRpc\Response;
-use Zend\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Response;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_XmlRpc_Response object
-     * @var Zend_XmlRpc_Response
+     * Laminas_XmlRpc_Response object
+     * @var Laminas_XmlRpc_Response
      */
     protected $_response;
 
@@ -85,7 +84,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->_response->getFault());
         $this->_response->loadXml('foo');
-        $this->assertInstanceOf('Zend\\XmlRpc\\Fault', $this->_response->getFault());
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Fault', $this->_response->getFault());
     }
 
     /**
@@ -122,7 +121,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9039
+     * @group Laminas-9039
      */
     public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer()
     {
@@ -135,7 +134,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-5404
+     * @group Laminas-5404
      */
     public function testNilResponseFromXmlRpcServer()
     {
@@ -242,12 +241,12 @@ EOD;
     }
 
     /**
-     * @group ZF-12293
+     * @group Laminas-12293
      */
     public function testDoesNotAllowExternalEntities()
     {
-        $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-response.xml');
-        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
+        $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-response.xml');
+        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
         $this->_response->loadXml($payload);
         $value = $this->_response->getReturnValue();
         $this->assertTrue(empty($value));
@@ -258,8 +257,8 @@ EOD;
 
     public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading()
     {
-        $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-response.xml');
-        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
+        $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-response.xml');
+        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
         $this->assertFalse($this->_response->loadXml($payload));
     }
 }

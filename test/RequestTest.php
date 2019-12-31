@@ -1,26 +1,25 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\XmlRpc\Request;
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc\Value;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Value;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_XmlRpc_Request object
-     * @var Zend_XmlRpc_Request
+     * Laminas_XmlRpc_Request object
+     * @var Laminas_XmlRpc_Request
      */
     protected $_request;
 
@@ -243,7 +242,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(null === $fault);
         $this->_request->loadXml('foo');
         $fault = $this->_request->getFault();
-        $this->assertTrue($fault instanceof \Zend\XmlRpc\Fault);
+        $this->assertTrue($fault instanceof \Laminas\XmlRpc\Fault);
     }
 
     /**
@@ -317,15 +316,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12293
+     * @group Laminas-12293
      *
      * Test should remain, but is defunct since DOCTYPE presence should return FALSE
      * from loadXml()
      */
     public function testDoesNotAllowExternalEntities()
     {
-        $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-request.xml');
-        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
+        $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-request.xml');
+        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
         $this->_request->loadXml($payload);
         $method = $this->_request->getMethod();
         $this->assertTrue(empty($method));
@@ -336,8 +335,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading()
     {
-        $payload = file_get_contents(dirname(__FILE__) . '/_files/ZF12293-request.xml');
-        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/ZF12293-payload.txt'));
+        $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-request.xml');
+        $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
         $this->assertFalse($this->_request->loadXml($payload));
     }
 }
