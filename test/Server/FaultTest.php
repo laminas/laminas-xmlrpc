@@ -1,48 +1,47 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc\Server;
+namespace LaminasTest\XmlRpc\Server;
 
-use Zend\XmlRpc\Server;
+use Laminas\XmlRpc\Server;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class FaultTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend\XmlRpc\Server\Fault::getInstance() test
+     * Laminas\XmlRpc\Server\Fault::getInstance() test
      */
     public function testGetInstance()
     {
         $e = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
 
-        $this->assertInstanceOf('Zend\XmlRpc\Server\Fault', $fault);
+        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $fault);
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::attachFaultException() test
+     * Laminas\XmlRpc\Server\Fault::attachFaultException() test
      */
     public function testAttachFaultException()
     {
-        Server\Fault::attachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::attachFaultException('LaminasTest\\XmlRpc\\Server\\Exception');
         $e = new Exception('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
-        Server\Fault::detachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::detachFaultException('LaminasTest\\XmlRpc\\Server\\Exception');
 
         $exceptions = array(
-            'ZendTest\\XmlRpc\\Server\\Exception',
-            'ZendTest\\XmlRpc\\Server\\Exception2',
-            'ZendTest\\XmlRpc\\Server\\Exception3',
+            'LaminasTest\\XmlRpc\\Server\\Exception',
+            'LaminasTest\\XmlRpc\\Server\\Exception2',
+            'LaminasTest\\XmlRpc\\Server\\Exception3',
         );
         Server\Fault::attachFaultException($exceptions);
         foreach ($exceptions as $class) {
@@ -55,39 +54,39 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ZF-1825
+     * Tests Laminas-1825
      * @return void
      */
     public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses()
     {
-        Server\Fault::attachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::attachFaultException('LaminasTest\\XmlRpc\\Server\\Exception');
         $e = new Exception4('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
-        Server\Fault::detachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::detachFaultException('LaminasTest\\XmlRpc\\Server\\Exception');
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::detachFaultException() test
+     * Laminas\XmlRpc\Server\Fault::detachFaultException() test
      */
     public function testDetachFaultException()
     {
-        Server\Fault::attachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::attachFaultException('LaminasTest\\XmlRpc\\Server\\Exception');
         $e = new Exception('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
-        Server\Fault::detachFaultException('ZendTest\\XmlRpc\\Server\\Exception');
+        Server\Fault::detachFaultException('LaminasTest\\XmlRpc\\Server\\Exception');
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('Unknown error', $fault->getMessage());
         $this->assertEquals(404, $fault->getCode());
 
 
         $exceptions = array(
-            'ZendTest\\XmlRpc\\Server\\Exception',
-            'ZendTest\\XmlRpc\\Server\\Exception2',
-            'ZendTest\\XmlRpc\\Server\\Exception3'
+            'LaminasTest\\XmlRpc\\Server\\Exception',
+            'LaminasTest\\XmlRpc\\Server\\Exception2',
+            'LaminasTest\\XmlRpc\\Server\\Exception3'
         );
         Server\Fault::attachFaultException($exceptions);
         foreach ($exceptions as $class) {
@@ -106,20 +105,20 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::attachObserver() test
+     * Laminas\XmlRpc\Server\Fault::attachObserver() test
      */
     public function testAttachObserver()
     {
-        Server\Fault::attachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        Server\Fault::attachObserver('LaminasTest\\XmlRpc\\Server\\Observer');
         $e = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
         $observed = Observer::getObserved();
         Observer::clearObserved();
-        Server\Fault::detachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        Server\Fault::detachObserver('LaminasTest\\XmlRpc\\Server\\Observer');
 
         $this->assertNotEmpty($observed);
         $f = array_shift($observed);
-        $this->assertInstanceOf('Zend\XmlRpc\Server\Fault', $f);
+        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $f);
         $this->assertEquals('Checking observers', $f->getMessage());
         $this->assertEquals(411, $f->getCode());
 
@@ -127,15 +126,15 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::detachObserver() test
+     * Laminas\XmlRpc\Server\Fault::detachObserver() test
      */
     public function testDetachObserver()
     {
-        Server\Fault::attachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        Server\Fault::attachObserver('LaminasTest\\XmlRpc\\Server\\Observer');
         $e = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
         Observer::clearObserved();
-        Server\Fault::detachObserver('ZendTest\\XmlRpc\\Server\\Observer');
+        Server\Fault::detachObserver('LaminasTest\\XmlRpc\\Server\\Observer');
 
         $e = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
