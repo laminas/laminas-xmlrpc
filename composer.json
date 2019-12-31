@@ -1,47 +1,57 @@
 {
-    "name": "zendframework/zend-xmlrpc",
+    "name": "laminas/laminas-xmlrpc",
     "description": " ",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "xmlrpc"
     ],
-    "homepage": "https://github.com/zendframework/zend-xmlrpc",
-    "autoload": {
-        "psr-4": {
-            "Zend\\XmlRpc\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-xmlrpc/",
+        "issues": "https://github.com/laminas/laminas-xmlrpc/issues",
+        "source": "https://github.com/laminas/laminas-xmlrpc",
+        "rss": "https://github.com/laminas/laminas-xmlrpc/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\XmlRpc\\": "test/"
-        },
-        "files": [
-            "test/TestAsset/functions.php"
-        ]
+    "config": {
+        "sort-packages": true
     },
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "zendframework/zend-http": "^2.5.4",
-        "zendframework/zend-math": "^2.7 || ^3.0",
-        "zendframework/zend-server": "^2.7",
-        "zendframework/zend-stdlib": "^2.7 || ^3.0",
-        "zendframework/zendxml": "^1.0.2"
-    },
-    "require-dev": {
-        "phpunit/PHPUnit": "^4.8",
-        "squizlabs/php_codesniffer": "^2.3.1"
-    },
-    "suggest": {
-        "zendframework/zend-cache": "To support Zend\\XmlRpc\\Server\\Cache usage"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "2.6-dev",
             "dev-develop": "2.7-dev"
         }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "laminas/laminas-http": "^2.5.4",
+        "laminas/laminas-math": "^2.7 || ^3.0",
+        "laminas/laminas-server": "^2.7",
+        "laminas/laminas-stdlib": "^2.7 || ^3.0",
+        "laminas/laminas-xml": "^1.0.2",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.3.1"
+    },
+    "suggest": {
+        "laminas/laminas-cache": "To support Laminas\\XmlRpc\\Server\\Cache usage"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\XmlRpc\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\XmlRpc\\": "test/"
+        },
+        "files": [
+            "test/TestAsset/functions.php"
+        ]
     },
     "scripts": {
         "check": [
@@ -53,5 +63,8 @@
         "cs-fix": "phpcbf",
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-clover clover.xml"
+    },
+    "replace": {
+        "zendframework/zend-xmlrpc": "self.version"
     }
 }

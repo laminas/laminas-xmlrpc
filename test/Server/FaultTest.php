@@ -1,34 +1,33 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc\Server;
+namespace LaminasTest\XmlRpc\Server;
 
-use Zend\XmlRpc\Server;
+use Laminas\XmlRpc\Server;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class FaultTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend\XmlRpc\Server\Fault::getInstance() test
+     * Laminas\XmlRpc\Server\Fault::getInstance() test
      */
     public function testGetInstance()
     {
         $e = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
 
-        $this->assertInstanceOf('Zend\XmlRpc\Server\Fault', $fault);
+        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $fault);
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::attachFaultException() test
+     * Laminas\XmlRpc\Server\Fault::attachFaultException() test
      */
     public function testAttachFaultException()
     {
@@ -55,7 +54,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ZF-1825
+     * Tests Laminas-1825
      * @return void
      */
     public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses()
@@ -69,7 +68,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::detachFaultException() test
+     * Laminas\XmlRpc\Server\Fault::detachFaultException() test
      */
     public function testDetachFaultException()
     {
@@ -106,7 +105,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::attachObserver() test
+     * Laminas\XmlRpc\Server\Fault::attachObserver() test
      */
     public function testAttachObserver()
     {
@@ -119,7 +118,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($observed);
         $f = array_shift($observed);
-        $this->assertInstanceOf('Zend\XmlRpc\Server\Fault', $f);
+        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $f);
         $this->assertEquals('Checking observers', $f->getMessage());
         $this->assertEquals(411, $f->getCode());
 
@@ -127,7 +126,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Zend\XmlRpc\Server\Fault::detachObserver() test
+     * Laminas\XmlRpc\Server\Fault::detachObserver() test
      */
     public function testDetachObserver()
     {

@@ -6,12 +6,12 @@ From its [home page](http://www.xmlrpc.com/), XML-RPC is described as:
 > encoding. XML-RPC is designed to be as simple as possible, while allowing
 > complex data structures to be transmitted, processed and returned."
 
-zend-xmlrpc provides support for both consuming remote XML-RPC services and
+laminas-xmlrpc provides support for both consuming remote XML-RPC services and
 providing XML-RPC servers.
 
 ## Quick Start
 
-The following demonstrates the most basic use case for `Zend\XmlRpc\Server`:
+The following demonstrates the most basic use case for `Laminas\XmlRpc\Server`:
 
 ```php
 class Greeter
@@ -28,7 +28,7 @@ class Greeter
     }
 }
 
-$server = new Zend\XmlRpc\Server;
+$server = new Laminas\XmlRpc\Server;
 
 // Our Greeter class will be called "greeter" from the client:
 $server->setClass('Greeter', 'greeter');
@@ -38,7 +38,7 @@ $server->handle();
 > ### Docblock annotations are required
 >
 > Function and method docblocks containing parameter and return value
-> annotations **are required** when exposing them via `Zend\XmlRpc\Server`. The
+> annotations **are required** when exposing them via `Laminas\XmlRpc\Server`. The
 > values will be used to validate method parameters and provide method
 > signatures to clients.
 >
@@ -47,7 +47,7 @@ $server->handle();
 The following demonstrates an XML-RPC client that can consume the above service:
 
 ```php
-$client = new Zend\XmlRpc\Client('http://example.com/xmlrpcserver.php');
+$client = new Laminas\XmlRpc\Client('http://example.com/xmlrpcserver.php');
 
 echo $client->call('greeter.sayHello');
 // will output "Hello Stranger!"
