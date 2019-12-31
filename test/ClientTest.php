@@ -1,43 +1,41 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\Http\Client\Adapter;
-use Zend\Http;
-use Zend\Http\Response as HttpResponse;
-use Zend\XmlRpc\Client;
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc\Value;
-use Zend\XmlRpc;
+use Laminas\Http;
+use Laminas\Http\Client\Adapter;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\XmlRpc;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Client;
+use Laminas\XmlRpc\Value;
 
 /**
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage UnitTests
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Zend_Http_Client_Adapter_Abstract
+     * @var Laminas_Http_Client_Adapter_Abstract
      */
     protected $httpAdapter;
 
     /**
-     * @var Zend_Http_Client
+     * @var Laminas_Http_Client
      */
     protected $httpClient;
 
     /**
-     * @var Zend_XmlRpc_Client
+     * @var Laminas_XmlRpc_Client
      */
     protected $xmlrpcClient;
 
@@ -57,7 +55,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $xmlrpcClient = new Client('http://foo');
         $httpClient = $xmlrpcClient->getHttpClient();
-        $this->assertInstanceOf('Zend\\Http\\Client', $httpClient);
+        $this->assertInstanceOf('Laminas\\Http\\Client', $httpClient);
         $this->assertSame($httpClient, $xmlrpcClient->getHttpClient());
     }
 
@@ -91,8 +89,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->setServerResponseTo(true);
         $this->xmlrpcClient->call('foo');
 
-        $this->assertInstanceOf('Zend\\XmlRpc\\Request', $this->xmlrpcClient->getLastRequest());
-        $this->assertInstanceOf('Zend\\XmlRpc\\Response', $this->xmlrpcClient->getLastResponse());
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Request', $this->xmlrpcClient->getLastRequest());
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Response', $this->xmlrpcClient->getLastResponse());
     }
 
     public function testSuccessfulRpcMethodCallWithNoParameters()
@@ -139,7 +137,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-2090
+     * @group Laminas-2090
      */
     public function testSuccessfullyDetectsEmptyArrayParameterAsArray()
     {
@@ -160,7 +158,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-1412
+     * @group Laminas-1412
      */
     public function testSuccessfulRpcMethodCallWithMixedDateParameters()
     {
@@ -190,7 +188,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-1797
+     * @group Laminas-1797
      */
     public function testSuccesfulRpcMethodCallWithXmlRpcValueParameters()
     {
@@ -217,7 +215,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-2978
+     * @group Laminas-2978
      */
     public function testSkippingSystemCallDisabledByDefault()
     {
@@ -225,7 +223,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6993
+     * @group Laminas-6993
      */
     public function testWhenPassingAStringAndAnIntegerIsExpectedParamIsConverted()
     {
@@ -250,7 +248,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8074
+     * @group Laminas-8074
      */
     public function testXmlRpcObjectsAreNotConverted()
     {
@@ -294,7 +292,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response = $this->makeHttpResponseFrom($body, $status, $message);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\HttpException', $message, $status);
+        $this->setExpectedException('Laminas\XmlRpc\Client\Exception\HttpException', $message, $status);
         $this->xmlrpcClient->call('foo');
     }
 
@@ -309,7 +307,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\FaultException', $message, $code);
+        $this->setExpectedException('Laminas\XmlRpc\Client\Exception\FaultException', $message, $code);
         $this->xmlrpcClient->call('foo');
     }
 
@@ -317,7 +315,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProxyReturnsServerProxy()
     {
-        $this->assertInstanceOf('Zend\\XmlRpc\\Client\\ServerProxy', $this->xmlrpcClient->getProxy());
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Client\\ServerProxy', $this->xmlrpcClient->getProxy());
     }
 
     public function testRpcMethodCallsThroughServerProxy()
@@ -370,7 +368,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $xmlrpcClient = new Client('http://foo');
         $introspector = $xmlrpcClient->getIntrospector();
-        $this->assertInstanceOf('Zend\\XmlRpc\\Client\\ServerIntrospection', $introspector);
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Client\\ServerIntrospection', $introspector);
         $this->assertSame($introspector, $xmlrpcClient->getIntrospector());
     }
 
@@ -486,7 +484,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $i = $this->xmlrpcClient->getIntrospector();
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\IntrospectException', 'Bad number of signatures received from multicall');
+        $this->setExpectedException('Laminas\XmlRpc\Client\Exception\IntrospectException', 'Bad number of signatures received from multicall');
         $i->getSignatureForEachMethodByMulticall();
     }
 
@@ -505,7 +503,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $i = $this->xmlrpcClient->getIntrospector();
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\IntrospectException', 'Multicall return is malformed.  Expected array, got integer');
+        $this->setExpectedException('Laminas\XmlRpc\Client\Exception\IntrospectException', 'Multicall return is malformed.  Expected array, got integer');
         $i->getSignatureForEachMethodByMulticall();
     }
 
@@ -534,7 +532,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-4372
+     * @group Laminas-4372
      */
     public function testSettingUriOnHttpClientIsNotOverwrittenByXmlRpcClient()
     {
@@ -549,7 +547,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-4372
+     * @group Laminas-4372
      */
     public function testSettingNoHttpClientUriForcesClientToSetUri()
     {
@@ -569,7 +567,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-3288
+     * @group Laminas-3288
      */
     public function testCustomHttpClientUserAgentIsNotOverridden()
     {
@@ -580,12 +578,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->setServerResponseTo(true);
         $this->assertTrue($this->xmlrpcClient->call('method'));
         $this->assertSame(
-            'Zend_XmlRpc_Client',
+            'Laminas_XmlRpc_Client',
             $this->httpClient->getHeader('user-agent'),
-            'If no custom UA is set, set Zend_XmlRpc_Client'
+            'If no custom UA is set, set Laminas_XmlRpc_Client'
         );
 
-        $expectedUserAgent = 'Zend_XmlRpc_Client (custom)';
+        $expectedUserAgent = 'Laminas_XmlRpc_Client (custom)';
         $this->httpClient->setHeaders(array('user-agent' => $expectedUserAgent));
 
         $this->setServerResponseTo(true);
@@ -594,7 +592,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8478
+     * @group Laminas-8478
      */
     public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures()
     {
@@ -602,13 +600,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             new TestClient('http://localhost/')
             );
 
-        $this->setExpectedException('Zend\XmlRpc\Client\Exception\IntrospectException', 'Invalid signature for method "add"');
+        $this->setExpectedException('Laminas\XmlRpc\Client\Exception\IntrospectException', 'Invalid signature for method "add"');
         $signature = $introspector->getMethodSignature('add');
     }
 
 
     /**
-     * @group ZF-8580
+     * @group Laminas-8580
      */
     public function testCallSelectsCorrectSignatureIfMoreThanOneIsAvailable()
     {
@@ -641,7 +639,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-1897
+     * @group Laminas-1897
      */
     public function testHandlesLeadingOrTrailingWhitespaceInChunkedResponseProperly()
     {
@@ -649,7 +647,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->httpAdapter = new Adapter\Test();
         $this->httpClient = new Http\Client(null, array('adapter' => $this->httpAdapter));
 
-        $respBody = file_get_contents(dirname(__FILE__) . "/_files/ZF1897-response-chunked.txt");
+        $respBody = file_get_contents(dirname(__FILE__) . "/_files/Laminas1897-response-chunked.txt");
         $this->httpAdapter->setResponse($respBody);
 
         $this->xmlrpcClient = new Client($baseUri);
@@ -694,7 +692,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function mockIntrospector()
     {
         $this->mockedIntrospector = $this->getMock(
-            'Zend\\XmlRpc\\Client\\ServerIntrospection',
+            'Laminas\\XmlRpc\\Client\\ServerIntrospection',
             array(),
             array(),
             '',
@@ -706,12 +704,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function mockHttpClient()
     {
-        $this->mockedHttpClient = $this->getMock('Zend\\Http\\Client');
+        $this->mockedHttpClient = $this->getMock('Laminas\\Http\\Client');
         $this->xmlrpcClient->setHttpClient($this->mockedHttpClient);
     }
 }
 
-/** related to ZF-8478 */
+/** related to Laminas-8478 */
 class PythonSimpleXMLRPCServerWithUnsupportedIntrospection extends Client\ServerProxy
 {
     public function __call($method, $args)
@@ -723,7 +721,7 @@ class PythonSimpleXMLRPCServerWithUnsupportedIntrospection extends Client\Server
     }
 }
 
-/** related to ZF-8478 */
+/** related to Laminas-8478 */
 class TestClient extends Client
 {
     public function getProxy($namespace = '')
