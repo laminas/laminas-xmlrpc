@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
 /**
  * XmlRpc Request object
@@ -21,8 +19,8 @@ namespace Zend\XmlRpc;
  * generated and stored in {@link $fault}; developers may check for it using
  * {@link isFault()} and {@link getFault()}.
  *
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  */
 class Request
 {
@@ -52,7 +50,7 @@ class Request
 
     /**
      * Fault object, if any
-     * @var \Zend\XmlRpc\Fault
+     * @var \Laminas\XmlRpc\Fault
      */
     protected $fault = null;
 
@@ -90,7 +88,7 @@ class Request
      * Set encoding to use in request
      *
      * @param string $encoding
-     * @return \Zend\XmlRpc\Request
+     * @return \Laminas\XmlRpc\Request
      */
     public function setEncoding($encoding)
     {
@@ -282,7 +280,7 @@ class Request
             return false;
         }
 
-        // @see ZF-12293 - disable external entities for security purposes
+        // @see Laminas-12293 - disable external entities for security purposes
         $loadEntities = libxml_disable_entity_loader(true);
         try {
             $dom = new \DOMDocument;
@@ -360,7 +358,7 @@ class Request
     /**
      * Retrieve the fault response, if any
      *
-     * @return null|\Zend\XmlRpc\Fault
+     * @return null|\Laminas\XmlRpc\Fault
      */
     public function getFault()
     {
