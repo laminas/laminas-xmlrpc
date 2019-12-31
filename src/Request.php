@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
 use DOMDocument;
+use Laminas\Stdlib\ErrorHandler;
 use SimpleXMLElement;
-use Zend\Stdlib\ErrorHandler;
 
 /**
  * XmlRpc Request object
@@ -52,7 +51,7 @@ class Request
 
     /**
      * Fault object, if any
-     * @var \Zend\XmlRpc\Fault
+     * @var \Laminas\XmlRpc\Fault
      */
     protected $fault = null;
 
@@ -90,7 +89,7 @@ class Request
      * Set encoding to use in request
      *
      * @param string $encoding
-     * @return \Zend\XmlRpc\Request
+     * @return \Laminas\XmlRpc\Request
      */
     public function setEncoding($encoding)
     {
@@ -283,7 +282,7 @@ class Request
             return false;
         }
 
-        // @see ZF-12293 - disable external entities for security purposes
+        // @see Laminas-12293 - disable external entities for security purposes
         $loadEntities  = libxml_disable_entity_loader(true);
         $xmlErrorsFlag = libxml_use_internal_errors(true);
         try {
@@ -372,7 +371,7 @@ class Request
     /**
      * Retrieve the fault response, if any
      *
-     * @return null|\Zend\XmlRpc\Fault
+     * @return null|\Laminas\XmlRpc\Fault
      */
     public function getFault()
     {
