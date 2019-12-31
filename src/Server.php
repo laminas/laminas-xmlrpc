@@ -1,26 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
+use Laminas\Server\AbstractServer;
+use Laminas\Server\Definition;
+use Laminas\Server\Reflection;
 use ReflectionClass;
-use Zend\Server\AbstractServer;
-use Zend\Server\Definition;
-use Zend\Server\Reflection;
 
 /**
  * An XML-RPC server implementation
  *
  * Example:
  * <code>
- * use Zend\XmlRpc;
+ * use Laminas\XmlRpc;
  *
  * // Instantiate server
  * $server = new XmlRpc\Server();
@@ -46,8 +44,8 @@ use Zend\Server\Reflection;
  * echo $response;
  * </code>
  *
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage Server
  */
 class Server extends AbstractServer
@@ -68,7 +66,7 @@ class Server extends AbstractServer
      * Class to use for responses; defaults to {@link Response\Http}
      * @var string
      */
-    protected $responseClass = 'Zend\XmlRpc\Response\Http';
+    protected $responseClass = 'Laminas\XmlRpc\Response\Http';
 
     /**
      * Dispatch table of name => method pairs
@@ -84,7 +82,7 @@ class Server extends AbstractServer
         'i4'                         => 'i4',
         'int'                        => 'int',
         'integer'                    => 'int',
-        'Zend\Math\BigInteger'       => 'i8',
+        'Laminas\Math\BigInteger'       => 'i8',
         'i8'                         => 'i8',
         'ex:i8'                      => 'i8',
         'double'                     => 'double',
@@ -173,7 +171,7 @@ class Server extends AbstractServer
      * @param string|array|callable $function  Valid callback
      * @param string                $namespace Optional namespace prefix
      * @return void
-     * @throws \Zend\XmlRpc\Exception\InvalidArgumentException
+     * @throws \Laminas\XmlRpc\Exception\InvalidArgumentException
      */
     public function addFunction($function, $namespace = '')
     {
@@ -322,7 +320,7 @@ class Server extends AbstractServer
      * Load methods as returned from {@link getFunctions}
      *
      * Typically, you will not use this method; it will be called using the
-     * results pulled from {@link Zend\XmlRpc\Server\Cache::get()}.
+     * results pulled from {@link Laminas\XmlRpc\Server\Cache::get()}.
      *
      * @param  array|Definition $definition
      * @return void
@@ -336,7 +334,7 @@ class Server extends AbstractServer
             } else {
                 $type = gettype($definition);
             }
-            throw new Server\Exception\InvalidArgumentException('Unable to load server definition; must be an array or Zend_Server_Definition, received ' . $type, 612);
+            throw new Server\Exception\InvalidArgumentException('Unable to load server definition; must be an array or Laminas_Server_Definition, received ' . $type, 612);
         }
 
         $this->table->clearMethods();
@@ -378,7 +376,7 @@ class Server extends AbstractServer
     }
 
     /**
-     * Do nothing; persistence is handled via {@link Zend\XmlRpc\Server\Cache}
+     * Do nothing; persistence is handled via {@link Laminas\XmlRpc\Server\Cache}
      *
      * @param  mixed $mode
      * @return void
@@ -439,7 +437,7 @@ class Server extends AbstractServer
      */
     public function setResponseClass($class)
     {
-        if (!class_exists($class) || !self::isSubclassOf($class, 'Zend\XmlRpc\Response')) {
+        if (!class_exists($class) || !self::isSubclassOf($class, 'Laminas\XmlRpc\Response')) {
             throw new Server\Exception\InvalidArgumentException('Invalid response class');
 
         }
@@ -470,7 +468,7 @@ class Server extends AbstractServer
     /**
      * Returns a list of registered methods
      *
-     * Returns an array of dispatchables (Zend\Server\Reflection\ReflectionFunction,
+     * Returns an array of dispatchables (Laminas\Server\Reflection\ReflectionFunction,
      * ReflectionMethod, and ReflectionClass items).
      *
      * @return array
@@ -528,7 +526,7 @@ class Server extends AbstractServer
      * @param  Request $request
      * @return Response
      * @throws Server\Exception\RuntimeException
-     * Zend\XmlRpc\Server\Exceptions are thrown for internal errors; otherwise,
+     * Laminas\XmlRpc\Server\Exceptions are thrown for internal errors; otherwise,
      * any other exception may be thrown by the callback
      */
     protected function handleRequest(Request $request)
