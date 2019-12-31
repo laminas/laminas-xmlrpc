@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
 use DateTime;
 use SimpleXMLElement;
 
 /**
  * Represent a native XML-RPC value entity, used as parameters for the methods
- * called by the Zend\XmlRpc\Client object and as the return value for those calls.
+ * called by the Laminas\XmlRpc\Client object and as the return value for those calls.
  *
- * This object as a very important static function Zend\XmlRpc\Value::getXmlRpcValue, this
- * function acts likes a factory for the Zend\XmlRpc\Value objects
+ * This object as a very important static function Laminas\XmlRpc\Value::getXmlRpcValue, this
+ * function acts likes a factory for the Laminas\XmlRpc\Value objects
  *
- * Using this function, users/Zend\XmlRpc\Client object can create the Zend\XmlRpc\Value objects
+ * Using this function, users/Laminas\XmlRpc\Client object can create the Laminas\XmlRpc\Value objects
  * from PHP variables, XML string or by specifying the exact XML-RPC native type
  */
 abstract class AbstractValue
@@ -44,7 +43,7 @@ abstract class AbstractValue
     protected $xml;
 
     /**
-     * @var \Zend\XmlRpc\Generator\GeneratorInterface
+     * @var \Laminas\XmlRpc\Generator\GeneratorInterface
      */
     protected static $generator;
 
@@ -88,7 +87,7 @@ abstract class AbstractValue
     /**
      * Get XML generator instance
      *
-     * @return \Zend\XmlRpc\Generator\GeneratorInterface
+     * @return \Laminas\XmlRpc\Generator\GeneratorInterface
      */
     public static function getGenerator()
     {
@@ -170,7 +169,7 @@ abstract class AbstractValue
      * By default the value type is autodetected according to it's PHP type
      *
      * @param  mixed $value
-     * @param  Zend\XmlRpc\Value::constant $type
+     * @param  Laminas\XmlRpc\Value::constant $type
      * @throws Exception\ValueException
      * @return AbstractValue
      */
@@ -276,7 +275,7 @@ abstract class AbstractValue
      */
     protected static function phpVarToNativeXmlRpc($value)
     {
-        // @see http://framework.zend.com/issues/browse/ZF-8623
+        // @see https://getlaminas.org/issues/browse/Laminas-8623
         if ($value instanceof AbstractValue) {
             return $value;
         }
@@ -318,7 +317,7 @@ abstract class AbstractValue
      * It can be also a valid XML string for conversion
      *
      * @throws Exception\ValueException
-     * @return \Zend\XmlRpc\AbstractValue
+     * @return \Laminas\XmlRpc\AbstractValue
      * @static
      */
     protected static function xmlStringToNativeXmlRpc($xml)
