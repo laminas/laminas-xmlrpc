@@ -1,34 +1,32 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\XmlRpc\Server;
-use Zend\XmlRpc\Request;
-use Zend\XmlRpc\Response;
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc\Value;
-use Zend\XmlRpc\Fault;
-use Zend\XmlRpc;
+use Laminas\XmlRpc;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Fault;
+use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Response;
+use Laminas\XmlRpc\Server;
+use Laminas\XmlRpc\Value;
 
 /**
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage UnitTests
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class ServerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_XmlRpc_Server object
-     * @var Zend_XmlRpc_Server
+     * Laminas_XmlRpc_Server object
+     * @var Laminas_XmlRpc_Server
      */
     protected $_server;
 
@@ -82,19 +80,19 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     public function testAddFunction()
     {
 
-        $this->_server->addFunction('ZendTest\\XmlRpc\\testFunction', 'zsr');
+        $this->_server->addFunction('LaminasTest\\XmlRpc\\testFunction', 'zsr');
 
         $methods = $this->_server->listMethods();
-        $this->assertTrue(in_array('zsr.ZendTest\\XmlRpc\\testFunction', $methods), var_export($methods, 1));
+        $this->assertTrue(in_array('zsr.LaminasTest\\XmlRpc\\testFunction', $methods), var_export($methods, 1));
 
         $methods = $this->_server->listMethods();
-        $this->assertTrue(in_array('zsr.ZendTest\\XmlRpc\\testFunction', $methods));
-        $this->assertFalse(in_array('zsr.ZendTest\\XmlRpc\\testFunction2', $methods), var_export($methods, 1));
+        $this->assertTrue(in_array('zsr.LaminasTest\\XmlRpc\\testFunction', $methods));
+        $this->assertFalse(in_array('zsr.LaminasTest\\XmlRpc\\testFunction2', $methods), var_export($methods, 1));
     }
 
     public function testAddFunctionThrowsExceptionOnInvalidInput()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to attach function; invalid');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to attach function; invalid');
         $this->_server->addFunction('nosuchfunction');
     }
 
@@ -103,8 +101,8 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         //$this->setExpectedException('XXX', 'xxx');
         $this->_server->addFunction(
             array(
-                'ZendTest\\XmlRpc\\testFunction',
-                'ZendTest\\XmlRpc\\testFunction2',
+                'LaminasTest\\XmlRpc\\testFunction',
+                'LaminasTest\\XmlRpc\\testFunction2',
             ),
             'zsr'
         );
@@ -140,7 +138,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetClass()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test');
+        $this->_server->setClass('LaminasTest\\XmlRpc\\TestClass', 'test');
         $methods = $this->_server->listMethods();
         $this->assertTrue(in_array('test.test1', $methods));
         $this->assertTrue(in_array('test.test2', $methods));
@@ -149,16 +147,16 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6526
+     * @group Laminas-6526
      */
     public function testSettingClassWithArguments()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test', 'argv-argument');
+        $this->_server->setClass('LaminasTest\\XmlRpc\\TestClass', 'test', 'argv-argument');
         $this->assertTrue($this->_server->sendArgumentsToAllMethods());
         $request = new Request();
         $request->setMethod('test.test4');
         $response = $this->_server->handle($request);
-        $this->assertNotInstanceOf('Zend\\XmlRpc\\Fault', $response);
+        $this->assertNotInstanceOf('Laminas\\XmlRpc\\Fault', $response);
         $this->assertSame(
             array('test1' => 'argv-argument',
                 'test2' => null,
@@ -168,7 +166,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingClassWithArgumentsOnlyPassingToConstructor()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test', 'a1', 'a2');
+        $this->_server->setClass('LaminasTest\\XmlRpc\\TestClass', 'test', 'a1', 'a2');
         $this->_server->sendArgumentsToAllMethods(false);
         $this->assertFalse($this->_server->sendArgumentsToAllMethods());
 
@@ -176,7 +174,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $request->setMethod('test.test4');
         $request->setParams(array('foo'));
         $response = $this->_server->handle($request);
-        $this->assertNotInstanceOf('Zend\\XmlRpc\\Fault', $response);
+        $this->assertNotInstanceOf('Laminas\\XmlRpc\\Fault', $response);
         $this->assertSame(array('test1' => 'a1', 'test2' => 'a2', 'arg' => array('foo')), $response->getReturnValue());
     }
 
@@ -227,7 +225,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      * Expects:
      * - request: Optional;
      *
-     * Returns: Zend_XmlRpc_Response|Zend_XmlRpc_Fault
+     * Returns: Laminas_XmlRpc_Response|Laminas_XmlRpc_Fault
      */
     public function testHandleWithReturnResponse()
     {
@@ -259,7 +257,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setMethod('invalid');
         $response = $this->_server->handle($request);
-        $this->assertInstanceOf('Zend\\XmlRpc\\Fault', $response);
+        $this->assertInstanceOf('Laminas\\XmlRpc\\Fault', $response);
         $this->assertSame('Method "invalid" does not exist', $response->getMessage());
         $this->assertSame(620, $response->getCode());
     }
@@ -277,7 +275,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetResponseClass()
     {
-        $this->assertTrue($this->_server->setResponseClass('ZendTest\\XmlRpc\\TestResponse'));
+        $this->assertTrue($this->_server->setResponseClass('LaminasTest\\XmlRpc\\TestResponse'));
         $request = new Request();
         $request->setMethod('system.listMethods');
         $response = $this->_server->handle($request);
@@ -318,7 +316,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $help = $this->_server->methodHelp('system.methodHelp', 'system.listMethods');
         $this->assertContains('Display help message for an XMLRPC method', $help);
 
-        $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Method "foo" does not exist');
+        $this->setExpectedException('Laminas\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Method "foo" does not exist');
         $this->_server->methodHelp('foo');
     }
 
@@ -338,7 +336,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($sig));
         $this->assertEquals(1, count($sig), var_export($sig, 1));
 
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\ExceptionInterface', 'Method "foo" does not exist');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\ExceptionInterface', 'Method "foo" does not exist');
         $this->_server->methodSignature('foo');
     }
 
@@ -378,7 +376,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-5635
+     * @group Laminas-5635
      */
     public function testMulticallHandlesFaults()
     {
@@ -446,28 +444,28 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFunctionWithExtraArgs()
     {
-        $this->_server->addFunction('ZendTest\\XmlRpc\\testFunction', 'test', 'arg1');
+        $this->_server->addFunction('LaminasTest\\XmlRpc\\testFunction', 'test', 'arg1');
         $methods = $this->_server->listMethods();
-        $this->assertContains('test.ZendTest\\XmlRpc\\testFunction', $methods);
+        $this->assertContains('test.LaminasTest\\XmlRpc\\testFunction', $methods);
     }
 
     public function testAddFunctionThrowsExceptionWithBadData()
     {
         $o = new \stdClass();
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to attach function; invalid');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to attach function; invalid');
         $this->_server->addFunction($o);
     }
 
     public function testLoadFunctionsThrowsExceptionWithBadData()
     {
         $o = new \stdClass();
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to load server definition; must be an array or Zend_Server_Definition, received stdClass');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to load server definition; must be an array or Laminas_Server_Definition, received stdClass');
         $this->_server->loadFunctions($o);
     }
 
     public function testLoadFunctionsThrowsExceptionsWithBadData2()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to load server definition; must be an array or Zend_Server_Definition, received string');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Unable to load server definition; must be an array or Laminas_Server_Definition, received string');
         $this->_server->loadFunctions('foo');
     }
 
@@ -476,15 +474,15 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $o = new \stdClass();
         $o = array($o);
 
-        $this->setExpectedException('Zend\Server\Exception\InvalidArgumentException', 'Invalid method provided');
+        $this->setExpectedException('Laminas\Server\Exception\InvalidArgumentException', 'Invalid method provided');
         $this->_server->loadFunctions($o);
     }
 
     public function testLoadFunctionsReadsMethodsFromServerDefinitionObjects()
     {
-        $mockedMethod = $this->getMock('Zend\\Server\\Method\\Definition', array(), array(), '', false,
+        $mockedMethod = $this->getMock('Laminas\\Server\\Method\\Definition', array(), array(), '', false,
             false);
-        $mockedDefinition = $this->getMock('Zend\\Server\\Definition', array(), array(), '', false, false);
+        $mockedDefinition = $this->getMock('Laminas\\Server\\Definition', array(), array(), '', false, false);
         $mockedDefinition->expects($this->once())
                          ->method('getMethods')
                          ->will($this->returnValue(array('bar' => $mockedMethod)));
@@ -493,13 +491,13 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testSetClassThrowsExceptionWithInvalidClass()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid method class');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid method class');
         $this->_server->setClass('mybogusclass');
     }
 
     public function testSetRequestUsingString()
     {
-        $this->_server->setRequest('ZendTest\\XmlRpc\\TestRequest');
+        $this->_server->setRequest('LaminasTest\\XmlRpc\\TestRequest');
         $req = $this->_server->getRequest();
         $this->assertTrue($req instanceof TestRequest);
     }
@@ -509,19 +507,19 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetRequestThrowsExceptionOnBadClassName()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid request object');
-        $this->_server->setRequest('ZendTest\\XmlRpc\\TestRequest2');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid request object');
+        $this->_server->setRequest('LaminasTest\\XmlRpc\\TestRequest2');
     }
 
     public function testSetRequestThrowsExceptionOnBadObject()
     {
-        $this->setExpectedException('Zend\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid request object');
+        $this->setExpectedException('Laminas\XmlRpc\Server\Exception\InvalidArgumentException', 'Invalid request object');
         $this->_server->setRequest($this);
     }
 
     public function testHandleObjectMethod()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass');
+        $this->_server->setClass('LaminasTest\\XmlRpc\\TestClass');
         $request = new Request();
         $request->setMethod('test1');
         $request->addParam('value');
@@ -532,7 +530,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleClassStaticMethod()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass');
+        $this->_server->setClass('LaminasTest\\XmlRpc\\TestClass');
         $request = new Request();
         $request->setMethod('test2');
         $request->addParam(array('value1', 'value2'));
@@ -543,9 +541,9 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleFunction()
     {
-        $this->_server->addFunction('ZendTest\\XmlRpc\\testFunction');
+        $this->_server->addFunction('LaminasTest\\XmlRpc\\testFunction');
         $request = new Request();
-        $request->setMethod('ZendTest\\XmlRpc\\testFunction');
+        $request->setMethod('LaminasTest\\XmlRpc\\testFunction');
         $request->setParams(array(array('value1'), 'key'));
         $response = $this->_server->handle($request);
         $this->assertFalse($response instanceof Fault);
@@ -603,11 +601,11 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-2872
+     * @group Laminas-2872
      */
     public function testCanMarshalBase64Requests()
     {
-        $this->_server->setClass('ZendTest\\XmlRpc\\TestClass', 'test');
+        $this->_server->setClass('LaminasTest\\XmlRpc\\TestClass', 'test');
         $data    = base64_encode('this is the payload');
         $param   = array('type' => 'base64', 'value' => $data);
         $request = new Request('test.base64', array($param));
@@ -618,12 +616,12 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6034
+     * @group Laminas-6034
      */
     public function testPrototypeReturnValueMustReflectDocBlock()
     {
         $server = new Server();
-        $server->setClass('ZendTest\\XmlRpc\\TestClass');
+        $server->setClass('LaminasTest\\XmlRpc\\TestClass');
         $table = $server->getDispatchTable();
         $method = $table->getMethod('test1');
         foreach ($method->getPrototypes() as $prototype) {
@@ -633,7 +631,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testCallingUnregisteredMethod()
     {
-        $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface',
+        $this->setExpectedException('Laminas\\XmlRpc\\Server\\Exception\\ExceptionInterface',
             'Unknown instance method called on server: foobarbaz');
         $this->_server->foobarbaz();
     }
@@ -646,13 +644,13 @@ class ServerTest extends \PHPUnit_Framework_TestCase
 
     public function testPassingInvalidRequestClassThrowsException()
     {
-        $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Invalid request class');
+        $this->setExpectedException('Laminas\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Invalid request class');
         $this->_server->setRequest('stdClass');
     }
 
     public function testPassingInvalidResponseClassThrowsException()
     {
-        $this->setExpectedException('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Invalid response class');
+        $this->setExpectedException('Laminas\\XmlRpc\\Server\\Exception\\ExceptionInterface', 'Invalid response class');
         $this->_server->setResponseClass('stdClass');
     }
 
