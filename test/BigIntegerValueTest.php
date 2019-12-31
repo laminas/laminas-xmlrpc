@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc\Value\BigInteger;
-use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
+use Laminas\XmlRpc\Value\BigInteger;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +24,7 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
         }
         try {
             $XmlRpcBigInteger = new BigInteger(0);
-        } catch (\Zend\Math\Exception $e) {
+        } catch (\Laminas\Math\Exception $e) {
             $this->markTestSkipped($e->getMessage());
         }
     }
@@ -33,8 +32,8 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
     // BigInteger
 
     /**
-     * @group ZF-6445
-     * @group ZF-8623
+     * @group Laminas-6445
+     * @group Laminas-8623
      */
     public function testBigIntegerGetValue()
     {
@@ -44,7 +43,7 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6445
+     * @group Laminas-6445
      */
     public function testBigIntegerGetType()
     {
@@ -54,7 +53,7 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6445
+     * @group Laminas-6445
      */
     public function testBigIntegerGeneratedXml()
     {
@@ -68,8 +67,8 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6445
-     * @dataProvider \ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-6445
+     * @dataProvider \LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarschalBigIntegerFromXmlRpc(Generator $generator)
     {
@@ -90,8 +89,8 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6445
-     * @dataProvider \ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-6445
+     * @dataProvider \LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarschalBigIntegerFromApacheXmlRpc(Generator $generator)
     {
@@ -114,7 +113,7 @@ class BigIntegerValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6445
+     * @group Laminas-6445
      */
     public function testMarshalBigIntegerFromNative()
     {
