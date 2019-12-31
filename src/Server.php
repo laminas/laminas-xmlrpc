@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
-use Zend\Server\AbstractServer;
-use Zend\Server\Definition;
-use Zend\Server\Reflection;
+use Laminas\Server\AbstractServer;
+use Laminas\Server\Definition;
+use Laminas\Server\Reflection;
 
 /**
  * An XML-RPC server implementation
  *
  * Example:
  * <code>
- * use Zend\XmlRpc;
+ * use Laminas\XmlRpc;
  *
  * // Instantiate server
  * $server = new XmlRpc\Server();
@@ -62,7 +61,7 @@ class Server extends AbstractServer
      * Class to use for responses; defaults to {@link Response\Http}
      * @var string
      */
-    protected $responseClass = 'Zend\XmlRpc\Response\Http';
+    protected $responseClass = 'Laminas\XmlRpc\Response\Http';
 
     /**
      * Dispatch table of name => method pairs
@@ -315,7 +314,7 @@ class Server extends AbstractServer
      * Load methods as returned from {@link getFunctions}
      *
      * Typically, you will not use this method; it will be called using the
-     * results pulled from {@link Zend\XmlRpc\Server\Cache::get()}.
+     * results pulled from {@link Laminas\XmlRpc\Server\Cache::get()}.
      *
      * @param  array|Definition $definition
      * @return void
@@ -330,7 +329,7 @@ class Server extends AbstractServer
                 $type = gettype($definition);
             }
             throw new Server\Exception\InvalidArgumentException(
-                'Unable to load server definition; must be an array or Zend\Server\Definition, received ' . $type,
+                'Unable to load server definition; must be an array or Laminas\Server\Definition, received ' . $type,
                 612
             );
         }
@@ -374,7 +373,7 @@ class Server extends AbstractServer
     }
 
     /**
-     * Do nothing; persistence is handled via {@link Zend\XmlRpc\Server\Cache}
+     * Do nothing; persistence is handled via {@link Laminas\XmlRpc\Server\Cache}
      *
      * @param  mixed $mode
      * @return void
@@ -435,7 +434,7 @@ class Server extends AbstractServer
      */
     public function setResponseClass($class)
     {
-        if (!class_exists($class) || !is_subclass_of($class, 'Zend\XmlRpc\Response')) {
+        if (!class_exists($class) || !is_subclass_of($class, 'Laminas\XmlRpc\Response')) {
             throw new Server\Exception\InvalidArgumentException('Invalid response class');
         }
         $this->responseClass = $class;
@@ -465,7 +464,7 @@ class Server extends AbstractServer
     /**
      * Returns a list of registered methods
      *
-     * Returns an array of dispatchables (Zend\Server\Reflection\ReflectionFunction,
+     * Returns an array of dispatchables (Laminas\Server\Reflection\ReflectionFunction,
      * ReflectionMethod, and ReflectionClass items).
      *
      * @return array
@@ -523,7 +522,7 @@ class Server extends AbstractServer
      * @param  Request $request
      * @return Response
      * @throws Server\Exception\RuntimeException
-     * Zend\XmlRpc\Server\Exceptions are thrown for internal errors; otherwise,
+     * Laminas\XmlRpc\Server\Exceptions are thrown for internal errors; otherwise,
      * any other exception may be thrown by the callback
      */
     protected function handleRequest(Request $request)
@@ -590,7 +589,7 @@ class Server extends AbstractServer
      * @see https://bugs.php.net/bug.php?id=53727
      * @see https://github.com/zendframework/zf2/pull/1807
      *
-     * @deprecated since zf 2.3 requires PHP >= 5.3.23
+     * @deprecated since laminas 2.3 requires PHP >= 5.3.23
      *
      * @param string $className
      * @param string $type
