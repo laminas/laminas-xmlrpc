@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc\Server;
+namespace LaminasTest\XmlRpc\Server;
 
-use Zend\XmlRpc\Server;
+use Laminas\XmlRpc\Server;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +34,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->_file = realpath(__DIR__) . '/xmlrpc.cache';
         $this->_server = new Server();
-        $this->_server->setClass('Zend\\XmlRpc\\Server\\Cache', 'cache');
+        $this->_server->setClass('Laminas\\XmlRpc\\Server\\Cache', 'cache');
     }
 
     /**
@@ -68,7 +67,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Zend\XmlRpc\Server\Cache::delete() test
+     * Laminas\XmlRpc\Server\Cache::delete() test
      */
     public function testDelete()
     {
