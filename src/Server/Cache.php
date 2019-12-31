@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Server;
+namespace Laminas\XmlRpc\Server;
 
 /**
- * Zend_XmlRpc_Server_Cache: cache Zend_XmlRpc_Server server definition
+ * Laminas_XmlRpc_Server_Cache: cache Laminas_XmlRpc_Server server definition
  *
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage Server
  */
-class Cache extends \Zend\Server\Cache
+class Cache extends \Laminas\Server\Cache
 {
     /**
      * @var array Skip system methods when caching XML-RPC server
