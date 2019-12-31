@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_XmlRpc
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc\Server\Exception;
+namespace Laminas\XmlRpc\Server\Exception;
 
-use Zend\XmlRpc\Exception\ExceptionInterface as Exception;
+use Laminas\XmlRpc\Exception\ExceptionInterface as Exception;
 
 /**
- * Zend_XmlRpc_Server_Exception
+ * Laminas_XmlRpc_Server_Exception
  *
- * @category   Zend
- * @package    Zend_XmlRpc
+ * @category   Laminas
+ * @package    Laminas_XmlRpc
  * @subpackage Server
  */
 interface ExceptionInterface extends Exception
