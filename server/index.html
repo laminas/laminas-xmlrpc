@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fully-featured XML-RPC server and client implementations">  
+    <link rel="canonical" href="https://docs.laminas.dev/server/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>XML-RPC Servers - laminas-xmlrpc - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-xmlrpc</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../client/" class="subnavigation__link">XML-RPC Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">XML-RPC Servers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-xmlrpc</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-xmlrpc/" class="header__link header__link--github" title="Go to repository of laminas-xmlrpc">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#basic-usage" class="toc__link">Basic Usage</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#server-structure" class="toc__link">Server Structure</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#anatomy-of-a-webservice" class="toc__link">Anatomy of a webservice</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#conventions" class="toc__link">Conventions</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#utilizing-namespaces" class="toc__link">Utilizing Namespaces</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#custom-request-objects" class="toc__link">Custom Request Objects</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#custom-responses" class="toc__link">Custom Responses</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#handling-exceptions-via-faults" class="toc__link">Handling Exceptions via Faults</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#caching-server-definitions-between-requests" class="toc__link">Caching Server Definitions Between Requests</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#usage-examples" class="toc__link">Usage Examples</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#performance-optimization" class="toc__link">Performance optimization</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-xmlrpc</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">XML-RPC Servers</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="laminas92xmlrpc92server">Laminas\XmlRpc\Server</h1>
+<p><code>Laminas\XmlRpc\Server</code> is a fully-featured XML-RPC server, following
+<a href="http://www.xmlrpc.com/spec">the specifications outlined at www.xmlrpc.com</a>.
+Additionally, it implements the <code>system.multicall()</code> method, allowing boxcarring
+of requests.</p>
+<h2 id="basic-usage">Basic Usage</h2>
+<p> <div class=codehilite><pre><span></span><span class=x>$server = new Laminas\XmlRpc\Server();</span>
+<span class=x>$server-&gt;setClass(&#39;My\Service\Class&#39;);</span>
+<span class=x>echo $server-&gt;handle();</span>
+</pre></div></p>
+<h2 id="server-structure">Server Structure</h2>
+<p><code>Laminas\XmlRpc\Server</code> is composed of a variety of components, ranging from the
+server itself to request, response, and fault objects.</p>
+<p>To bootstrap <code>Laminas\XmlRpc\Server</code>, the developer must attach one or more classes
+or functions to the server, via the <code>setClass()</code> and <code>addFunction()</code> methods.</p>
+<p>Once done, you may either pass a <code>Laminas\XmlRpc\Request</code> object to
+<code>Laminas\XmlRpc\Server::handle()</code>, or it will instantiate a
+<code>Laminas\XmlRpc\Request\Http</code> object if none is provided, thus grabbing the request
+from <code>php://input</code>.</p>
+<p><code>Laminas\XmlRpc\Server::handle()</code> then attempts to dispatch to the appropriate
+handler based on the method requested. It then returns either a
+<code>Laminas\XmlRpc\Response</code>-based object or a <code>Laminas\XmlRpc\Server\Fault</code> object.
+These objects both have <code>__toString()</code> methods that create valid XML-RPC XML
+responses, allowing them to be directly echoed.</p>
+<h2 id="anatomy-of-a-webservice">Anatomy of a webservice</h2>
+<h3>General considerations</h3>
+<p>For maximum performance it is recommended to use a simple bootstrap file for the
+server component.  Using <code>Laminas\XmlRpc\Server</code> inside a
+<a href="https://docs.laminas.dev/laminas-mvc/">Laminas\Mvc\Controller</a> is strongly
+discouraged to avoid the overhead.</p>
+<p>Services change over time and while webservices are generally less change
+intense as code-native APIs, it is recommended to version your service. Do so to
+lay grounds to provide compatibility for clients using older versions of your
+service and manage your service lifecycle including deprecation timeframes. To
+do so just include a version number into your URI. It is also recommended to
+include the remote protocol name in the URI to allow easy integration of
+upcoming remoting technologies. <code>http://myservice.ws/1.0/XMLRPC/</code>.</p>
+<h3>What to expose?</h3>
+<p>Most of the time it is not sensible to expose business objects directly.
+Business objects are usually small and under heavy change, because change is
+cheap in this layer of your application.  Once deployed and adopted, web
+services are hard to change. Another concern is I/O and latency: the best
+webservice calls are those not happening. Therefore service calls need to be
+more coarse-grained than usual business logic is. Often an additional layer in
+front of your business objects makes sense. This layer is sometimes referred to
+as <a href="http://martinfowler.com/eaaCatalog/remoteFacade.html">Remote Facade</a>. Such a
+service layer adds a coarse grained interface on top of your business logic and
+groups verbose operations into smaller ones.</p>
+<h2 id="conventions">Conventions</h2>
+<p><code>Laminas\XmlRpc\Server</code> allows the developer to attach functions and class method
+calls as dispatchable XML-RPC methods. Via <code>Laminas\Server\Reflection</code>, it does
+introspection on all attached methods, using the function and method docblocks
+to determine the method help text and method signatures.</p>
+<p>XML-RPC types do not necessarily map one-to-one to PHP types. However, the code
+will do its best to guess the appropriate type based on the values listed in
+<code>@param</code> and <code>@return</code> annotations. Some XML-RPC types have no immediate PHP
+equivalent, however, and should be hinted using the XML-RPC type in the PHPDoc.
+These include:</p>
+<ul>
+<li><code>dateTime.iso8601</code>, a string formatted as '<code>YYYYMMDDTHH:mm:ss</code>'</li>
+<li><code>base64</code>, base64 encoded data</li>
+<li><code>struct</code>, any associative array</li>
+</ul>
+<p>An example of how to hint follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
+<span class=x> * This is a sample function</span>
+<span class=x> *</span>
+<span class=x> * @param base64 $val1 Base64-encoded data</span>
+<span class=x> * @param dateTime.iso8601 $val2 An ISO date</span>
+<span class=x> * @param struct $val3 An associative array</span>
+<span class=x> * @return struct</span>
+<span class=x> */</span>
+<span class=x>function myFunc($val1, $val2, $val3)</span>
+<span class=x>{</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>PhpDocumentor does not validate types specified for params or return values, so
+this will have no impact on your API documentation. Providing the hinting is
+necessary, however, when the server is validating the parameters provided to the
+method call.</p>
+<p>It is perfectly valid to specify multiple types for both params and return
+values; the XML-RPC specification even suggests that <code>system.methodSignature</code>
+should return an array of all possible method signatures (i.e., all possible
+combinations of param and return values). You may do so just as you normally
+would with PhpDocumentor, using the <code>|</code> operator:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
+<span class=x> * This is a sample function</span>
+<span class=x> *</span>
+<span class=x> * @param string|base64 $val1 String or base64-encoded data</span>
+<span class=x> * @param string|dateTime.iso8601 $val2 String or an ISO date</span>
+<span class=x> * @param array|struct $val3 Normal indexed array or an associative array</span>
+<span class=x> * @return boolean|struct</span>
+<span class=x> */</span>
+<span class=x>function myFunc($val1, $val2, $val3)</span>
+<span class=x>{</span>
+<span class=x>}</span>
+</pre></div></p>
+<blockquote>
+<h3>Use multiple values sparingly</h3>
+<p>Allowing multiple signatures can lead to confusion for developers using the
+services; to keep things simple, a XML-RPC service method should typically
+only present a single signature.</p>
+</blockquote>
+<h2 id="utilizing-namespaces">Utilizing Namespaces</h2>
+<p>XML-RPC allows grouping related methods under dot-delimited <em>namespaces</em>. This
+helps prevent naming collisions between methods served by different classes. As
+an example, the XML-RPC server is expected to server several methods in the
+<code>system</code> namespace:</p>
+<ul>
+<li><code>system.listMethods</code></li>
+<li><code>system.methodHelp</code></li>
+<li><code>system.methodSignature</code></li>
+</ul>
+<p>Internally, these map to the methods of the same name in <code>Laminas\XmlRpc\Server</code>.</p>
+<p>If you want to add namespaces to the methods you serve, simply provide a
+namespace to the appropriate method when attaching a function or class:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// All public methods in My\Service\Class will be accessible as</span>
+<span class=x>// myservice.METHODNAME</span>
+<span class=x>$server-&gt;setClass(&#39;My\Service\Class&#39;, &#39;myservice&#39;);</span>
+
+<span class=x>// Function &#39;somefunc&#39; will be accessible as funcs.somefunc</span>
+<span class=x>$server-&gt;addFunction(&#39;somefunc&#39;, &#39;funcs&#39;);</span>
+</pre></div></p>
+<h2 id="custom-request-objects">Custom Request Objects</h2>
+<p>Most of the time, you'll simply use the default request type included with
+<code>Laminas\XmlRpc\Server</code>, <code>Laminas\XmlRpc\Request\Http</code>. However, there may be times
+when you need XML-RPC to be available via the CLI, a GUI, or other environment,
+or want to log incoming requests. To do so, you may create a custom request
+object that extends <code>Laminas\XmlRpc\Request</code>. The most important thing to remember
+is to ensure that the <code>getMethod()</code> and <code>getParams()</code> methods are implemented so
+that the XML-RPC server can retrieve that information in order to dispatch the
+request.</p>
+<h2 id="custom-responses">Custom Responses</h2>
+<p>Similar to request objects, <code>Laminas\XmlRpc\Server</code> can return custom response
+objects; by default, a <code>Laminas\XmlRpc\Response\Http</code> object is returned, which
+sends an appropriate <code>Content-Type</code> HTTP header for use with XML-RPC. Possible
+uses of a custom object would be to log responses, or to send responses back to
+<code>STDOUT</code>.</p>
+<p>To use a custom response class, use <code>Laminas\XmlRpc\Server::setResponseClass()</code>
+prior to calling <code>handle()</code>.</p>
+<h2 id="handling-exceptions-via-faults">Handling Exceptions via Faults</h2>
+<p><code>Laminas\XmlRpc\Server</code> catches Exceptions generated by a dispatched method, and
+generates an XML-RPC fault response when such an exception is caught. By
+default, however, the exception messages and codes are not used in a fault
+response. This is an intentional decision to protect your code; many exceptions
+expose more information about the code or environment than a developer would
+necessarily intend (a prime example includes database exceptions).</p>
+<p>Exception classes can be whitelisted to be used as fault responses, however. To
+do so, call <code>Laminas\XmlRpc\Server\Fault::attachFaultException()</code> and pass an
+exception class to whitelist:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>Laminas\XmlRpc\Server\Fault::attachFaultException(&#39;My\Project\Exception&#39;);</span>
+</pre></div></p>
+<p>If you utilize an exception class that your other project exceptions inherit,
+you can then whitelist a whole family of exceptions at a time.
+<code>Laminas\XmlRpc\Server\Exception</code>s are always whitelisted, to allow reporting
+specific internal errors (undefined methods, etc.).</p>
+<p>Any exception not specifically whitelisted will generate a fault response with a
+code of '404' and a message of 'Unknown error'.</p>
+<h2 id="caching-server-definitions-between-requests">Caching Server Definitions Between Requests</h2>
+<p>Attaching many classes to an XML-RPC server instance can utilize a lot of
+resources; each class must introspect using the Reflection API (via
+<code>Laminas\Server\Reflection</code>), which in turn generates a list of all possible method
+signatures to provide to the server class.</p>
+<p>To reduce this performance hit somewhat, <code>Laminas\XmlRpc\Server\Cache</code> can be used
+to cache the server definition between requests.</p>
+<p>An sample usage follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use My\Service as s;</span>
+<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+
+<span class=x>$cacheFile = dirname(__FILE__) . &#39;/xmlrpc.cache&#39;;</span>
+<span class=x>$server = new XmlRpcServer();</span>
+
+<span class=x>if (! XmlRpcServer\Cache::get($cacheFile, $server)) {</span>
+
+<span class=x>    $server-&gt;setClass(s\Glue::class, &#39;glue&#39;);   // glue. namespace</span>
+<span class=x>    $server-&gt;setClass(s\Paste::class, &#39;paste&#39;); // paste. namespace</span>
+<span class=x>    $server-&gt;setClass(s\Tape::class, &#39;tape&#39;);   // tape. namespace</span>
+
+<span class=x>    XmlRpcServer\Cache::save($cacheFile, $server);</span>
+<span class=x>}</span>
+
+<span class=x>echo $server-&gt;handle();</span>
+</pre></div></p>
+<p>The above example attempts to retrieve a server definition from <code>xmlrpc.cache</code>
+in the same directory as the script. If unsuccessful, it loads the service
+classes it needs, attaches them to the server instance, and then attempts to
+create a new cache file with the server definition.</p>
+<h2 id="usage-examples">Usage Examples</h2>
+<p>Below are several usage examples, showing the full spectrum of options available
+to developers.  Usage examples will each build on the previous example provided.</p>
+<h3>Basic Usage</h3>
+<p>The example below attaches a function as a dispatchable XML-RPC method and
+handles incoming calls.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
+<span class=x> * Return the MD5 sum of a value</span>
+<span class=x> *</span>
+<span class=x> * @param string $value Value to md5sum</span>
+<span class=x> * @return string MD5 sum of value</span>
+<span class=x> */</span>
+<span class=x>function md5Value($value)</span>
+<span class=x>{</span>
+<span class=x>    return md5($value);</span>
+<span class=x>}</span>
+
+<span class=x>$server = new Laminas\XmlRpc\Server();</span>
+<span class=x>$server-&gt;addFunction(&#39;md5Value&#39;);</span>
+<span class=x>echo $server-&gt;handle();</span>
+</pre></div></p>
+<h3>Attaching a class</h3>
+<p>The example below illustrates attaching a class' public methods as dispatchable
+XML-RPC methods.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>require_once &#39;Services/Comb.php&#39;;</span>
+
+<span class=x>$server = new Laminas\XmlRpc\Server();</span>
+<span class=x>$server-&gt;setClass(&#39;Services\Comb&#39;);</span>
+<span class=x>echo $server-&gt;handle();</span>
+</pre></div></p>
+<h3>Attaching a class with arguments</h3>
+<p>The following example illustrates how to attach a class' public methods and
+passing arguments to its methods. This can be used to specify certain defaults
+when registering service classes.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Services;</span>
+
+<span class=x>class PricingService</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Calculate current price of product with $productId</span>
+<span class=x>     *</span>
+<span class=x>     * @param ProductRepository $productRepository</span>
+<span class=x>     * @param PurchaseRepository $purchaseRepository</span>
+<span class=x>     * @param integer $productId</span>
+<span class=x>     */</span>
+<span class=x>    public function calculate(</span>
+<span class=x>        ProductRepository $productRepository,</span>
+<span class=x>        PurchaseRepository $purchaseRepository,</span>
+<span class=x>        $productId</span>
+<span class=x>    ) {</span>
+<span class=x>        /* ... */</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+
+<span class=x>$server = new Laminas\XmlRpc\Server();</span>
+<span class=x>$server-&gt;setClass(</span>
+<span class=x>    &#39;Services\PricingService&#39;,</span>
+<span class=x>    &#39;pricing&#39;,</span>
+<span class=x>    new ProductRepository(),</span>
+<span class=x>    new PurchaseRepository()</span>
+<span class=x>);</span>
+</pre></div></p>
+<p>The arguments passed to <code>setClass()</code> are injected into the method call
+<code>pricing.calculate()</code> on remote invocation. In the example above, only the
+argument <code>$productId</code> is expected from the client.</p>
+<h3>Passing arguments only to constructor</h3>
+<p><code>Laminas\XmlRpc\Server</code> allows providing constructor arguments when specifying
+classes, instead of when invoking methods.</p>
+<p>To limit injection to constructors, call <code>sendArgumentsToAllMethods</code> and pass
+<code>FALSE</code> as an argument. This disables the default behavior of all arguments
+being injected into the remote method. In the example below, the instance of
+<code>ProductRepository</code> and <code>PurchaseRepository</code> is only injected into the
+constructor of <code>Services\PricingService2</code>.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>class Services\PricingService2</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * @param ProductRepository $productRepository</span>
+<span class=x>     * @param PurchaseRepository $purchaseRepository</span>
+<span class=x>     */</span>
+<span class=x>    public function __construct(</span>
+<span class=x>        ProductRepository $productRepository,</span>
+<span class=x>        PurchaseRepository $purchaseRepository</span>
+<span class=x>    ) {</span>
+<span class=x>        /* ... */</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * Calculate current price of product with $productId</span>
+<span class=x>     *</span>
+<span class=x>     * @param integer $productId</span>
+<span class=x>     * @return double</span>
+<span class=x>     */</span>
+<span class=x>    public function calculate($productId)</span>
+<span class=x>    {</span>
+<span class=x>        ...</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+
+<span class=x>$server = new Laminas\XmlRpc\Server();</span>
+
+<span class=x>// Tell the server to pass arguments to constructors instead of at invocation:</span>
+<span class=x>$server-&gt;sendArgumentsToAllMethods(false);</span>
+
+<span class=x>// Map the class:</span>
+<span class=x>$server-&gt;setClass(</span>
+<span class=x>    &#39;Services\PricingService2&#39;,</span>
+<span class=x>    &#39;pricing&#39;,</span>
+<span class=x>    new ProductRepository(),</span>
+<span class=x>    new PurchaseRepository()</span>
+<span class=x>);</span>
+</pre></div></p>
+<h3>Attaching a class instance</h3>
+<p><code>setClass()</code> allows registering a previously instantiated class with the server,
+instead of specifying the class name. Obviously, passing arguments to the
+constructor is not possible with pre-instantiated classes.</p>
+<h3>Attaching several classes using namespaces</h3>
+<p>The example below illustrates attaching several classes, each with their own
+namespace.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
+<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+
+<span class=x>$server = new XmlRpcServer();</span>
+<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
+<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
+<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+<span class=x>echo $server-&gt;handle();</span>
+</pre></div></p>
+<h3>Specifying exceptions to use as valid fault responses</h3>
+<p>The example below allows any <code>Services\Exception</code>-derived class to report its
+code and message in the fault response.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
+<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+
+<span class=x>// Allow Services_Exceptions to report as fault responses</span>
+<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+
+<span class=x>$server = new XmlRpcServer();</span>
+<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
+<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
+<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+<span class=x>echo $server-&gt;handle();</span>
+</pre></div></p>
+<h3>Utilizing custom request and response objects</h3>
+<p>Some use cases require custom request objects; XML-RPC is not bound to HTTP as a
+transfer protocol. It is possible to use other transfer protocols like SSH or
+telnet to send the request and response data over the wire. Another use case is
+authentication and authorization. When a different transfer protocol is
+required, you will need to change the implementation to read request data.</p>
+<p>The example below instantiates a custom request class and passes it to the
+server to handle.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
+<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+
+<span class=x>// Allow Services_Exceptions to report as fault responses</span>
+<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+
+<span class=x>$server = new XmlRpcServer();</span>
+<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
+<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
+<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+
+<span class=x>// Create a request object</span>
+<span class=x>$request = new s\Request();</span>
+
+<span class=x>echo $server-&gt;handle($request);</span>
+</pre></div></p>
+<h3>Specifying a custom response class</h3>
+<p>The example below illustrates specifying a custom response class for the returned response.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
+<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+
+<span class=x>// Allow Services_Exceptions to report as fault responses</span>
+<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+
+<span class=x>$server = new XmlRpcServer();</span>
+<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
+<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
+<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+
+<span class=x>// Create a request object</span>
+<span class=x>$request = new s\Request();</span>
+
+<span class=x>// Utilize a custom response</span>
+<span class=x>$server-&gt;setResponseClass(s\Response::class);</span>
+
+<span class=x>echo $server-&gt;handle($request);</span>
+</pre></div></p>
+<h2 id="performance-optimization">Performance optimization</h2>
+<h3>Cache server definitions between requests</h3>
+<p>The example below illustrates caching server definitions between requests.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
+<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+
+<span class=x>// Specify a cache file</span>
+<span class=x>$cacheFile = dirname(__FILE__) . &#39;/xmlrpc.cache&#39;;</span>
+
+<span class=x>// Allow Services\Exceptions to report as fault responses</span>
+<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+
+<span class=x>$server = new XmlRpcServer();</span>
+
+<span class=x>// Attempt to retrieve server definition from cache</span>
+<span class=x>if (! XmlRpcServer\Cache::get($cacheFile, $server)) {</span>
+<span class=x>    $server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
+<span class=x>    $server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
+<span class=x>    $server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+
+<span class=x>    // Save cache</span>
+<span class=x>    XmlRpcServer\Cache::save($cacheFile, $server);</span>
+<span class=x>}</span>
+
+<span class=x>// Create a request object</span>
+<span class=x>$request = new s\Request();</span>
+
+<span class=x>// Utilize a custom response</span>
+<span class=x>$server-&gt;setResponseClass(s\Response::class);</span>
+
+<span class=x>echo $server-&gt;handle($request);</span>
+</pre></div></p>
+<blockquote>
+<h3>Cache file location</h3>
+<p>The server cache file should be located outside the document root.</p>
+</blockquote>
+<h3>Optimizing XML generation</h3>
+<p><code>Laminas\XmlRpc\Server</code> uses <code>DOMDocument</code> to generate it's XML output. While this
+functionality is available on most hosts, it's not always the most performant
+solution; benchmarks have shown that <code>XmlWriter</code> performs better.</p>
+<p>If <code>ext/xmlwriter</code> is available on your host, you can select the
+<code>XmlWriter</code>-based generator to leverage the performance differences.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\XmlRpc;</span>
+
+<span class=x>XmlRpc\AbstractValue::setGenerator(new XmlRpc\Generator\XmlWriter());</span>
+
+<span class=x>$server = new XmlRpc\Server();</span>
+</pre></div></p>
+<blockquote>
+<h4>Benchmark your application</h4>
+<p>Performance is determined by many parameters, and benchmarks only apply for
+the specific test case. Differences come from PHP version, installed
+extensions, webserver, and operating system just to name a few. Please make
+sure to benchmark your application on your own and decide which generator to
+use based on <strong>your</strong> numbers.</p>
+<h4>Benchmark your client</h4>
+<p>Optimization makes sense for the client side too. Just select the alternate
+XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
+</blockquote>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../client/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-xmlrpc/edit/master/docs/book/server.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-xmlrpc</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../client/" class="subnavigation__link">XML-RPC Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">XML-RPC Servers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-xmlrpc//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-xmlrpc//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-xmlrpc';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-xmlrpc" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

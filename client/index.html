@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fully-featured XML-RPC server and client implementations">  
+    <link rel="canonical" href="https://docs.laminas.dev/client/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>XML-RPC Clients - laminas-xmlrpc - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-xmlrpc</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">XML-RPC Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../server/" class="subnavigation__link">XML-RPC Servers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-xmlrpc</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-xmlrpc/" class="header__link header__link--github" title="Go to repository of laminas-xmlrpc">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#method-calls" class="toc__link">Method Calls</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#types-and-conversions" class="toc__link">Types and Conversions</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#server-proxy-object" class="toc__link">Server Proxy Object</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#error-handling" class="toc__link">Error Handling</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#server-introspection" class="toc__link">Server Introspection</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#from-request-to-response" class="toc__link">From Request to Response</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#http-client-and-testing" class="toc__link">HTTP Client and Testing</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-xmlrpc</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">XML-RPC Clients</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="xml-rpc-clients">XML-RPC Clients</h1>
+<p>laminas-xmlrpc provides support for consuming remote XML-RPC services as a client
+via the <code>Laminas\XmlRpc\Client</code> class. Its major features include:</p>
+<ul>
+<li>automatic type conversion between PHP and XML-RPC</li>
+<li>a server proxy object (to simplify method resolution)</li>
+<li>access to server introspection capabilities</li>
+</ul>
+<h2 id="method-calls">Method Calls</h2>
+<p>The constructor of <code>Laminas\XmlRpc\Client</code> receives the URL of the remote XML-RPC
+server endpoint as its first parameter. The new instance returned may be used to
+call any number of remote methods at that endpoint.</p>
+<p>To call a remote method with the XML-RPC client, instantiate it and use the
+<code>call()</code> instance method. The code sample below uses a demonstration XML-RPC
+server from <a href="http://www.advogato.org/">Advogato</a>. You can use it for testing or
+exploring the <code>Laminas\XmlRpc</code> components.</p>
+<h3>XML-RPC Method Call</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://www.advogato.org/XMLRPC&#39;);</span>
+
+<span class=x>var_dump($client-&gt;call(&#39;test.guess&#39;));</span>
+
+<span class=x>// [&#39;You guessed&#39;, 42]</span>
+</pre></div></p>
+<p>The XML-RPC value returned from the remote method call will be automatically
+unmarshaled and cast to the equivalent PHP native type. In the example above, a
+PHP array is returned containing a string and an integer value; you can
+immediately use the returned value.</p>
+<p>The first parameter of the <code>call()</code> method receives the name of the remote
+method to call. If the remote method requires any parameters, these can be sent
+by supplying a second, optional parameter to <code>call()</code> with an <code>array</code> of values
+to pass to the remote method:</p>
+<h3>XML-RPC Method Call with Parameters</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://www.advogato.org/XMLRPC&#39;);</span>
+
+<span class=x>$arg1 = 5;</span>
+<span class=x>$arg2 = 7;</span>
+
+<span class=x>$result = $client-&gt;call(&#39;test.sumProd&#39;, [$arg1, $arg2]);</span>
+
+<span class=x>// $result is a native PHP type</span>
+</pre></div></p>
+<p>If the remote method doesn't require parameters, this optional parameter may
+either be left out or an empty <code>[]</code> passed to it. The array of parameters for
+the remote method can contain native PHP types, <code>Laminas\XmlRpc\Value</code> objects, or
+a mix of each.</p>
+<p>The <code>call()</code> method will automatically convert the XML-RPC response and return
+its equivalent PHP native type. A <code>Laminas\XmlRpc\Response</code> object for the return
+value will also be available by calling the <code>getLastResponse()</code> method after the
+call.</p>
+<h2 id="types-and-conversions">Types and Conversions</h2>
+<p>Some remote method calls require parameters. These are given to the <code>call()</code>
+method of <code>Laminas\XmlRpc\Client</code> as an array in the second parameter. Each
+parameter may be given as either a native PHP type which will be automatically
+converted, or as an object representing a specific XML-RPC type (one of the
+<code>Laminas\XmlRpc\Value</code> objects).</p>
+<h3>PHP Native Types as Parameters</h3>
+<p>Parameters may be passed to <code>call()</code> as native PHP variables, meaning as a <code>string</code>, <code>integer</code>,
+<code>float</code>, <code>boolean</code>, <code>array</code>, or an <code>object</code>. In this case, each PHP native type will be
+auto-detected and converted into one of the XML-RPC types according to this table:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>PHP Native Type</th>
+<th>XML-RPC Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>integer</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>Laminas\Math\BigInteger\BigInteger</code></td>
+<td>i8</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>double</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td>boolean</td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>null</code></td>
+<td>nil</td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td>array</td>
+</tr>
+<tr>
+<td><code>associative array</code></td>
+<td>struct</td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td>array</td>
+</tr>
+<tr>
+<td><code>DateTime</code></td>
+<td>dateTime.iso8601</td>
+</tr>
+<tr>
+<td><code>DateTime</code></td>
+<td>dateTime.iso8601</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<h4>What type do empty arrays get cast to?</h4>
+<p>Passing an empty array to an XML-RPC method is problematic, as it could
+represent either an array or a struct. <code>Laminas\XmlRpc\Client</code> detects such
+conditions and makes a request to the server's <code>system.methodSignature</code> method
+to determine the appropriate XML-RPC type to cast to.</p>
+<p>However, this in itself can lead to issues. First off, servers that do not
+support <code>system.methodSignature</code> will log failed requests, and
+<code>Laminas\XmlRpc\Client</code> will resort to casting the value to an XML-RPC array
+type. Additionally, this means that any call with array arguments will result
+in an additional call to the remote server.</p>
+<p>To disable the lookup entirely, you can call the <code>setSkipSystemLookup()</code>
+method prior to making your XML-RPC call:</p>
+<pre class=codehilite><code class=language-php>
+$client-setSkipSystemLookup(true);
+$result = $client-call('foo.bar', array(array()));
+</code></pre>
+</blockquote>
+<h3>Laminas\XmlRpc\Value Objects as Parameters</h3>
+<p>Parameters may also be created as <code>Laminas\XmlRpc\Value</code> instances to specify an
+exact XML-RPC type.  The primary reasons for doing this are:</p>
+<ul>
+<li>When you want to make sure the correct parameter type is passed to the
+  procedure (i.e. the procedure requires an integer and you may get it from a
+  database as a string)</li>
+<li>When the procedure requires <code>base64</code> or <code>dateTime.iso8601</code> type (which doesn't
+  exists as a PHP native type)</li>
+<li>When auto-conversion may fail (i.e. you want to pass an empty XML-RPC struct
+  as a parameter.  Empty structs are represented as empty arrays in PHP but, if
+  you give an empty array as a parameter it will be auto-converted to an XML-RPC
+  array since it's not an associative array)</li>
+</ul>
+<p>There are two ways to create a <code>Laminas\XmlRpc\Value</code> object: instantiate one of the
+<code>Laminas\XmlRpc\Value</code> subclasses directly, or use the static factory method
+<code>Laminas\XmlRpc\AbstractValue::getXmlRpcValue()</code>.</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>XML-RPC Type</th>
+<th><code>Laminas\XmlRpc\AbstractValue</code> Constant</th>
+<th><code>Laminas\XmlRpc\Value</code> Object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_INTEGER</code></td>
+<td><code>Laminas\XmlRpc\Value\Integer</code></td>
+</tr>
+<tr>
+<td>i4</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_I4</code></td>
+<td><code>Laminas\XmlRpc\Value\Integer</code></td>
+</tr>
+<tr>
+<td>i8</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_I8</code></td>
+<td><code>Laminas\XmlRpc\Value\BigInteger</code> or <code>Laminas\XmlRpc\Value\Integer</code> if machine is 64-bit</td>
+</tr>
+<tr>
+<td>ex:i8</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8</code></td>
+<td><code>Laminas\XmlRpc\Value\BigInteger</code> or <code>Laminas\XmlRpc\Value\Integer</code> if machine is 64-bit</td>
+</tr>
+<tr>
+<td>double</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_DOUBLE</code></td>
+<td><code>Laminas\XmlRpc\ValueDouble</code></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_BOOLEAN</code></td>
+<td><code>Laminas\XmlRpc\Value\Boolean</code></td>
+</tr>
+<tr>
+<td>string</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_STRING</code></td>
+<td><code>Laminas\XmlRpc\Value\Text</code></td>
+</tr>
+<tr>
+<td>nil</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_NIL</code></td>
+<td><code>Laminas\XmlRpc\Value\Nil</code></td>
+</tr>
+<tr>
+<td>ex:nil</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHENIL</code></td>
+<td><code>Laminas\XmlRpc\Value\Nil</code></td>
+</tr>
+<tr>
+<td>base64</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_BASE64</code></td>
+<td><code>Laminas\XmlRpc\Value\Base64</code></td>
+</tr>
+<tr>
+<td>dateTime.iso8601</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_DATETIME</code></td>
+<td><code>Laminas\XmlRpc\Value\DateTime</code></td>
+</tr>
+<tr>
+<td>array</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_ARRAY</code></td>
+<td><code>Laminas\XmlRpc\Value\Array</code></td>
+</tr>
+<tr>
+<td>struct</td>
+<td><code>Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_STRUCT</code></td>
+<td><code>Laminas\XmlRpc\Value\Struct</code></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<h4>Automatic Conversion</h4>
+<p>When building a new <code>Laminas\XmlRpc\Value</code> object, its value is set by a PHP
+type. The PHP type will be converted to the specified type using PHP casting.
+For example, if a string is given as a value to the
+<code>Laminas\XmlRpc\Value\Integer</code> object, it will be converted using <code>(int) $value</code>.</p>
+</blockquote>
+<h2 id="server-proxy-object">Server Proxy Object</h2>
+<p>Another way to call remote methods with the XML-RPC client is to use the server
+proxy. This is a PHP object that proxies a remote XML-RPC namespace, making it
+work as close to a native PHP object as possible.</p>
+<p>To instantiate a server proxy, call the <code>getProxy()</code> instance method of
+<code>Laminas\XmlRpc\Client</code>. This will return an instance of <code>Laminas\XmlRpc\Client\ServerProxy</code>.
+Any method call on the server proxy object will be forwarded to the remote, and
+parameters may be passed like any other PHP method.</p>
+<h3>Proxy the Default Namespace</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://www.advogato.org/XMLRPC&#39;);</span>
+
+<span class=x>$service  = $client-&gt;getProxy();           // Proxy the default namespace</span>
+<span class=x>$products = $service-&gt;test-&gt;sumProd(5, 7); // test.sumProd(5, 7) returns [12, 35]</span>
+</pre></div></p>
+<p>The <code>getProxy()</code> method receives an optional argument specifying which namespace of the remote
+server to proxy. If it does not receive a namespace, the default namespace will be proxied. In the
+next example, the 'test' namespace will be proxied:</p>
+<h3>Proxy Any Namespace</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://www.advogato.org/XMLRPC&#39;);</span>
+
+<span class=x>$test  = $client-&gt;getProxy(&#39;test&#39;); // Proxy the &quot;test&quot; namespace</span>
+<span class=x>$hello = $test-&gt;sumProd(5, 7);      // test.sumProd(5, 7) returns [12, 35]</span>
+</pre></div></p>
+<p>If the remote server supports nested namespaces of any depth, these can also be
+used through the server proxy. For example, if the server in the example above
+had a method <code>test.foo.bar()</code>, it could be called as <code>$test-&gt;foo-&gt;bar()</code>.</p>
+<h2 id="error-handling">Error Handling</h2>
+<p>Two kinds of errors can occur during an XML-RPC method call: HTTP errors and
+XML-RPC faults.  <code>Laminas\XmlRpc\Client</code> recognizes each and provides the ability
+to detect and trap them independently.</p>
+<h3>HTTP Errors</h3>
+<p>If any HTTP error occurs, such as the remote HTTP server returns a <strong>404 Not
+Found</strong>, a <code>Laminas\XmlRpc\Client\Exception\HttpException</code> will be thrown.</p>
+<h4>Handling HTTP Errors</h4>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://foo/404&#39;);</span>
+
+<span class=x>try {</span>
+<span class=x>    $client-&gt;call(&#39;bar&#39;, array($arg1, $arg2));</span>
+<span class=x>} catch (Laminas\XmlRpc\Client\Exception\HttpException $e) {</span>
+<span class=x>    // $e-&gt;getCode() returns 404</span>
+<span class=x>    // $e-&gt;getMessage() returns &quot;Not Found&quot;</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Regardless of how the XML-RPC client is used, the <code>Laminas\XmlRpc\Client\Exception\HttpException</code>
+will be thrown whenever an HTTP error occurs.</p>
+<h3>XML-RPC Faults</h3>
+<p>An XML-RPC fault is analogous to a PHP exception. It is a special type returned
+from an XML-RPC method call that has both an error code and an error message.
+XML-RPC faults are handled differently depending on the context of how the
+<code>Laminas\XmlRpc\Client</code> is used.</p>
+<p>When the <code>call()</code> method or the server proxy object is used, an XML-RPC fault
+will result in a <code>Laminas\XmlRpc\Client\Exception\FaultException</code> being thrown. The
+code and message of the exception will map directly to their respective values
+in the original XML-RPC fault response.</p>
+<h4>Handling XML-RPC Faults</h4>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://www.advogato.org/XMLRPC&#39;);</span>
+
+<span class=x>try {</span>
+<span class=x>    $client-&gt;call(&#39;badMethod&#39;);</span>
+<span class=x>} catch (Laminas\XmlRpc\Client\Exception\FaultException $e) {</span>
+<span class=x>    // $e-&gt;getCode() returns 1</span>
+<span class=x>    // $e-&gt;getMessage() returns &quot;Unknown method&quot;</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>When the <code>call()</code> method is used to make the request, the
+<code>Laminas\XmlRpc\Client\Exception\FaultException</code> will be thrown on fault. A
+<code>Laminas\XmlRpc\Response</code> object containing the fault will also be available by
+calling <code>getLastResponse()</code>.</p>
+<p>When the <code>doRequest()</code> method is used to make the request, it will not throw the
+exception. Instead, it will return a <code>Laminas\XmlRpc\Response</code> object that, on
+error, contains the fault. This can be checked with <code>isFault()</code> instance method
+of <code>Laminas\XmlRpc\Response</code>.</p>
+<h2 id="server-introspection">Server Introspection</h2>
+<p>Some XML-RPC servers support the de facto introspection methods under the
+XML-RPC <code>system.</code> namespace. <code>Laminas\XmlRpc\Client</code> provides special support for
+servers with these capabilities.</p>
+<p>A <code>Laminas\XmlRpc\Client\ServerIntrospection</code> instance may be retrieved by calling
+the <code>getIntrospector()</code> method of <code>Laminas\XmlRpc\Client</code>. It can then be used to
+perform introspection operations on the server.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://example.com/xmlrpcserver.php&#39;);</span>
+<span class=x>$introspector = $client-&gt;getIntrospector();</span>
+<span class=x>foreach ($introspector-&gt;listMethods() as $method) {</span>
+<span class=x>    echo &quot;Method: &quot; . $method . &quot;\n&quot;;</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The following methods are available for introspection:</p>
+<ul>
+<li><code>getSignatureForEachMethod</code>: Returns the signature for each method on the
+  server.</li>
+<li><code>getSignatureForEachMethodByMulticall($methods=null)</code>: Attempt to get the
+  method signatures in one request via <code>system.multicall</code>. Optionally pass an
+  array of method names.</li>
+<li><code>getSignatureForEachMethodByLooping($methods=null)</code>: Get the method signatures
+  for every method by successively calling <code>system.methodSignature</code>. Optionally
+  pass an array of method names</li>
+<li><code>getMethodSignature($method)</code>: Get the method's signature for <code>$method</code>.</li>
+<li><code>listMethods</code>: List all methods on the server.</li>
+</ul>
+<h2 id="from-request-to-response">From Request to Response</h2>
+<p>Under the hood, the <code>call()</code> instance method of <code>Laminas\XmlRpc\Client</code> builds a
+request object (<code>Laminas\XmlRpc\Request</code>) and sends it to another method,
+<code>doRequest()</code>, that returns a response object (<code>Laminas\XmlRpc\Response</code>).</p>
+<p>The <code>doRequest()</code> method is also available for use directly.</p>
+<h3>Processing Request to Response</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>$client = new Laminas\XmlRpc\Client(&#39;http://www.advogato.org/XMLRPC&#39;);</span>
+
+<span class=x>$request = new Laminas\XmlRpc\Request();</span>
+<span class=x>$request-&gt;setMethod(&#39;test.guess&#39;);</span>
+
+<span class=x>$client-&gt;doRequest($request);</span>
+
+<span class=x>// $client-&gt;getLastRequest() returns instanceof Laminas\XmlRpc\Request</span>
+<span class=x>// $client-&gt;getLastResponse() returns instanceof Laminas\XmlRpc\Response</span>
+</pre></div></p>
+<p>Whenever an XML-RPC method call is made by the client through any means &mdash;
+either the <code>call()</code> method, <code>doRequest()</code> method, or server proxy &mdash; the
+last request object and its resultant response object will always be available
+through the methods <code>getLastRequest()</code> and <code>getLastResponse()</code> respectively.</p>
+<h2 id="http-client-and-testing">HTTP Client and Testing</h2>
+<p>In all of the prior examples, an HTTP client was never specified. When this is
+the case, a new instance of <code>Laminas\Http\Client</code> will be created with its default
+options and used by <code>Laminas\XmlRpc\Client</code> automatically.</p>
+<p>The HTTP client can be retrieved at any time with the <code>getHttpClient()</code> method.
+For most cases, the default HTTP client will be sufficient. However, the
+<code>setHttpClient()</code> method allows for a different HTTP client instance to be
+injected.</p>
+<p>The <code>setHttpClient()</code> is particularly useful for unit testing. When combined
+with <code>Laminas\Http\Client\Adapter\Test</code>, remote services can be mocked out for
+testing. See the unit tests for <code>Laminas\XmlRpc\Client</code> for examples of how to do
+this.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../intro/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../server/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-xmlrpc/edit/master/docs/book/client.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-xmlrpc</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">XML-RPC Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../server/" class="subnavigation__link">XML-RPC Servers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-xmlrpc//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-xmlrpc//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-xmlrpc';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-xmlrpc" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
