@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Exception;
+use Laminas\XmlRpc\Fault;
 use PHPUnit\Framework\TestCase;
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc\Exception;
-use Zend\XmlRpc\Fault;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class FaultTest extends TestCase
 {
@@ -46,7 +45,7 @@ class FaultTest extends TestCase
      */
     public function testConstructor()
     {
-        $this->assertInstanceOf('Zend\XmlRpc\Fault', $this->fault);
+        $this->assertInstanceOf('Laminas\XmlRpc\Fault', $this->fault);
         $this->assertEquals(404, $this->fault->getCode());
         $this->assertEquals('Unknown Error', $this->fault->getMessage());
     }
@@ -178,7 +177,7 @@ class FaultTest extends TestCase
     }
 
     /**
-     * Zend\XmlRpc\Fault::isFault() test
+     * Laminas\XmlRpc\Fault::isFault() test
      */
     public function testIsFault()
     {

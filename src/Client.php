@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\XmlRpc;
+namespace Laminas\XmlRpc;
 
-use Zend\Http;
-use Zend\Server\Client as ServerClient;
+use Laminas\Http;
+use Laminas\Server\Client as ServerClient;
 
 /**
  * An XML-RPC client implementation
@@ -26,31 +25,31 @@ class Client implements ServerClient
 
     /**
      * HTTP Client to use for requests
-     * @var \Zend\Http\Client
+     * @var \Laminas\Http\Client
      */
     protected $httpClient = null;
 
     /**
      * Introspection object
-     * @var \Zend\XmlRpc\Client\ServerIntrospection
+     * @var \Laminas\XmlRpc\Client\ServerIntrospection
      */
     protected $introspector = null;
 
     /**
      * Request of the last method call
-     * @var \Zend\XmlRpc\Request
+     * @var \Laminas\XmlRpc\Request
      */
     protected $lastRequest = null;
 
     /**
      * Response received from the last method call
-     * @var \Zend\XmlRpc\Response
+     * @var \Laminas\XmlRpc\Response
      */
     protected $lastResponse = null;
 
     /**
      * Proxy object for more convenient method calls
-     * @var array of Zend\XmlRpc\Client\ServerProxy
+     * @var array of Laminas\XmlRpc\Client\ServerProxy
      */
     protected $proxyCache = [];
 
@@ -65,7 +64,7 @@ class Client implements ServerClient
      *
      * @param  string $server      Full address of the XML-RPC service
      *                             (e.g. http://time.xmlrpc.com/RPC2)
-     * @param  \Zend\Http\Client $httpClient HTTP Client to use for requests
+     * @param  \Laminas\Http\Client $httpClient HTTP Client to use for requests
      */
     public function __construct($server, Http\Client $httpClient = null)
     {
@@ -82,8 +81,8 @@ class Client implements ServerClient
     /**
      * Sets the HTTP client object to use for connecting the XML-RPC server.
      *
-     * @param  \Zend\Http\Client $httpClient
-     * @return \Zend\Http\Client
+     * @param  \Laminas\Http\Client $httpClient
+     * @return \Laminas\Http\Client
      */
     public function setHttpClient(Http\Client $httpClient)
     {
@@ -93,7 +92,7 @@ class Client implements ServerClient
     /**
      * Gets the HTTP client object.
      *
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      */
     public function getHttpClient()
     {
@@ -103,8 +102,8 @@ class Client implements ServerClient
     /**
      * Sets the object used to introspect remote servers
      *
-     * @param  \Zend\XmlRpc\Client\ServerIntrospection
-     * @return \Zend\XmlRpc\Client\ServerIntrospection
+     * @param  \Laminas\XmlRpc\Client\ServerIntrospection
+     * @return \Laminas\XmlRpc\Client\ServerIntrospection
      */
     public function setIntrospector(Client\ServerIntrospection $introspector)
     {
@@ -114,7 +113,7 @@ class Client implements ServerClient
     /**
      * Gets the introspection object.
      *
-     * @return \Zend\XmlRpc\Client\ServerIntrospection
+     * @return \Laminas\XmlRpc\Client\ServerIntrospection
      */
     public function getIntrospector()
     {
@@ -124,7 +123,7 @@ class Client implements ServerClient
     /**
      * The request of the last method call
      *
-     * @return \Zend\XmlRpc\Request
+     * @return \Laminas\XmlRpc\Request
      */
     public function getLastRequest()
     {
@@ -134,7 +133,7 @@ class Client implements ServerClient
     /**
      * The response received from the last method call
      *
-     * @return \Zend\XmlRpc\Response
+     * @return \Laminas\XmlRpc\Response
      */
     public function getLastResponse()
     {
@@ -145,7 +144,7 @@ class Client implements ServerClient
      * Returns a proxy object for more convenient method calls
      *
      * @param string $namespace  Namespace to proxy or empty string for none
-     * @return \Zend\XmlRpc\Client\ServerProxy
+     * @return \Laminas\XmlRpc\Client\ServerProxy
      */
     public function getProxy($namespace = '')
     {
@@ -160,7 +159,7 @@ class Client implements ServerClient
      * Set skip system lookup flag
      *
      * @param  bool $flag
-     * @return \Zend\XmlRpc\Client
+     * @return \Laminas\XmlRpc\Client
      */
     public function setSkipSystemLookup($flag = true)
     {
@@ -181,13 +180,13 @@ class Client implements ServerClient
     /**
      * Perform an XML-RPC request and return a response.
      *
-     * @param \Zend\XmlRpc\Request       $request
-     * @param null|\Zend\XmlRpc\Response $response
+     * @param \Laminas\XmlRpc\Request       $request
+     * @param null|\Laminas\XmlRpc\Response $response
      *
-     * @throws \Zend\Http\Exception\InvalidArgumentException
-     * @throws \Zend\Http\Client\Exception\RuntimeException
-     * @throws \Zend\XmlRpc\Client\Exception\HttpException
-     * @throws \Zend\XmlRpc\Exception\ValueException
+     * @throws \Laminas\Http\Exception\InvalidArgumentException
+     * @throws \Laminas\Http\Client\Exception\RuntimeException
+     * @throws \Laminas\XmlRpc\Client\Exception\HttpException
+     * @throws \Laminas\XmlRpc\Exception\ValueException
      *
      * @return void
      */
@@ -220,7 +219,7 @@ class Client implements ServerClient
         }
 
         if (! $headers->has('user-agent')) {
-            $headers->addHeaderLine('user-agent', 'Zend_XmlRpc_Client');
+            $headers->addHeaderLine('user-agent', 'Laminas_XmlRpc_Client');
         }
 
         $xml = $this->lastRequest->__toString();
@@ -251,17 +250,17 @@ class Client implements ServerClient
      * @param  string $method Name of the method we want to call
      * @param  array $params Array of parameters for the method
      * @return mixed
-     * @throws \Zend\XmlRpc\Client\Exception\FaultException
+     * @throws \Laminas\XmlRpc\Client\Exception\FaultException
      */
     public function call($method, $params = [])
     {
         if (! $this->skipSystemLookup() && ('system.' != substr($method, 0, 7))) {
             // Ensure empty array/struct params are cast correctly
-            // If system.* methods are not available, bypass. (ZF-2978)
+            // If system.* methods are not available, bypass. (Laminas-2978)
             $success = true;
             try {
                 $signatures = $this->getIntrospector()->getMethodSignature($method);
-            } catch (\Zend\XmlRpc\Exception\ExceptionInterface $e) {
+            } catch (\Laminas\XmlRpc\Exception\ExceptionInterface $e) {
                 $success = false;
             }
             if ($success) {
@@ -336,7 +335,7 @@ class Client implements ServerClient
      *
      * @param string $method
      * @param array $params
-     * @return \Zend\XmlRpc\Request
+     * @return \Laminas\XmlRpc\Request
      */
     protected function createRequest($method, $params)
     {
