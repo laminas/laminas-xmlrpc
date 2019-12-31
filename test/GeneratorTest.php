@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
+use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class GeneratorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testCreatingSingleElement(Generator $generator)
     {
@@ -27,7 +26,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testCreatingSingleElementWithValue(Generator $generator)
     {
@@ -37,7 +36,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testCreatingComplexXmlDocument(Generator $generator)
     {
@@ -54,7 +53,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testFlushingGeneratorFlushesEverything(Generator $generator)
     {
@@ -65,7 +64,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testSpecialCharsAreEncoded(Generator $generator)
     {
@@ -80,7 +79,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGeneratorsWithAlternateEncodings
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGeneratorsWithAlternateEncodings
      */
     public function testDifferentEncodings(Generator $generator)
     {
@@ -89,7 +88,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testFluentInterfacesProvided(Generator $generator)
     {

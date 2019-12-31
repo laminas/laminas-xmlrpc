@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use stdClass;
 use DateTime;
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc\Value;
-use Zend\XmlRpc\Generator\GeneratorInterface as Generator;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
+use Laminas\XmlRpc\Value;
+use stdClass;
 
 /**
  * Test case for Value
  *
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class ValueTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,7 +44,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalBooleanFromXmlRpc(Generator $generator)
     {
@@ -82,7 +81,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalIntegerFromXmlRpc(Generator $generator)
     {
@@ -103,21 +102,21 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-3310
+     * @group Laminas-3310
      */
     public function testMarshalI4FromOverlongNativeThrowsException()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException', 'Overlong integer given');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\ValueException', 'Overlong integer given');
         $x = AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_I4);
         var_dump($x);
     }
 
     /**
-     * @group ZF-3310
+     * @group Laminas-3310
      */
     public function testMarshalIntegerFromOverlongNativeThrowsException()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException', 'Overlong integer given');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\ValueException', 'Overlong integer given');
         AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_INTEGER);
     }
 
@@ -140,7 +139,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalDoubleFromXmlRpc(Generator $generator)
     {
@@ -157,8 +156,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7712
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-7712
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingDoubleWithHigherPrecisionFromNative(Generator $generator)
     {
@@ -175,8 +174,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7712
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-7712
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingDoubleWithHigherPrecisionFromNativeWithTrailingZeros(Generator $generator)
     {
@@ -211,7 +210,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalStringFromXmlRpc(Generator $generator)
     {
@@ -228,7 +227,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalStringFromDefault(Generator $generator)
     {
@@ -266,7 +265,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalNilFromXmlRpc(Generator $generator)
     {
@@ -303,7 +302,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalArrayFromXmlRpc(Generator $generator)
     {
@@ -322,7 +321,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testEmptyXmlRpcArrayResultsInEmptyArray(Generator $generator)
     {
@@ -344,7 +343,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testArrayMustContainDataElement(Generator $generator)
     {
@@ -352,15 +351,15 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         $native = array();
         $xml    = '<value><array/></value>';
 
-        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException',
+        $this->setExpectedException('Laminas\XmlRpc\Exception\ValueException',
             'Invalid XML for XML-RPC native array type: ARRAY tag must contain DATA tag'
             );
         $val = AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
     }
 
     /**
-     * @group ZF-5405
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-5405
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalNilInStructWrappedInArray(Generator $generator)
     {
@@ -405,7 +404,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalStructFromXmlRpc(Generator $generator)
     {
@@ -425,7 +424,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingNestedStructFromXmlRpc(Generator $generator)
     {
@@ -447,7 +446,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingStructWithMemberWithoutValue(Generator $generator)
     {
@@ -469,7 +468,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingStructWithMemberWithoutName(Generator $generator)
     {
@@ -491,8 +490,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7639
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-7639
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalStructFromXmlRpcWithEntities(Generator $generator)
     {
@@ -507,8 +506,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-3947
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-3947
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingStructsWithEmptyValueFromXmlRpcShouldRetainKeys(Generator $generator)
     {
@@ -527,7 +526,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshallingStructWithMultibyteValueFromXmlRpcRetainsMultibyteValue(Generator $generator)
     {
@@ -578,7 +577,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 
     public function testMarshalDateTimeFromInvalidString()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException',
+        $this->setExpectedException('Laminas\XmlRpc\Exception\ValueException',
                                     "The timezone could not be found in the database");
         AbstractValue::getXmlRpcValue('foobarbaz', AbstractValue::XMLRPC_TYPE_DATETIME);
     }
@@ -594,7 +593,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11588
+     * @group Laminas-11588
      */
     public function testMarshalDateTimeBeyondUnixEpochFromNativeStringPassedToConstructor()
     {
@@ -605,7 +604,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalDateTimeFromXmlRpc(Generator $generator)
     {
@@ -624,8 +623,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
-     * @group ZF-4249
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-4249
      */
     public function testMarshalDateTimeFromFromDateTime(Generator $generator)
     {
@@ -644,8 +643,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
-     * @group ZF-4249
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @group Laminas-4249
      */
     public function testMarshalDateTimeFromDateTimeAndAutodetectingType(Generator $generator)
     {
@@ -662,7 +661,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10776
+     * @group Laminas-10776
      */
     public function testGetValueDatetime()
     {
@@ -690,7 +689,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ZendTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
      */
     public function testMarshalBase64FromXmlRpc(Generator $generator)
     {
@@ -720,7 +719,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-3862
+     * @group Laminas-3862
      */
     public function testMarshalSerializedObjectAsBase64()
     {
@@ -752,7 +751,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryThrowsWhenInvalidTypeSpecified()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\ValueException', 'Given type is not a Zend\XmlRpc\AbstractValue constant');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\ValueException', 'Given type is not a Laminas\XmlRpc\AbstractValue constant');
         AbstractValue::getXmlRpcValue('', 'bad type here');
     }
 
@@ -825,13 +824,13 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             AbstractValue::XMLRPC_TYPE_STRING,
-            AbstractValue::getXmlRpcTypeByValue('Zend Framework')
+            AbstractValue::getXmlRpcTypeByValue('Laminas')
         );
     }
 
     public function testGetXmlRpcTypeByValueThrowsExceptionOnInvalidValue()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\InvalidArgumentException');
         AbstractValue::getXmlRpcTypeByValue(fopen(__FILE__, 'r'));
     }
 
@@ -842,7 +841,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         if ($type == 'array') {
             $type = 'arrayValue';
         }
-        $type = 'Zend\\XmlRpc\\Value\\' . ucfirst($type);
+        $type = 'Laminas\\XmlRpc\\Value\\' . ucfirst($type);
         $this->assertInstanceOf($type, $object);
     }
 
