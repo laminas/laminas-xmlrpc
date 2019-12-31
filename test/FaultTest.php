@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\XmlRpc;
+namespace LaminasTest\XmlRpc;
 
-use Zend\XmlRpc\AbstractValue;
-use Zend\XmlRpc;
+use Laminas\XmlRpc;
+use Laminas\XmlRpc\AbstractValue;
 
 /**
- * @group      Zend_XmlRpc
+ * @group      Laminas_XmlRpc
  */
 class FaultTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,7 +43,7 @@ class FaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $this->assertInstanceOf('Zend\XmlRpc\Fault', $this->_fault);
+        $this->assertInstanceOf('Laminas\XmlRpc\Fault', $this->_fault);
         $this->assertEquals(404, $this->_fault->getCode());
         $this->assertEquals('Unknown Error', $this->_fault->getMessage());
     }
@@ -146,30 +145,30 @@ class FaultTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadXmlThrowsExceptionOnInvalidInput()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Failed to parse XML fault');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\InvalidArgumentException', 'Failed to parse XML fault');
         $parsed = $this->_fault->loadXml('foo');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput2()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
         $this->assertFalse($this->_fault->loadXml('<methodResponse><fault/></methodResponse>'));
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput3()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\InvalidArgumentException', 'Invalid fault structure');
         $this->_fault->loadXml('<methodResponse><fault/></methodResponse>');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput4()
     {
-        $this->setExpectedException('Zend\XmlRpc\Exception\InvalidArgumentException', 'Fault code and string required');
+        $this->setExpectedException('Laminas\XmlRpc\Exception\InvalidArgumentException', 'Fault code and string required');
         $this->_fault->loadXml('<methodResponse><fault><value><struct/></value></fault></methodResponse>');
     }
 
     /**
-     * Zend\XmlRpc\Fault::isFault() test
+     * Laminas\XmlRpc\Fault::isFault() test
      */
     public function testIsFault()
     {
