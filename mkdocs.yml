@@ -1,11 +1,13 @@
 docs_dir: docs/book
 site_dir: docs/html
 nav:
-    - { Home: index.md }
-    - { Introduction: intro.md }
-    - { Reference: [{ 'XML-RPC Clients': client.md }, { 'XML-RPC Servers': server.md }] }
+    - Home: index.md
+    - Introduction: intro.md
+    - Reference:
+        - "XML-RPC Clients": client.md
+        - "XML-RPC Servers": server.md
 site_name: laminas-xmlrpc
-site_description: 'Fully-featured XML-RPC server and client implementations'
+site_description: "Fully-featured XML-RPC server and client implementations"
 repo_url: 'https://github.com/laminas/laminas-xmlrpc'
 extra:
     project: Components
