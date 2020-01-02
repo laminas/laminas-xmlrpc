@@ -9,3 +9,6 @@ nav:
 site_name: laminas-xmlrpc
 site_description: "Fully-featured XML-RPC server and client implementations"
 repo_url: 'https://github.com/laminas/laminas-xmlrpc'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
