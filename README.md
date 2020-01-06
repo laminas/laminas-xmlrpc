@@ -1,6 +1,6 @@
 # laminas-xmlrpc
 
-[![Build Status](https://travis-ci.org/laminas/laminas-xmlrpc.svg?branch=master)](https://travis-ci.org/laminas/laminas-xmlrpc)
+[![Build Status](https://travis-ci.com/laminas/laminas-xmlrpc.svg?branch=master)](https://travis-ci.com/laminas/laminas-xmlrpc)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-xmlrpc/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-xmlrpc?branch=master)
 
 From its home page, XML-RPC is described as a ”...remote procedure calling using
