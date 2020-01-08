@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Fully-featured XML-RPC server and client implementations">  
-    <link rel="canonical" href="https://docs.laminas.dev/intro/">
     <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Introduction - laminas-xmlrpc - Laminas Docs</title>
+    <title>laminas-xmlrpc - Laminas Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -59,7 +58,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-xmlrpc</a>
+            <a href="../.">laminas-xmlrpc</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -73,8 +72,8 @@
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Introduction</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
@@ -168,135 +167,21 @@
         <div class="row">
             <div class="col-md-2 col-sm-12">
                 
-    
-
-    
-    
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#quick-start" class="toc__link">Quick Start</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
-
             </div>
             <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
                 
-                    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        
-            <li class="breadcrumb-item"><a href="">Overview</a></li>
 
-            
-                <li class="breadcrumb-item"><a href="..">laminas-xmlrpc</a></li>
-
-                
-
-                <li class="breadcrumb-item active" aria-current="page">Introduction</li>
-            
-        
-    </ol>
-</nav>
-
-
-
-
-
-
-    
-    
-
-    <h1 id="introduction">Introduction</h1>
-<p>From its <a href="http://www.xmlrpc.com/">home page</a>, XML-RPC is described as:</p>
+<h1 class="content__title">404</h1>
 <blockquote>
-<p>"...remote procedure calling using HTTP as the transport and XML as the
-encoding. XML-RPC is designed to be as simple as possible, while allowing
-complex data structures to be transmitted, processed and returned."</p>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
 </blockquote>
-<p>laminas-xmlrpc provides support for both consuming remote XML-RPC services and
-providing XML-RPC servers.</p>
-<h2 id="quick-start">Quick Start</h2>
-<p>The following demonstrates the most basic use case for <code>Laminas\XmlRpc\Server</code>:</p>
-<pre class=codehilite><code class=language-php>class Greeter
-{
-    /**
-    * Say hello to someone.
-    *
-    * @param string $name Who to greet
-    * @return string
-    */
-    public function sayHello($name = 'Stranger')
-    {
-        return sprintf(&quot;Hello %s!&quot;, $name);
-    }
-}
 
-$server = new Laminas\XmlRpc\Server;
-
-// Our Greeter class will be called &quot;greeter&quot; from the client:
-$server-&gt;setClass('Greeter', 'greeter');
-$server-&gt;handle();</code></pre>
-<blockquote>
-<h3>Docblock annotations are required</h3>
-<p>Function and method docblocks containing parameter and return value
-annotations <strong>are required</strong> when exposing them via <code>Laminas\XmlRpc\Server</code>. The
-values will be used to validate method parameters and provide method
-signatures to clients.</p>
-<p>Docblock descriptions will also be used to provide method help text.</p>
-</blockquote>
-<p>The following demonstrates an XML-RPC client that can consume the above service:</p>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://example.com/xmlrpcserver.php');
-
-echo $client-&gt;call('greeter.sayHello');
-// will output &quot;Hello Stranger!&quot;
-
-echo $client-&gt;call('greeter.sayHello', ['Dude']);
-// will output &quot;Hello Dude!&quot;</code></pre>
+<a href="../." class="btn btn-default" role="button">Go to homepage</a>
 
 
-
-
-    <nav>
-    <ul class="page-nav hidden-print">
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="..">
-                    <i class="fa fa-chevron-left"></i> Previous
-                </a>
-            
-        </li>
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../client/">
-                    Next <i class="fa fa-chevron-right"></i>
-                </a>
-            
-        </li>
-    </ul>
-</nav>
-
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-xmlrpc/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             </div>
             <div class="col-md-3 col-sm-12 sidebar">
                 
@@ -311,7 +196,7 @@ echo $client-&gt;call('greeter.sayHello', ['Dude']);
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-xmlrpc</a>
+            <a href="../.">laminas-xmlrpc</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -325,8 +210,8 @@ echo $client-&gt;call('greeter.sayHello', ['Dude']);
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Introduction</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     

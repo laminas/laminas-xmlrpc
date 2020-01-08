@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -262,10 +266,9 @@
 Additionally, it implements the <code>system.multicall()</code> method, allowing boxcarring
 of requests.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<p> <div class=codehilite><pre><span></span><span class=x>$server = new Laminas\XmlRpc\Server();</span>
-<span class=x>$server-&gt;setClass(&#39;My\Service\Class&#39;);</span>
-<span class=x>echo $server-&gt;handle();</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$server = new Laminas\XmlRpc\Server();
+$server-&gt;setClass('My\Service\Class');
+echo $server-&gt;handle();</code></pre>
 <h2 id="server-structure">Server Structure</h2>
 <p><code>Laminas\XmlRpc\Server</code> is composed of a variety of components, ranging from the
 server itself to request, response, and fault objects.</p>
@@ -320,18 +323,17 @@ These include:</p>
 <li><code>struct</code>, any associative array</li>
 </ul>
 <p>An example of how to hint follows:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
-<span class=x> * This is a sample function</span>
-<span class=x> *</span>
-<span class=x> * @param base64 $val1 Base64-encoded data</span>
-<span class=x> * @param dateTime.iso8601 $val2 An ISO date</span>
-<span class=x> * @param struct $val3 An associative array</span>
-<span class=x> * @return struct</span>
-<span class=x> */</span>
-<span class=x>function myFunc($val1, $val2, $val3)</span>
-<span class=x>{</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>/**
+ * This is a sample function
+ *
+ * @param base64 $val1 Base64-encoded data
+ * @param dateTime.iso8601 $val2 An ISO date
+ * @param struct $val3 An associative array
+ * @return struct
+ */
+function myFunc($val1, $val2, $val3)
+{
+}</code></pre>
 <p>PhpDocumentor does not validate types specified for params or return values, so
 this will have no impact on your API documentation. Providing the hinting is
 necessary, however, when the server is validating the parameters provided to the
@@ -341,18 +343,17 @@ values; the XML-RPC specification even suggests that <code>system.methodSignatur
 should return an array of all possible method signatures (i.e., all possible
 combinations of param and return values). You may do so just as you normally
 would with PhpDocumentor, using the <code>|</code> operator:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
-<span class=x> * This is a sample function</span>
-<span class=x> *</span>
-<span class=x> * @param string|base64 $val1 String or base64-encoded data</span>
-<span class=x> * @param string|dateTime.iso8601 $val2 String or an ISO date</span>
-<span class=x> * @param array|struct $val3 Normal indexed array or an associative array</span>
-<span class=x> * @return boolean|struct</span>
-<span class=x> */</span>
-<span class=x>function myFunc($val1, $val2, $val3)</span>
-<span class=x>{</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>/**
+ * This is a sample function
+ *
+ * @param string|base64 $val1 String or base64-encoded data
+ * @param string|dateTime.iso8601 $val2 String or an ISO date
+ * @param array|struct $val3 Normal indexed array or an associative array
+ * @return boolean|struct
+ */
+function myFunc($val1, $val2, $val3)
+{
+}</code></pre>
 <blockquote>
 <h3>Use multiple values sparingly</h3>
 <p>Allowing multiple signatures can lead to confusion for developers using the
@@ -372,13 +373,12 @@ an example, the XML-RPC server is expected to server several methods in the
 <p>Internally, these map to the methods of the same name in <code>Laminas\XmlRpc\Server</code>.</p>
 <p>If you want to add namespaces to the methods you serve, simply provide a
 namespace to the appropriate method when attaching a function or class:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// All public methods in My\Service\Class will be accessible as</span>
-<span class=x>// myservice.METHODNAME</span>
-<span class=x>$server-&gt;setClass(&#39;My\Service\Class&#39;, &#39;myservice&#39;);</span>
+<pre class=codehilite><code class=language-php>// All public methods in My\Service\Class will be accessible as
+// myservice.METHODNAME
+$server-&gt;setClass('My\Service\Class', 'myservice');
 
-<span class=x>// Function &#39;somefunc&#39; will be accessible as funcs.somefunc</span>
-<span class=x>$server-&gt;addFunction(&#39;somefunc&#39;, &#39;funcs&#39;);</span>
-</pre></div></p>
+// Function 'somefunc' will be accessible as funcs.somefunc
+$server-&gt;addFunction('somefunc', 'funcs');</code></pre>
 <h2 id="custom-request-objects">Custom Request Objects</h2>
 <p>Most of the time, you'll simply use the default request type included with
 <code>Laminas\XmlRpc\Server</code>, <code>Laminas\XmlRpc\Request\Http</code>. However, there may be times
@@ -406,8 +406,7 @@ necessarily intend (a prime example includes database exceptions).</p>
 <p>Exception classes can be whitelisted to be used as fault responses, however. To
 do so, call <code>Laminas\XmlRpc\Server\Fault::attachFaultException()</code> and pass an
 exception class to whitelist:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>Laminas\XmlRpc\Server\Fault::attachFaultException(&#39;My\Project\Exception&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>Laminas\XmlRpc\Server\Fault::attachFaultException('My\Project\Exception');</code></pre>
 <p>If you utilize an exception class that your other project exceptions inherit,
 you can then whitelist a whole family of exceptions at a time.
 <code>Laminas\XmlRpc\Server\Exception</code>s are always whitelisted, to allow reporting
@@ -422,23 +421,22 @@ signatures to provide to the server class.</p>
 <p>To reduce this performance hit somewhat, <code>Laminas\XmlRpc\Server\Cache</code> can be used
 to cache the server definition between requests.</p>
 <p>An sample usage follows:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use My\Service as s;</span>
-<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+<pre class=codehilite><code class=language-php>use My\Service as s;
+use Laminas\XmlRpc\Server as XmlRpcServer;
 
-<span class=x>$cacheFile = dirname(__FILE__) . &#39;/xmlrpc.cache&#39;;</span>
-<span class=x>$server = new XmlRpcServer();</span>
+$cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
+$server = new XmlRpcServer();
 
-<span class=x>if (! XmlRpcServer\Cache::get($cacheFile, $server)) {</span>
+if (! XmlRpcServer\Cache::get($cacheFile, $server)) {
 
-<span class=x>    $server-&gt;setClass(s\Glue::class, &#39;glue&#39;);   // glue. namespace</span>
-<span class=x>    $server-&gt;setClass(s\Paste::class, &#39;paste&#39;); // paste. namespace</span>
-<span class=x>    $server-&gt;setClass(s\Tape::class, &#39;tape&#39;);   // tape. namespace</span>
+    $server-&gt;setClass(s\Glue::class, 'glue');   // glue. namespace
+    $server-&gt;setClass(s\Paste::class, 'paste'); // paste. namespace
+    $server-&gt;setClass(s\Tape::class, 'tape');   // tape. namespace
 
-<span class=x>    XmlRpcServer\Cache::save($cacheFile, $server);</span>
-<span class=x>}</span>
+    XmlRpcServer\Cache::save($cacheFile, $server);
+}
 
-<span class=x>echo $server-&gt;handle();</span>
-</pre></div></p>
+echo $server-&gt;handle();</code></pre>
 <p>The above example attempts to retrieve a server definition from <code>xmlrpc.cache</code>
 in the same directory as the script. If unsuccessful, it loads the service
 classes it needs, attaches them to the server instance, and then attempts to
@@ -449,62 +447,59 @@ to developers.  Usage examples will each build on the previous example provided.
 <h3>Basic Usage</h3>
 <p>The example below attaches a function as a dispatchable XML-RPC method and
 handles incoming calls.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
-<span class=x> * Return the MD5 sum of a value</span>
-<span class=x> *</span>
-<span class=x> * @param string $value Value to md5sum</span>
-<span class=x> * @return string MD5 sum of value</span>
-<span class=x> */</span>
-<span class=x>function md5Value($value)</span>
-<span class=x>{</span>
-<span class=x>    return md5($value);</span>
-<span class=x>}</span>
+<pre class=codehilite><code class=language-php>/**
+ * Return the MD5 sum of a value
+ *
+ * @param string $value Value to md5sum
+ * @return string MD5 sum of value
+ */
+function md5Value($value)
+{
+    return md5($value);
+}
 
-<span class=x>$server = new Laminas\XmlRpc\Server();</span>
-<span class=x>$server-&gt;addFunction(&#39;md5Value&#39;);</span>
-<span class=x>echo $server-&gt;handle();</span>
-</pre></div></p>
+$server = new Laminas\XmlRpc\Server();
+$server-&gt;addFunction('md5Value');
+echo $server-&gt;handle();</code></pre>
 <h3>Attaching a class</h3>
 <p>The example below illustrates attaching a class' public methods as dispatchable
 XML-RPC methods.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>require_once &#39;Services/Comb.php&#39;;</span>
+<pre class=codehilite><code class=language-php>require_once 'Services/Comb.php';
 
-<span class=x>$server = new Laminas\XmlRpc\Server();</span>
-<span class=x>$server-&gt;setClass(&#39;Services\Comb&#39;);</span>
-<span class=x>echo $server-&gt;handle();</span>
-</pre></div></p>
+$server = new Laminas\XmlRpc\Server();
+$server-&gt;setClass('Services\Comb');
+echo $server-&gt;handle();</code></pre>
 <h3>Attaching a class with arguments</h3>
 <p>The following example illustrates how to attach a class' public methods and
 passing arguments to its methods. This can be used to specify certain defaults
 when registering service classes.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Services;</span>
+<pre class=codehilite><code class=language-php>namespace Services;
 
-<span class=x>class PricingService</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Calculate current price of product with $productId</span>
-<span class=x>     *</span>
-<span class=x>     * @param ProductRepository $productRepository</span>
-<span class=x>     * @param PurchaseRepository $purchaseRepository</span>
-<span class=x>     * @param integer $productId</span>
-<span class=x>     */</span>
-<span class=x>    public function calculate(</span>
-<span class=x>        ProductRepository $productRepository,</span>
-<span class=x>        PurchaseRepository $purchaseRepository,</span>
-<span class=x>        $productId</span>
-<span class=x>    ) {</span>
-<span class=x>        /* ... */</span>
-<span class=x>    }</span>
-<span class=x>}</span>
+class PricingService
+{
+    /**
+     * Calculate current price of product with $productId
+     *
+     * @param ProductRepository $productRepository
+     * @param PurchaseRepository $purchaseRepository
+     * @param integer $productId
+     */
+    public function calculate(
+        ProductRepository $productRepository,
+        PurchaseRepository $purchaseRepository,
+        $productId
+    ) {
+        /* ... */
+    }
+}
 
-<span class=x>$server = new Laminas\XmlRpc\Server();</span>
-<span class=x>$server-&gt;setClass(</span>
-<span class=x>    &#39;Services\PricingService&#39;,</span>
-<span class=x>    &#39;pricing&#39;,</span>
-<span class=x>    new ProductRepository(),</span>
-<span class=x>    new PurchaseRepository()</span>
-<span class=x>);</span>
-</pre></div></p>
+$server = new Laminas\XmlRpc\Server();
+$server-&gt;setClass(
+    'Services\PricingService',
+    'pricing',
+    new ProductRepository(),
+    new PurchaseRepository()
+);</code></pre>
 <p>The arguments passed to <code>setClass()</code> are injected into the method call
 <code>pricing.calculate()</code> on remote invocation. In the example above, only the
 argument <code>$productId</code> is expected from the client.</p>
@@ -516,44 +511,43 @@ classes, instead of when invoking methods.</p>
 being injected into the remote method. In the example below, the instance of
 <code>ProductRepository</code> and <code>PurchaseRepository</code> is only injected into the
 constructor of <code>Services\PricingService2</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class Services\PricingService2</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @param ProductRepository $productRepository</span>
-<span class=x>     * @param PurchaseRepository $purchaseRepository</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct(</span>
-<span class=x>        ProductRepository $productRepository,</span>
-<span class=x>        PurchaseRepository $purchaseRepository</span>
-<span class=x>    ) {</span>
-<span class=x>        /* ... */</span>
-<span class=x>    }</span>
+<pre class=codehilite><code class=language-php>class Services\PricingService2
+{
+    /**
+     * @param ProductRepository $productRepository
+     * @param PurchaseRepository $purchaseRepository
+     */
+    public function __construct(
+        ProductRepository $productRepository,
+        PurchaseRepository $purchaseRepository
+    ) {
+        /* ... */
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Calculate current price of product with $productId</span>
-<span class=x>     *</span>
-<span class=x>     * @param integer $productId</span>
-<span class=x>     * @return double</span>
-<span class=x>     */</span>
-<span class=x>    public function calculate($productId)</span>
-<span class=x>    {</span>
-<span class=x>        ...</span>
-<span class=x>    }</span>
-<span class=x>}</span>
+    /**
+     * Calculate current price of product with $productId
+     *
+     * @param integer $productId
+     * @return double
+     */
+    public function calculate($productId)
+    {
+        ...
+    }
+}
 
-<span class=x>$server = new Laminas\XmlRpc\Server();</span>
+$server = new Laminas\XmlRpc\Server();
 
-<span class=x>// Tell the server to pass arguments to constructors instead of at invocation:</span>
-<span class=x>$server-&gt;sendArgumentsToAllMethods(false);</span>
+// Tell the server to pass arguments to constructors instead of at invocation:
+$server-&gt;sendArgumentsToAllMethods(false);
 
-<span class=x>// Map the class:</span>
-<span class=x>$server-&gt;setClass(</span>
-<span class=x>    &#39;Services\PricingService2&#39;,</span>
-<span class=x>    &#39;pricing&#39;,</span>
-<span class=x>    new ProductRepository(),</span>
-<span class=x>    new PurchaseRepository()</span>
-<span class=x>);</span>
-</pre></div></p>
+// Map the class:
+$server-&gt;setClass(
+    'Services\PricingService2',
+    'pricing',
+    new ProductRepository(),
+    new PurchaseRepository()
+);</code></pre>
 <h3>Attaching a class instance</h3>
 <p><code>setClass()</code> allows registering a previously instantiated class with the server,
 instead of specifying the class name. Obviously, passing arguments to the
@@ -561,31 +555,29 @@ constructor is not possible with pre-instantiated classes.</p>
 <h3>Attaching several classes using namespaces</h3>
 <p>The example below illustrates attaching several classes, each with their own
 namespace.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
-<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
+<pre class=codehilite><code class=language-php>use Services as s;
+use Laminas\XmlRpc\Server as XmlRpcServer;
 
-<span class=x>$server = new XmlRpcServer();</span>
-<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
-<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
-<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
-<span class=x>echo $server-&gt;handle();</span>
-</pre></div></p>
+$server = new XmlRpcServer();
+$server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
+$server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
+$server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
+echo $server-&gt;handle();</code></pre>
 <h3>Specifying exceptions to use as valid fault responses</h3>
 <p>The example below allows any <code>Services\Exception</code>-derived class to report its
 code and message in the fault response.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
-<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
-<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+<pre class=codehilite><code class=language-php>use Services as s;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
-<span class=x>// Allow Services_Exceptions to report as fault responses</span>
-<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+// Allow Services_Exceptions to report as fault responses
+XmlRpcFault::attachFaultException(s\Exception::class);
 
-<span class=x>$server = new XmlRpcServer();</span>
-<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
-<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
-<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
-<span class=x>echo $server-&gt;handle();</span>
-</pre></div></p>
+$server = new XmlRpcServer();
+$server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
+$server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
+$server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
+echo $server-&gt;handle();</code></pre>
 <h3>Utilizing custom request and response objects</h3>
 <p>Some use cases require custom request objects; XML-RPC is not bound to HTTP as a
 transfer protocol. It is possible to use other transfer protocols like SSH or
@@ -594,78 +586,75 @@ authentication and authorization. When a different transfer protocol is
 required, you will need to change the implementation to read request data.</p>
 <p>The example below instantiates a custom request class and passes it to the
 server to handle.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
-<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
-<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+<pre class=codehilite><code class=language-php>use Services as s;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
-<span class=x>// Allow Services_Exceptions to report as fault responses</span>
-<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+// Allow Services_Exceptions to report as fault responses
+XmlRpcFault::attachFaultException(s\Exception::class);
 
-<span class=x>$server = new XmlRpcServer();</span>
-<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
-<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
-<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+$server = new XmlRpcServer();
+$server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
+$server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
+$server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 
-<span class=x>// Create a request object</span>
-<span class=x>$request = new s\Request();</span>
+// Create a request object
+$request = new s\Request();
 
-<span class=x>echo $server-&gt;handle($request);</span>
-</pre></div></p>
+echo $server-&gt;handle($request);</code></pre>
 <h3>Specifying a custom response class</h3>
 <p>The example below illustrates specifying a custom response class for the returned response.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
-<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
-<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+<pre class=codehilite><code class=language-php>use Services as s;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
-<span class=x>// Allow Services_Exceptions to report as fault responses</span>
-<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+// Allow Services_Exceptions to report as fault responses
+XmlRpcFault::attachFaultException(s\Exception::class);
 
-<span class=x>$server = new XmlRpcServer();</span>
-<span class=x>$server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
-<span class=x>$server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
-<span class=x>$server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+$server = new XmlRpcServer();
+$server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
+$server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
+$server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 
-<span class=x>// Create a request object</span>
-<span class=x>$request = new s\Request();</span>
+// Create a request object
+$request = new s\Request();
 
-<span class=x>// Utilize a custom response</span>
-<span class=x>$server-&gt;setResponseClass(s\Response::class);</span>
+// Utilize a custom response
+$server-&gt;setResponseClass(s\Response::class);
 
-<span class=x>echo $server-&gt;handle($request);</span>
-</pre></div></p>
+echo $server-&gt;handle($request);</code></pre>
 <h2 id="performance-optimization">Performance optimization</h2>
 <h3>Cache server definitions between requests</h3>
 <p>The example below illustrates caching server definitions between requests.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Services as s;</span>
-<span class=x>use Laminas\XmlRpc\Server as XmlRpcServer;</span>
-<span class=x>use Laminas\XmlRpc\Server\Fault as XmlRpcFault;</span>
+<pre class=codehilite><code class=language-php>use Services as s;
+use Laminas\XmlRpc\Server as XmlRpcServer;
+use Laminas\XmlRpc\Server\Fault as XmlRpcFault;
 
-<span class=x>// Specify a cache file</span>
-<span class=x>$cacheFile = dirname(__FILE__) . &#39;/xmlrpc.cache&#39;;</span>
+// Specify a cache file
+$cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
-<span class=x>// Allow Services\Exceptions to report as fault responses</span>
-<span class=x>XmlRpcFault::attachFaultException(s\Exception::class);</span>
+// Allow Services\Exceptions to report as fault responses
+XmlRpcFault::attachFaultException(s\Exception::class);
 
-<span class=x>$server = new XmlRpcServer();</span>
+$server = new XmlRpcServer();
 
-<span class=x>// Attempt to retrieve server definition from cache</span>
-<span class=x>if (! XmlRpcServer\Cache::get($cacheFile, $server)) {</span>
-<span class=x>    $server-&gt;setClass(s\Comb::class, &#39;comb&#39;);   // methods called as comb.*</span>
-<span class=x>    $server-&gt;setClass(s\Brush::class, &#39;brush&#39;); // methods called as brush.*</span>
-<span class=x>    $server-&gt;setClass(s\Pick::class, &#39;pick&#39;);   // methods called as pick.*</span>
+// Attempt to retrieve server definition from cache
+if (! XmlRpcServer\Cache::get($cacheFile, $server)) {
+    $server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
+    $server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
+    $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 
-<span class=x>    // Save cache</span>
-<span class=x>    XmlRpcServer\Cache::save($cacheFile, $server);</span>
-<span class=x>}</span>
+    // Save cache
+    XmlRpcServer\Cache::save($cacheFile, $server);
+}
 
-<span class=x>// Create a request object</span>
-<span class=x>$request = new s\Request();</span>
+// Create a request object
+$request = new s\Request();
 
-<span class=x>// Utilize a custom response</span>
-<span class=x>$server-&gt;setResponseClass(s\Response::class);</span>
+// Utilize a custom response
+$server-&gt;setResponseClass(s\Response::class);
 
-<span class=x>echo $server-&gt;handle($request);</span>
-</pre></div></p>
+echo $server-&gt;handle($request);</code></pre>
 <blockquote>
 <h3>Cache file location</h3>
 <p>The server cache file should be located outside the document root.</p>
@@ -676,12 +665,11 @@ functionality is available on most hosts, it's not always the most performant
 solution; benchmarks have shown that <code>XmlWriter</code> performs better.</p>
 <p>If <code>ext/xmlwriter</code> is available on your host, you can select the
 <code>XmlWriter</code>-based generator to leverage the performance differences.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\XmlRpc;</span>
+<pre class=codehilite><code class=language-php>use Laminas\XmlRpc;
 
-<span class=x>XmlRpc\AbstractValue::setGenerator(new XmlRpc\Generator\XmlWriter());</span>
+XmlRpc\AbstractValue::setGenerator(new XmlRpc\Generator\XmlWriter());
 
-<span class=x>$server = new XmlRpc\Server();</span>
-</pre></div></p>
+$server = new XmlRpc\Server();</code></pre>
 <blockquote>
 <h4>Benchmark your application</h4>
 <p>Performance is determined by many parameters, and benchmarks only apply for
@@ -816,9 +804,10 @@ XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -855,7 +844,7 @@ XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-xmlrpc//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -864,8 +853,8 @@ XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-xmlrpc//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-xmlrpc/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
