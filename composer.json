@@ -65,6 +65,6 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
     "replace": {
-        "zendframework/zend-xmlrpc": "self.version"
+        "zendframework/zend-xmlrpc": "^2.9.0"
     }
 }
