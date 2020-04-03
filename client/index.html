@@ -320,11 +320,12 @@ call any number of remote methods at that endpoint.</p>
 server from <a href="http://www.advogato.org/">Advogato</a>. You can use it for testing or
 exploring the <code>Laminas\XmlRpc</code> components.</p>
 <h3>XML-RPC Method Call</h3>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 var_dump($client-&gt;call('test.guess'));
 
 // ['You guessed', 42]</code></pre>
+
 <p>The XML-RPC value returned from the remote method call will be automatically
 unmarshaled and cast to the equivalent PHP native type. In the example above, a
 PHP array is returned containing a string and an integer value; you can
@@ -334,7 +335,7 @@ method to call. If the remote method requires any parameters, these can be sent
 by supplying a second, optional parameter to <code>call()</code> with an <code>array</code> of values
 to pass to the remote method:</p>
 <h3>XML-RPC Method Call with Parameters</h3>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $arg1 = 5;
 $arg2 = 7;
@@ -342,6 +343,7 @@ $arg2 = 7;
 $result = $client-&gt;call('test.sumProd', [$arg1, $arg2]);
 
 // $result is a native PHP type</code></pre>
+
 <p>If the remote method doesn't require parameters, this optional parameter may
 either be left out or an empty <code>[]</code> passed to it. The array of parameters for
 the remote method can contain native PHP types, <code>Laminas\XmlRpc\Value</code> objects, or
@@ -427,10 +429,9 @@ type. Additionally, this means that any call with array arguments will result
 in an additional call to the remote server.</p>
 <p>To disable the lookup entirely, you can call the <code>setSkipSystemLookup()</code>
 method prior to making your XML-RPC call:</p>
-<pre class="codehilite"><code class="language-php">
-$client-setSkipSystemLookup(true);
-$result = $client-call('foo.bar', array(array()));
-</code></pre>
+<pre class="highlight"><code class="language-php">$client-setSkipSystemLookup(true);
+$result = $client-call('foo.bar', array(array()));</code></pre>
+
 </blockquote>
 <h3>Laminas\XmlRpc\Value Objects as Parameters</h3>
 <p>Parameters may also be created as <code>Laminas\XmlRpc\Value</code> instances to specify an
@@ -541,18 +542,20 @@ work as close to a native PHP object as possible.</p>
 Any method call on the server proxy object will be forwarded to the remote, and
 parameters may be passed like any other PHP method.</p>
 <h3>Proxy the Default Namespace</h3>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $service  = $client-&gt;getProxy();           // Proxy the default namespace
 $products = $service-&gt;test-&gt;sumProd(5, 7); // test.sumProd(5, 7) returns [12, 35]</code></pre>
+
 <p>The <code>getProxy()</code> method receives an optional argument specifying which namespace of the remote
 server to proxy. If it does not receive a namespace, the default namespace will be proxied. In the
 next example, the 'test' namespace will be proxied:</p>
 <h3>Proxy Any Namespace</h3>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
-$test  = $client-&gt;getProxy('test'); // Proxy the &quot;test&quot; namespace
+$test  = $client-&gt;getProxy('test'); // Proxy the "test" namespace
 $hello = $test-&gt;sumProd(5, 7);      // test.sumProd(5, 7) returns [12, 35]</code></pre>
+
 <p>If the remote server supports nested namespaces of any depth, these can also be
 used through the server proxy. For example, if the server in the example above
 had a method <code>test.foo.bar()</code>, it could be called as <code>$test-&gt;foo-&gt;bar()</code>.</p>
@@ -564,14 +567,15 @@ to detect and trap them independently.</p>
 <p>If any HTTP error occurs, such as the remote HTTP server returns a <strong>404 Not
 Found</strong>, a <code>Laminas\XmlRpc\Client\Exception\HttpException</code> will be thrown.</p>
 <h4>Handling HTTP Errors</h4>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://foo/404');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://foo/404');
 
 try {
     $client-&gt;call('bar', array($arg1, $arg2));
 } catch (Laminas\XmlRpc\Client\Exception\HttpException $e) {
     // $e-&gt;getCode() returns 404
-    // $e-&gt;getMessage() returns &quot;Not Found&quot;
+    // $e-&gt;getMessage() returns "Not Found"
 }</code></pre>
+
 <p>Regardless of how the XML-RPC client is used, the <code>Laminas\XmlRpc\Client\Exception\HttpException</code>
 will be thrown whenever an HTTP error occurs.</p>
 <h3>XML-RPC Faults</h3>
@@ -584,14 +588,15 @@ will result in a <code>Laminas\XmlRpc\Client\Exception\FaultException</code> bei
 code and message of the exception will map directly to their respective values
 in the original XML-RPC fault response.</p>
 <h4>Handling XML-RPC Faults</h4>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 try {
     $client-&gt;call('badMethod');
 } catch (Laminas\XmlRpc\Client\Exception\FaultException $e) {
     // $e-&gt;getCode() returns 1
-    // $e-&gt;getMessage() returns &quot;Unknown method&quot;
+    // $e-&gt;getMessage() returns "Unknown method"
 }</code></pre>
+
 <p>When the <code>call()</code> method is used to make the request, the
 <code>Laminas\XmlRpc\Client\Exception\FaultException</code> will be thrown on fault. A
 <code>Laminas\XmlRpc\Response</code> object containing the fault will also be available by
@@ -607,11 +612,12 @@ servers with these capabilities.</p>
 <p>A <code>Laminas\XmlRpc\Client\ServerIntrospection</code> instance may be retrieved by calling
 the <code>getIntrospector()</code> method of <code>Laminas\XmlRpc\Client</code>. It can then be used to
 perform introspection operations on the server.</p>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://example.com/xmlrpcserver.php');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://example.com/xmlrpcserver.php');
 $introspector = $client-&gt;getIntrospector();
 foreach ($introspector-&gt;listMethods() as $method) {
-    echo &quot;Method: &quot; . $method . &quot;\n&quot;;
+    echo "Method: " . $method . "\n";
 }</code></pre>
+
 <p>The following methods are available for introspection:</p>
 <ul>
 <li><code>getSignatureForEachMethod</code>: Returns the signature for each method on the
@@ -631,7 +637,7 @@ request object (<code>Laminas\XmlRpc\Request</code>) and sends it to another met
 <code>doRequest()</code>, that returns a response object (<code>Laminas\XmlRpc\Response</code>).</p>
 <p>The <code>doRequest()</code> method is also available for use directly.</p>
 <h3>Processing Request to Response</h3>
-<pre class=codehilite><code class=language-php>$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $request = new Laminas\XmlRpc\Request();
 $request-&gt;setMethod('test.guess');
@@ -640,6 +646,7 @@ $client-&gt;doRequest($request);
 
 // $client-&gt;getLastRequest() returns instanceof Laminas\XmlRpc\Request
 // $client-&gt;getLastResponse() returns instanceof Laminas\XmlRpc\Response</code></pre>
+
 <p>Whenever an XML-RPC method call is made by the client through any means &mdash;
 either the <code>call()</code> method, <code>doRequest()</code> method, or server proxy &mdash; the
 last request object and its resultant response object will always be available
