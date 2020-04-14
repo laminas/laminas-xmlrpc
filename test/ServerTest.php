@@ -76,7 +76,11 @@ class ServerTest extends TestCase
 
         $methods = $this->server->listMethods();
         $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods);
-        $this->assertNotContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction2', $methods, var_export($methods, 1));
+        $this->assertNotContains(
+            'zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction2',
+            $methods,
+            var_export($methods, 1)
+        );
     }
 
     public function testAddFunctionThrowsExceptionOnInvalidInput()
