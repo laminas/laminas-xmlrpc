@@ -210,7 +210,7 @@ class Response
                 throw new Exception\ValueException('Missing XML-RPC value in XML');
             }
             $valueXml = $xml->params->param->value->asXML();
-            $value = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING);
+            $value = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING, $this->libXmlConstants);
         } catch (Exception\ValueException $e) {
             $this->fault = new Fault(653);
             $this->fault->setEncoding($this->getEncoding());

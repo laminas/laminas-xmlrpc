@@ -178,10 +178,11 @@ abstract class AbstractValue
      *
      * @param  mixed $value
      * @param  Laminas\XmlRpc\Value::constant $type
+     * @param  int $libXmlConstants
      * @throws Exception\ValueException
      * @return AbstractValue
      */
-    public static function getXmlRpcValue($value, $type = self::AUTO_DETECT_TYPE)
+    public static function getXmlRpcValue($value, $type = self::AUTO_DETECT_TYPE, $libXmlConstants = 0)
     {
         switch ($type) {
             case self::AUTO_DETECT_TYPE:
@@ -190,7 +191,7 @@ abstract class AbstractValue
 
             case self::XML_STRING:
                 // Parse the XML string given in $value and get the XML-RPC value in it
-                return static::xmlStringToNativeXmlRpc($value);
+                return static::xmlStringToNativeXmlRpc($value, $libXmlConstants);
 
             case self::XMLRPC_TYPE_I4:
                 // fall through to the next case
@@ -323,14 +324,15 @@ abstract class AbstractValue
      *
      * @param string|\SimpleXMLElement $xml A SimpleXMLElement object represent the XML string
      * It can be also a valid XML string for conversion
+     * @param int $libXmlConstants
      *
      * @throws Exception\ValueException
      * @return \Laminas\XmlRpc\AbstractValue
      * @static
      */
-    protected static function xmlStringToNativeXmlRpc($xml)
+    protected static function xmlStringToNativeXmlRpc($xml, $libXmlConstants = 0)
     {
-        static::createSimpleXMLElement($xml);
+        static::createSimpleXMLElement($xml, $libXmlConstants);
 
         static::extractTypeAndValue($xml, $type, $value);
 
@@ -418,14 +420,14 @@ abstract class AbstractValue
         return $xmlrpcValue;
     }
 
-    protected static function createSimpleXMLElement(&$xml)
+    protected static function createSimpleXMLElement(&$xml, $libXmlConstants = 0)
     {
         if ($xml instanceof SimpleXMLElement) {
             return;
         }
 
         try {
-            $xml = new SimpleXMLElement($xml);
+            $xml = new SimpleXMLElement($xml, $libXmlConstants);
         } catch (\Exception $e) {
             // The given string is not a valid XML
             throw new Exception\ValueException(
