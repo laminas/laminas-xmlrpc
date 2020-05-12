@@ -13,7 +13,7 @@ namespace LaminasTest\XmlRpc;
  * <code>
  * class ...
  * {
- *     public function setUp()
+ *     protected function setUp(): void
  *     {
  *         LaminasTest\XmlRpc\PhpInputMock::mockInput('expected string');
  *     }
@@ -24,7 +24,7 @@ namespace LaminasTest\XmlRpc;
  *         $this->assertSame('php://input', LaminasTest\XmlRpc\PhpInputMock::getCurrentPath());
  *     }
  *
- *     public function tearDown()
+ *     protected function tearDown(): void
  *     {
  *         LaminasTest\XmlRpc\PhpInputMock::restoreDefault();
  *     }

@@ -28,7 +28,7 @@ class CacheTest extends TestCase
     /**
      * Setup environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->file = realpath(__DIR__) . '/xmlrpc.cache';
         $this->server = new Server();
@@ -38,7 +38,7 @@ class CacheTest extends TestCase
     /**
      * Teardown environment
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->file)) {
             unlink($this->file);

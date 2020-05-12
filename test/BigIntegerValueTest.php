@@ -22,7 +22,7 @@ class BigIntegerValueTest extends TestCase
     /** @var null|bool */
     protected $useBigIntForI8Flag;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->useBigIntForI8Flag = AbstractValue::$USE_BIGINT_FOR_I8;
         AbstractValue::$USE_BIGINT_FOR_I8 = true;
@@ -37,7 +37,7 @@ class BigIntegerValueTest extends TestCase
         }
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;
         $this->useBigIntForI8Flag = null;

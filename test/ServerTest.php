@@ -35,7 +35,7 @@ class ServerTest extends TestCase
     /**
      * Setup environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->server = new Server();
         $this->server->setReturnResponse(true);
@@ -44,7 +44,7 @@ class ServerTest extends TestCase
     /**
      * Teardown environment
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->server);
     }

@@ -26,7 +26,7 @@ class FaultTest extends TestCase
     /**
      * Setup environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         AbstractValue::setGenerator(null);
         $this->fault = new Fault();
@@ -35,7 +35,7 @@ class FaultTest extends TestCase
     /**
      * Teardown environment
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->fault);
     }

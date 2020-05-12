@@ -32,7 +32,7 @@ class ResponseTest extends TestCase
     /**
      * Setup environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->response = new Response();
     }
@@ -40,7 +40,7 @@ class ResponseTest extends TestCase
     /**
      * Teardown environment
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->response);
     }

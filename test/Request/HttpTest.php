@@ -20,7 +20,7 @@ class HttpTest extends TestCase
     /**
      * Setup environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->xml = <<<EOX
 <?xml version="1.0" encoding="UTF-8"?>
@@ -72,7 +72,7 @@ EOX;
     /**
      * Teardown environment
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         $_SERVER = $this->server;
         unset($this->request);

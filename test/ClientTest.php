@@ -38,7 +38,7 @@ class ClientTest extends TestCase
      */
     protected $xmlrpcClient;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->httpAdapter = new Adapter\Test();
         $this->httpClient = new HttpClient(

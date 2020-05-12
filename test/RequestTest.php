@@ -27,7 +27,7 @@ class RequestTest extends TestCase
     /**
      * Setup environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->request = new Request();
     }
@@ -35,7 +35,7 @@ class RequestTest extends TestCase
     /**
      * Teardown environment
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->request);
     }
