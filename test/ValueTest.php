@@ -764,7 +764,7 @@ class ValueTest extends TestCase
         $this->assertXmlRpcType('base64', $val);
         $xml = $val->saveXml();
         $encoded = base64_encode($native);
-        $this->assertContains($encoded, $xml);
+        $this->assertStringContainsString($encoded, $xml);
     }
 
     /**

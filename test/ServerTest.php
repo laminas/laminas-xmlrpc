@@ -195,7 +195,7 @@ class ServerTest extends TestCase
         $this->assertInstanceOf('Laminas\XmlRpc\Response', $response);
         $this->assertSame($response->__toString(), $output);
         $return = $response->getReturnValue();
-        $this->assertInternalType('array', $return);
+        $this->assertIsArray($return);
         $this->assertContains('system.multicall', $return);
     }
 
@@ -217,7 +217,7 @@ class ServerTest extends TestCase
 
         $this->assertInstanceOf('Laminas\XmlRpc\Response', $response);
         $return = $response->getReturnValue();
-        $this->assertInternalType('array', $return);
+        $this->assertIsArray($return);
         $this->assertContains('system.multicall', $return);
     }
 
@@ -276,7 +276,7 @@ class ServerTest extends TestCase
     public function testListMethods()
     {
         $methods = $this->server->listMethods();
-        $this->assertInternalType('array', $methods);
+        $this->assertIsArray($methods);
         $this->assertContains('system.listMethods', $methods);
         $this->assertContains('system.methodHelp', $methods);
         $this->assertContains('system.methodSignature', $methods);
@@ -296,7 +296,7 @@ class ServerTest extends TestCase
     public function testMethodHelp()
     {
         $help = $this->server->methodHelp('system.methodHelp', 'system.listMethods');
-        $this->assertContains('Display help message for an XMLRPC method', $help);
+        $this->assertStringContainsString('Display help message for an XMLRPC method', $help);
 
         $this->expectException(Server\Exception\ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
@@ -316,7 +316,7 @@ class ServerTest extends TestCase
     public function testMethodSignature()
     {
         $sig = $this->server->methodSignature('system.methodSignature');
-        $this->assertInternalType('array', $sig);
+        $this->assertIsArray($sig);
         $this->assertEquals(1, count($sig), var_export($sig, 1));
 
         $this->expectException(Server\Exception\ExceptionInterface::class);
@@ -357,10 +357,10 @@ class ServerTest extends TestCase
             $response->__toString() . "\n\n" . $request->__toString()
         );
         $returns = $response->getReturnValue();
-        $this->assertInternalType('array', $returns);
+        $this->assertIsArray($returns);
         $this->assertEquals(2, count($returns), var_export($returns, 1));
-        $this->assertInternalType('array', $returns[0], var_export($returns[0], 1));
-        $this->assertInternalType('string', $returns[1], var_export($returns[1], 1));
+        $this->assertIsArray($returns[0], var_export($returns[0], 1));
+        $this->assertIsString($returns[1], var_export($returns[1], 1));
     }
 
     /**
@@ -389,9 +389,9 @@ class ServerTest extends TestCase
             $response->__toString() . "\n\n" . $request->__toString()
         );
         $returns = $response->getReturnValue();
-        $this->assertInternalType('array', $returns);
+        $this->assertIsArray($returns);
         $this->assertEquals(2, count($returns), var_export($returns, 1));
-        $this->assertInternalType('array', $returns[0], var_export($returns[0], 1));
+        $this->assertIsArray($returns[0], var_export($returns[0], 1));
         $this->assertSame([
             'faultCode' => 620,
             'faultString' => 'Method "undefined" does not exist'
@@ -581,31 +581,31 @@ class ServerTest extends TestCase
             ]
         ];
         $returned = $this->server->multicall($try);
-        $this->assertInternalType('array', $returned);
+        $this->assertIsArray($returned);
         $this->assertEquals(5, count($returned));
 
         $response = $returned[0];
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue(isset($response['faultCode']));
         $this->assertEquals(601, $response['faultCode']);
 
         $response = $returned[1];
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue(isset($response['faultCode']));
         $this->assertEquals(602, $response['faultCode']);
 
         $response = $returned[2];
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue(isset($response['faultCode']));
         $this->assertEquals(603, $response['faultCode']);
 
         $response = $returned[3];
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue(isset($response['faultCode']));
         $this->assertEquals(604, $response['faultCode']);
 
         $response = $returned[4];
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue(isset($response['faultCode']));
         $this->assertEquals(605, $response['faultCode']);
     }

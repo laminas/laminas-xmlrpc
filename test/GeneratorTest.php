@@ -61,7 +61,7 @@ class GeneratorTest extends TestCase
     {
         $generator->openElement('test')->closeElement('test');
         $this->assertXml('<test/>', $generator);
-        $this->assertContains('<test/>', $generator->flush());
+        $this->assertStringContainsString('<test/>', $generator->flush());
         $this->assertSame('', (string) $generator);
     }
 
