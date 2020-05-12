@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#6](https://github.com/laminas/laminas-xmlrpc/pull/6) updates the minimum supported version of PHP to 7.2.
 
 ### Deprecated
 
