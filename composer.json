@@ -25,7 +25,7 @@
         }
     },
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.2",
         "laminas/laminas-http": "^2.5.4",
         "laminas/laminas-math": "^2.7 || ^3.0",
         "laminas/laminas-server": "^2.7",
@@ -35,7 +35,7 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
-        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+        "phpunit/phpunit": "^8.5"
     },
     "suggest": {
         "laminas/laminas-cache": "To support Laminas\\XmlRpc\\Server\\Cache usage"
