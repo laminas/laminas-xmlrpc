@@ -286,8 +286,8 @@ class Request
 
         if ($isOldPhp) {
             $loadEntities  = libxml_disable_entity_loader(true);
-            $xmlErrorsFlag = libxml_use_internal_errors(true);
         }
+        $xmlErrorsFlag = libxml_use_internal_errors(true);
 
         try {
             $dom = new DOMDocument;
