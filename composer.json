@@ -28,7 +28,7 @@
     ],
     "require": {
         "php": "^7.3 || ~8.0.0",
-        "laminas/laminas-http": "^2.14",
+        "laminas/laminas-http": "^2.5.4",
         "laminas/laminas-math": "dev-php-8.0",
         "laminas/laminas-server": "^2.9",
         "laminas/laminas-stdlib": "^3.3.1",
