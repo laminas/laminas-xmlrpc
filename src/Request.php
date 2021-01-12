@@ -281,8 +281,6 @@ class Request
             return false;
         }
 
-        // @see Laminas-12293 - disable external entities for security purposes
-        $loadEntities  = libxml_disable_entity_loader(true);
         $xmlErrorsFlag = libxml_use_internal_errors(true);
         try {
             $dom = new DOMDocument;
@@ -297,13 +295,11 @@ class Request
             ErrorHandler::start();
             $xml   = simplexml_import_dom($dom);
             $error = ErrorHandler::stop();
-            libxml_disable_entity_loader($loadEntities);
             libxml_use_internal_errors($xmlErrorsFlag);
         } catch (\Exception $e) {
             // Not valid XML
             $this->fault = new Fault(631);
             $this->fault->setEncoding($this->getEncoding());
-            libxml_disable_entity_loader($loadEntities);
             libxml_use_internal_errors($xmlErrorsFlag);
             return false;
         }
