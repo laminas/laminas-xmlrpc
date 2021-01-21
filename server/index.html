@@ -203,7 +203,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -328,7 +328,6 @@ of requests.</p>
 <pre class="highlight"><code class="language-php">$server = new Laminas\XmlRpc\Server();
 $server-&gt;setClass('My\Service\Class');
 echo $server-&gt;handle();</code></pre>
-
 <h2 id="server-structure">Server Structure</h2>
 <p><code>Laminas\XmlRpc\Server</code> is composed of a variety of components, ranging from the
 server itself to request, response, and fault objects.</p>
@@ -394,7 +393,6 @@ These include:</p>
 function myFunc($val1, $val2, $val3)
 {
 }</code></pre>
-
 <p>PhpDocumentor does not validate types specified for params or return values, so
 this will have no impact on your API documentation. Providing the hinting is
 necessary, however, when the server is validating the parameters provided to the
@@ -415,7 +413,6 @@ would with PhpDocumentor, using the <code>|</code> operator:</p>
 function myFunc($val1, $val2, $val3)
 {
 }</code></pre>
-
 <blockquote>
 <h3>Use multiple values sparingly</h3>
 <p>Allowing multiple signatures can lead to confusion for developers using the
@@ -441,7 +438,6 @@ $server-&gt;setClass('My\Service\Class', 'myservice');
 
 // Function 'somefunc' will be accessible as funcs.somefunc
 $server-&gt;addFunction('somefunc', 'funcs');</code></pre>
-
 <h2 id="custom-request-objects">Custom Request Objects</h2>
 <p>Most of the time, you'll simply use the default request type included with
 <code>Laminas\XmlRpc\Server</code>, <code>Laminas\XmlRpc\Request\Http</code>. However, there may be times
@@ -470,7 +466,6 @@ necessarily intend (a prime example includes database exceptions).</p>
 do so, call <code>Laminas\XmlRpc\Server\Fault::attachFaultException()</code> and pass an
 exception class to whitelist:</p>
 <pre class="highlight"><code class="language-php">Laminas\XmlRpc\Server\Fault::attachFaultException('My\Project\Exception');</code></pre>
-
 <p>If you utilize an exception class that your other project exceptions inherit,
 you can then whitelist a whole family of exceptions at a time.
 <code>Laminas\XmlRpc\Server\Exception</code>s are always whitelisted, to allow reporting
@@ -501,7 +496,6 @@ if (! XmlRpcServer\Cache::get($cacheFile, $server)) {
 }
 
 echo $server-&gt;handle();</code></pre>
-
 <p>The above example attempts to retrieve a server definition from <code>xmlrpc.cache</code>
 in the same directory as the script. If unsuccessful, it loads the service
 classes it needs, attaches them to the server instance, and then attempts to
@@ -526,7 +520,6 @@ function md5Value($value)
 $server = new Laminas\XmlRpc\Server();
 $server-&gt;addFunction('md5Value');
 echo $server-&gt;handle();</code></pre>
-
 <h3>Attaching a class</h3>
 <p>The example below illustrates attaching a class' public methods as dispatchable
 XML-RPC methods.</p>
@@ -535,7 +528,6 @@ XML-RPC methods.</p>
 $server = new Laminas\XmlRpc\Server();
 $server-&gt;setClass('Services\Comb');
 echo $server-&gt;handle();</code></pre>
-
 <h3>Attaching a class with arguments</h3>
 <p>The following example illustrates how to attach a class' public methods and
 passing arguments to its methods. This can be used to specify certain defaults
@@ -567,7 +559,6 @@ $server-&gt;setClass(
     new ProductRepository(),
     new PurchaseRepository()
 );</code></pre>
-
 <p>The arguments passed to <code>setClass()</code> are injected into the method call
 <code>pricing.calculate()</code> on remote invocation. In the example above, only the
 argument <code>$productId</code> is expected from the client.</p>
@@ -616,7 +607,6 @@ $server-&gt;setClass(
     new ProductRepository(),
     new PurchaseRepository()
 );</code></pre>
-
 <h3>Attaching a class instance</h3>
 <p><code>setClass()</code> allows registering a previously instantiated class with the server,
 instead of specifying the class name. Obviously, passing arguments to the
@@ -632,7 +622,6 @@ $server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
 $server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
 $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 echo $server-&gt;handle();</code></pre>
-
 <h3>Specifying exceptions to use as valid fault responses</h3>
 <p>The example below allows any <code>Services\Exception</code>-derived class to report its
 code and message in the fault response.</p>
@@ -648,7 +637,6 @@ $server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
 $server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
 $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 echo $server-&gt;handle();</code></pre>
-
 <h3>Utilizing custom request and response objects</h3>
 <p>Some use cases require custom request objects; XML-RPC is not bound to HTTP as a
 transfer protocol. It is possible to use other transfer protocols like SSH or
@@ -673,7 +661,6 @@ $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 $request = new s\Request();
 
 echo $server-&gt;handle($request);</code></pre>
-
 <h3>Specifying a custom response class</h3>
 <p>The example below illustrates specifying a custom response class for the returned response.</p>
 <pre class="highlight"><code class="language-php">use Services as s;
@@ -695,7 +682,6 @@ $request = new s\Request();
 $server-&gt;setResponseClass(s\Response::class);
 
 echo $server-&gt;handle($request);</code></pre>
-
 <h2 id="performance-optimization">Performance optimization</h2>
 <h3>Cache server definitions between requests</h3>
 <p>The example below illustrates caching server definitions between requests.</p>
@@ -728,7 +714,6 @@ $request = new s\Request();
 $server-&gt;setResponseClass(s\Response::class);
 
 echo $server-&gt;handle($request);</code></pre>
-
 <blockquote>
 <h3>Cache file location</h3>
 <p>The server cache file should be located outside the document root.</p>
@@ -744,7 +729,6 @@ solution; benchmarks have shown that <code>XmlWriter</code> performs better.</p>
 XmlRpc\AbstractValue::setGenerator(new XmlRpc\Generator\XmlWriter());
 
 $server = new XmlRpc\Server();</code></pre>
-
 <blockquote>
 <h4>Benchmark your application</h4>
 <p>Performance is determined by many parameters, and benchmarks only apply for
@@ -867,6 +851,7 @@ XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -939,7 +924,7 @@ XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-xmlrpc/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
