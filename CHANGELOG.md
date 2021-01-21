@@ -2,27 +2,31 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.10.0 - TBD
-
-### Added
-
-- Nothing.
+## 2.10.0 - 2021-01-21
 
 ### Changed
 
 - [#6](https://github.com/laminas/laminas-xmlrpc/pull/6) updates the minimum supported version of PHP to 7.2.
 
-### Deprecated
 
-- Nothing.
+-----
 
-### Removed
+### Release Notes for [2.10.0](https://github.com/laminas/laminas-xmlrpc/milestone/1)
 
-- Nothing.
 
-### Fixed
 
-- Nothing.
+### 2.10.0
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **3**
+- Total contributors: **3**
+
+#### Enhancement
+
+ - [10: Allow and test installation on PHP 8 ](https://github.com/laminas/laminas-xmlrpc/pull/10) thanks to @Ocramius
+ - [9: updated for PHP8](https://github.com/laminas/laminas-xmlrpc/pull/9) thanks to @delboy1978uk
+
+ - [6: QA: Update to PHP 7.2 + PHPUnit 8.5](https://github.com/laminas/laminas-xmlrpc/pull/6) thanks to @arueckauer
 
 ## 2.9.0 - 2019-12-27
 
