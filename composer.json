@@ -20,16 +20,10 @@
     },
     "extra": {
     },
-    "repositories": [
-      {
-        "type": "git",
-        "url": "https://github.com/bfoosness/laminas-math.git"
-      }
-    ],
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-http": "^2.5.4",
-        "laminas/laminas-math": "dev-php-8.0",
+        "laminas/laminas-math": "^3.3.0",
         "laminas/laminas-server": "^2.9.1",
         "laminas/laminas-stdlib": "^3.2.1",
         "laminas/laminas-xml": "^1.0.2",
