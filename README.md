@@ -1,7 +1,6 @@
 # laminas-xmlrpc
 
-[![Build Status](https://travis-ci.com/laminas/laminas-xmlrpc.svg?branch=master)](https://travis-ci.com/laminas/laminas-xmlrpc)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-xmlrpc/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-xmlrpc?branch=master)
+[![Build Status](https://github.com/laminas/laminas-xmlrpc/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-xmlrpc/actions?query=workflow%3A"Continuous+Integration")
 
 From its home page, XML-RPC is described as a ”...remote procedure calling using
 HTTP as the transport and XML as the encoding. XML-RPC is designed to be as
