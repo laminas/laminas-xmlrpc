@@ -319,7 +319,7 @@ call any number of remote methods at that endpoint.</p>
 <code>call()</code> instance method. The code sample below uses a demonstration XML-RPC
 server from <a href="http://www.advogato.org/">Advogato</a>. You can use it for testing or
 exploring the <code>Laminas\XmlRpc</code> components.</p>
-<h3>XML-RPC Method Call</h3>
+<h3 id="xml-rpc-method-call">XML-RPC Method Call</h3>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 var_dump($client-&gt;call('test.guess'));
@@ -333,7 +333,7 @@ immediately use the returned value.</p>
 method to call. If the remote method requires any parameters, these can be sent
 by supplying a second, optional parameter to <code>call()</code> with an <code>array</code> of values
 to pass to the remote method:</p>
-<h3>XML-RPC Method Call with Parameters</h3>
+<h3 id="xml-rpc-method-call-with-parameters">XML-RPC Method Call with Parameters</h3>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $arg1 = 5;
@@ -356,7 +356,7 @@ method of <code>Laminas\XmlRpc\Client</code> as an array in the second parameter
 parameter may be given as either a native PHP type which will be automatically
 converted, or as an object representing a specific XML-RPC type (one of the
 <code>Laminas\XmlRpc\Value</code> objects).</p>
-<h3>PHP Native Types as Parameters</h3>
+<h3 id="php-native-types-as-parameters">PHP Native Types as Parameters</h3>
 <p>Parameters may be passed to <code>call()</code> as native PHP variables, meaning as a <code>string</code>, <code>integer</code>,
 <code>float</code>, <code>boolean</code>, <code>array</code>, or an <code>object</code>. In this case, each PHP native type will be
 auto-detected and converted into one of the XML-RPC types according to this table:</p>
@@ -415,7 +415,7 @@ auto-detected and converted into one of the XML-RPC types according to this tabl
 </tbody>
 </table></div>
 <blockquote>
-<h4>What type do empty arrays get cast to?</h4>
+<h4 id="what-type-do-empty-arrays-get-cast-to">What type do empty arrays get cast to?</h4>
 <p>Passing an empty array to an XML-RPC method is problematic, as it could
 represent either an array or a struct. <code>Laminas\XmlRpc\Client</code> detects such
 conditions and makes a request to the server's <code>system.methodSignature</code> method
@@ -430,7 +430,7 @@ method prior to making your XML-RPC call:</p>
 <pre class="highlight"><code class="language-php">$client-setSkipSystemLookup(true);
 $result = $client-call('foo.bar', array(array()));</code></pre>
 </blockquote>
-<h3>Laminas\XmlRpc\Value Objects as Parameters</h3>
+<h3 id="laminasxmlrpcvalue-objects-as-parameters">Laminas\XmlRpc\Value Objects as Parameters</h3>
 <p>Parameters may also be created as <code>Laminas\XmlRpc\Value</code> instances to specify an
 exact XML-RPC type.  The primary reasons for doing this are:</p>
 <ul>
@@ -524,7 +524,7 @@ exact XML-RPC type.  The primary reasons for doing this are:</p>
 </tbody>
 </table></div>
 <blockquote>
-<h4>Automatic Conversion</h4>
+<h4 id="automatic-conversion">Automatic Conversion</h4>
 <p>When building a new <code>Laminas\XmlRpc\Value</code> object, its value is set by a PHP
 type. The PHP type will be converted to the specified type using PHP casting.
 For example, if a string is given as a value to the
@@ -538,7 +538,7 @@ work as close to a native PHP object as possible.</p>
 <code>Laminas\XmlRpc\Client</code>. This will return an instance of <code>Laminas\XmlRpc\Client\ServerProxy</code>.
 Any method call on the server proxy object will be forwarded to the remote, and
 parameters may be passed like any other PHP method.</p>
-<h3>Proxy the Default Namespace</h3>
+<h3 id="proxy-the-default-namespace">Proxy the Default Namespace</h3>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $service  = $client-&gt;getProxy();           // Proxy the default namespace
@@ -546,7 +546,7 @@ $products = $service-&gt;test-&gt;sumProd(5, 7); // test.sumProd(5, 7) returns [
 <p>The <code>getProxy()</code> method receives an optional argument specifying which namespace of the remote
 server to proxy. If it does not receive a namespace, the default namespace will be proxied. In the
 next example, the 'test' namespace will be proxied:</p>
-<h3>Proxy Any Namespace</h3>
+<h3 id="proxy-any-namespace">Proxy Any Namespace</h3>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $test  = $client-&gt;getProxy('test'); // Proxy the "test" namespace
@@ -558,10 +558,10 @@ had a method <code>test.foo.bar()</code>, it could be called as <code>$test-&gt;
 <p>Two kinds of errors can occur during an XML-RPC method call: HTTP errors and
 XML-RPC faults.  <code>Laminas\XmlRpc\Client</code> recognizes each and provides the ability
 to detect and trap them independently.</p>
-<h3>HTTP Errors</h3>
+<h3 id="http-errors">HTTP Errors</h3>
 <p>If any HTTP error occurs, such as the remote HTTP server returns a <strong>404 Not
 Found</strong>, a <code>Laminas\XmlRpc\Client\Exception\HttpException</code> will be thrown.</p>
-<h4>Handling HTTP Errors</h4>
+<h4 id="handling-http-errors">Handling HTTP Errors</h4>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://foo/404');
 
 try {
@@ -572,7 +572,7 @@ try {
 }</code></pre>
 <p>Regardless of how the XML-RPC client is used, the <code>Laminas\XmlRpc\Client\Exception\HttpException</code>
 will be thrown whenever an HTTP error occurs.</p>
-<h3>XML-RPC Faults</h3>
+<h3 id="xml-rpc-faults">XML-RPC Faults</h3>
 <p>An XML-RPC fault is analogous to a PHP exception. It is a special type returned
 from an XML-RPC method call that has both an error code and an error message.
 XML-RPC faults are handled differently depending on the context of how the
@@ -581,7 +581,7 @@ XML-RPC faults are handled differently depending on the context of how the
 will result in a <code>Laminas\XmlRpc\Client\Exception\FaultException</code> being thrown. The
 code and message of the exception will map directly to their respective values
 in the original XML-RPC fault response.</p>
-<h4>Handling XML-RPC Faults</h4>
+<h4 id="handling-xml-rpc-faults">Handling XML-RPC Faults</h4>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 try {
@@ -628,7 +628,7 @@ foreach ($introspector-&gt;listMethods() as $method) {
 request object (<code>Laminas\XmlRpc\Request</code>) and sends it to another method,
 <code>doRequest()</code>, that returns a response object (<code>Laminas\XmlRpc\Response</code>).</p>
 <p>The <code>doRequest()</code> method is also available for use directly.</p>
-<h3>Processing Request to Response</h3>
+<h3 id="processing-request-to-response">Processing Request to Response</h3>
 <pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
 
 $request = new Laminas\XmlRpc\Request();

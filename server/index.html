@@ -343,7 +343,7 @@ handler based on the method requested. It then returns either a
 These objects both have <code>__toString()</code> methods that create valid XML-RPC XML
 responses, allowing them to be directly echoed.</p>
 <h2 id="anatomy-of-a-webservice">Anatomy of a webservice</h2>
-<h3>General considerations</h3>
+<h3 id="general-considerations">General considerations</h3>
 <p>For maximum performance it is recommended to use a simple bootstrap file for the
 server component.  Using <code>Laminas\XmlRpc\Server</code> inside a
 <a href="https://docs.laminas.dev/laminas-mvc/">Laminas\Mvc\Controller</a> is strongly
@@ -355,7 +355,7 @@ service and manage your service lifecycle including deprecation timeframes. To
 do so just include a version number into your URI. It is also recommended to
 include the remote protocol name in the URI to allow easy integration of
 upcoming remoting technologies. <code>http://myservice.ws/1.0/XMLRPC/</code>.</p>
-<h3>What to expose?</h3>
+<h3 id="what-to-expose">What to expose?</h3>
 <p>Most of the time it is not sensible to expose business objects directly.
 Business objects are usually small and under heavy change, because change is
 cheap in this layer of your application.  Once deployed and adopted, web
@@ -414,7 +414,7 @@ function myFunc($val1, $val2, $val3)
 {
 }</code></pre>
 <blockquote>
-<h3>Use multiple values sparingly</h3>
+<h3 id="use-multiple-values-sparingly">Use multiple values sparingly</h3>
 <p>Allowing multiple signatures can lead to confusion for developers using the
 services; to keep things simple, a XML-RPC service method should typically
 only present a single signature.</p>
@@ -503,7 +503,7 @@ create a new cache file with the server definition.</p>
 <h2 id="usage-examples">Usage Examples</h2>
 <p>Below are several usage examples, showing the full spectrum of options available
 to developers.  Usage examples will each build on the previous example provided.</p>
-<h3>Basic Usage</h3>
+<h3 id="basic-usage_1">Basic Usage</h3>
 <p>The example below attaches a function as a dispatchable XML-RPC method and
 handles incoming calls.</p>
 <pre class="highlight"><code class="language-php">/**
@@ -520,7 +520,7 @@ function md5Value($value)
 $server = new Laminas\XmlRpc\Server();
 $server-&gt;addFunction('md5Value');
 echo $server-&gt;handle();</code></pre>
-<h3>Attaching a class</h3>
+<h3 id="attaching-a-class">Attaching a class</h3>
 <p>The example below illustrates attaching a class' public methods as dispatchable
 XML-RPC methods.</p>
 <pre class="highlight"><code class="language-php">require_once 'Services/Comb.php';
@@ -528,7 +528,7 @@ XML-RPC methods.</p>
 $server = new Laminas\XmlRpc\Server();
 $server-&gt;setClass('Services\Comb');
 echo $server-&gt;handle();</code></pre>
-<h3>Attaching a class with arguments</h3>
+<h3 id="attaching-a-class-with-arguments">Attaching a class with arguments</h3>
 <p>The following example illustrates how to attach a class' public methods and
 passing arguments to its methods. This can be used to specify certain defaults
 when registering service classes.</p>
@@ -562,7 +562,7 @@ $server-&gt;setClass(
 <p>The arguments passed to <code>setClass()</code> are injected into the method call
 <code>pricing.calculate()</code> on remote invocation. In the example above, only the
 argument <code>$productId</code> is expected from the client.</p>
-<h3>Passing arguments only to constructor</h3>
+<h3 id="passing-arguments-only-to-constructor">Passing arguments only to constructor</h3>
 <p><code>Laminas\XmlRpc\Server</code> allows providing constructor arguments when specifying
 classes, instead of when invoking methods.</p>
 <p>To limit injection to constructors, call <code>sendArgumentsToAllMethods</code> and pass
@@ -607,11 +607,11 @@ $server-&gt;setClass(
     new ProductRepository(),
     new PurchaseRepository()
 );</code></pre>
-<h3>Attaching a class instance</h3>
+<h3 id="attaching-a-class-instance">Attaching a class instance</h3>
 <p><code>setClass()</code> allows registering a previously instantiated class with the server,
 instead of specifying the class name. Obviously, passing arguments to the
 constructor is not possible with pre-instantiated classes.</p>
-<h3>Attaching several classes using namespaces</h3>
+<h3 id="attaching-several-classes-using-namespaces">Attaching several classes using namespaces</h3>
 <p>The example below illustrates attaching several classes, each with their own
 namespace.</p>
 <pre class="highlight"><code class="language-php">use Services as s;
@@ -622,7 +622,7 @@ $server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
 $server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
 $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 echo $server-&gt;handle();</code></pre>
-<h3>Specifying exceptions to use as valid fault responses</h3>
+<h3 id="specifying-exceptions-to-use-as-valid-fault-responses">Specifying exceptions to use as valid fault responses</h3>
 <p>The example below allows any <code>Services\Exception</code>-derived class to report its
 code and message in the fault response.</p>
 <pre class="highlight"><code class="language-php">use Services as s;
@@ -637,7 +637,7 @@ $server-&gt;setClass(s\Comb::class, 'comb');   // methods called as comb.*
 $server-&gt;setClass(s\Brush::class, 'brush'); // methods called as brush.*
 $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 echo $server-&gt;handle();</code></pre>
-<h3>Utilizing custom request and response objects</h3>
+<h3 id="utilizing-custom-request-and-response-objects">Utilizing custom request and response objects</h3>
 <p>Some use cases require custom request objects; XML-RPC is not bound to HTTP as a
 transfer protocol. It is possible to use other transfer protocols like SSH or
 telnet to send the request and response data over the wire. Another use case is
@@ -661,7 +661,7 @@ $server-&gt;setClass(s\Pick::class, 'pick');   // methods called as pick.*
 $request = new s\Request();
 
 echo $server-&gt;handle($request);</code></pre>
-<h3>Specifying a custom response class</h3>
+<h3 id="specifying-a-custom-response-class">Specifying a custom response class</h3>
 <p>The example below illustrates specifying a custom response class for the returned response.</p>
 <pre class="highlight"><code class="language-php">use Services as s;
 use Laminas\XmlRpc\Server as XmlRpcServer;
@@ -683,7 +683,7 @@ $server-&gt;setResponseClass(s\Response::class);
 
 echo $server-&gt;handle($request);</code></pre>
 <h2 id="performance-optimization">Performance optimization</h2>
-<h3>Cache server definitions between requests</h3>
+<h3 id="cache-server-definitions-between-requests">Cache server definitions between requests</h3>
 <p>The example below illustrates caching server definitions between requests.</p>
 <pre class="highlight"><code class="language-php">use Services as s;
 use Laminas\XmlRpc\Server as XmlRpcServer;
@@ -715,10 +715,10 @@ $server-&gt;setResponseClass(s\Response::class);
 
 echo $server-&gt;handle($request);</code></pre>
 <blockquote>
-<h3>Cache file location</h3>
+<h3 id="cache-file-location">Cache file location</h3>
 <p>The server cache file should be located outside the document root.</p>
 </blockquote>
-<h3>Optimizing XML generation</h3>
+<h3 id="optimizing-xml-generation">Optimizing XML generation</h3>
 <p><code>Laminas\XmlRpc\Server</code> uses <code>DOMDocument</code> to generate it's XML output. While this
 functionality is available on most hosts, it's not always the most performant
 solution; benchmarks have shown that <code>XmlWriter</code> performs better.</p>
@@ -730,13 +730,13 @@ XmlRpc\AbstractValue::setGenerator(new XmlRpc\Generator\XmlWriter());
 
 $server = new XmlRpc\Server();</code></pre>
 <blockquote>
-<h4>Benchmark your application</h4>
+<h4 id="benchmark-your-application">Benchmark your application</h4>
 <p>Performance is determined by many parameters, and benchmarks only apply for
 the specific test case. Differences come from PHP version, installed
 extensions, webserver, and operating system just to name a few. Please make
 sure to benchmark your application on your own and decide which generator to
 use based on <strong>your</strong> numbers.</p>
-<h4>Benchmark your client</h4>
+<h4 id="benchmark-your-client">Benchmark your client</h4>
 <p>Optimization makes sense for the client side too. Just select the alternate
 XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
 </blockquote>
