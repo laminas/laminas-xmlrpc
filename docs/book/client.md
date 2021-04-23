@@ -324,3 +324,16 @@ The `setHttpClient()` is particularly useful for unit testing. When combined
 with `Laminas\Http\Client\Adapter\Test`, remote services can be mocked out for
 testing. See the unit tests for `Laminas\XmlRpc\Client` for examples of how to do
 this.
+
+## Using additional libXml constants
+Additional libXml constants can be specified using the `setLibXmlConstants()` instance method. Available constants can be found in the [PHP reference manual](https://www.php.net/manual/en/libxml.constants.php).
+
+```php
+$client = new Laminas\XmlRpc\Client('http://www.advogato.org/XMLRPC');
+$client->setLibXmlConstants(LIBXML_PARSEHUGE);
+```
+
+Multiple constants can be used by using the bitwise OR operator:
+```php
+$client->setLibXmlConstants(LIBXML_PARSEHUGE | LIBXML_PEDANTIC);
+```
