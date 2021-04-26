@@ -42,6 +42,12 @@ class Response
     protected $fault = null;
 
     /**
+     * Additional libxml constants to use for decoding
+     * @var int
+     */
+    protected $libXmlConstants = 0;
+
+    /**
      * Constructor
      *
      * Can optionally pass in the return value and type hinting; otherwise, the
@@ -91,6 +97,30 @@ class Response
     {
         $this->return = $value;
         $this->type = (string) $type;
+    }
+
+    /**
+     * Retrieve additional libxml constants to use for decoding
+     *
+     * @return int
+     */
+    public function getLibXmlConstants()
+    {
+        return $this->libXmlConstants;
+    }
+
+    /**
+     * Set additional libxml constants to use for decoding
+     *
+     * @param int $libXmlConstants
+     *
+     * @return \Laminas\XmlRpc\Response
+     */
+    public function setLibXmlConstants($libXmlConstants)
+    {
+        $this->libXmlConstants = $libXmlConstants;
+
+        return $this;
     }
 
     /**
@@ -153,7 +183,7 @@ class Response
         }
 
         try {
-            $xml = XmlSecurity::scan($response);
+            $xml = XmlSecurity::scan($response, null, $this->libXmlConstants);
         } catch (\Laminas\Xml\Exception\RuntimeException $e) {
             $this->fault = new Fault(651);
             $this->fault->setEncoding($this->getEncoding());
@@ -180,7 +210,7 @@ class Response
                 throw new Exception\ValueException('Missing XML-RPC value in XML');
             }
             $valueXml = $xml->params->param->value->asXML();
-            $value = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING);
+            $value = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING, $this->libXmlConstants);
         } catch (Exception\ValueException $e) {
             $this->fault = new Fault(653);
             $this->fault->setEncoding($this->getEncoding());

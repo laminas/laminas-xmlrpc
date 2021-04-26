@@ -60,6 +60,12 @@ class Client implements ServerClient
     protected $skipSystemLookup = false;
 
     /**
+     * Additional libxml constants to use for decoding
+     * @var int
+     */
+    protected $libXmlConstants = 0;
+
+    /**
      * Create a new XML-RPC client to a remote server
      *
      * @param  string $server      Full address of the XML-RPC service
@@ -156,6 +162,30 @@ class Client implements ServerClient
     }
 
     /**
+     * Retrieve additional libxml constants to use for decoding
+     *
+     * @return int
+     */
+    public function getLibXmlConstants()
+    {
+        return $this->libXmlConstants;
+    }
+
+    /**
+     * Set additional libxml constants to use for decoding
+     *
+     * @param int $libXmlConstants
+     *
+     * @return \Laminas\XmlRpc\Client
+     */
+    public function setLibXmlConstants($libXmlConstants)
+    {
+        $this->libXmlConstants = $libXmlConstants;
+
+        return $this;
+    }
+
+    /**
      * Set skip system lookup flag
      *
      * @param  bool $flag
@@ -238,6 +268,7 @@ class Client implements ServerClient
 
         if ($response === null) {
             $response = new Response();
+            $response->setLibXmlConstants($this->libXmlConstants);
         }
 
         $this->lastResponse = $response;
