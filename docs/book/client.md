@@ -334,6 +334,7 @@ $client->setLibXmlConstants(LIBXML_PARSEHUGE);
 ```
 
 Multiple constants can be used by using the bitwise OR operator:
+
 ```php
 $client->setLibXmlConstants(LIBXML_PARSEHUGE | LIBXML_PEDANTIC);
 ```
