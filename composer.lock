@@ -44,16 +44,16 @@
         },
         {
             "name": "laminas/laminas-code",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-code.git",
-                "reference": "e7e8f8a9c267520051d8026ff1da74823a3d8b97"
+                "reference": "1beb4447f9efd26041eba7eff50614e798c353fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/e7e8f8a9c267520051d8026ff1da74823a3d8b97",
-                "reference": "e7e8f8a9c267520051d8026ff1da74823a3d8b97",
+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/1beb4447f9efd26041eba7eff50614e798c353fd",
+                "reference": "1beb4447f9efd26041eba7eff50614e798c353fd",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-04-14T22:05:06+00:00"
+            "time": "2021-05-12T12:41:03+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -1044,16 +1044,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.10.4",
+            "version": "v4.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e"
+                "reference": "4432ba399e47c66624bc73c8c0f811e5c109576f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c6d052fc58cb876152f89f532b95a8d7907e7f0e",
-                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4432ba399e47c66624bc73c8c0f811e5c109576f",
+                "reference": "4432ba399e47c66624bc73c8c0f811e5c109576f",
                 "shasum": ""
             },
             "require": {
@@ -1094,9 +1094,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.4"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.5"
             },
-            "time": "2020-12-20T10:01:03+00:00"
+            "time": "2021-05-03T19:11:20+00:00"
         },
         {
             "name": "phar-io/manifest",
