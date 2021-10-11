@@ -1,25 +1,27 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Server\Definition as ServerDefinition;
-use Laminas\Server\Exception\InvalidArgumentException;
+use Laminas\Server\Exception\InvalidArgumentException as ServerInvalidArgumentException;
 use Laminas\Server\Method\Definition as MethodDefinition;
 use Laminas\XmlRpc\AbstractValue;
-use Laminas\XmlRpc\Exception;
+use Laminas\XmlRpc\Exception\ExceptionInterface;
+use Laminas\XmlRpc\Exception\InvalidArgumentException;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Server;
-use Laminas\XmlRpc\Value;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
+use function base64_encode;
+use function count;
+use function ob_end_clean;
+use function ob_get_contents;
+use function ob_start;
+use function strstr;
+use function var_export;
 
 /**
  * @group      Laminas_XmlRpc
@@ -28,6 +30,7 @@ class ServerTest extends TestCase
 {
     /**
      * Server object
+     *
      * @var Server
      */
     protected $server;
@@ -49,6 +52,11 @@ class ServerTest extends TestCase
         unset($this->server);
     }
 
+    /**
+     * @param string $errno
+     * @param string $errstr
+     * @return bool|void
+     */
     public function suppressNotFoundWarnings($errno, $errstr)
     {
         if (! strstr($errstr, 'failed')) {
@@ -85,7 +93,7 @@ class ServerTest extends TestCase
 
     public function testAddFunctionThrowsExceptionOnInvalidInput()
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to attach function; invalid');
         $this->server->addFunction('nosuchfunction');
     }
@@ -108,7 +116,7 @@ class ServerTest extends TestCase
         $expected = $this->server->listMethods();
 
         $functions = $this->server->getFunctions();
-        $server = new Server();
+        $server    = new Server();
         $server->loadFunctions($functions);
         $actual = $server->listMethods();
 
@@ -138,11 +146,11 @@ class ServerTest extends TestCase
         $request = new Request();
         $request->setMethod('test.test4');
         $response = $this->server->handle($request);
-        $this->assertNotInstanceOf('Laminas\\XmlRpc\\Fault', $response);
+        $this->assertNotInstanceOf(Fault::class, $response);
         $this->assertSame([
             'test1' => 'argv-argument',
             'test2' => null,
-            'arg' => ['argv-argument']
+            'arg'   => ['argv-argument'],
         ], $response->getReturnValue());
     }
 
@@ -156,7 +164,7 @@ class ServerTest extends TestCase
         $request->setMethod('test.test4');
         $request->setParams(['foo']);
         $response = $this->server->handle($request);
-        $this->assertNotInstanceOf('Laminas\\XmlRpc\\Fault', $response);
+        $this->assertNotInstanceOf(Fault::class, $response);
         $this->assertSame(['test1' => 'a1', 'test2' => 'a2', 'arg' => ['foo']], $response->getReturnValue());
     }
 
@@ -166,12 +174,12 @@ class ServerTest extends TestCase
     public function testFault()
     {
         $fault = $this->server->fault('This is a fault', 411);
-        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $fault);
+        $this->assertInstanceOf(\Laminas\XmlRpc\Server\Fault::class, $fault);
         $this->assertEquals(411, $fault->getCode());
         $this->assertEquals('This is a fault', $fault->getMessage());
 
         $fault = $this->server->fault(new Server\Exception\RuntimeException('Exception fault', 511));
-        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $fault);
+        $this->assertInstanceOf(\Laminas\XmlRpc\Server\Fault::class, $fault);
         $this->assertEquals(511, $fault->getCode());
         $this->assertEquals('Exception fault', $fault->getMessage());
     }
@@ -186,13 +194,13 @@ class ServerTest extends TestCase
         $this->server->setReturnResponse(false);
         ob_start();
         $response = $this->server->handle($request);
-        $output = ob_get_contents();
+        $output   = ob_get_contents();
         ob_end_clean();
         $this->server->setReturnResponse(true);
 
         $this->assertFalse(isset($response));
         $response = $this->server->getResponse();
-        $this->assertInstanceOf('Laminas\XmlRpc\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame($response->__toString(), $output);
         $return = $response->getReturnValue();
         $this->assertIsArray($return);
@@ -215,7 +223,7 @@ class ServerTest extends TestCase
         $request->setMethod('system.listMethods');
         $response = $this->server->handle($request);
 
-        $this->assertInstanceOf('Laminas\XmlRpc\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $return = $response->getReturnValue();
         $this->assertIsArray($return);
         $this->assertContains('system.multicall', $return);
@@ -230,7 +238,7 @@ class ServerTest extends TestCase
         $request->setMethod('system.methodHelp');
         $response = $this->server->handle($request);
 
-        $this->assertInstanceOf('Laminas\XmlRpc\Fault', $response);
+        $this->assertInstanceOf(Fault::class, $response);
         $this->assertEquals(623, $response->getCode());
     }
 
@@ -239,11 +247,10 @@ class ServerTest extends TestCase
         $request = new Request();
         $request->setMethod('invalid');
         $response = $this->server->handle($request);
-        $this->assertInstanceOf('Laminas\\XmlRpc\\Fault', $response);
+        $this->assertInstanceOf(Fault::class, $response);
         $this->assertSame('Method "invalid" does not exist', $response->getMessage());
         $this->assertSame(620, $response->getCode());
     }
-
 
     /**
      * setResponseClass() test
@@ -262,7 +269,7 @@ class ServerTest extends TestCase
         $request->setMethod('system.listMethods');
         $response = $this->server->handle($request);
 
-        $this->assertInstanceOf('Laminas\XmlRpc\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertInstanceOf(TestAsset\TestResponse::class, $response);
     }
 
@@ -298,7 +305,7 @@ class ServerTest extends TestCase
         $help = $this->server->methodHelp('system.methodHelp', 'system.listMethods');
         $this->assertStringContainsString('Display help message for an XMLRPC method', $help);
 
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
         $this->server->methodHelp('foo');
     }
@@ -319,7 +326,7 @@ class ServerTest extends TestCase
         $this->assertIsArray($sig);
         $this->assertEquals(1, count($sig), var_export($sig, 1));
 
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
         $this->server->methodSignature('foo');
     }
@@ -336,15 +343,15 @@ class ServerTest extends TestCase
      */
     public function testMulticall()
     {
-        $struct = [
+        $struct  = [
             [
                 'methodName' => 'system.listMethods',
-                'params' => []
+                'params'     => [],
             ],
             [
                 'methodName' => 'system.methodHelp',
-                'params' => ['system.multicall']
-            ]
+                'params'     => ['system.multicall'],
+            ],
         ];
         $request = new Request();
         $request->setMethod('system.multicall');
@@ -352,7 +359,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle($request);
 
         $this->assertInstanceOf(
-            'Laminas\XmlRpc\Response',
+            Response::class,
             $response,
             $response->__toString() . "\n\n" . $request->__toString()
         );
@@ -368,15 +375,15 @@ class ServerTest extends TestCase
      */
     public function testMulticallHandlesFaults()
     {
-        $struct = [
+        $struct  = [
             [
                 'methodName' => 'system.listMethods',
-                'params' => []
+                'params'     => [],
             ],
             [
                 'methodName' => 'undefined',
-                'params' => []
-            ]
+                'params'     => [],
+            ],
         ];
         $request = new Request();
         $request->setMethod('system.multicall');
@@ -384,7 +391,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle($request);
 
         $this->assertInstanceOf(
-            'Laminas\XmlRpc\Response',
+            Response::class,
             $response,
             $response->__toString() . "\n\n" . $request->__toString()
         );
@@ -393,8 +400,8 @@ class ServerTest extends TestCase
         $this->assertEquals(2, count($returns), var_export($returns, 1));
         $this->assertIsArray($returns[0], var_export($returns[0], 1));
         $this->assertSame([
-            'faultCode' => 620,
-            'faultString' => 'Method "undefined" does not exist'
+            'faultCode'   => 620,
+            'faultString' => 'Method "undefined" does not exist',
         ], $returns[1], var_export($returns[1], 1));
     }
 
@@ -445,7 +452,7 @@ class ServerTest extends TestCase
     public function testAddFunctionThrowsExceptionWithBadData()
     {
         $o = new stdClass();
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to attach function; invalid');
         $this->server->addFunction($o);
     }
@@ -453,7 +460,7 @@ class ServerTest extends TestCase
     public function testLoadFunctionsThrowsExceptionWithBadData()
     {
         $o = new stdClass();
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Unable to load server definition; must be an array or Laminas\Server\Definition, received stdClass'
         );
@@ -462,7 +469,7 @@ class ServerTest extends TestCase
 
     public function testLoadFunctionsThrowsExceptionsWithBadData2()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Unable to load server definition; must be an array or Laminas\Server\Definition, received string'
         );
@@ -474,14 +481,14 @@ class ServerTest extends TestCase
         $o = new stdClass();
         $o = [$o];
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ServerInvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid method provided');
         $this->server->loadFunctions($o);
     }
 
     public function testLoadFunctionsReadsMethodsFromServerDefinitionObjects()
     {
-        $mockedMethod = $this->getMockBuilder(MethodDefinition::class)
+        $mockedMethod     = $this->getMockBuilder(MethodDefinition::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->getMock();
@@ -498,7 +505,7 @@ class ServerTest extends TestCase
 
     public function testSetClassThrowsExceptionWithInvalidClass()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid method class');
         $this->server->setClass('mybogusclass');
     }
@@ -515,14 +522,14 @@ class ServerTest extends TestCase
      */
     public function testSetRequestThrowsExceptionOnBadClassName()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid request object');
         $this->server->setRequest('LaminasTest\\XmlRpc\\TestRequest2');
     }
 
     public function testSetRequestThrowsExceptionOnBadObject()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid request object');
         $this->server->setRequest($this);
     }
@@ -534,7 +541,7 @@ class ServerTest extends TestCase
         $request->setMethod('test1');
         $request->addParam('value');
         $response = $this->server->handle($request);
-        $this->assertNotInstanceOf('Laminas\XmlRpc\Fault', $response);
+        $this->assertNotInstanceOf(Fault::class, $response);
         $this->assertEquals('String: value', $response->getReturnValue());
     }
 
@@ -545,7 +552,7 @@ class ServerTest extends TestCase
         $request->setMethod('test2');
         $request->addParam(['value1', 'value2']);
         $response = $this->server->handle($request);
-        $this->assertNotInstanceOf('Laminas\XmlRpc\Fault', $response);
+        $this->assertNotInstanceOf(Fault::class, $response);
         $this->assertEquals('value1; value2', $response->getReturnValue());
     }
 
@@ -556,29 +563,29 @@ class ServerTest extends TestCase
         $request->setMethod('LaminasTest\\XmlRpc\\TestAsset\\testFunction');
         $request->setParams([['value1'], 'key']);
         $response = $this->server->handle($request);
-        $this->assertNotInstanceOf('Laminas\XmlRpc\Fault', $response);
+        $this->assertNotInstanceOf(Fault::class, $response);
         $this->assertEquals('key: value1', $response->getReturnValue());
     }
 
     public function testMulticallReturnsFaultsWithBadData()
     {
         // bad method array
-        $try = [
+        $try      = [
             'system.listMethods',
             [
-                'name' => 'system.listMethods'
-            ],
-            [
-                'methodName' => 'system.listMethods'
+                'name' => 'system.listMethods',
             ],
             [
                 'methodName' => 'system.listMethods',
-                'params'     => ''
+            ],
+            [
+                'methodName' => 'system.listMethods',
+                'params'     => '',
             ],
             [
                 'methodName' => 'system.multicall',
-                'params'     => []
-            ]
+                'params'     => [],
+            ],
         ];
         $returned = $this->server->multicall($try);
         $this->assertIsArray($returned);
@@ -621,7 +628,7 @@ class ServerTest extends TestCase
         $request = new Request('test.base64', [$param]);
 
         $response = $this->server->handle($request);
-        $this->assertNotInstanceOf('Laminas\XmlRpc\Fault', $response);
+        $this->assertNotInstanceOf(Fault::class, $response);
         $this->assertEquals($data, $response->getReturnValue());
     }
 
@@ -632,7 +639,7 @@ class ServerTest extends TestCase
     {
         $server = new Server();
         $server->setClass(TestAsset\TestClass::class);
-        $table = $server->getDispatchTable();
+        $table  = $server->getDispatchTable();
         $method = $table->getMethod('test1');
         foreach ($method->getPrototypes() as $prototype) {
             $this->assertNotEquals('void', $prototype->getReturnType(), var_export($prototype, 1));
@@ -641,7 +648,7 @@ class ServerTest extends TestCase
 
     public function testCallingUnregisteredMethod()
     {
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Unknown instance method called on server: foobarbaz');
         $this->server->foobarbaz();
     }
@@ -654,14 +661,14 @@ class ServerTest extends TestCase
 
     public function testPassingInvalidRequestClassThrowsException()
     {
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Invalid request class');
         $this->server->setRequest('stdClass');
     }
 
     public function testPassingInvalidResponseClassThrowsException()
     {
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid response class');
         $this->server->setResponseClass('stdClass');
     }

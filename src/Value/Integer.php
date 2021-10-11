@@ -1,14 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\Exception;
+
+use const PHP_INT_MAX;
 
 class Integer extends AbstractScalar
 {
@@ -24,7 +20,7 @@ class Integer extends AbstractScalar
             throw new Exception\ValueException('Overlong integer given');
         }
 
-        $this->type = self::XMLRPC_TYPE_INTEGER;
+        $this->type  = self::XMLRPC_TYPE_INTEGER;
         $this->value = (int) $value;    // Make sure this value is integer
     }
 

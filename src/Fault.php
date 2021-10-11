@@ -1,15 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc;
 
+use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
 use SimpleXMLElement;
+
+use function array_reduce;
+use function is_string;
+use function libxml_get_errors;
+use function libxml_use_internal_errors;
 
 /**
  * XMLRPC Faults
@@ -25,24 +25,28 @@ class Fault
 {
     /**
      * Fault code
+     *
      * @var int
      */
     protected $code;
 
     /**
      * Fault character encoding
+     *
      * @var string
      */
     protected $encoding = 'UTF-8';
 
     /**
      * Fault message
+     *
      * @var string
      */
     protected $message;
 
     /**
      * Internal fault codes => messages
+     *
      * @var array
      */
     protected $internal = [
@@ -123,7 +127,7 @@ class Fault
     /**
      * Retrieve fault message
      *
-     * @param string
+     * @param string $message
      * @return Fault
      */
     public function setMessage($message)
@@ -171,8 +175,8 @@ class Fault
      * @param string $fault
      * @return bool Returns true if successfully loaded fault response, false
      * if response was not a fault response
-     * @throws Exception\ExceptionInterface if no or faulty XML provided, or if fault
-     * response does not contain either code or message
+     * @throws Exception\ExceptionInterface If no or faulty XML provided, or if fault
+     * response does not contain either code or message.
      */
     public function loadXml($fault)
     {
@@ -183,9 +187,9 @@ class Fault
         $xmlErrorsFlag = libxml_use_internal_errors(true);
         try {
             $xml = XmlSecurity::scan($fault);
-        } catch (\Laminas\Xml\Exception\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             // Unsecure XML
-            throw new Exception\RuntimeException('Failed to parse XML fault: ' .  $e->getMessage(), 500, $e);
+            throw new Exception\RuntimeException('Failed to parse XML fault: ' . $e->getMessage(), 500, $e);
         }
         if (! $xml instanceof SimpleXMLElement) {
             $errors = libxml_get_errors();
@@ -272,9 +276,9 @@ class Fault
         // Create fault value
         $faultStruct = [
             'faultCode'   => $this->getCode(),
-            'faultString' => $this->getMessage()
+            'faultString' => $this->getMessage(),
         ];
-        $value = AbstractValue::getXmlRpcValue($faultStruct);
+        $value       = AbstractValue::getXmlRpcValue($faultStruct);
 
         $generator = AbstractValue::getGenerator();
         $generator->openElement('methodResponse')

@@ -1,16 +1,26 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc;
 
 use DOMDocument;
+use Exception;
 use Laminas\Stdlib\ErrorHandler;
+use Laminas\XmlRpc\Exception\ValueException;
+use Laminas\XmlRpc\Fault;
 use SimpleXMLElement;
+
+use function count;
+use function func_get_args;
+use function func_num_args;
+use function is_array;
+use function is_string;
+use function libxml_disable_entity_loader;
+use function libxml_use_internal_errors;
+use function preg_match;
+use function simplexml_import_dom;
+
+use const PHP_MAJOR_VERSION;
+use const XML_DOCUMENT_TYPE_NODE;
 
 /**
  * XmlRpc Request object
@@ -27,42 +37,49 @@ class Request
 {
     /**
      * Request character encoding
+     *
      * @var string
      */
     protected $encoding = 'UTF-8';
 
     /**
      * Method to call
+     *
      * @var string
      */
     protected $method;
 
     /**
      * XML request
+     *
      * @var string
      */
     protected $xml;
 
     /**
      * Method parameters
+     *
      * @var array
      */
     protected $params = [];
 
     /**
      * Fault object, if any
-     * @var \Laminas\XmlRpc\Fault
+     *
+     * @var Fault
      */
-    protected $fault = null;
+    protected $fault;
 
     /**
      * XML-RPC type for each param
+     *
      * @var array
      */
     protected $types = [];
 
     /**
      * XML-RPC request params
+     *
      * @var array
      */
     protected $xmlRpcParams = [];
@@ -88,7 +105,7 @@ class Request
      * Set encoding to use in request
      *
      * @param string $encoding
-     * @return \Laminas\XmlRpc\Request
+     * @return Request
      */
     public function setEncoding($encoding)
     {
@@ -157,7 +174,7 @@ class Request
                 $type        = $xmlRpcValue->getType();
             }
         }
-        $this->types[]  = $type;
+        $this->types[]        = $type;
         $this->xmlRpcParams[] = ['value' => $value, 'type' => $type];
     }
 
@@ -186,11 +203,11 @@ class Request
     {
         $argc = func_num_args();
         $argv = func_get_args();
-        if (0 == $argc) {
+        if (0 === $argc) {
             return;
         }
 
-        if ((1 == $argc) && is_array($argv[0])) {
+        if ((1 === $argc) && is_array($argv[0])) {
             $params     = [];
             $types      = [];
             $wellFormed = true;
@@ -209,12 +226,12 @@ class Request
             }
             if ($wellFormed) {
                 $this->xmlRpcParams = $argv[0];
-                $this->params = $params;
-                $this->types  = $types;
+                $this->params       = $params;
+                $this->types        = $types;
             } else {
                 $this->params = $argv[0];
                 $this->types  = [];
-                $xmlRpcParams  = [];
+                $xmlRpcParams = [];
                 foreach ($argv[0] as $arg) {
                     if ($arg instanceof AbstractValue) {
                         $type = $arg->getType();
@@ -223,7 +240,7 @@ class Request
                         $type        = $xmlRpcValue->getType();
                     }
                     $xmlRpcParams[] = ['value' => $arg, 'type' => $type];
-                    $this->types[] = $type;
+                    $this->types[]  = $type;
                 }
                 $this->xmlRpcParams = $xmlRpcParams;
             }
@@ -232,7 +249,7 @@ class Request
 
         $this->params = $argv;
         $this->types  = [];
-        $xmlRpcParams  = [];
+        $xmlRpcParams = [];
         foreach ($argv as $arg) {
             if ($arg instanceof AbstractValue) {
                 $type = $arg->getType();
@@ -241,7 +258,7 @@ class Request
                 $type        = $xmlRpcValue->getType();
             }
             $xmlRpcParams[] = ['value' => $arg, 'type' => $type];
-            $this->types[] = $type;
+            $this->types[]  = $type;
         }
         $this->xmlRpcParams = $xmlRpcParams;
     }
@@ -270,7 +287,7 @@ class Request
      * Load XML and parse into request components
      *
      * @param string $request
-     * @throws Exception\ValueException if invalid XML
+     * @throws ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */
     public function loadXml($request)
@@ -282,16 +299,16 @@ class Request
         }
 
         // @see Laminas-12293 - disable external entities for security purposes for < PHP 8
-        $isOldPhp = PHP_MAJOR_VERSION < 8;
-        $loadEntities = $isOldPhp && libxml_disable_entity_loader(true);
+        $isOldPhp      = PHP_MAJOR_VERSION < 8;
+        $loadEntities  = $isOldPhp && libxml_disable_entity_loader(true);
         $xmlErrorsFlag = libxml_use_internal_errors(true);
 
         try {
-            $dom = new DOMDocument;
+            $dom = new DOMDocument();
             $dom->loadXML($request);
             foreach ($dom->childNodes as $child) {
                 if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
-                    throw new Exception\ValueException(
+                    throw new ValueException(
                         'Invalid XML: Detected use of illegal DOCTYPE'
                     );
                 }
@@ -301,7 +318,7 @@ class Request
             $error = ErrorHandler::stop();
             $isOldPhp && libxml_disable_entity_loader($loadEntities);
             libxml_use_internal_errors($xmlErrorsFlag);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Not valid XML
             $this->fault = new Fault(631);
             $this->fault->setEncoding($this->getEncoding());
@@ -342,7 +359,7 @@ class Request
                     $param   = AbstractValue::getXmlRpcValue($param->value, AbstractValue::XML_STRING);
                     $types[] = $param->getType();
                     $argv[]  = $param->getValue();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->fault = new Fault(636);
                     $this->fault->setEncoding($this->getEncoding());
                     return false;
@@ -372,7 +389,7 @@ class Request
     /**
      * Retrieve the fault response, if any
      *
-     * @return null|\Laminas\XmlRpc\Fault
+     * @return null|Fault
      */
     public function getFault()
     {

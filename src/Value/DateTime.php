@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\Exception;
+
+use function date;
+use function is_numeric;
 
 class DateTime extends AbstractScalar
 {
@@ -33,7 +30,7 @@ class DateTime extends AbstractScalar
      *
      * @param mixed $value Integer of the unix timestamp or any string that can be parsed
      *                     to a unix timestamp using the PHP strtotime() function
-     * @throws Exception\ValueException if unable to create a DateTime object from $value
+     * @throws Exception\ValueException If unable to create a DateTime object from $value.
      */
     public function __construct($value)
     {

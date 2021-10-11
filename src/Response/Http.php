@@ -1,14 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc\Response;
 
 use Laminas\XmlRpc\Response as XmlRpcResponse;
+
+use function header;
+use function headers_sent;
+use function strtolower;
 
 /**
  * HTTP response

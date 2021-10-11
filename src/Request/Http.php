@@ -1,16 +1,16 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc\Request;
 
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request as XmlRpcRequest;
+
+use function file_get_contents;
+use function str_replace;
+use function strtolower;
+use function substr;
+use function ucwords;
 
 /**
  * XmlRpc Request object -- Request via HTTP
@@ -23,12 +23,14 @@ class Http extends XmlRpcRequest
 {
     /**
      * Array of headers
+     *
      * @var array
      */
     protected $headers;
 
     /**
      * Raw XML as received via request
+     *
      * @var string
      */
     protected $xml;
@@ -39,7 +41,6 @@ class Http extends XmlRpcRequest
      * Attempts to read from php://input to get raw POST request; if an error
      * occurs in doing so, or if the XML is invalid, the request is declared a
      * fault.
-     *
      */
     public function __construct()
     {
@@ -78,8 +79,12 @@ class Http extends XmlRpcRequest
         if (null === $this->headers) {
             $this->headers = [];
             foreach ($_SERVER as $key => $value) {
-                if ('HTTP_' == substr($key, 0, 5)) {
-                    $header = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($key, 5)))));
+                if ('HTTP_' === substr($key, 0, 5)) {
+                    $header                 = str_replace(
+                        ' ',
+                        '-',
+                        ucwords(strtolower(str_replace('_', ' ', substr($key, 5))))
+                    );
                     $this->headers[$header] = $value;
                 }
             }

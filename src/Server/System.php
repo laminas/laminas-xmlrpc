@@ -1,29 +1,29 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc\Server;
+
+use Exception;
+use Laminas\XmlRpc\Fault;
+use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Server;
+use Laminas\XmlRpc\Server\Exception\InvalidArgumentException;
+
+use function array_keys;
+use function is_array;
+use function var_export;
 
 /**
  * XML-RPC system.* methods
  */
 class System
 {
-    /**
-     * @var \Laminas\XmlRpc\Server
-     */
+    /** @var Server */
     protected $server;
 
     /**
      * Constructor
-     *
-     * @param \Laminas\XmlRpc\Server $server
      */
-    public function __construct(\Laminas\XmlRpc\Server $server)
+    public function __construct(Server $server)
     {
         $this->server = $server;
     }
@@ -45,14 +45,14 @@ class System
      * Display help message for an XMLRPC method
      *
      * @param string $method
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return string
      */
     public function methodHelp($method)
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
-            throw new Exception\InvalidArgumentException('Method "' . $method . '" does not exist', 640);
+            throw new InvalidArgumentException('Method "' . $method . '" does not exist', 640);
         }
 
         return $table->getMethod($method)->getMethodHelp();
@@ -62,14 +62,14 @@ class System
      * Return a method signature
      *
      * @param string $method
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return array
      */
     public function methodSignature($method)
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
-            throw new Exception\InvalidArgumentException('Method "' . $method . '" does not exist', 640);
+            throw new InvalidArgumentException('Method "' . $method . '" does not exist', 640);
         }
         $method = $table->getMethod($method)->toArray();
         return $method['prototypes'];
@@ -89,6 +89,7 @@ class System
      * struct with a fault response.
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
+     *
      * @param  array $methods
      * @return array
      */
@@ -106,7 +107,7 @@ class System
             } elseif (! is_array($method['params'])) {
                 $fault = $this->server->fault('Params must be an array', 604);
             } else {
-                if ('system.multicall' == $method['methodName']) {
+                if ('system.multicall' === $method['methodName']) {
                     // don't allow recursive calls to multicall
                     $fault = $this->server->fault('Recursive system.multicall forbidden', 605);
                 }
@@ -114,18 +115,19 @@ class System
 
             if (! $fault) {
                 try {
-                    $request = new \Laminas\XmlRpc\Request();
+                    $request = new Request();
                     $request->setMethod($method['methodName']);
                     $request->setParams($method['params']);
                     $response = $this->server->handle($request);
-                    if ($response instanceof \Laminas\XmlRpc\Fault
+                    if (
+                        $response instanceof Fault
                         || $response->isFault()
                     ) {
                         $fault = $response;
                     } else {
                         $responses[] = $response->getReturnValue();
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $fault = $this->server->fault($e);
                 }
             }
@@ -133,7 +135,7 @@ class System
             if ($fault) {
                 $responses[] = [
                     'faultCode'   => $fault->getCode(),
-                    'faultString' => $fault->getMessage()
+                    'faultString' => $fault->getMessage(),
                 ];
             }
         }

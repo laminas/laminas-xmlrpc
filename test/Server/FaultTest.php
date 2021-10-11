@@ -1,15 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\XmlRpc\Server;
 
+use DOMDocument;
 use Laminas\XmlRpc\Server;
+use Laminas\XmlRpc\Server\Fault;
 use PHPUnit\Framework\TestCase;
+
+use function array_shift;
+use function trim;
 
 /**
  * @group      Laminas_XmlRpc
@@ -21,10 +20,10 @@ class FaultTest extends TestCase
      */
     public function testGetInstance()
     {
-        $e = new Server\Exception\RuntimeException('Testing fault', 411);
+        $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
 
-        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $fault);
+        $this->assertInstanceOf(Fault::class, $fault);
     }
 
     /**
@@ -33,7 +32,7 @@ class FaultTest extends TestCase
     public function testAttachFaultException()
     {
         Server\Fault::attachFaultException(TestAsset\Exception::class);
-        $e = new TestAsset\Exception('test exception', 411);
+        $e     = new TestAsset\Exception('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
@@ -46,7 +45,7 @@ class FaultTest extends TestCase
         ];
         Server\Fault::attachFaultException($exceptions);
         foreach ($exceptions as $class) {
-            $e = new $class('test exception', 411);
+            $e     = new $class('test exception', 411);
             $fault = Server\Fault::getInstance($e);
             $this->assertEquals('test exception', $fault->getMessage());
             $this->assertEquals(411, $fault->getCode());
@@ -56,12 +55,13 @@ class FaultTest extends TestCase
 
     /**
      * Tests Laminas-1825
+     *
      * @return void
      */
     public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses()
     {
         Server\Fault::attachFaultException(TestAsset\Exception::class);
-        $e = new TestAsset\Exception4('test exception', 411);
+        $e     = new TestAsset\Exception4('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
@@ -74,7 +74,7 @@ class FaultTest extends TestCase
     public function testDetachFaultException()
     {
         Server\Fault::attachFaultException(TestAsset\Exception::class);
-        $e = new TestAsset\Exception('test exception', 411);
+        $e     = new TestAsset\Exception('test exception', 411);
         $fault = Server\Fault::getInstance($e);
         $this->assertEquals('test exception', $fault->getMessage());
         $this->assertEquals(411, $fault->getCode());
@@ -83,7 +83,6 @@ class FaultTest extends TestCase
         $this->assertEquals('Unknown error', $fault->getMessage());
         $this->assertEquals(404, $fault->getCode());
 
-
         $exceptions = [
             TestAsset\Exception::class,
             TestAsset\Exception2::class,
@@ -91,14 +90,14 @@ class FaultTest extends TestCase
         ];
         Server\Fault::attachFaultException($exceptions);
         foreach ($exceptions as $class) {
-            $e = new $class('test exception', 411);
+            $e     = new $class('test exception', 411);
             $fault = Server\Fault::getInstance($e);
             $this->assertEquals('test exception', $fault->getMessage());
             $this->assertEquals(411, $fault->getCode());
         }
         Server\Fault::detachFaultException($exceptions);
         foreach ($exceptions as $class) {
-            $e = new $class('test exception', 411);
+            $e     = new $class('test exception', 411);
             $fault = Server\Fault::getInstance($e);
             $this->assertEquals('Unknown error', $fault->getMessage());
             $this->assertEquals(404, $fault->getCode());
@@ -111,15 +110,15 @@ class FaultTest extends TestCase
     public function testAttachObserver()
     {
         Server\Fault::attachObserver(TestAsset\Observer::class);
-        $e = new Server\Exception\RuntimeException('Checking observers', 411);
-        $fault = Server\Fault::getInstance($e);
+        $e        = new Server\Exception\RuntimeException('Checking observers', 411);
+        $fault    = Server\Fault::getInstance($e);
         $observed = TestAsset\Observer::getObserved();
         TestAsset\Observer::clearObserved();
         Server\Fault::detachObserver(TestAsset\Observer::class);
 
         $this->assertNotEmpty($observed);
         $f = array_shift($observed);
-        $this->assertInstanceOf('Laminas\XmlRpc\Server\Fault', $f);
+        $this->assertInstanceOf(Fault::class, $f);
         $this->assertEquals('Checking observers', $f->getMessage());
         $this->assertEquals(411, $f->getCode());
 
@@ -132,13 +131,13 @@ class FaultTest extends TestCase
     public function testDetachObserver()
     {
         Server\Fault::attachObserver(TestAsset\Observer::class);
-        $e = new Server\Exception\RuntimeException('Checking observers', 411);
+        $e     = new Server\Exception\RuntimeException('Checking observers', 411);
         $fault = Server\Fault::getInstance($e);
         TestAsset\Observer::clearObserved();
         Server\Fault::detachObserver(TestAsset\Observer::class);
 
-        $e = new Server\Exception\RuntimeException('Checking observers', 411);
-        $fault = Server\Fault::getInstance($e);
+        $e        = new Server\Exception\RuntimeException('Checking observers', 411);
+        $fault    = Server\Fault::getInstance($e);
         $observed = TestAsset\Observer::getObserved();
         $this->assertEmpty($observed);
 
@@ -150,7 +149,7 @@ class FaultTest extends TestCase
      */
     public function testGetCode()
     {
-        $e = new Server\Exception\RuntimeException('Testing fault', 411);
+        $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
 
         $this->assertEquals(411, $fault->getCode());
@@ -161,7 +160,7 @@ class FaultTest extends TestCase
      */
     public function testGetException()
     {
-        $e = new Server\Exception\RuntimeException('Testing fault', 411);
+        $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
 
         $this->assertSame($e, $fault->getException());
@@ -172,7 +171,7 @@ class FaultTest extends TestCase
      */
     public function testGetMessage()
     {
-        $e = new Server\Exception\RuntimeException('Testing fault', 411);
+        $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
 
         $this->assertEquals('Testing fault', $fault->getMessage());
@@ -183,25 +182,25 @@ class FaultTest extends TestCase
      */
     public function testCastsFaultsToString()
     {
-        $dom  = new \DOMDocument('1.0', 'UTF-8');
-        $r    = $dom->appendChild($dom->createElement('methodResponse'));
-        $f    = $r->appendChild($dom->createElement('fault'));
-        $v    = $f->appendChild($dom->createElement('value'));
-        $s    = $v->appendChild($dom->createElement('struct'));
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $r   = $dom->appendChild($dom->createElement('methodResponse'));
+        $f   = $r->appendChild($dom->createElement('fault'));
+        $v   = $f->appendChild($dom->createElement('value'));
+        $s   = $v->appendChild($dom->createElement('struct'));
 
-        $m1   = $s->appendChild($dom->createElement('member'));
+        $m1 = $s->appendChild($dom->createElement('member'));
         $m1->appendChild($dom->createElement('name', 'faultCode'));
-        $cv   = $m1->appendChild($dom->createElement('value'));
+        $cv = $m1->appendChild($dom->createElement('value'));
         $cv->appendChild($dom->createElement('int', 411));
 
-        $m2   = $s->appendChild($dom->createElement('member'));
+        $m2 = $s->appendChild($dom->createElement('member'));
         $m2->appendChild($dom->createElement('name', 'faultString'));
-        $sv   = $m2->appendChild($dom->createElement('value'));
+        $sv = $m2->appendChild($dom->createElement('value'));
         $sv->appendChild($dom->createElement('string', 'Testing fault'));
 
         $xml = $dom->saveXML();
 
-        $e = new Server\Exception\RuntimeException('Testing fault', 411);
+        $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
         $fault->setEncoding('UTF-8');
 

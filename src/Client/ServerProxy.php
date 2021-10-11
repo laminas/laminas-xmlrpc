@@ -1,14 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\XmlRpc\Client;
 
 use Laminas\XmlRpc\Client as XMLRPCClient;
+
+use function ltrim;
 
 /**
  * The namespace decorator enables object chaining to permit
@@ -17,25 +13,16 @@ use Laminas\XmlRpc\Client as XMLRPCClient;
  */
 class ServerProxy
 {
-    /**
-     * @var \Laminas\XmlRpc\Client
-     */
-    private $client = null;
+    /** @var XMLRPCClient */
+    private $client;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $namespace = '';
 
-    /**
-     * @var array of \Laminas\XmlRpc\Client\ServerProxy
-     */
+    /** @var array of \Laminas\XmlRpc\Client\ServerProxy */
     private $cache = [];
 
     /**
-     * Class constructor
-     *
-     * @param \Laminas\XmlRpc\Client $client
      * @param string             $namespace
      */
     public function __construct(XMLRPCClient $client, $namespace = '')
@@ -48,7 +35,7 @@ class ServerProxy
      * Get the next successive namespace
      *
      * @param string $namespace
-     * @return \Laminas\XmlRpc\Client\ServerProxy
+     * @return ServerProxy
      */
     public function __get($namespace)
     {

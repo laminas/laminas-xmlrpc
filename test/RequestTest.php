@@ -1,17 +1,25 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\XmlRpc;
 
+use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Value;
 use PHPUnit\Framework\TestCase;
+use SimpleXMLElement;
+use stdClass;
+
+use function count;
+use function dirname;
+use function file_get_contents;
+use function is_string;
+use function realpath;
+use function sprintf;
+use function strtotime;
+use function time;
+use function var_export;
 
 /**
  * @group      Laminas_XmlRpc
@@ -20,7 +28,8 @@ class RequestTest extends TestCase
 {
     /**
      * \Laminas\XmlRpc\Request object
-     * @var \Laminas\XmlRpc\Request
+     *
+     * @var Request
      */
     protected $request;
 
@@ -56,7 +65,6 @@ class RequestTest extends TestCase
         $this->assertEquals('test/method', $this->request->getMethod());
     }
 
-
     /**
      * __construct() test
      */
@@ -68,11 +76,10 @@ class RequestTest extends TestCase
 
         $method = 'foo.bar';
         $params = ['baz', 1, ['foo' => 'bar']];
-        $r = new Request($method, $params);
+        $r      = new Request($method, $params);
         $this->assertEquals($method, $r->getMethod());
         $this->assertEquals($params, $r->getParams());
     }
-
 
     /**
      * addParam()/getParams() test
@@ -103,8 +110,8 @@ class RequestTest extends TestCase
         $time = time();
         $this->request->addParam($time, AbstractValue::XMLRPC_TYPE_DATETIME);
         $this->request->setMethod('foo.bar');
-        $xml = $this->request->saveXml();
-        $sxl = new \SimpleXMLElement($xml);
+        $xml   = $this->request->saveXml();
+        $sxl   = new SimpleXMLElement($xml);
         $param = $sxl->params->param->value;
         $type  = 'dateTime.iso8601';
         $this->assertTrue(isset($param->{$type}), var_export($param, 1));
@@ -119,7 +126,7 @@ class RequestTest extends TestCase
         $params = [
             'string1',
             true,
-            ['one', 'two']
+            ['one', 'two'],
         ];
         $this->request->setParams($params);
         $returned = $this->request->getParams();
@@ -127,7 +134,7 @@ class RequestTest extends TestCase
 
         $params = [
             'string2',
-            ['two', 'one']
+            ['two', 'one'],
         ];
         $this->request->setParams($params);
         $returned = $this->request->getParams();
@@ -151,9 +158,9 @@ class RequestTest extends TestCase
      */
     public function testLoadXml()
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $mCall = $dom->appendChild($dom->createElement('methodCall'));
-        $mName = $mCall->appendChild($dom->createElement('methodName', 'do.Something'));
+        $dom    = new DOMDocument('1.0', 'UTF-8');
+        $mCall  = $dom->appendChild($dom->createElement('methodCall'));
+        $mName  = $mCall->appendChild($dom->createElement('methodName', 'do.Something'));
         $params = $mCall->appendChild($dom->createElement('params'));
         $param1 = $params->appendChild($dom->createElement('param'));
         $value1 = $param1->appendChild($dom->createElement('value'));
@@ -163,15 +170,13 @@ class RequestTest extends TestCase
         $value2 = $param2->appendChild($dom->createElement('value'));
         $value2->appendChild($dom->createElement('boolean', 1));
 
-
         $xml = $dom->saveXml();
-
 
         $parsed = $this->request->loadXml($xml);
         $this->assertTrue($parsed, $xml);
 
         $this->assertEquals('do.Something', $this->request->getMethod());
-        $test = ['string1', true];
+        $test   = ['string1', true];
         $params = $this->request->getParams();
         $this->assertSame($test, $params);
 
@@ -181,7 +186,7 @@ class RequestTest extends TestCase
 
     public function testPassingInvalidTypeToLoadXml()
     {
-        $this->assertFalse($this->request->loadXml(new \stdClass()));
+        $this->assertFalse($this->request->loadXml(new stdClass()));
         $this->assertTrue($this->request->isFault());
         $this->assertSame(635, $this->request->getFault()->getCode());
         $this->assertSame('Invalid XML provided to request', $this->request->getFault()->getMessage());
@@ -249,31 +254,31 @@ class RequestTest extends TestCase
         $this->assertNull($fault);
         $this->request->loadXml('foo');
         $fault = $this->request->getFault();
-        $this->assertInstanceOf('Laminas\XmlRpc\Fault', $fault);
+        $this->assertInstanceOf(Fault::class, $fault);
     }
 
     /**
      * helper for saveXml() and __toString() tests
      *
      * @param string $xml
-     * @return void
+     * @param array $argv
      */
-    protected function assertXmlRequest($xml, $argv)
+    protected function assertXmlRequest($xml, $argv): void
     {
-        $sx = new \SimpleXMLElement($xml);
+        $sx = new SimpleXMLElement($xml);
 
         $result = $sx->xpath('//methodName');
-        $count = count($result);
+        $count  = count($result);
         $this->assertEquals(1, $count, $xml);
 
         $result = $sx->xpath('//params');
-        $count = count($result);
+        $count  = count($result);
         $this->assertEquals(1, $count, $xml);
 
         $methodName = (string) $sx->methodName;
-        $params = [
+        $params     = [
             (string) $sx->params->param[0]->value->string,
-            (bool) $sx->params->param[1]->value->boolean
+            (bool) $sx->params->param[1]->value->boolean,
         ];
 
         $this->assertEquals('do.Something', $methodName);

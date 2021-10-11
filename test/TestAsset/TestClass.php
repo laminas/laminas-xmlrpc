@@ -1,21 +1,20 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\XmlRpc\TestAsset;
+
+use function func_get_args;
+use function implode;
 
 class TestClass
 {
+    /** @var mixed */
     private $value1;
+    /** @var mixed */
     private $value2;
 
     /**
-     * Constructor
-     *
+     * @param mixed $value1
+     * @param mixed $value2
      */
     public function __construct($value1 = null, $value2 = null)
     {

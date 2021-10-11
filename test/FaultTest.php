@@ -1,26 +1,20 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-xmlrpc for the canonical source repository
- * @copyright https://github.com/laminas/laminas-xmlrpc/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-xmlrpc/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\XmlRpc;
 
+use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Exception;
 use Laminas\XmlRpc\Fault;
 use PHPUnit\Framework\TestCase;
+use SimpleXMLElement;
 
 /**
  * @group      Laminas_XmlRpc
  */
 class FaultTest extends TestCase
 {
-    /**
-     * @var XmlRpc\Fault
-     */
+    /** @var XmlRpc\Fault */
     protected $fault;
 
     /**
@@ -45,7 +39,7 @@ class FaultTest extends TestCase
      */
     public function testConstructor()
     {
-        $this->assertInstanceOf('Laminas\XmlRpc\Fault', $this->fault);
+        $this->assertInstanceOf(Fault::class, $this->fault);
         $this->assertEquals(404, $this->fault->getCode());
         $this->assertEquals('Unknown Error', $this->fault->getMessage());
     }
@@ -68,13 +62,16 @@ class FaultTest extends TestCase
         $this->assertEquals('Message', $this->fault->getMessage());
     }
 
+    /**
+     * @return bool|string
+     */
     protected function createXml()
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
-        $fault  = $response->appendChild($dom->createElement('fault'));
-        $value  = $fault->appendChild($dom->createElement('value'));
-        $struct = $value->appendChild($dom->createElement('struct'));
+        $fault    = $response->appendChild($dom->createElement('fault'));
+        $value    = $fault->appendChild($dom->createElement('value'));
+        $struct   = $value->appendChild($dom->createElement('struct'));
 
         $member1 = $struct->appendChild($dom->createElement('member'));
         $member1->appendChild($dom->createElement('name', 'faultCode'));
@@ -89,13 +86,16 @@ class FaultTest extends TestCase
         return $dom->saveXml();
     }
 
+    /**
+     * @return bool|string
+     */
     protected function createNonStandardXml()
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
-        $fault  = $response->appendChild($dom->createElement('fault'));
-        $value  = $fault->appendChild($dom->createElement('value'));
-        $struct = $value->appendChild($dom->createElement('struct'));
+        $fault    = $response->appendChild($dom->createElement('fault'));
+        $value    = $fault->appendChild($dom->createElement('value'));
+        $struct   = $value->appendChild($dom->createElement('struct'));
 
         $member1 = $struct->appendChild($dom->createElement('member'));
         $member1->appendChild($dom->createElement('name', 'faultCode'));
@@ -196,7 +196,7 @@ class FaultTest extends TestCase
      */
     protected function assertXmlFault($xml)
     {
-        $sx = new \SimpleXMLElement($xml);
+        $sx = new SimpleXMLElement($xml);
 
         $this->assertNotFalse($sx->fault, $xml);
         $this->assertNotFalse($sx->fault->value, $xml);
@@ -206,11 +206,11 @@ class FaultTest extends TestCase
             $count++;
             $this->assertNotFalse($member->name, $xml);
             $this->assertNotFalse($member->value, $xml);
-            if ('faultCode' == (string) $member->name) {
+            if ('faultCode' === (string) $member->name) {
                 $this->assertNotFalse($member->value->int, $xml);
                 $this->assertEquals(1000, (int) $member->value->int, $xml);
             }
-            if ('faultString' == (string) $member->name) {
+            if ('faultString' === (string) $member->name) {
                 $this->assertNotFalse($member->value->string, $xml);
                 $this->assertEquals('Fault message', (string) $member->value->string, $xml);
             }
