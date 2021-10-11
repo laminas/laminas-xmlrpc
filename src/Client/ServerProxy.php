@@ -13,14 +13,12 @@ use function ltrim;
  */
 class ServerProxy
 {
-    /** @var XMLRPCClient */
-    private $client;
+    private XMLRPCClient $client;
 
-    /** @var string */
-    private $namespace = '';
+    private string $namespace = '';
 
     /** @var array of \Laminas\XmlRpc\Client\ServerProxy */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * @param string             $namespace

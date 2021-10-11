@@ -663,14 +663,14 @@ class ServerTest extends TestCase
     {
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Invalid request class');
-        $this->server->setRequest('stdClass');
+        $this->server->setRequest(stdClass::class);
     }
 
     public function testPassingInvalidResponseClassThrowsException()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid response class');
-        $this->server->setResponseClass('stdClass');
+        $this->server->setResponseClass(stdClass::class);
     }
 
     public function testCreatingFaultWithEmptyMessageResultsInUnknownError()
