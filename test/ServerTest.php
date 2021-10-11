@@ -9,6 +9,7 @@
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Server\Definition as ServerDefinition;
+use Laminas\Server\Exception\InvalidArgumentException as ServerInvalidArgumentException;
 use Laminas\Server\Method\Definition as MethodDefinition;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Exception\ExceptionInterface;
@@ -17,7 +18,6 @@ use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Server;
-use Laminas\XmlRpc\Server\Exception\InvalidArgumentException as ServerInvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

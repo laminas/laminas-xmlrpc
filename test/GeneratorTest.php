@@ -20,7 +20,7 @@ use function trim;
 class GeneratorTest extends TestCase
 {
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testCreatingSingleElement(Generator $generator)
     {
@@ -30,7 +30,7 @@ class GeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testCreatingSingleElementWithValue(Generator $generator)
     {
@@ -40,7 +40,7 @@ class GeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testCreatingComplexXmlDocument(Generator $generator)
     {
@@ -57,7 +57,7 @@ class GeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testFlushingGeneratorFlushesEverything(Generator $generator)
     {
@@ -68,7 +68,7 @@ class GeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testSpecialCharsAreEncoded(Generator $generator)
     {
@@ -83,7 +83,7 @@ class GeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGeneratorsWithAlternateEncodings
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGeneratorsWithAlternateEncodings
      */
     public function testDifferentEncodings(Generator $generator)
     {
@@ -92,7 +92,7 @@ class GeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testFluentInterfacesProvided(Generator $generator)
     {

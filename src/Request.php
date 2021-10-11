@@ -11,6 +11,7 @@ namespace Laminas\XmlRpc;
 use DOMDocument;
 use Exception;
 use Laminas\Stdlib\ErrorHandler;
+use Laminas\XmlRpc\Exception\ValueException;
 use Laminas\XmlRpc\Fault;
 use SimpleXMLElement;
 
@@ -292,7 +293,7 @@ class Request
      * Load XML and parse into request components
      *
      * @param string $request
-     * @throws Exception\ValueException If invalid XML.
+     * @throws ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */
     public function loadXml($request)
@@ -313,7 +314,7 @@ class Request
             $dom->loadXML($request);
             foreach ($dom->childNodes as $child) {
                 if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
-                    throw new Exception\ValueException(
+                    throw new ValueException(
                         'Invalid XML: Detected use of illegal DOCTYPE'
                     );
                 }

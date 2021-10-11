@@ -12,6 +12,7 @@ use Exception;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Server;
+use Laminas\XmlRpc\Server\Exception\InvalidArgumentException;
 
 use function array_keys;
 use function is_array;
@@ -50,14 +51,14 @@ class System
      * Display help message for an XMLRPC method
      *
      * @param string $method
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return string
      */
     public function methodHelp($method)
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
-            throw new Exception\InvalidArgumentException('Method "' . $method . '" does not exist', 640);
+            throw new InvalidArgumentException('Method "' . $method . '" does not exist', 640);
         }
 
         return $table->getMethod($method)->getMethodHelp();
@@ -67,14 +68,14 @@ class System
      * Return a method signature
      *
      * @param string $method
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return array
      */
     public function methodSignature($method)
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
-            throw new Exception\InvalidArgumentException('Method "' . $method . '" does not exist', 640);
+            throw new InvalidArgumentException('Method "' . $method . '" does not exist', 640);
         }
         $method = $table->getMethod($method)->toArray();
         return $method['prototypes'];
