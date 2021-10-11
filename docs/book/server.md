@@ -133,9 +133,9 @@ helps prevent naming collisions between methods served by different classes. As
 an example, the XML-RPC server is expected to server several methods in the
 `system` namespace:
 
-- `system.listMethods`
-- `system.methodHelp`
-- `system.methodSignature`
+* `system.listMethods`
+* `system.methodHelp`
+* `system.methodSignature`
 
 Internally, these map to the methods of the same name in `Laminas\XmlRpc\Server`.
 
