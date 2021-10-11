@@ -17,4 +17,8 @@
 
     <!-- Include all rules from the Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard"/>
+
+    <rule ref="WebimpressCodingStandard.NamingConventions.Exception.Suffix">
+        <exclude-pattern>test/Server/TestAsset/Exception*.php</exclude-pattern>
+    </rule>
 </ruleset>

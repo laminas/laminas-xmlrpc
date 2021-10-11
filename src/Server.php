@@ -14,6 +14,7 @@ use Laminas\Server\Definition;
 use Laminas\Server\Reflection;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Response\Http;
+use Laminas\XmlRpc\Server\Exception\InvalidArgumentException;
 
 use function array_merge;
 use function array_slice;
@@ -190,13 +191,13 @@ class Server extends AbstractServer
      *
      * @param string|array|callable $function  Valid callback
      * @param string                $namespace Optional namespace prefix
-     * @throws Server\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return void
      */
     public function addFunction($function, $namespace = '')
     {
         if (! is_string($function) && ! is_array($function)) {
-            throw new Server\Exception\InvalidArgumentException('Unable to attach function; invalid', 611);
+            throw new InvalidArgumentException('Unable to attach function; invalid', 611);
         }
 
         $argv = null;
@@ -208,7 +209,7 @@ class Server extends AbstractServer
         $function = (array) $function;
         foreach ($function as $func) {
             if (! is_string($func) || ! function_exists($func)) {
-                throw new Server\Exception\InvalidArgumentException('Unable to attach function; invalid', 611);
+                throw new InvalidArgumentException('Unable to attach function; invalid', 611);
             }
             $reflection = Reflection::reflectFunction($func, $argv, $namespace);
             $this->_buildSignature($reflection);
@@ -230,12 +231,12 @@ class Server extends AbstractServer
      * @param string $namespace Optional
      * @param mixed $argv Optional arguments to pass to methods
      * @return void
-     * @throws Server\Exception\InvalidArgumentException on invalid input
+     * @throws InvalidArgumentException On invalid input.
      */
     public function setClass($class, $namespace = '', $argv = null)
     {
         if (is_string($class) && ! class_exists($class)) {
-            throw new Server\Exception\InvalidArgumentException('Invalid method class', 610);
+            throw new InvalidArgumentException('Invalid method class', 610);
         }
 
         if (2 < func_num_args()) {
@@ -345,7 +346,7 @@ class Server extends AbstractServer
      *
      * @param  array|Definition $definition
      * @return void
-     * @throws Server\Exception\InvalidArgumentException on invalid input
+     * @throws InvalidArgumentException On invalid input.
      */
     public function loadFunctions($definition)
     {
@@ -355,7 +356,7 @@ class Server extends AbstractServer
             } else {
                 $type = gettype($definition);
             }
-            throw new Server\Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Unable to load server definition; must be an array or Laminas\Server\Definition, received ' . $type,
                 612
             );
@@ -369,7 +370,7 @@ class Server extends AbstractServer
         }
 
         foreach ($definition as $key => $method) {
-            if ('system.' == substr($key, 0, 7)) {
+            if ('system.' === substr($key, 0, 7)) {
                 continue;
             }
             $this->table->addMethod($method, $key);
@@ -414,18 +415,18 @@ class Server extends AbstractServer
      *
      * @param  string|Request $request
      * @return Server
-     * @throws Server\Exception\InvalidArgumentException on invalid request class or object
+     * @throws InvalidArgumentException On invalid request class or object.
      */
     public function setRequest($request)
     {
         if (is_string($request) && class_exists($request)) {
             $request = new $request();
             if (! $request instanceof Request) {
-                throw new Server\Exception\InvalidArgumentException('Invalid request class');
+                throw new InvalidArgumentException('Invalid request class');
             }
             $request->setEncoding($this->getEncoding());
         } elseif (! $request instanceof Request) {
-            throw new Server\Exception\InvalidArgumentException('Invalid request object');
+            throw new InvalidArgumentException('Invalid request object');
         }
 
         $this->request = $request;
@@ -456,13 +457,13 @@ class Server extends AbstractServer
      * Set the class to use for the response
      *
      * @param  string $class
-     * @throws Server\Exception\InvalidArgumentException if invalid response class
+     * @throws InvalidArgumentException If invalid response class.
      * @return bool True if class was set, false if not
      */
     public function setResponseClass($class)
     {
         if (! class_exists($class) || ! is_subclass_of($class, Response::class)) {
-            throw new Server\Exception\InvalidArgumentException('Invalid response class');
+            throw new InvalidArgumentException('Invalid response class');
         }
         $this->responseClass = $class;
         return true;
@@ -568,7 +569,7 @@ class Server extends AbstractServer
         $info   = $this->table->getMethod($method);
         $params = $request->getParams();
         $argv   = $info->getInvokeArguments();
-        if (0 < count($argv) and $this->sendArgumentsToAllMethods()) {
+        if (0 < count($argv) && $this->sendArgumentsToAllMethods()) {
             $params = array_merge($params, $argv);
         }
 

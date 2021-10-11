@@ -12,15 +12,17 @@ use Laminas\XmlRpc\Server\Fault;
 
 class Observer
 {
-    private static $instance = false;
+    /** @var self|null */
+    private static $instance;
 
+    /** @var array */
     public $observed = [];
 
     private function __construct()
     {
     }
 
-    public static function getInstance()
+    public static function getInstance(): self
     {
         if (! static::$instance) {
             static::$instance = new self();
@@ -29,17 +31,17 @@ class Observer
         return static::$instance;
     }
 
-    public static function observe(Fault $fault)
+    public static function observe(Fault $fault): void
     {
         self::getInstance()->observed[] = $fault;
     }
 
-    public static function clearObserved()
+    public static function clearObserved(): void
     {
         self::getInstance()->observed = [];
     }
 
-    public static function getObserved()
+    public static function getObserved(): array
     {
         return self::getInstance()->observed;
     }

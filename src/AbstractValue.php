@@ -10,6 +10,8 @@ namespace Laminas\XmlRpc;
 
 use DateTime;
 use Exception;
+use Laminas\XmlRpc\Exception\InvalidArgumentException;
+use Laminas\XmlRpc\Exception\ValueException;
 use Laminas\XmlRpc\Generator\GeneratorInterface;
 use SimpleXMLElement;
 
@@ -20,7 +22,7 @@ use function get_object_vars;
 use function gettype;
 use function is_array;
 use function is_bool;
-use function is_double;
+use function is_float;
 use function is_int;
 use function is_object;
 use function is_string;
@@ -49,17 +51,23 @@ abstract class AbstractValue
      *
      * If the native type of this object is array or struct, this will be an array
      * of Value objects
+     *
+     * @var mixed
      */
     protected $value;
 
     /**
      * The native XML-RPC type of this object
      * One of the XMLRPC_TYPE_* constants
+     *
+     * @var string
      */
     protected $type;
 
     /**
      * XML code representation of this object (will be calculated only once)
+     *
+     * @var string
      */
     protected $xml;
 
@@ -70,6 +78,7 @@ abstract class AbstractValue
      *
      * @var bool
      */
+    // phpcs:ignore
     public static $USE_BIGINT_FOR_I8 = PHP_INT_SIZE < 8;
 
     /** @var GeneratorInterface */
@@ -78,29 +87,29 @@ abstract class AbstractValue
     /**
      * Specify that the XML-RPC native type will be auto detected from a PHP variable type
      */
-    const AUTO_DETECT_TYPE = 'auto_detect';
+    public const AUTO_DETECT_TYPE = 'auto_detect';
 
     /**
      * Specify that the XML-RPC value will be parsed out from a given XML code
      */
-    const XML_STRING = 'xml';
+    public const XML_STRING = 'xml';
 
     /**
      * All the XML-RPC native types
      */
-    const XMLRPC_TYPE_I4        = 'i4';
-    const XMLRPC_TYPE_INTEGER   = 'int';
-    const XMLRPC_TYPE_I8        = 'i8';
-    const XMLRPC_TYPE_APACHEI8  = 'ex:i8';
-    const XMLRPC_TYPE_DOUBLE    = 'double';
-    const XMLRPC_TYPE_BOOLEAN   = 'boolean';
-    const XMLRPC_TYPE_STRING    = 'string';
-    const XMLRPC_TYPE_DATETIME  = 'dateTime.iso8601';
-    const XMLRPC_TYPE_BASE64    = 'base64';
-    const XMLRPC_TYPE_ARRAY     = 'array';
-    const XMLRPC_TYPE_STRUCT    = 'struct';
-    const XMLRPC_TYPE_NIL       = 'nil';
-    const XMLRPC_TYPE_APACHENIL = 'ex:nil';
+    public const XMLRPC_TYPE_I4        = 'i4';
+    public const XMLRPC_TYPE_INTEGER   = 'int';
+    public const XMLRPC_TYPE_I8        = 'i8';
+    public const XMLRPC_TYPE_APACHEI8  = 'ex:i8';
+    public const XMLRPC_TYPE_DOUBLE    = 'double';
+    public const XMLRPC_TYPE_BOOLEAN   = 'boolean';
+    public const XMLRPC_TYPE_STRING    = 'string';
+    public const XMLRPC_TYPE_DATETIME  = 'dateTime.iso8601';
+    public const XMLRPC_TYPE_BASE64    = 'base64';
+    public const XMLRPC_TYPE_ARRAY     = 'array';
+    public const XMLRPC_TYPE_STRUCT    = 'struct';
+    public const XMLRPC_TYPE_NIL       = 'nil';
+    public const XMLRPC_TYPE_APACHENIL = 'ex:nil';
 
     /**
      * Get the native XML-RPC type (the type is one of the Value::XMLRPC_TYPE_* constants)
@@ -196,7 +205,7 @@ abstract class AbstractValue
      *
      * @param  mixed $value
      * @param  Laminas\XmlRpc\Value::constant $type
-     * @throws Exception\ValueException
+     * @throws ValueException
      * @return AbstractValue
      */
     public static function getXmlRpcValue($value, $type = self::AUTO_DETECT_TYPE)
@@ -247,7 +256,7 @@ abstract class AbstractValue
                 return new Value\Struct($value);
 
             default:
-                throw new Exception\ValueException('Given type is not a ' . self::class . ' constant');
+                throw new ValueException('Given type is not a ' . self::class . ' constant');
         }
     }
 
@@ -256,7 +265,7 @@ abstract class AbstractValue
      *
      * @static
      * @param mixed $value
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return string
      */
     public static function getXmlRpcTypeByValue($value)
@@ -275,7 +284,7 @@ abstract class AbstractValue
             return self::XMLRPC_TYPE_ARRAY;
         } elseif (is_int($value)) {
             return $value > PHP_INT_MAX ? self::XMLRPC_TYPE_I8 : self::XMLRPC_TYPE_INTEGER;
-        } elseif (is_double($value)) {
+        } elseif (is_float($value)) {
             return self::XMLRPC_TYPE_DOUBLE;
         } elseif (is_bool($value)) {
             return self::XMLRPC_TYPE_BOOLEAN;
@@ -284,7 +293,7 @@ abstract class AbstractValue
         } elseif (is_string($value)) {
             return self::XMLRPC_TYPE_STRING;
         }
-        throw new Exception\InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             'No matching XMLRPC type found for php type %s.',
             gettype($value)
         ));
@@ -294,7 +303,7 @@ abstract class AbstractValue
      * Transform a PHP native variable into a XML-RPC native value
      *
      * @param mixed $value The PHP variable for conversion
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return AbstractValue
      * @static
      */
@@ -340,7 +349,7 @@ abstract class AbstractValue
      *
      * @param string|SimpleXMLElement $xml A SimpleXMLElement object represent the XML string
      * It can be also a valid XML string for conversion
-     * @throws Exception\ValueException
+     * @throws ValueException
      * @return AbstractValue
      * @static
      */
@@ -388,14 +397,14 @@ abstract class AbstractValue
                 // returns; need to look for the item specifically
                 $data = null;
                 foreach ($value->children() as $key => $value) {
-                    if ('data' == $key) {
+                    if ('data' === $key) {
                         $data = $value;
                         break;
                     }
                 }
 
                 if (null === $data) {
-                    throw new Exception\ValueException(
+                    throw new ValueException(
                         'Invalid XML for XML-RPC native '
                         . self::XMLRPC_TYPE_ARRAY
                         . ' type: ARRAY tag must contain DATA tag'
@@ -416,7 +425,7 @@ abstract class AbstractValue
                 foreach ($value->member as $member) {
                     // @todo? If a member doesn't have a <value> tag, we don't add it to the struct
                     // Maybe we want to throw an exception here ?
-                    if (! isset($member->value) or ! isset($member->name)) {
+                    if (! isset($member->value) || ! isset($member->name)) {
                         continue;
                     }
                     $values[(string) $member->name] = static::xmlStringToNativeXmlRpc($member->value);
@@ -424,16 +433,18 @@ abstract class AbstractValue
                 $xmlrpcValue = new Value\Struct($values);
                 break;
             default:
-                throw new Exception\ValueException(
+                throw new ValueException(
                     'Value type \'' . $type . '\' parsed from the XML string is not a known XML-RPC native type'
                 );
-                break;
         }
         $xmlrpcValue->setXML($xml->asXML());
 
         return $xmlrpcValue;
     }
 
+    /**
+     * @param SimpleXMLElement|string $xml
+     */
     protected static function createSimpleXMLElement(&$xml)
     {
         if ($xml instanceof SimpleXMLElement) {
@@ -444,7 +455,7 @@ abstract class AbstractValue
             $xml = new SimpleXMLElement($xml);
         } catch (Exception $e) {
             // The given string is not a valid XML
-            throw new Exception\ValueException(
+            throw new ValueException(
                 'Failed to create XML-RPC value from XML string: ' . $e->getMessage(),
                 $e->getCode(),
                 $e
@@ -455,8 +466,8 @@ abstract class AbstractValue
     /**
      * Extract XML/RPC type and value from SimpleXMLElement object
      *
-     * @param string &$type Type bind variable
-     * @param string &$value Value bind variable
+     * @param string $type Type bind variable
+     * @param string $value Value bind variable
      * @return void
      */
     protected static function extractTypeAndValue(SimpleXMLElement $xml, &$type, &$value)
@@ -465,7 +476,7 @@ abstract class AbstractValue
         foreach ((array) $xml as $type => $value) {
             break;
         }
-        if (! $type and $value === null) {
+        if (! $type && $value === null) {
             $namespaces = ['ex' => 'http://ws.apache.org/xmlrpc/namespaces/extensions'];
             foreach ($namespaces as $namespaceName => $namespaceUri) {
                 foreach ((array) $xml->children($namespaceUri) as $type => $value) {
@@ -481,14 +492,14 @@ abstract class AbstractValue
         // If no type was specified, the default is string
         if (! $type) {
             $type = self::XMLRPC_TYPE_STRING;
-            if (empty($value) and preg_match('#^<value>.*</value>$#', $xml->asXML())) {
+            if (empty($value) && preg_match('#^<value>.*</value>$#', $xml->asXML())) {
                 $value = str_replace(['<value>', '</value>'], '', $xml->asXML());
             }
         }
     }
 
     /**
-     * @param $xml
+     * @param string $xml
      * @return void
      */
     protected function setXML($xml)

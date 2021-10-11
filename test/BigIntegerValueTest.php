@@ -35,7 +35,7 @@ class BigIntegerValueTest extends TestCase
             $this->markTestSkipped('gmp causes test failure');
         }
         try {
-            $XmlRpcBigInteger = new BigInteger(0);
+            new BigInteger(0);
         } catch (Exception $e) {
             $this->markTestSkipped($e->getMessage());
         }
@@ -86,7 +86,7 @@ class BigIntegerValueTest extends TestCase
 
     /**
      * @group Laminas-6445
-     * @dataProvider \LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarschalBigIntegerFromXmlRpc(Generator $generator)
     {
@@ -108,7 +108,7 @@ class BigIntegerValueTest extends TestCase
 
     /**
      * @group Laminas-6445
-     * @dataProvider \LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarschalBigIntegerFromApacheXmlRpc(Generator $generator)
     {
@@ -146,8 +146,10 @@ class BigIntegerValueTest extends TestCase
         $this->assertSame($bigIntegerValue, $value->getValue());
     }
 
-    // Custom Assertions and Helper Methods
-
+    /**
+     * @param string $xml
+     * @return string
+     */
     public function wrapXml($xml)
     {
         return $xml . "\n";

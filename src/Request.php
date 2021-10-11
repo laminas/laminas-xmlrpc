@@ -208,11 +208,11 @@ class Request
     {
         $argc = func_num_args();
         $argv = func_get_args();
-        if (0 == $argc) {
+        if (0 === $argc) {
             return;
         }
 
-        if ((1 == $argc) && is_array($argv[0])) {
+        if ((1 === $argc) && is_array($argv[0])) {
             $params     = [];
             $types      = [];
             $wellFormed = true;
@@ -292,7 +292,7 @@ class Request
      * Load XML and parse into request components
      *
      * @param string $request
-     * @throws Exception\ValueException if invalid XML
+     * @throws Exception\ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */
     public function loadXml($request)

@@ -43,11 +43,6 @@ class Fault extends \Laminas\XmlRpc\Fault
     /** @var array Array of fault observers */
     protected static $observers = [];
 
-    /**
-     * Constructor
-     *
-     * @return Fault
-     */
     public function __construct(Exception $e)
     {
         $this->exception = $e;

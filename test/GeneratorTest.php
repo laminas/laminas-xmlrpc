@@ -100,7 +100,7 @@ class GeneratorTest extends TestCase
         $this->assertSame($generator, $generator->closeElement('foo'));
     }
 
-    public function assertXml($expected, $actual)
+    public function assertXml(string $expected, Generator $actual)
     {
         $expected = trim($expected);
         $this->assertSame($expected, trim($actual));

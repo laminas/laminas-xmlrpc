@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 use function file_exists;
 use function file_put_contents;
-use function is_writeable;
+use function is_writable;
 use function realpath;
 use function unlink;
 
@@ -60,7 +60,7 @@ class CacheTest extends TestCase
      */
     public function testGetSave()
     {
-        if (! is_writeable('./')) {
+        if (! is_writable('./')) {
             $this->markTestIncomplete('Directory no writable');
         }
 
@@ -78,7 +78,7 @@ class CacheTest extends TestCase
      */
     public function testDelete()
     {
-        if (! is_writeable('./')) {
+        if (! is_writable('./')) {
             $this->markTestIncomplete('Directory no writable');
         }
 
@@ -88,7 +88,7 @@ class CacheTest extends TestCase
 
     public function testShouldReturnFalseWithInvalidCache()
     {
-        if (! is_writeable('./')) {
+        if (! is_writable('./')) {
             $this->markTestIncomplete('Directory no writable');
         }
 

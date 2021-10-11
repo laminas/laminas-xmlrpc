@@ -10,7 +10,8 @@ namespace LaminasTest\XmlRpc;
 
 use DateTime;
 use Laminas\XmlRpc\AbstractValue;
-use Laminas\XmlRpc\Exception;
+use Laminas\XmlRpc\Exception\InvalidArgumentException;
+use Laminas\XmlRpc\Exception\ValueException;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value;
 use PHPUnit\Framework\TestCase;
@@ -35,9 +36,8 @@ use const PHP_INT_MAX;
  */
 class ValueTest extends TestCase
 {
+    /** @var string */
     public $xmlRpcDateFormat = 'Ymd\\TH:i:s';
-
-    // Boolean
 
     public function testFactoryAutodetectsBoolean()
     {
@@ -60,7 +60,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalBooleanFromXmlRpc(Generator $generator)
     {
@@ -76,8 +76,6 @@ class ValueTest extends TestCase
         $this->assertSame(true, $val->getValue());
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
-
-    // Integer
 
     public function testFactoryAutodetectsInteger()
     {
@@ -101,7 +99,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalIntegerFromXmlRpc(Generator $generator)
     {
@@ -130,7 +128,7 @@ class ValueTest extends TestCase
      */
     public function testMarshalI4FromOverlongNativeThrowsException()
     {
-        $this->expectException(Exception\ValueException::class);
+        $this->expectException(ValueException::class);
         $this->expectExceptionMessage('Overlong integer given');
         $x = AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_I4);
         var_dump($x);
@@ -141,12 +139,10 @@ class ValueTest extends TestCase
      */
     public function testMarshalIntegerFromOverlongNativeThrowsException()
     {
-        $this->expectException(Exception\ValueException::class);
+        $this->expectException(ValueException::class);
         $this->expectExceptionMessage('Overlong integer given');
         AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_INTEGER);
     }
-
-    // Double
 
     public function testFactoryAutodetectsFloat()
     {
@@ -167,7 +163,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalDoubleFromXmlRpc(Generator $generator)
     {
@@ -187,7 +183,7 @@ class ValueTest extends TestCase
 
     /**
      * @group Laminas-7712
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingDoubleWithHigherPrecisionFromNative(Generator $generator)
     {
@@ -205,7 +201,7 @@ class ValueTest extends TestCase
 
     /**
      * @group Laminas-7712
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingDoubleWithHigherPrecisionFromNativeWithTrailingZeros(Generator $generator)
     {
@@ -219,8 +215,6 @@ class ValueTest extends TestCase
         $this->assertSame($native, $value->getValue());
         $this->assertSame('<value><double>0.1</double></value>', trim($value->saveXml()));
     }
-
-    // String
 
     public function testFactoryAutodetectsString()
     {
@@ -258,7 +252,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalStringFromXmlRpc(Generator $generator)
     {
@@ -277,7 +271,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalStringFromDefault(Generator $generator)
     {
@@ -294,8 +288,6 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
-
-    //Nil
 
     public function testFactoryAutodetectsNil()
     {
@@ -319,7 +311,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalNilFromXmlRpc(Generator $generator)
     {
@@ -341,8 +333,6 @@ class ValueTest extends TestCase
         }
     }
 
-    // Array
-
     public function testFactoryAutodetectsArray()
     {
         $val = AbstractValue::getXmlRpcValue([0, 'foo']);
@@ -362,7 +352,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalArrayFromXmlRpc(Generator $generator)
     {
@@ -383,7 +373,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testEmptyXmlRpcArrayResultsInEmptyArray(Generator $generator)
     {
@@ -407,7 +397,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testArrayMustContainDataElement(Generator $generator)
     {
@@ -415,14 +405,12 @@ class ValueTest extends TestCase
         $native = [];
         $xml    = '<value><array/></value>';
 
-        $this->expectException(Exception\ValueException::class);
+        $this->expectException(ValueException::class);
         $this->expectExceptionMessage(
             'Invalid XML for XML-RPC native array type: ARRAY tag must contain DATA tag'
         );
         $val = AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
     }
-
-    // Struct
 
     public function testFactoryAutodetectsStruct()
     {
@@ -449,7 +437,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalStructFromXmlRpc(Generator $generator)
     {
@@ -471,7 +459,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingNestedStructFromXmlRpc(Generator $generator)
     {
@@ -493,7 +481,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingStructWithMemberWithoutValue(Generator $generator)
     {
@@ -517,7 +505,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingStructWithMemberWithoutName(Generator $generator)
     {
@@ -542,7 +530,7 @@ class ValueTest extends TestCase
 
     /**
      * @group Laminas-7639
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalStructFromXmlRpcWithEntities(Generator $generator)
     {
@@ -558,7 +546,7 @@ class ValueTest extends TestCase
 
     /**
      * @group Laminas-3947
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingStructsWithEmptyValueFromXmlRpcShouldRetainKeys(Generator $generator)
     {
@@ -579,7 +567,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshallingStructWithMultibyteValueFromXmlRpcRetainsMultibyteValue(Generator $generator)
     {
@@ -602,8 +590,6 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
         $this->assertSame(trim($xml), trim($val->saveXml()));
     }
-
-    // DateTime
 
     public function testMarshalDateTimeFromNativeString()
     {
@@ -636,7 +622,7 @@ class ValueTest extends TestCase
 
     public function testMarshalDateTimeFromInvalidString()
     {
-        $this->expectException(Exception\ValueException::class);
+        $this->expectException(ValueException::class);
         $this->expectExceptionMessage('The timezone could not be found in the database');
         AbstractValue::getXmlRpcValue('foobarbaz', AbstractValue::XMLRPC_TYPE_DATETIME);
     }
@@ -665,7 +651,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalDateTimeFromXmlRpc(Generator $generator)
     {
@@ -686,7 +672,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      * @group Laminas-4249
      */
     public function testMarshalDateTimeFromFromDateTime(Generator $generator)
@@ -705,7 +691,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      * @group Laminas-4249
      */
     public function testMarshalDateTimeFromDateTimeAndAutodetectingType(Generator $generator)
@@ -738,8 +724,6 @@ class ValueTest extends TestCase
         $this->assertEquals($expectedValue, $xmlRpcValueDateTime->getValue());
     }
 
-    // Base64
-
     public function testMarshalBase64FromString()
     {
         $native = 'foo';
@@ -753,7 +737,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * @dataProvider LaminasTest\XmlRpc\TestProvider::provideGenerators
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
     public function testMarshalBase64FromXmlRpc(Generator $generator)
     {
@@ -817,11 +801,9 @@ class ValueTest extends TestCase
         $this->assertNotEquals($generator, AbstractValue::getGenerator());
     }
 
-    // Exceptions
-
     public function testFactoryThrowsWhenInvalidTypeSpecified()
     {
-        $this->expectException(Exception\ValueException::class);
+        $this->expectException(ValueException::class);
         $this->expectExceptionMessage('Given type is not a Laminas\XmlRpc\AbstractValue constant');
         AbstractValue::getXmlRpcValue('', 'bad type here');
     }
@@ -900,13 +882,14 @@ class ValueTest extends TestCase
 
     public function testGetXmlRpcTypeByValueThrowsExceptionOnInvalidValue()
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         AbstractValue::getXmlRpcTypeByValue(fopen(__FILE__, 'r'));
     }
 
-    // Custom Assertions and Helper Methods
-
-    public function assertXmlRpcType($type, $object)
+    /**
+     * @param mixed $object
+     */
+    public function assertXmlRpcType(string $type, $object): void
     {
         switch ($type) {
             case 'array':
@@ -923,7 +906,7 @@ class ValueTest extends TestCase
         $this->assertInstanceOf($type, $object);
     }
 
-    public function wrapXml($xml)
+    public function wrapXml(string $xml): string
     {
         return $xml . "\n";
     }

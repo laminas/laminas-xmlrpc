@@ -9,14 +9,15 @@
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Server\Definition as ServerDefinition;
-use Laminas\Server\Exception\InvalidArgumentException;
 use Laminas\Server\Method\Definition as MethodDefinition;
 use Laminas\XmlRpc\AbstractValue;
-use Laminas\XmlRpc\Exception;
+use Laminas\XmlRpc\Exception\ExceptionInterface;
+use Laminas\XmlRpc\Exception\InvalidArgumentException;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Server;
+use Laminas\XmlRpc\Server\Exception\InvalidArgumentException as ServerInvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -57,6 +58,11 @@ class ServerTest extends TestCase
         unset($this->server);
     }
 
+    /**
+     * @param string $errno
+     * @param string $errstr
+     * @return bool|void
+     */
     public function suppressNotFoundWarnings($errno, $errstr)
     {
         if (! strstr($errstr, 'failed')) {
@@ -93,7 +99,7 @@ class ServerTest extends TestCase
 
     public function testAddFunctionThrowsExceptionOnInvalidInput()
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to attach function; invalid');
         $this->server->addFunction('nosuchfunction');
     }
@@ -305,7 +311,7 @@ class ServerTest extends TestCase
         $help = $this->server->methodHelp('system.methodHelp', 'system.listMethods');
         $this->assertStringContainsString('Display help message for an XMLRPC method', $help);
 
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
         $this->server->methodHelp('foo');
     }
@@ -326,7 +332,7 @@ class ServerTest extends TestCase
         $this->assertIsArray($sig);
         $this->assertEquals(1, count($sig), var_export($sig, 1));
 
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
         $this->server->methodSignature('foo');
     }
@@ -452,7 +458,7 @@ class ServerTest extends TestCase
     public function testAddFunctionThrowsExceptionWithBadData()
     {
         $o = new stdClass();
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to attach function; invalid');
         $this->server->addFunction($o);
     }
@@ -460,7 +466,7 @@ class ServerTest extends TestCase
     public function testLoadFunctionsThrowsExceptionWithBadData()
     {
         $o = new stdClass();
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Unable to load server definition; must be an array or Laminas\Server\Definition, received stdClass'
         );
@@ -469,7 +475,7 @@ class ServerTest extends TestCase
 
     public function testLoadFunctionsThrowsExceptionsWithBadData2()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Unable to load server definition; must be an array or Laminas\Server\Definition, received string'
         );
@@ -481,7 +487,7 @@ class ServerTest extends TestCase
         $o = new stdClass();
         $o = [$o];
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ServerInvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid method provided');
         $this->server->loadFunctions($o);
     }
@@ -505,7 +511,7 @@ class ServerTest extends TestCase
 
     public function testSetClassThrowsExceptionWithInvalidClass()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid method class');
         $this->server->setClass('mybogusclass');
     }
@@ -522,14 +528,14 @@ class ServerTest extends TestCase
      */
     public function testSetRequestThrowsExceptionOnBadClassName()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid request object');
         $this->server->setRequest('LaminasTest\\XmlRpc\\TestRequest2');
     }
 
     public function testSetRequestThrowsExceptionOnBadObject()
     {
-        $this->expectException(Server\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid request object');
         $this->server->setRequest($this);
     }
@@ -648,7 +654,7 @@ class ServerTest extends TestCase
 
     public function testCallingUnregisteredMethod()
     {
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Unknown instance method called on server: foobarbaz');
         $this->server->foobarbaz();
     }
@@ -661,14 +667,14 @@ class ServerTest extends TestCase
 
     public function testPassingInvalidRequestClassThrowsException()
     {
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Invalid request class');
         $this->server->setRequest('stdClass');
     }
 
     public function testPassingInvalidResponseClassThrowsException()
     {
-        $this->expectException(Server\Exception\ExceptionInterface::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid response class');
         $this->server->setResponseClass('stdClass');
     }

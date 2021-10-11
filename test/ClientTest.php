@@ -55,8 +55,6 @@ class ClientTest extends TestCase
         $this->xmlrpcClient->setHttpClient($this->httpClient);
     }
 
-    // HTTP Client
-
     public function testGettingDefaultHttpClient()
     {
         $xmlrpcClient = new Client('http://foo');
@@ -81,8 +79,6 @@ class ClientTest extends TestCase
         $httpClient   = $xmlrpcClient->getHttpClient();
         $this->assertSame($this->httpClient, $httpClient);
     }
-
-    // Request & Response
 
     public function testLastRequestAndResponseAreInitiallyNull()
     {
@@ -291,10 +287,6 @@ class ClientTest extends TestCase
         $this->assertSame('foo', $this->xmlrpcClient->call('test.method'));
     }
 
-    /**#@-*/
-
-    // Faults
-
     public function testRpcMethodCallThrowsOnHttpFailure()
     {
         $status  = 404;
@@ -326,8 +318,6 @@ class ClientTest extends TestCase
         $this->expectExceptionCode($code);
         $this->xmlrpcClient->call('foo');
     }
-
-    // Server Proxy
 
     public function testGetProxyReturnsServerProxy()
     {
@@ -377,8 +367,6 @@ class ClientTest extends TestCase
         $bar = $proxy->foo->bar;
         $this->assertSame($bar, $proxy->foo->bar);
     }
-
-    // Introspection
 
     public function testGettingDefaultIntrospector()
     {
@@ -722,13 +710,19 @@ class ClientTest extends TestCase
         $this->assertEquals('FOO', $this->xmlrpcClient->call('foo'));
     }
 
-    // Helpers
+    /**
+     * @param mixed $nativeVars
+     */
     public function setServerResponseTo($nativeVars)
     {
         $response = $this->getServerResponseFor($nativeVars);
         $this->httpAdapter->setResponse($response);
     }
 
+    /**
+     * @param mixed $nativeVars
+     * @return string
+     */
     public function getServerResponseFor($nativeVars)
     {
         $response = new Response();
@@ -738,6 +732,12 @@ class ClientTest extends TestCase
         return $this->makeHttpResponseFrom($xml);
     }
 
+    /**
+     * @param string $data
+     * @param int $status
+     * @param string $message
+     * @return string
+     */
     public function makeHttpResponseFrom($data, $status = 200, $message = 'OK')
     {
         $headers = [
@@ -749,6 +749,10 @@ class ClientTest extends TestCase
         return implode("\r\n", $headers) . "\r\n\r\n$data\r\n\r\n";
     }
 
+    /**
+     * @param mixed $nativeVars
+     * @return HttpResponse
+     */
     public function makeHttpResponseFor($nativeVars)
     {
         $response = $this->getServerResponseFor($nativeVars);

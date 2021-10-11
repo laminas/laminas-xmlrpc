@@ -10,9 +10,9 @@ namespace LaminasTest\XmlRpc;
 
 use Laminas\XmlRpc\Generator;
 
-abstract class TestProvider
+abstract class AbstractTestProvider
 {
-    public static function provideGenerators()
+    public static function provideGenerators(): array
     {
         return [
             [new Generator\DomDocument()],
@@ -20,7 +20,7 @@ abstract class TestProvider
         ];
     }
 
-    public static function provideGeneratorsWithAlternateEncodings()
+    public static function provideGeneratorsWithAlternateEncodings(): array
     {
         return [
             [new Generator\DomDocument('ISO-8859-1')],

@@ -68,6 +68,9 @@ class FaultTest extends TestCase
         $this->assertEquals('Message', $this->fault->getMessage());
     }
 
+    /**
+     * @return bool|string
+     */
     protected function createXml()
     {
         $dom      = new DOMDocument('1.0', 'UTF-8');
@@ -89,6 +92,9 @@ class FaultTest extends TestCase
         return $dom->saveXml();
     }
 
+    /**
+     * @return bool|string
+     */
     protected function createNonStandardXml()
     {
         $dom      = new DOMDocument('1.0', 'UTF-8');
@@ -206,11 +212,11 @@ class FaultTest extends TestCase
             $count++;
             $this->assertNotFalse($member->name, $xml);
             $this->assertNotFalse($member->value, $xml);
-            if ('faultCode' == (string) $member->name) {
+            if ('faultCode' === (string) $member->name) {
                 $this->assertNotFalse($member->value->int, $xml);
                 $this->assertEquals(1000, (int) $member->value->int, $xml);
             }
-            if ('faultString' == (string) $member->name) {
+            if ('faultString' === (string) $member->name) {
                 $this->assertNotFalse($member->value->string, $xml);
                 $this->assertEquals('Fault message', (string) $member->value->string, $xml);
             }

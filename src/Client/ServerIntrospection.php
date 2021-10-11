@@ -83,7 +83,7 @@ class ServerIntrospection
             throw new Exception\IntrospectException($error);
         }
 
-        if (count($serverSignatures) != count($methods)) {
+        if (count($serverSignatures) !== count($methods)) {
             $error = 'Bad number of signatures received from multicall';
             throw new Exception\IntrospectException($error);
         }

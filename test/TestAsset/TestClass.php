@@ -13,11 +13,14 @@ use function implode;
 
 class TestClass
 {
+    /** @var mixed */
     private $value1;
+    /** @var mixed */
     private $value2;
 
     /**
-     * Constructor
+     * @param mixed $value1
+     * @param mixed $value2
      */
     public function __construct($value1 = null, $value2 = null)
     {

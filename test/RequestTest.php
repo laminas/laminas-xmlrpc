@@ -267,9 +267,9 @@ class RequestTest extends TestCase
      * helper for saveXml() and __toString() tests
      *
      * @param string $xml
-     * @return void
+     * @param array $argv
      */
-    protected function assertXmlRequest($xml, $argv)
+    protected function assertXmlRequest($xml, $argv): void
     {
         $sx = new SimpleXMLElement($xml);
 

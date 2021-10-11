@@ -128,7 +128,6 @@ class Client implements ServerClient
     /**
      * Sets the object used to introspect remote servers
      *
-     * @param  ServerIntrospection
      * @return ServerIntrospection
      */
     public function setIntrospector(ServerIntrospection $introspector)
@@ -278,7 +277,7 @@ class Client implements ServerClient
      */
     public function call($method, $params = [])
     {
-        if (! $this->skipSystemLookup() && ('system.' != substr($method, 0, 7))) {
+        if (! $this->skipSystemLookup() && ('system.' !== substr($method, 0, 7))) {
             // Ensure empty array/struct params are cast correctly
             // If system.* methods are not available, bypass. (Laminas-2978)
             $success = true;
@@ -316,7 +315,7 @@ class Client implements ServerClient
                                 continue;
                             }
                             if (isset($signature['parameters'][$key])) {
-                                if ($signature['parameters'][$key] == $type) {
+                                if ($signature['parameters'][$key] === $type) {
                                     break;
                                 }
                             }

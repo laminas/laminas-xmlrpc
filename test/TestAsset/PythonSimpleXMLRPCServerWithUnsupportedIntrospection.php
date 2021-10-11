@@ -15,9 +15,14 @@ use Laminas\XmlRpc\Client\ServerProxy;
  */
 class PythonSimpleXMLRPCServerWithUnsupportedIntrospection extends ServerProxy
 {
+    /**
+     * @param string $method
+     * @param array $args
+     * @return mixed
+     */
     public function __call($method, $args)
     {
-        if ($method == 'methodSignature') {
+        if ($method === 'methodSignature') {
             return 'signatures not supported';
         }
         return parent::__call($method, $args);

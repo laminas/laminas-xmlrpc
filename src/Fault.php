@@ -133,7 +133,7 @@ class Fault
     /**
      * Retrieve fault message
      *
-     * @param string
+     * @param string $message
      * @return Fault
      */
     public function setMessage($message)
@@ -181,8 +181,8 @@ class Fault
      * @param string $fault
      * @return bool Returns true if successfully loaded fault response, false
      * if response was not a fault response
-     * @throws Exception\ExceptionInterface if no or faulty XML provided, or if fault
-     * response does not contain either code or message
+     * @throws Exception\ExceptionInterface If no or faulty XML provided, or if fault
+     * response does not contain either code or message.
      */
     public function loadXml($fault)
     {
