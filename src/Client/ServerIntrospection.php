@@ -3,7 +3,6 @@
 namespace Laminas\XmlRpc\Client;
 
 use Laminas\XmlRpc\Client as XMLRPCClient;
-use Laminas\XmlRpc\Client\ServerProxy;
 
 use function count;
 use function gettype;
@@ -14,8 +13,7 @@ use function is_array;
  */
 class ServerIntrospection
 {
-    /** @var ServerProxy */
-    private $system;
+    private ServerProxy $system;
 
     public function __construct(XMLRPCClient $client)
     {

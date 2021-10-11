@@ -172,7 +172,7 @@ abstract class AbstractValue
     {
         if (! $this->xml) {
             $this->generateXml();
-            $this->xml = (string) $this->getGenerator();
+            $this->xml = (string) static::getGenerator();
         }
         return $this->xml;
     }
@@ -498,6 +498,6 @@ abstract class AbstractValue
      */
     protected function setXML($xml)
     {
-        $this->xml = $this->getGenerator()->stripDeclaration($xml);
+        $this->xml = static::getGenerator()->stripDeclaration($xml);
     }
 }

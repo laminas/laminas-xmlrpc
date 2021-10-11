@@ -6,8 +6,7 @@ use Laminas\XmlRpc\Server\Fault;
 
 class Observer
 {
-    /** @var self|null */
-    private static $instance;
+    private static ?Observer $instance = null;
 
     /** @var array */
     public $observed = [];

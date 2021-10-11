@@ -2,6 +2,7 @@
 
 namespace Laminas\XmlRpc;
 
+use DateTime;
 use Exception;
 use Laminas\Server\AbstractServer;
 use Laminas\Server\Definition;
@@ -112,7 +113,7 @@ class Server extends AbstractServer
         'dateTime.iso8601' => 'dateTime.iso8601',
         'date'             => 'dateTime.iso8601',
         'time'             => 'dateTime.iso8601',
-        'DateTime'         => 'dateTime.iso8601',
+        DateTime::class    => 'dateTime.iso8601',
         'array'            => 'array',
         'struct'           => 'struct',
         'null'             => 'nil',

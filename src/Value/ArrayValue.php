@@ -24,7 +24,7 @@ class ArrayValue extends AbstractCollection
      */
     protected function generate()
     {
-        $generator = $this->getGenerator();
+        $generator = static::getGenerator();
         $generator
             ->openElement('value')
             ->openElement('array')
