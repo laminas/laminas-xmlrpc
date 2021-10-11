@@ -12,6 +12,9 @@ use Laminas\XmlRpc\Request;
 use LaminasTest\XmlRpc\PhpInputMock;
 use PHPUnit\Framework\TestCase;
 
+use function strlen;
+use function substr;
+
 /**
  * @group      Laminas_XmlRpc
  */
@@ -22,7 +25,7 @@ class HttpTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->xml = <<<EOX
+        $this->xml     = <<<EOX
 <?xml version="1.0" encoding="UTF-8"?>
 <methodCall>
     <methodName>test.userUpdate</methodName>
@@ -90,14 +93,14 @@ EOX;
             'User-Agent'     => 'Laminas_XmlRpc_Client',
             'Host'           => 'localhost',
             'Content-Type'   => 'text/xml',
-            'Content-Length' => 961
+            'Content-Length' => 961,
         ];
         $this->assertEquals($expected, $this->request->getHeaders());
     }
 
     public function testGetFullRequest()
     {
-        $expected = <<<EOT
+        $expected  = <<<EOT
 User-Agent: Laminas_XmlRpc_Client
 Host: localhost
 Content-Type: text/xml
@@ -119,8 +122,8 @@ EOT;
     public function testHttpRequestReadsFromPhpInput()
     {
         $this->assertNull(PhpInputMock::argumentsPassedTo('stream_open'));
-        $request = new Request\Http();
-        list($path, $mode) = PhpInputMock::argumentsPassedTo('stream_open');
+        $request       = new Request\Http();
+        [$path, $mode] = PhpInputMock::argumentsPassedTo('stream_open');
         $this->assertSame('php://input', $path);
         $this->assertSame('rb', $mode);
         $this->assertSame($this->xml, $request->getRawRequest());

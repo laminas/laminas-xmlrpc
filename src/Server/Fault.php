@@ -8,6 +8,15 @@
 
 namespace Laminas\XmlRpc\Server;
 
+use Exception;
+use Laminas\XmlRpc\Server\Exception\ExceptionInterface;
+
+use function array_keys;
+use function class_exists;
+use function is_array;
+use function is_callable;
+use function is_string;
+
 /**
  * XMLRPC Server Faults
  *
@@ -25,32 +34,25 @@ namespace Laminas\XmlRpc\Server;
  */
 class Fault extends \Laminas\XmlRpc\Fault
 {
-    /**
-     * @var \Exception
-     */
+    /** @var Exception */
     protected $exception;
 
-    /**
-     * @var array Array of exception classes that may define xmlrpc faults
-     */
-    protected static $faultExceptionClasses = ['Laminas\\XmlRpc\\Server\\Exception\\ExceptionInterface' => true];
+    /** @var array Array of exception classes that may define xmlrpc faults */
+    protected static $faultExceptionClasses = [ExceptionInterface::class => true];
 
-    /**
-     * @var array Array of fault observers
-     */
+    /** @var array Array of fault observers */
     protected static $observers = [];
 
     /**
      * Constructor
      *
-     * @param  \Exception $e
      * @return Fault
      */
-    public function __construct(\Exception $e)
+    public function __construct(Exception $e)
     {
         $this->exception = $e;
-        $code             = 404;
-        $message          = 'Unknown error';
+        $code            = 404;
+        $message         = 'Unknown error';
 
         foreach (array_keys(static::$faultExceptionClasses) as $class) {
             if ($e instanceof $class) {
@@ -73,10 +75,9 @@ class Fault extends \Laminas\XmlRpc\Fault
     /**
      * Return Laminas\XmlRpc\Server\Fault instance
      *
-     * @param \Exception $e
      * @return Fault
      */
-    public static function getInstance(\Exception $e)
+    public static function getInstance(Exception $e)
     {
         return new static($e);
     }
@@ -164,7 +165,7 @@ class Fault extends \Laminas\XmlRpc\Fault
      * Retrieve the exception
      *
      * @access public
-     * @return \Exception
+     * @return Exception
      */
     public function getException()
     {

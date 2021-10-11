@@ -10,6 +10,10 @@ namespace Laminas\XmlRpc\Response;
 
 use Laminas\XmlRpc\Response as XmlRpcResponse;
 
+use function header;
+use function headers_sent;
+use function strtolower;
+
 /**
  * HTTP response
  */

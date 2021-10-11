@@ -9,18 +9,27 @@
 namespace LaminasTest\XmlRpc\Server;
 
 use Laminas\XmlRpc\Server;
+use Laminas\XmlRpc\Server\Cache;
 use PHPUnit\Framework\TestCase;
+
+use function file_exists;
+use function file_put_contents;
+use function is_writeable;
+use function realpath;
+use function unlink;
 
 class CacheTest extends TestCase
 {
     /**
      * Server object
+     *
      * @var Server
      */
     protected $server;
 
     /**
      * Local file for caching
+     *
      * @var string
      */
     protected $file;
@@ -30,9 +39,9 @@ class CacheTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->file = realpath(__DIR__) . '/xmlrpc.cache';
+        $this->file   = realpath(__DIR__) . '/xmlrpc.cache';
         $this->server = new Server();
-        $this->server->setClass('Laminas\\XmlRpc\\Server\\Cache', 'cache');
+        $this->server->setClass(Cache::class, 'cache');
     }
 
     /**
@@ -57,7 +66,7 @@ class CacheTest extends TestCase
 
         $this->assertTrue(Server\Cache::save($this->file, $this->server));
         $expected = $this->server->listMethods();
-        $server = new Server();
+        $server   = new Server();
         $this->assertTrue(Server\Cache::get($this->file, $server));
         $actual = $server->listMethods();
 

@@ -8,6 +8,8 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use function is_array;
+
 class ArrayValue extends AbstractCollection
 {
     /**

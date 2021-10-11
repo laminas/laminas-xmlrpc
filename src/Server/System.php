@@ -8,22 +8,27 @@
 
 namespace Laminas\XmlRpc\Server;
 
+use Exception;
+use Laminas\XmlRpc\Fault;
+use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Server;
+
+use function array_keys;
+use function is_array;
+use function var_export;
+
 /**
  * XML-RPC system.* methods
  */
 class System
 {
-    /**
-     * @var \Laminas\XmlRpc\Server
-     */
+    /** @var Server */
     protected $server;
 
     /**
      * Constructor
-     *
-     * @param \Laminas\XmlRpc\Server $server
      */
-    public function __construct(\Laminas\XmlRpc\Server $server)
+    public function __construct(Server $server)
     {
         $this->server = $server;
     }
@@ -89,6 +94,7 @@ class System
      * struct with a fault response.
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
+     *
      * @param  array $methods
      * @return array
      */
@@ -114,18 +120,19 @@ class System
 
             if (! $fault) {
                 try {
-                    $request = new \Laminas\XmlRpc\Request();
+                    $request = new Request();
                     $request->setMethod($method['methodName']);
                     $request->setParams($method['params']);
                     $response = $this->server->handle($request);
-                    if ($response instanceof \Laminas\XmlRpc\Fault
+                    if (
+                        $response instanceof Fault
                         || $response->isFault()
                     ) {
                         $fault = $response;
                     } else {
                         $responses[] = $response->getReturnValue();
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $fault = $this->server->fault($e);
                 }
             }
@@ -133,7 +140,7 @@ class System
             if ($fault) {
                 $responses[] = [
                     'faultCode'   => $fault->getCode(),
-                    'faultString' => $fault->getMessage()
+                    'faultString' => $fault->getMessage(),
                 ];
             }
         }

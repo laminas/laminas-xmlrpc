@@ -8,6 +8,8 @@
 
 namespace LaminasTest\XmlRpc\Server\TestAsset;
 
-class Exception3 extends \Exception
+use Exception;
+
+class Exception3 extends Exception
 {
 }

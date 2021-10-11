@@ -12,6 +12,8 @@ use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
+use function trim;
+
 /**
  * @group      Laminas_XmlRpc
  */

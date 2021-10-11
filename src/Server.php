@@ -8,9 +8,29 @@
 
 namespace Laminas\XmlRpc;
 
+use Exception;
 use Laminas\Server\AbstractServer;
 use Laminas\Server\Definition;
 use Laminas\Server\Reflection;
+use Laminas\XmlRpc\Response;
+use Laminas\XmlRpc\Response\Http;
+
+use function array_merge;
+use function array_slice;
+use function call_user_func_array;
+use function class_exists;
+use function count;
+use function func_get_args;
+use function func_num_args;
+use function function_exists;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function is_string;
+use function is_subclass_of;
+use function method_exists;
+use function substr;
 
 /**
  * An XML-RPC server implementation
@@ -47,59 +67,64 @@ class Server extends AbstractServer
 {
     /**
      * Character encoding
+     *
      * @var string
      */
     protected $encoding = 'UTF-8';
 
     /**
      * Request processed
+     *
      * @var null|Request
      */
-    protected $request = null;
+    protected $request;
 
     /**
      * Class to use for responses; defaults to {@link Response\Http}
+     *
      * @var string
      */
-    protected $responseClass = 'Laminas\XmlRpc\Response\Http';
+    protected $responseClass = Http::class;
 
     /**
      * Dispatch table of name => method pairs
+     *
      * @var Definition
      */
     protected $table;
 
     /**
      * PHP types => XML-RPC types
+     *
      * @var array
      */
     protected $typeMap = [
-        'i4'                         => 'i4',
-        'int'                        => 'int',
-        'integer'                    => 'int',
-        'i8'                         => 'i8',
-        'ex:i8'                      => 'i8',
-        'double'                     => 'double',
-        'float'                      => 'double',
-        'real'                       => 'double',
-        'boolean'                    => 'boolean',
-        'bool'                       => 'boolean',
-        'true'                       => 'boolean',
-        'false'                      => 'boolean',
-        'string'                     => 'string',
-        'str'                        => 'string',
-        'base64'                     => 'base64',
-        'dateTime.iso8601'           => 'dateTime.iso8601',
-        'date'                       => 'dateTime.iso8601',
-        'time'                       => 'dateTime.iso8601',
-        'DateTime'                   => 'dateTime.iso8601',
-        'array'                      => 'array',
-        'struct'                     => 'struct',
-        'null'                       => 'nil',
-        'nil'                        => 'nil',
-        'ex:nil'                     => 'nil',
-        'void'                       => 'void',
-        'mixed'                      => 'struct',
+        'i4'               => 'i4',
+        'int'              => 'int',
+        'integer'          => 'int',
+        'i8'               => 'i8',
+        'ex:i8'            => 'i8',
+        'double'           => 'double',
+        'float'            => 'double',
+        'real'             => 'double',
+        'boolean'          => 'boolean',
+        'bool'             => 'boolean',
+        'true'             => 'boolean',
+        'false'            => 'boolean',
+        'string'           => 'string',
+        'str'              => 'string',
+        'base64'           => 'base64',
+        'dateTime.iso8601' => 'dateTime.iso8601',
+        'date'             => 'dateTime.iso8601',
+        'time'             => 'dateTime.iso8601',
+        'DateTime'         => 'dateTime.iso8601',
+        'array'            => 'array',
+        'struct'           => 'struct',
+        'null'             => 'nil',
+        'nil'              => 'nil',
+        'ex:nil'           => 'nil',
+        'void'             => 'void',
+        'mixed'            => 'struct',
     ];
 
     /**
@@ -112,12 +137,14 @@ class Server extends AbstractServer
     /**
      * Flag: whether or not {@link handle()} should return a response instead
      * of automatically emitting it.
+     *
      * @var bool
      */
     protected $returnResponse = false;
 
     /**
      * Last response results.
+     *
      * @var Response
      */
     protected $response;
@@ -126,7 +153,6 @@ class Server extends AbstractServer
      * Constructor
      *
      * Creates system.* methods.
-     *
      */
     public function __construct()
     {
@@ -226,13 +252,13 @@ class Server extends AbstractServer
     /**
      * Raise an xmlrpc server fault
      *
-     * @param string|\Exception $fault
+     * @param string|Exception $fault
      * @param int $code
      * @return Server\Fault
      */
     public function fault($fault = null, $code = 404)
     {
-        if (! $fault instanceof \Exception) {
+        if (! $fault instanceof Exception) {
             $fault = (string) $fault;
             if (empty($fault)) {
                 $fault = 'Unknown Error';
@@ -279,7 +305,8 @@ class Server extends AbstractServer
     public function handle($request = false)
     {
         // Get request
-        if ((! $request || ! $request instanceof Request)
+        if (
+            (! $request || ! $request instanceof Request)
             && (null === ($request = $this->getRequest()))
         ) {
             $request = new Request\Http();
@@ -293,7 +320,7 @@ class Server extends AbstractServer
         } else {
             try {
                 $response = $this->handleRequest($request);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $response = $this->fault($e);
             }
         }
@@ -322,7 +349,7 @@ class Server extends AbstractServer
      */
     public function loadFunctions($definition)
     {
-        if (! is_array($definition) && (! $definition instanceof Definition)) {
+        if (! is_array($definition) && ! $definition instanceof Definition) {
             if (is_object($definition)) {
                 $type = get_class($definition);
             } else {
@@ -434,7 +461,7 @@ class Server extends AbstractServer
      */
     public function setResponseClass($class)
     {
-        if (! class_exists($class) || ! is_subclass_of($class, 'Laminas\XmlRpc\Response')) {
+        if (! class_exists($class) || ! is_subclass_of($class, Response::class)) {
             throw new Server\Exception\InvalidArgumentException('Invalid response class');
         }
         $this->responseClass = $class;
@@ -524,7 +551,6 @@ class Server extends AbstractServer
     /**
      * Handle an xmlrpc call (actual work)
      *
-     * @param  Request $request
      * @return Response
      * @throws Server\Exception\RuntimeException
      * Laminas\XmlRpc\Server\Exceptions are thrown for internal errors; otherwise,
@@ -539,19 +565,19 @@ class Server extends AbstractServer
             throw new Server\Exception\RuntimeException('Method "' . $method . '" does not exist', 620);
         }
 
-        $info     = $this->table->getMethod($method);
-        $params   = $request->getParams();
-        $argv     = $info->getInvokeArguments();
+        $info   = $this->table->getMethod($method);
+        $params = $request->getParams();
+        $argv   = $info->getInvokeArguments();
         if (0 < count($argv) and $this->sendArgumentsToAllMethods()) {
             $params = array_merge($params, $argv);
         }
 
         // Check calling parameters against signatures
-        $matched    = false;
-        $sigCalled  = $request->getTypes();
+        $matched   = false;
+        $sigCalled = $request->getTypes();
 
-        $sigLength  = count($sigCalled);
-        $paramsLen  = count($params);
+        $sigLength = count($sigCalled);
+        $paramsLen = count($params);
         if ($sigLength < $paramsLen) {
             for ($i = $sigLength; $i < $paramsLen; ++$i) {
                 $xmlRpcValue = AbstractValue::getXmlRpcValue($params[$i]);
@@ -583,7 +609,7 @@ class Server extends AbstractServer
      */
     protected function registerSystemMethods()
     {
-        $system = new Server\System($this);
+        $system       = new Server\System($this);
         $this->system = $system;
         $this->setClass($system, 'system');
     }
@@ -591,10 +617,10 @@ class Server extends AbstractServer
     /**
      * Checks if the object has this class as one of its parents
      *
+     * @deprecated since laminas 2.3 requires PHP >= 5.3.23
+     *
      * @see https://bugs.php.net/bug.php?id=53727
      * @see https://github.com/zendframework/zf2/pull/1807
-     *
-     * @deprecated since laminas 2.3 requires PHP >= 5.3.23
      *
      * @param string $className
      * @param string $type

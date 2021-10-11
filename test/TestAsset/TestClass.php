@@ -8,6 +8,9 @@
 
 namespace LaminasTest\XmlRpc\TestAsset;
 
+use function func_get_args;
+use function implode;
+
 class TestClass
 {
     private $value1;
@@ -15,7 +18,6 @@ class TestClass
 
     /**
      * Constructor
-     *
      */
     public function __construct($value1 = null, $value2 = null)
     {

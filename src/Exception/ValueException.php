@@ -8,6 +8,8 @@
 
 namespace Laminas\XmlRpc\Exception;
 
-class ValueException extends \LogicException implements ExceptionInterface
+use LogicException;
+
+class ValueException extends LogicException implements ExceptionInterface
 {
 }

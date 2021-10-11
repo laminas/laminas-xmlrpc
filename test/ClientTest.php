@@ -8,40 +8,45 @@
 
 namespace LaminasTest\XmlRpc;
 
-use Laminas\Http\Client\Adapter;
 use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client\Adapter;
+use Laminas\Http\Client\Adapter\AdapterInterface;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Client;
+use Laminas\XmlRpc\Client\ServerIntrospection;
+use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Fault;
+use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Value;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function dirname;
+use function file_get_contents;
+use function implode;
+use function strlen;
+use function time;
 
 /**
  * @group      Laminas_XmlRpc
  */
 class ClientTest extends TestCase
 {
-    /**
-     * @var \Laminas\Http\Client\Adapter\AdapterInterface
-     */
+    /** @var AdapterInterface */
     protected $httpAdapter;
 
-    /**
-     * @var \Laminas\Http\Client
-     */
+    /** @var HttpClient */
     protected $httpClient;
 
-    /**
-     * @var \Laminas\XmlRpc\Client
-     */
+    /** @var Client */
     protected $xmlrpcClient;
 
     protected function setUp(): void
     {
         $this->httpAdapter = new Adapter\Test();
-        $this->httpClient = new HttpClient(
+        $this->httpClient  = new HttpClient(
             'http://foo',
             ['adapter' => $this->httpAdapter]
         );
@@ -55,15 +60,15 @@ class ClientTest extends TestCase
     public function testGettingDefaultHttpClient()
     {
         $xmlrpcClient = new Client('http://foo');
-        $httpClient = $xmlrpcClient->getHttpClient();
-        $this->assertInstanceOf('Laminas\\Http\\Client', $httpClient);
+        $httpClient   = $xmlrpcClient->getHttpClient();
+        $this->assertInstanceOf(HttpClient::class, $httpClient);
         $this->assertSame($httpClient, $xmlrpcClient->getHttpClient());
     }
 
     public function testSettingAndGettingHttpClient()
     {
         $xmlrpcClient = new Client('http://foo');
-        $httpClient = new HttpClient('http://foo');
+        $httpClient   = new HttpClient('http://foo');
         $this->assertNotSame($httpClient, $xmlrpcClient->getHttpClient());
 
         $xmlrpcClient->setHttpClient($httpClient);
@@ -90,8 +95,8 @@ class ClientTest extends TestCase
         $this->setServerResponseTo(true);
         $this->xmlrpcClient->call('foo');
 
-        $this->assertInstanceOf('Laminas\\XmlRpc\\Request', $this->xmlrpcClient->getLastRequest());
-        $this->assertInstanceOf('Laminas\\XmlRpc\\Response', $this->xmlrpcClient->getLastResponse());
+        $this->assertInstanceOf(Request::class, $this->xmlrpcClient->getLastRequest());
+        $this->assertInstanceOf(Response::class, $this->xmlrpcClient->getLastResponse());
     }
 
     public function testSuccessfulRpcMethodCallWithNoParameters()
@@ -151,7 +156,7 @@ class ClientTest extends TestCase
         $actualReturn = $this->xmlrpcClient->call($expectedMethod, $expectedParams);
         $this->assertSame($expectedReturn, $actualReturn);
 
-        $request  = $this->xmlrpcClient->getLastRequest();
+        $request = $this->xmlrpcClient->getLastRequest();
 
         $params = $request->getParams();
         $this->assertSame(count($expectedParams), count($params));
@@ -163,11 +168,11 @@ class ClientTest extends TestCase
      */
     public function testSuccessfulRpcMethodCallWithMixedDateParameters()
     {
-        $time = time();
+        $time           = time();
         $expectedMethod = 'foo.bar';
         $expectedParams = [
             'username',
-            new Value\DateTime($time)
+            new Value\DateTime($time),
         ];
         $expectedReturn = ['username', $time];
 
@@ -197,7 +202,7 @@ class ClientTest extends TestCase
         $params = [
             new Value\Boolean(true),
             new Value\Integer(4),
-            new Value\Text('foo')
+            new Value\Text('foo'),
         ];
         $expect = [true, 4, 'foo'];
 
@@ -307,11 +312,11 @@ class ClientTest extends TestCase
 
     public function testRpcMethodCallThrowsOnXmlRpcFault()
     {
-        $code = 9;
+        $code    = 9;
         $message = 'foo';
 
         $fault = new Fault($code, $message);
-        $xml = $fault->saveXml();
+        $xml   = $fault->saveXml();
 
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->setResponse($response);
@@ -326,7 +331,7 @@ class ClientTest extends TestCase
 
     public function testGetProxyReturnsServerProxy()
     {
-        $this->assertInstanceOf('Laminas\\XmlRpc\\Client\\ServerProxy', $this->xmlrpcClient->getProxy());
+        $this->assertInstanceOf(ServerProxy::class, $this->xmlrpcClient->getProxy());
     }
 
     public function testRpcMethodCallsThroughServerProxy()
@@ -379,7 +384,7 @@ class ClientTest extends TestCase
     {
         $xmlrpcClient = new Client('http://foo');
         $introspector = $xmlrpcClient->getIntrospector();
-        $this->assertInstanceOf('Laminas\\XmlRpc\\Client\\ServerIntrospection', $introspector);
+        $this->assertInstanceOf(ServerIntrospection::class, $introspector);
         $this->assertSame($introspector, $xmlrpcClient->getIntrospector());
     }
 
@@ -395,7 +400,7 @@ class ClientTest extends TestCase
 
     public function testGettingMethodSignature()
     {
-        $method = 'foo';
+        $method     = 'foo';
         $signatures = [['int', 'int', 'int']];
         $this->setServerResponseTo($signatures);
 
@@ -423,22 +428,24 @@ class ClientTest extends TestCase
     public function testGettingAllMethodSignaturesByLooping()
     {
         // system.listMethods() will return ['foo', 'bar']
-        $methods = ['foo', 'bar'];
+        $methods  = ['foo', 'bar'];
         $response = $this->getServerResponseFor($methods);
         $this->httpAdapter->setResponse($response);
 
         // system.methodSignature('foo') will return [['int'], ['int', 'string']]
         $fooSignatures = [['int'], ['int', 'string']];
-        $response = $this->getServerResponseFor($fooSignatures);
+        $response      = $this->getServerResponseFor($fooSignatures);
         $this->httpAdapter->addResponse($response);
 
         // system.methodSignature('bar') will return [['boolean']]
         $barSignatures = [['boolean']];
-        $response = $this->getServerResponseFor($barSignatures);
+        $response      = $this->getServerResponseFor($barSignatures);
         $this->httpAdapter->addResponse($response);
 
-        $expected = ['foo' => $fooSignatures,
-                          'bar' => $barSignatures];
+        $expected = [
+            'foo' => $fooSignatures,
+            'bar' => $barSignatures,
+        ];
 
         $i = $this->xmlrpcClient->getIntrospector();
         $this->assertEquals($expected, $i->getSignatureForEachMethodByLooping());
@@ -452,26 +459,34 @@ class ClientTest extends TestCase
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
-        $response = $this->getServerResponseFor($whatListMethodsReturns);
+        $response               = $this->getServerResponseFor($whatListMethodsReturns);
         $this->httpAdapter->setResponse($response);
 
         // after system.listMethods(), these system.multicall() params are expected
-        $multicallParams = [['methodName' => 'system.methodSignature',
-                                       'params'     => ['foo']],
-                                 ['methodName' => 'system.methodSignature',
-                                       'params'     => ['bar']]];
+        $multicallParams = [
+            [
+                'methodName' => 'system.methodSignature',
+                'params'     => ['foo'],
+            ],
+            [
+                'methodName' => 'system.methodSignature',
+                'params'     => ['bar'],
+            ],
+        ];
 
         // system.multicall() will then return [fooSignatures, barSignatures]
-        $fooSignatures = [['int'], ['int', 'string']];
-        $barSignatures = [['boolean']];
+        $fooSignatures        = [['int'], ['int', 'string']];
+        $barSignatures        = [['boolean']];
         $whatMulticallReturns = [$fooSignatures, $barSignatures];
-        $response = $this->getServerResponseFor($whatMulticallReturns);
+        $response             = $this->getServerResponseFor($whatMulticallReturns);
         $this->httpAdapter->addResponse($response);
 
         $i = $this->xmlrpcClient->getIntrospector();
 
-        $expected = ['foo' => $fooSignatures,
-                          'bar' => $barSignatures];
+        $expected = [
+            'foo' => $fooSignatures,
+            'bar' => $barSignatures,
+        ];
         $this->assertEquals($expected, $i->getSignatureForEachMethodByMulticall());
 
         $request = $this->xmlrpcClient->getLastRequest();
@@ -483,11 +498,11 @@ class ClientTest extends TestCase
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
-        $response = $this->getServerResponseFor($whatListMethodsReturns);
+        $response               = $this->getServerResponseFor($whatListMethodsReturns);
         $this->httpAdapter->setResponse($response);
 
         // system.multicall() will then return only [fooSignatures]
-        $fooSignatures = [['int'], ['int', 'string']];
+        $fooSignatures        = [['int'], ['int', 'string']];
         $whatMulticallReturns = [$fooSignatures];  // error! no bar signatures!
 
         $response = $this->getServerResponseFor($whatMulticallReturns);
@@ -504,7 +519,7 @@ class ClientTest extends TestCase
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
-        $response = $this->getServerResponseFor($whatListMethodsReturns);
+        $response               = $this->getServerResponseFor($whatListMethodsReturns);
         $this->httpAdapter->setResponse($response);
 
         // system.multicall() will then return only an int
@@ -524,20 +539,22 @@ class ClientTest extends TestCase
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
-        $response = $this->getServerResponseFor($whatListMethodsReturns);
+        $response               = $this->getServerResponseFor($whatListMethodsReturns);
         $this->httpAdapter->setResponse($response);
 
         // system.multicall() will then return [fooSignatures, barSignatures]
-        $fooSignatures = [['int'], ['int', 'string']];
-        $barSignatures = [['boolean']];
+        $fooSignatures        = [['int'], ['int', 'string']];
+        $barSignatures        = [['boolean']];
         $whatMulticallReturns = [$fooSignatures, $barSignatures];
-        $response = $this->getServerResponseFor($whatMulticallReturns);
+        $response             = $this->getServerResponseFor($whatMulticallReturns);
         $this->httpAdapter->addResponse($response);
 
         $i = $this->xmlrpcClient->getIntrospector();
 
-        $expected = ['foo' => $fooSignatures,
-                          'bar' => $barSignatures];
+        $expected = [
+            'foo' => $fooSignatures,
+            'bar' => $barSignatures,
+        ];
         $this->assertEquals($expected, $i->getSignatureForEachMethod());
 
         $request = $this->xmlrpcClient->getLastRequest();
@@ -564,9 +581,9 @@ class ClientTest extends TestCase
      */
     public function testSettingNoHttpClientUriForcesClientToSetUri()
     {
-        $baseUri = 'http://foo:80/';
+        $baseUri           = 'http://foo:80/';
         $this->httpAdapter = new Adapter\Test();
-        $this->httpClient = new HttpClient(null, ['adapter' => $this->httpAdapter]);
+        $this->httpClient  = new HttpClient(null, ['adapter' => $this->httpAdapter]);
 
         $this->xmlrpcClient = new Client($baseUri);
         $this->xmlrpcClient->setHttpClient($this->httpClient);
@@ -654,7 +671,6 @@ class ClientTest extends TestCase
         $signature = $introspector->getMethodSignature('add');
     }
 
-
     /**
      * @group Laminas-8580
      */
@@ -668,7 +684,7 @@ class ClientTest extends TestCase
              ->with('get')
              ->will($this->returnValue([
                  ['parameters' => ['int']],
-                 ['parameters' => ['array']]
+                 ['parameters' => ['array']],
              ]));
 
         $expectedResult = 'array';
@@ -693,9 +709,9 @@ class ClientTest extends TestCase
      */
     public function testHandlesLeadingOrTrailingWhitespaceInChunkedResponseProperly()
     {
-        $baseUri = "http://foo:80";
+        $baseUri           = "http://foo:80";
         $this->httpAdapter = new Adapter\Test();
-        $this->httpClient = new HttpClient(null, ['adapter' => $this->httpAdapter]);
+        $this->httpClient  = new HttpClient(null, ['adapter' => $this->httpAdapter]);
 
         $respBody = file_get_contents(dirname(__FILE__) . "/_files/Laminas1897-response-chunked.txt");
         $this->httpAdapter->setResponse($respBody);
@@ -719,17 +735,17 @@ class ClientTest extends TestCase
         $response->setReturnValue($nativeVars);
         $xml = $response->saveXml();
 
-        $response = $this->makeHttpResponseFrom($xml);
-        return $response;
+        return $this->makeHttpResponseFrom($xml);
     }
 
     public function makeHttpResponseFrom($data, $status = 200, $message = 'OK')
     {
-        $headers = ["HTTP/1.1 $status $message",
-                         "Status: $status",
-                         'Content-Type: text/xml; charset=utf-8',
-                         'Content-Length: ' . strlen($data)
-                         ];
+        $headers = [
+            "HTTP/1.1 $status $message",
+            "Status: $status",
+            'Content-Type: text/xml; charset=utf-8',
+            'Content-Length: ' . strlen($data),
+        ];
         return implode("\r\n", $headers) . "\r\n\r\n$data\r\n\r\n";
     }
 

@@ -8,10 +8,20 @@
 
 namespace LaminasTest\XmlRpc;
 
+use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Response;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
+use stdClass;
+
+use function dirname;
+use function file_get_contents;
+use function is_string;
+use function realpath;
+use function set_error_handler;
+use function sprintf;
 
 /**
  * @group      Laminas_XmlRpc
@@ -20,13 +30,12 @@ class ResponseTest extends TestCase
 {
     /**
      * Response object
+     *
      * @var Response
      */
     protected $response;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $errorOccurred = false;
 
     /**
@@ -78,7 +87,7 @@ class ResponseTest extends TestCase
     {
         $this->assertNull($this->response->getFault());
         $this->response->loadXml('foo');
-        $this->assertInstanceOf('Laminas\\XmlRpc\\Fault', $this->response->getFault());
+        $this->assertInstanceOf(Fault::class, $this->response->getFault());
     }
 
     /**
@@ -93,7 +102,7 @@ class ResponseTest extends TestCase
      */
     public function testLoadXml()
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
         $params   = $response->appendChild($dom->createElement('params'));
         $param    = $params->appendChild($dom->createElement('param'));
@@ -109,7 +118,7 @@ class ResponseTest extends TestCase
 
     public function testLoadXmlWithInvalidValue()
     {
-        $this->assertFalse($this->response->loadXml(new \stdClass()));
+        $this->assertFalse($this->response->loadXml(new stdClass()));
         $this->assertTrue($this->response->isFault());
         $this->assertSame(650, $this->response->getFault()->getCode());
     }
@@ -121,7 +130,7 @@ class ResponseTest extends TestCase
     {
         set_error_handler([$this, 'trackError']);
         $invalidResponse = 'foo';
-        $response = new Response();
+        $response        = new Response();
         $this->assertFalse($this->errorOccurred);
         $this->assertFalse($response->loadXml($invalidResponse));
         $this->assertFalse($this->errorOccurred);
@@ -144,10 +153,10 @@ EOD;
         $this->assertTrue($ret);
         $this->assertEquals([
             0 => [
-                'id'            => 1,
-                'name'          => 'birdy num num!',
-                'description'   => null,
-            ]
+                'id'          => 1,
+                'name'        => 'birdy num num!',
+                'description' => null,
+            ],
         ], $response->getReturnValue());
     }
 
@@ -231,7 +240,6 @@ EOD;
         $fault = $this->response->getFault();
         $this->assertEquals(652, $fault->getCode());
     }
-
 
     public function trackError($error)
     {

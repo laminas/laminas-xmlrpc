@@ -9,7 +9,27 @@
 namespace Laminas\XmlRpc;
 
 use Laminas\Http;
+use Laminas\Http\Client\Exception\RuntimeException;
+use Laminas\Http\Exception\InvalidArgumentException;
 use Laminas\Server\Client as ServerClient;
+use Laminas\XmlRpc\Client\Exception\FaultException;
+use Laminas\XmlRpc\Client\Exception\HttpException;
+use Laminas\XmlRpc\Client\ServerIntrospection;
+use Laminas\XmlRpc\Client\ServerProxy;
+use Laminas\XmlRpc\Exception\ExceptionInterface;
+use Laminas\XmlRpc\Exception\ValueException;
+use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Response;
+
+use function count;
+use function iconv_set_encoding;
+use function in_array;
+use function ini_set;
+use function is_array;
+use function substr;
+use function trim;
+
+use const PHP_VERSION_ID;
 
 /**
  * An XML-RPC client implementation
@@ -18,6 +38,7 @@ class Client implements ServerClient
 {
     /**
      * Full address of the XML-RPC service
+     *
      * @var string
      * @example http://time.xmlrpc.com/RPC2
      */
@@ -25,36 +46,42 @@ class Client implements ServerClient
 
     /**
      * HTTP Client to use for requests
+     *
      * @var \Laminas\Http\Client
      */
-    protected $httpClient = null;
+    protected $httpClient;
 
     /**
      * Introspection object
-     * @var \Laminas\XmlRpc\Client\ServerIntrospection
+     *
+     * @var ServerIntrospection
      */
-    protected $introspector = null;
+    protected $introspector;
 
     /**
      * Request of the last method call
-     * @var \Laminas\XmlRpc\Request
+     *
+     * @var Request
      */
-    protected $lastRequest = null;
+    protected $lastRequest;
 
     /**
      * Response received from the last method call
-     * @var \Laminas\XmlRpc\Response
+     *
+     * @var Response
      */
-    protected $lastResponse = null;
+    protected $lastResponse;
 
     /**
      * Proxy object for more convenient method calls
+     *
      * @var array of Laminas\XmlRpc\Client\ServerProxy
      */
     protected $proxyCache = [];
 
     /**
      * Flag for skipping system lookup
+     *
      * @var bool
      */
     protected $skipSystemLookup = false;
@@ -66,7 +93,7 @@ class Client implements ServerClient
      *                             (e.g. http://time.xmlrpc.com/RPC2)
      * @param  \Laminas\Http\Client $httpClient HTTP Client to use for requests
      */
-    public function __construct($server, Http\Client $httpClient = null)
+    public function __construct($server, ?Http\Client $httpClient = null)
     {
         if ($httpClient === null) {
             $this->httpClient = new Http\Client();
@@ -74,14 +101,13 @@ class Client implements ServerClient
             $this->httpClient = $httpClient;
         }
 
-        $this->introspector  = new Client\ServerIntrospection($this);
+        $this->introspector  = new ServerIntrospection($this);
         $this->serverAddress = $server;
     }
 
     /**
      * Sets the HTTP client object to use for connecting the XML-RPC server.
      *
-     * @param  \Laminas\Http\Client $httpClient
      * @return \Laminas\Http\Client
      */
     public function setHttpClient(Http\Client $httpClient)
@@ -102,10 +128,10 @@ class Client implements ServerClient
     /**
      * Sets the object used to introspect remote servers
      *
-     * @param  \Laminas\XmlRpc\Client\ServerIntrospection
-     * @return \Laminas\XmlRpc\Client\ServerIntrospection
+     * @param  ServerIntrospection
+     * @return ServerIntrospection
      */
-    public function setIntrospector(Client\ServerIntrospection $introspector)
+    public function setIntrospector(ServerIntrospection $introspector)
     {
         return $this->introspector = $introspector;
     }
@@ -113,7 +139,7 @@ class Client implements ServerClient
     /**
      * Gets the introspection object.
      *
-     * @return \Laminas\XmlRpc\Client\ServerIntrospection
+     * @return ServerIntrospection
      */
     public function getIntrospector()
     {
@@ -123,7 +149,7 @@ class Client implements ServerClient
     /**
      * The request of the last method call
      *
-     * @return \Laminas\XmlRpc\Request
+     * @return Request
      */
     public function getLastRequest()
     {
@@ -133,7 +159,7 @@ class Client implements ServerClient
     /**
      * The response received from the last method call
      *
-     * @return \Laminas\XmlRpc\Response
+     * @return Response
      */
     public function getLastResponse()
     {
@@ -144,12 +170,12 @@ class Client implements ServerClient
      * Returns a proxy object for more convenient method calls
      *
      * @param string $namespace  Namespace to proxy or empty string for none
-     * @return \Laminas\XmlRpc\Client\ServerProxy
+     * @return ServerProxy
      */
     public function getProxy($namespace = '')
     {
         if (empty($this->proxyCache[$namespace])) {
-            $proxy = new Client\ServerProxy($this, $namespace);
+            $proxy                        = new ServerProxy($this, $namespace);
             $this->proxyCache[$namespace] = $proxy;
         }
         return $this->proxyCache[$namespace];
@@ -159,7 +185,7 @@ class Client implements ServerClient
      * Set skip system lookup flag
      *
      * @param  bool $flag
-     * @return \Laminas\XmlRpc\Client
+     * @return Client
      */
     public function setSkipSystemLookup($flag = true)
     {
@@ -180,14 +206,12 @@ class Client implements ServerClient
     /**
      * Perform an XML-RPC request and return a response.
      *
-     * @param \Laminas\XmlRpc\Request       $request
-     * @param null|\Laminas\XmlRpc\Response $response
-     *
-     * @throws \Laminas\Http\Exception\InvalidArgumentException
-     * @throws \Laminas\Http\Client\Exception\RuntimeException
-     * @throws \Laminas\XmlRpc\Client\Exception\HttpException
-     * @throws \Laminas\XmlRpc\Exception\ValueException
-     *
+     * @param Request $request
+     * @param null|Response $response
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws HttpException
+     * @throws ValueException
      * @return void
      */
     public function doRequest($request, $response = null)
@@ -230,7 +254,7 @@ class Client implements ServerClient
             /**
              * Exception thrown when an HTTP error occurs
              */
-            throw new Client\Exception\HttpException(
+            throw new HttpException(
                 $httpResponse->getReasonPhrase(),
                 $httpResponse->getStatusCode()
             );
@@ -250,7 +274,7 @@ class Client implements ServerClient
      * @param  string $method Name of the method we want to call
      * @param  array $params Array of parameters for the method
      * @return mixed
-     * @throws \Laminas\XmlRpc\Client\Exception\FaultException
+     * @throws FaultException
      */
     public function call($method, $params = [])
     {
@@ -260,7 +284,7 @@ class Client implements ServerClient
             $success = true;
             try {
                 $signatures = $this->getIntrospector()->getMethodSignature($method);
-            } catch (\Laminas\XmlRpc\Exception\ExceptionInterface $e) {
+            } catch (ExceptionInterface $e) {
                 $success = false;
             }
             if ($success) {
@@ -321,7 +345,7 @@ class Client implements ServerClient
             /**
              * Exception thrown when an XML-RPC fault is returned
              */
-            throw new Client\Exception\FaultException(
+            throw new FaultException(
                 $fault->getMessage(),
                 $fault->getCode()
             );
@@ -335,7 +359,7 @@ class Client implements ServerClient
      *
      * @param string $method
      * @param array $params
-     * @return \Laminas\XmlRpc\Request
+     * @return Request
      */
     protected function createRequest($method, $params)
     {

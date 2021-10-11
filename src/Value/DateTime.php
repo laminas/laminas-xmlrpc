@@ -10,6 +10,9 @@ namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\Exception;
 
+use function date;
+use function is_numeric;
+
 class DateTime extends AbstractScalar
 {
     /**

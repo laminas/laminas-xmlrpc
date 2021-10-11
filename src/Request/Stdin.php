@@ -11,6 +11,11 @@ namespace Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request as XmlRpcRequest;
 
+use function fclose;
+use function feof;
+use function fgets;
+use function fopen;
+
 /**
  * XmlRpc Request object -- Request via STDIN
  *
@@ -22,6 +27,7 @@ class Stdin extends XmlRpcRequest
 {
     /**
      * Raw XML as received via request
+     *
      * @var string
      */
     protected $xml;
@@ -32,7 +38,6 @@ class Stdin extends XmlRpcRequest
      * Attempts to read from php://stdin to get raw POST request; if an error
      * occurs in doing so, or if the XML is invalid, the request is declared a
      * fault.
-     *
      */
     public function __construct()
     {

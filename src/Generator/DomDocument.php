@@ -15,14 +15,10 @@ use DOMNode;
  */
 class DomDocument extends AbstractGenerator
 {
-    /**
-     * @var \DOMDocument
-     */
+    /** @var \DOMDocument */
     protected $dom;
 
-    /**
-     * @var DOMNode
-     */
+    /** @var DOMNode */
     protected $currentElement;
 
     /**
@@ -80,7 +76,7 @@ class DomDocument extends AbstractGenerator
      */
     protected function init()
     {
-        $this->dom = new \DOMDocument('1.0', $this->encoding);
+        $this->dom            = new \DOMDocument('1.0', $this->encoding);
         $this->currentElement = $this->dom;
     }
 }

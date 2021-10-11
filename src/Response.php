@@ -8,7 +8,12 @@
 
 namespace Laminas\XmlRpc;
 
+use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
+use Laminas\XmlRpc\AbstractValue;
+use Laminas\XmlRpc\Fault;
+
+use function is_string;
 
 /**
  * XmlRpc Response
@@ -19,27 +24,31 @@ class Response
 {
     /**
      * Return value
+     *
      * @var mixed
      */
     protected $return;
 
     /**
      * Return type
+     *
      * @var string
      */
     protected $type;
 
     /**
      * Response character encoding
+     *
      * @var string
      */
     protected $encoding = 'UTF-8';
 
     /**
      * Fault, if response is a fault response
-     * @var null|\Laminas\XmlRpc\Fault
+     *
+     * @var null|Fault
      */
-    protected $fault = null;
+    protected $fault;
 
     /**
      * Constructor
@@ -59,7 +68,7 @@ class Response
      * Set encoding to use in response
      *
      * @param string $encoding
-     * @return \Laminas\XmlRpc\Response
+     * @return Response
      */
     public function setEncoding($encoding)
     {
@@ -90,7 +99,7 @@ class Response
     public function setReturnValue($value, $type = null)
     {
         $this->return = $value;
-        $this->type = (string) $type;
+        $this->type   = (string) $type;
     }
 
     /**
@@ -106,7 +115,7 @@ class Response
     /**
      * Retrieve the XMLRPC value for the return value
      *
-     * @return \Laminas\XmlRpc\AbstractValue
+     * @return AbstractValue
      */
     protected function getXmlRpcReturn()
     {
@@ -126,7 +135,7 @@ class Response
     /**
      * Returns the fault, if any.
      *
-     * @return null|\Laminas\XmlRpc\Fault
+     * @return null|Fault
      */
     public function getFault()
     {
@@ -154,7 +163,7 @@ class Response
 
         try {
             $xml = XmlSecurity::scan($response);
-        } catch (\Laminas\Xml\Exception\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->fault = new Fault(651);
             $this->fault->setEncoding($this->getEncoding());
             return false;
@@ -180,7 +189,7 @@ class Response
                 throw new Exception\ValueException('Missing XML-RPC value in XML');
             }
             $valueXml = $xml->params->param->value->asXML();
-            $value = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING);
+            $value    = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING);
         } catch (Exception\ValueException $e) {
             $this->fault = new Fault(653);
             $this->fault->setEncoding($this->getEncoding());
@@ -198,7 +207,7 @@ class Response
      */
     public function saveXml()
     {
-        $value = $this->getXmlRpcReturn();
+        $value     = $this->getXmlRpcReturn();
         $generator = AbstractValue::getGenerator();
         $generator->openElement('methodResponse')
                   ->openElement('params')

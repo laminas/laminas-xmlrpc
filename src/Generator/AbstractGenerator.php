@@ -8,6 +8,8 @@
 
 namespace Laminas\XmlRpc\Generator;
 
+use function preg_replace;
+
 /**
  * Abstract XML generator adapter
  */

@@ -9,20 +9,20 @@
 namespace Laminas\XmlRpc\Client;
 
 use Laminas\XmlRpc\Client as XMLRPCClient;
+use Laminas\XmlRpc\Client\ServerProxy;
+
+use function count;
+use function gettype;
+use function is_array;
 
 /**
  * Wraps the XML-RPC system.* introspection methods
  */
 class ServerIntrospection
 {
-    /**
-     * @var \Laminas\XmlRpc\Client\ServerProxy
-     */
-    private $system = null;
+    /** @var ServerProxy */
+    private $system;
 
-    /**
-     * @param \Laminas\XmlRpc\Client $client
-     */
     public function __construct(XMLRPCClient $client)
     {
         $this->system = $client->getProxy('system');
@@ -69,14 +69,16 @@ class ServerIntrospection
 
         $multicallParams = [];
         foreach ($methods as $method) {
-            $multicallParams[] = ['methodName' => 'system.methodSignature',
-                                       'params'     => [$method]];
+            $multicallParams[] = [
+                'methodName' => 'system.methodSignature',
+                'params'     => [$method],
+            ];
         }
 
         $serverSignatures = $this->system->multicall($multicallParams);
 
         if (! is_array($serverSignatures)) {
-            $type = gettype($serverSignatures);
+            $type  = gettype($serverSignatures);
             $error = "Multicall return is malformed.  Expected array, got $type";
             throw new Exception\IntrospectException($error);
         }

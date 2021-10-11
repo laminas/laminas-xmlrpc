@@ -8,19 +8,19 @@
 
 namespace LaminasTest\XmlRpc;
 
+use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Exception;
 use Laminas\XmlRpc\Fault;
 use PHPUnit\Framework\TestCase;
+use SimpleXMLElement;
 
 /**
  * @group      Laminas_XmlRpc
  */
 class FaultTest extends TestCase
 {
-    /**
-     * @var XmlRpc\Fault
-     */
+    /** @var XmlRpc\Fault */
     protected $fault;
 
     /**
@@ -45,7 +45,7 @@ class FaultTest extends TestCase
      */
     public function testConstructor()
     {
-        $this->assertInstanceOf('Laminas\XmlRpc\Fault', $this->fault);
+        $this->assertInstanceOf(Fault::class, $this->fault);
         $this->assertEquals(404, $this->fault->getCode());
         $this->assertEquals('Unknown Error', $this->fault->getMessage());
     }
@@ -70,11 +70,11 @@ class FaultTest extends TestCase
 
     protected function createXml()
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
-        $fault  = $response->appendChild($dom->createElement('fault'));
-        $value  = $fault->appendChild($dom->createElement('value'));
-        $struct = $value->appendChild($dom->createElement('struct'));
+        $fault    = $response->appendChild($dom->createElement('fault'));
+        $value    = $fault->appendChild($dom->createElement('value'));
+        $struct   = $value->appendChild($dom->createElement('struct'));
 
         $member1 = $struct->appendChild($dom->createElement('member'));
         $member1->appendChild($dom->createElement('name', 'faultCode'));
@@ -91,11 +91,11 @@ class FaultTest extends TestCase
 
     protected function createNonStandardXml()
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
-        $fault  = $response->appendChild($dom->createElement('fault'));
-        $value  = $fault->appendChild($dom->createElement('value'));
-        $struct = $value->appendChild($dom->createElement('struct'));
+        $fault    = $response->appendChild($dom->createElement('fault'));
+        $value    = $fault->appendChild($dom->createElement('value'));
+        $struct   = $value->appendChild($dom->createElement('struct'));
 
         $member1 = $struct->appendChild($dom->createElement('member'));
         $member1->appendChild($dom->createElement('name', 'faultCode'));
@@ -196,7 +196,7 @@ class FaultTest extends TestCase
      */
     protected function assertXmlFault($xml)
     {
-        $sx = new \SimpleXMLElement($xml);
+        $sx = new SimpleXMLElement($xml);
 
         $this->assertNotFalse($sx->fault, $xml);
         $this->assertNotFalse($sx->fault->value, $xml);

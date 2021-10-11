@@ -8,6 +8,9 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use function base64_decode;
+use function base64_encode;
+
 class Base64 extends AbstractScalar
 {
     /**

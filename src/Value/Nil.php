@@ -12,11 +12,10 @@ class Nil extends AbstractScalar
 {
     /**
      * Set the value of a nil native type
-     *
      */
     public function __construct()
     {
-        $this->type = self::XMLRPC_TYPE_NIL;
+        $this->type  = self::XMLRPC_TYPE_NIL;
         $this->value = null;
     }
 

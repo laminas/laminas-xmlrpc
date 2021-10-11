@@ -8,6 +8,8 @@
 
 namespace LaminasTest\XmlRpc\TestAsset;
 
+use function implode;
+
 /**
  * testFunction
  *
