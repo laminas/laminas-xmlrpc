@@ -6,6 +6,7 @@ use Laminas\XmlRpc\Response as XmlRpcResponse;
 
 use function header;
 use function headers_sent;
+use function strtolower;
 
 /**
  * HTTP response
@@ -20,7 +21,7 @@ class Http extends XmlRpcResponse
     public function __toString()
     {
         if (! headers_sent()) {
-            header('Content-Type: text/xml; charset=' . $this->getEncoding());
+            header('Content-Type: text/xml; charset=' . strtolower($this->getEncoding()));
         }
 
         return parent::__toString();
