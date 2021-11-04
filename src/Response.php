@@ -147,7 +147,7 @@ class Response
      * @return bool True if a valid XMLRPC response, false if a fault
      * response or invalid input
      */
-    public function loadXml($response)
+    public function loadXml($response, int $libXmlOptions = 0)
     {
         if (! is_string($response)) {
             $this->fault = new Fault(650);
@@ -156,7 +156,7 @@ class Response
         }
 
         try {
-            $xml = XmlSecurity::scan($response);
+            $xml = XmlSecurity::scan($response, null, $libXmlOptions);
         } catch (RuntimeException $e) {
             $this->fault = new Fault(651);
             $this->fault->setEncoding($this->getEncoding());
@@ -183,7 +183,7 @@ class Response
                 throw new Exception\ValueException('Missing XML-RPC value in XML');
             }
             $valueXml = $xml->params->param->value->asXML();
-            $value    = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING);
+            $value    = AbstractValue::getXmlRpcValue($valueXml, AbstractValue::XML_STRING, $libXmlOptions);
         } catch (Exception\ValueException $e) {
             $this->fault = new Fault(653);
             $this->fault->setEncoding($this->getEncoding());

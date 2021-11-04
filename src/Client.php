@@ -207,7 +207,7 @@ class Client implements ServerClient
      * @throws ValueException
      * @return void
      */
-    public function doRequest($request, $response = null)
+    public function doRequest($request, $response = null, int $libXmlOptions = 0)
     {
         $this->lastRequest = $request;
 
@@ -258,7 +258,7 @@ class Client implements ServerClient
         }
 
         $this->lastResponse = $response;
-        $this->lastResponse->loadXml(trim($httpResponse->getBody()));
+        $this->lastResponse->loadXml(trim($httpResponse->getBody()), $libXmlOptions);
     }
 
     /**

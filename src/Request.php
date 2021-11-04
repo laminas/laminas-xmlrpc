@@ -290,7 +290,7 @@ class Request
      * @throws ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */
-    public function loadXml($request)
+    public function loadXml($request, int $libXmlOptions = 0)
     {
         if (! is_string($request)) {
             $this->fault = new Fault(635);
@@ -305,7 +305,7 @@ class Request
 
         try {
             $dom = new DOMDocument();
-            $dom->loadXML($request);
+            $dom->loadXML($request, $libXmlOptions);
             foreach ($dom->childNodes as $child) {
                 if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
                     throw new ValueException(
