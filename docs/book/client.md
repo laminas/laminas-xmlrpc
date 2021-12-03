@@ -324,3 +324,24 @@ The `setHttpClient()` is particularly useful for unit testing. When combined
 with `Laminas\Http\Client\Adapter\Test`, remote services can be mocked out for
 testing. See the unit tests for `Laminas\XmlRpc\Client` for examples of how to do
 this.
+
+## Providing libxml Options
+
+The various XML extensions to PHP are linked to libxml, and many allow providing libxml options for purposes of shaping how libxml parses and/or produces XML.
+A full [list of libxml constants is available in the PHP documentation](https://www.php.net/manual/en/libxml.constants.php).
+
+When using the XML-RPC client, you may pass these as the third argument to the client's `doRequest()` method:
+
+```php
+// With a response:
+$client->doRequest($request, $response, LIBXML_PARSEHUGE)
+
+// Without passing a response:
+$client->doRequest($request, null, LIBXML_PARSEHUGE)
+```
+
+Per standard usage of these constants, you can provide multiple options by using the `|` operator:
+
+```php
+$client->doRequest($request, $response, LIBXML_PARSEHUGE | LIBXML_BIGLINES)
+```

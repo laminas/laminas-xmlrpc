@@ -534,3 +534,28 @@ $server = new XmlRpc\Server();
 >
 > Optimization makes sense for the client side too. Just select the alternate
 > XML generator before doing any work with `Laminas\XmlRpc\Client`.
+
+## Providing libxml Options
+
+The various XML extensions to PHP are linked to libxml, and many allow providing libxml options for purposes of shaping how libxml parses and/or produces XML.
+A full [list of libxml constants is available in the PHP documentation](https://www.php.net/manual/en/libxml.constants.php).
+
+When providing an XML-RPC server, you may pass these when you call the request's `loadXml()` method:
+
+```php
+use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Server;
+
+$server = new Server();
+// setup server by adding classes and functions...
+
+$request = new Request();
+$request->loadXml(file_get_contents('php://input'), LIBXML_PARSEHUGE);
+echo $server->handle($request);
+```
+
+Per standard usage of these constants, you can provide multiple options by using the `|` operator:
+
+```php
+$request->loadXml(file_get_contents('php://input'), LIBXML_PARSEHUGE | LIBXML_BIGLINES);
+```
