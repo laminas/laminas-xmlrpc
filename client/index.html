@@ -262,6 +262,10 @@
                         <a href="#http-client-and-testing" class="toc__link nav-link">HTTP Client and Testing</a>
                     </li>
                 
+                    <li class="toc__entry">
+                        <a href="#providing-libxml-options" class="toc__link nav-link">Providing libxml Options</a>
+                    </li>
+                
             </ul>
         </div>
     
@@ -654,6 +658,17 @@ injected.</p>
 with <code>Laminas\Http\Client\Adapter\Test</code>, remote services can be mocked out for
 testing. See the unit tests for <code>Laminas\XmlRpc\Client</code> for examples of how to do
 this.</p>
+<h2 id="providing-libxml-options">Providing libxml Options</h2>
+<p>The various XML extensions to PHP are linked to libxml, and many allow providing libxml options for purposes of shaping how libxml parses and/or produces XML.
+A full <a href="https://www.php.net/manual/en/libxml.constants.php">list of libxml constants is available in the PHP documentation</a>.</p>
+<p>When using the XML-RPC client, you may pass these as the third argument to the client's <code>doRequest()</code> method:</p>
+<pre class="highlight"><code class="language-php">// With a response:
+$client-&gt;doRequest($request, $response, LIBXML_PARSEHUGE)
+
+// Without passing a response:
+$client-&gt;doRequest($request, null, LIBXML_PARSEHUGE)</code></pre>
+<p>Per standard usage of these constants, you can provide multiple options by using the <code>|</code> operator:</p>
+<pre class="highlight"><code class="language-php">$client-&gt;doRequest($request, $response, LIBXML_PARSEHUGE | LIBXML_BIGLINES)</code></pre>
 
 
 

@@ -278,6 +278,10 @@
                         <a href="#performance-optimization" class="toc__link nav-link">Performance optimization</a>
                     </li>
                 
+                    <li class="toc__entry">
+                        <a href="#providing-libxml-options" class="toc__link nav-link">Providing libxml Options</a>
+                    </li>
+                
             </ul>
         </div>
     
@@ -740,6 +744,21 @@ use based on <strong>your</strong> numbers.</p>
 <p>Optimization makes sense for the client side too. Just select the alternate
 XML generator before doing any work with <code>Laminas\XmlRpc\Client</code>.</p>
 </blockquote>
+<h2 id="providing-libxml-options">Providing libxml Options</h2>
+<p>The various XML extensions to PHP are linked to libxml, and many allow providing libxml options for purposes of shaping how libxml parses and/or produces XML.
+A full <a href="https://www.php.net/manual/en/libxml.constants.php">list of libxml constants is available in the PHP documentation</a>.</p>
+<p>When providing an XML-RPC server, you may pass these when you call the request's <code>loadXml()</code> method:</p>
+<pre class="highlight"><code class="language-php">use Laminas\XmlRpc\Request;
+use Laminas\XmlRpc\Server;
+
+$server = new Server();
+// setup server by adding classes and functions...
+
+$request = new Request();
+$request-&gt;loadXml(file_get_contents('php://input'), LIBXML_PARSEHUGE);
+echo $server-&gt;handle($request);</code></pre>
+<p>Per standard usage of these constants, you can provide multiple options by using the <code>|</code> operator:</p>
+<pre class="highlight"><code class="language-php">$request-&gt;loadXml(file_get_contents('php://input'), LIBXML_PARSEHUGE | LIBXML_BIGLINES);</code></pre>
 
 
 
