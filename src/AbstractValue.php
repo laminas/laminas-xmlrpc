@@ -197,12 +197,17 @@ abstract class AbstractValue
      *
      * By default the value type is autodetected according to it's PHP type
      *
+     * You may optionally pass a bitmask of LIBXML options via the
+     * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
+     * See https://www.php.net/manual/en/libxml.constants.php for a full list.
+     *
      * @param  mixed $value
      * @param  Laminas\XmlRpc\Value::constant $type
+     * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException
      * @return AbstractValue
      */
-    public static function getXmlRpcValue($value, $type = self::AUTO_DETECT_TYPE)
+    public static function getXmlRpcValue($value, $type = self::AUTO_DETECT_TYPE, int $libXmlOptions = 0)
     {
         switch ($type) {
             case self::AUTO_DETECT_TYPE:
@@ -211,7 +216,7 @@ abstract class AbstractValue
 
             case self::XML_STRING:
                 // Parse the XML string given in $value and get the XML-RPC value in it
-                return static::xmlStringToNativeXmlRpc($value);
+                return static::xmlStringToNativeXmlRpc($value, $libXmlOptions);
 
             case self::XMLRPC_TYPE_I4:
                 // fall through to the next case
@@ -347,9 +352,9 @@ abstract class AbstractValue
      * @return AbstractValue
      * @static
      */
-    protected static function xmlStringToNativeXmlRpc($xml)
+    protected static function xmlStringToNativeXmlRpc($xml, int $libXmlOptions = 0)
     {
-        static::createSimpleXMLElement($xml);
+        static::createSimpleXMLElement($xml, $libXmlOptions);
 
         static::extractTypeAndValue($xml, $type, $value);
 
@@ -408,7 +413,7 @@ abstract class AbstractValue
                 // Parse all the elements of the array from the XML string
                 // (simple xml element) to Value objects
                 foreach ($data->value as $element) {
-                    $values[] = static::xmlStringToNativeXmlRpc($element);
+                    $values[] = static::xmlStringToNativeXmlRpc($element, $libXmlOptions);
                 }
                 $xmlrpcValue = new Value\ArrayValue($values);
                 break;
@@ -422,7 +427,7 @@ abstract class AbstractValue
                     if (! isset($member->value) || ! isset($member->name)) {
                         continue;
                     }
-                    $values[(string) $member->name] = static::xmlStringToNativeXmlRpc($member->value);
+                    $values[(string) $member->name] = static::xmlStringToNativeXmlRpc($member->value, $libXmlOptions);
                 }
                 $xmlrpcValue = new Value\Struct($values);
                 break;
@@ -439,14 +444,14 @@ abstract class AbstractValue
     /**
      * @param SimpleXMLElement|string $xml
      */
-    protected static function createSimpleXMLElement(&$xml)
+    protected static function createSimpleXMLElement(&$xml, int $libXmlOptions = 0)
     {
         if ($xml instanceof SimpleXMLElement) {
             return;
         }
 
         try {
-            $xml = new SimpleXMLElement($xml);
+            $xml = new SimpleXMLElement($xml, $libXmlOptions);
         } catch (Exception $e) {
             // The given string is not a valid XML
             throw new ValueException(
