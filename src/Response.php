@@ -142,7 +142,12 @@ class Response
      * Attempts to load a response from an XMLRPC response, autodetecting if it
      * is a fault response.
      *
+     * You may optionally pass a bitmask of LIBXML options via the
+     * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
+     * See https://www.php.net/manual/en/libxml.constants.php for a full list.
+     *
      * @param string $response
+     * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws Exception\ValueException If invalid XML.
      * @return bool True if a valid XMLRPC response, false if a fault
      * response or invalid input

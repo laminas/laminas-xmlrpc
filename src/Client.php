@@ -199,8 +199,13 @@ class Client implements ServerClient
     /**
      * Perform an XML-RPC request and return a response.
      *
+     * You may optionally pass a bitmask of LIBXML options via the
+     * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
+     * See https://www.php.net/manual/en/libxml.constants.php for a full list.
+     *
      * @param Request $request
      * @param null|Response $response
+     * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws HttpException

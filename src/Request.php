@@ -286,7 +286,12 @@ class Request
     /**
      * Load XML and parse into request components
      *
+     * You may optionally pass a bitmask of LIBXML options via the
+     * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
+     * See https://www.php.net/manual/en/libxml.constants.php for a full list.
+     *
      * @param string $request
+     * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */

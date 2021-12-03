@@ -197,8 +197,13 @@ abstract class AbstractValue
      *
      * By default the value type is autodetected according to it's PHP type
      *
+     * You may optionally pass a bitmask of LIBXML options via the
+     * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
+     * See https://www.php.net/manual/en/libxml.constants.php for a full list.
+     *
      * @param  mixed $value
      * @param  Laminas\XmlRpc\Value::constant $type
+     * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException
      * @return AbstractValue
      */
