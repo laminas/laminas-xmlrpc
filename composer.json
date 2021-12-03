@@ -27,8 +27,7 @@
         "laminas/laminas-math": "^3.4.0",
         "laminas/laminas-server": "^2.11",
         "laminas/laminas-stdlib": "^3.6.1",
-        "laminas/laminas-xml": "^1.4.0",
-        "laminas/laminas-zendframework-bridge": "^1.4"
+        "laminas/laminas-xml": "^1.4.0"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.2.1",
@@ -61,7 +60,7 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-xmlrpc": "^2.9.0"
+    "conflict": {
+        "zendframework/zend-xmlrpc": "*"
     }
 }
