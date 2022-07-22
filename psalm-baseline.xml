@@ -1,0 +1,1336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+  <file src="src/AbstractValue.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$newGenerator</code>
+    </ArgumentTypeCoercion>
+    <DocblockTypeContradiction occurrences="2">
+      <code>! static::$generator</code>
+      <code>static::$generator</code>
+    </DocblockTypeContradiction>
+    <InvalidMethodCall occurrences="1">
+      <code>children</code>
+    </InvalidMethodCall>
+    <InvalidParamDefault occurrences="1">
+      <code>Laminas\XmlRpc\Value::constant</code>
+    </InvalidParamDefault>
+    <InvalidPropertyFetch occurrences="1">
+      <code>$value-&gt;member</code>
+    </InvalidPropertyFetch>
+    <InvalidScalarArgument occurrences="5">
+      <code>$e-&gt;getCode()</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </InvalidScalarArgument>
+    <MissingReturnType occurrences="1">
+      <code>createSimpleXMLElement</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="17">
+      <code>$element</code>
+      <code>$member-&gt;value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="7">
+      <code>$data</code>
+      <code>$element</code>
+      <code>$key</code>
+      <code>$member</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>AbstractValue</code>
+    </MixedInferredReturnType>
+    <MixedPropertyFetch occurrences="4">
+      <code>$data-&gt;value</code>
+      <code>$member-&gt;name</code>
+      <code>$member-&gt;name</code>
+      <code>$member-&gt;value</code>
+    </MixedPropertyFetch>
+    <NullReference occurrences="2">
+      <code>$type</code>
+      <code>$value</code>
+    </NullReference>
+    <PossiblyFalseArgument occurrences="3">
+      <code>$xml-&gt;asXML()</code>
+      <code>$xml-&gt;asXML()</code>
+      <code>$xml-&gt;asXML()</code>
+    </PossiblyFalseArgument>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$xml</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>asXML</code>
+    </PossiblyInvalidMethodCall>
+    <RedundantCondition occurrences="2">
+      <code>! empty($value) &amp;&amp; is_array($value)</code>
+      <code>is_array($value)</code>
+    </RedundantCondition>
+    <ReferenceConstraintViolation occurrences="1">
+      <code>$type</code>
+    </ReferenceConstraintViolation>
+    <UndefinedClass occurrences="1">
+      <code>new $generator($encoding)</code>
+    </UndefinedClass>
+    <UndefinedConstant occurrences="1">
+      <code>Laminas\XmlRpc\Value::constant</code>
+    </UndefinedConstant>
+    <UndefinedDocblockClass occurrences="1">
+      <code>Laminas\XmlRpc\Value::constant</code>
+    </UndefinedDocblockClass>
+    <UndefinedMethod occurrences="1">
+      <code>generate</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Client.php">
+    <DeprecatedInterface occurrences="1">
+      <code>Client</code>
+    </DeprecatedInterface>
+    <DocblockTypeContradiction occurrences="2">
+      <code>$httpRequest-&gt;getUriString() === null</code>
+      <code>is_array($params)</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="2">
+      <code>$method</code>
+      <code>$type</code>
+    </InvalidArgument>
+    <MixedArgument occurrences="1">
+      <code>$type</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="3">
+      <code>$param</code>
+      <code>$signature</code>
+      <code>$type</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>ServerProxy</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;proxyCache[$namespace]</code>
+    </MixedReturnStatement>
+    <PossiblyInvalidMethodCall occurrences="6">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference occurrences="1">
+      <code>getMessage</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="6">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+    </PossiblyUndefinedMethod>
+    <PossiblyUndefinedVariable occurrences="2">
+      <code>$signatures</code>
+      <code>$signatures</code>
+    </PossiblyUndefinedVariable>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>$lastRequest</code>
+      <code>$lastResponse</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(bool) $flag</code>
+    </RedundantCastGivenDocblockType>
+    <UnusedFunctionCall occurrences="3">
+      <code>iconv_set_encoding</code>
+      <code>iconv_set_encoding</code>
+      <code>iconv_set_encoding</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Client/ServerIntrospection.php">
+    <InvalidOperand occurrences="1">
+      <code>$method</code>
+    </InvalidOperand>
+    <MixedArgument occurrences="1">
+      <code>$method</code>
+    </MixedArgument>
+    <MixedArrayOffset occurrences="2">
+      <code>$signatures[$method]</code>
+      <code>$signatures[$methods[$i]]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="4">
+      <code>$method</code>
+      <code>$method</code>
+      <code>$signature</code>
+      <code>$signatures[$methods[$i]]</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;system-&gt;listMethods()</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Client/ServerProxy.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$this-&gt;cache[$namespace]</code>
+    </LessSpecificReturnStatement>
+    <MixedInferredReturnType occurrences="1">
+      <code>ServerProxy</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;cache[$namespace]</code>
+    </MixedReturnStatement>
+    <UndefinedClass occurrences="1">
+      <code>new $this($this-&gt;client, $namespace)</code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Fault.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>is_string($fault)</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="1">
+      <code>AbstractValue::XML_STRING</code>
+    </InvalidArgument>
+    <InvalidScalarArgument occurrences="1">
+      <code>$code</code>
+    </InvalidScalarArgument>
+    <MixedArgument occurrences="3">
+      <code>$code</code>
+      <code>$message</code>
+      <code>$message</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="2">
+      <code>$struct['faultCode']</code>
+      <code>$struct['faultString']</code>
+    </MixedArrayAccess>
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;internal[$code]</code>
+    </MixedArrayOffset>
+    <MixedArrayTypeCoercion occurrences="1">
+      <code>$this-&gt;internal[$code]</code>
+    </MixedArrayTypeCoercion>
+    <MixedAssignment occurrences="9">
+      <code>$code</code>
+      <code>$errors</code>
+      <code>$message</code>
+      <code>$message</code>
+      <code>$message</code>
+      <code>$message</code>
+      <code>$message</code>
+      <code>$struct</code>
+      <code>$structXml</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="3">
+      <code>asXML</code>
+      <code>closeElement</code>
+      <code>openElement</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="3">
+      <code>$errors</code>
+      <code>$item-&gt;message</code>
+      <code>$result</code>
+    </MixedOperand>
+    <MixedPropertyFetch occurrences="3">
+      <code>$item-&gt;message</code>
+      <code>$item-&gt;message</code>
+      <code>$xml-&gt;fault-&gt;value</code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement occurrences="1">
+      <code>$generator-&gt;flush()</code>
+    </MixedReturnStatement>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(int) $code</code>
+      <code>(string) $message</code>
+    </RedundantCastGivenDocblockType>
+    <UnsafeInstantiation occurrences="1">
+      <code>new static()</code>
+    </UnsafeInstantiation>
+  </file>
+  <file src="src/Generator/AbstractGenerator.php">
+    <MissingReturnType occurrences="3">
+      <code>closeXmlElement</code>
+      <code>openXmlElement</code>
+      <code>writeTextData</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Generator/DomDocument.php">
+    <MissingReturnType occurrences="1">
+      <code>writeTextData</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Generator/GeneratorInterface.php">
+    <MissingReturnType occurrences="6">
+      <code>__toString</code>
+      <code>closeElement</code>
+      <code>flush</code>
+      <code>getEncoding</code>
+      <code>openElement</code>
+      <code>setEncoding</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Generator/XmlWriter.php">
+    <InvalidClass occurrences="1">
+      <code>XMLWriter</code>
+    </InvalidClass>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>new \XMLWriter()</code>
+    </InvalidPropertyAssignmentValue>
+    <TooManyArguments occurrences="1">
+      <code>flush</code>
+    </TooManyArguments>
+    <UndefinedMethod occurrences="3">
+      <code>endElement</code>
+      <code>startElement</code>
+      <code>text</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Request.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$request</code>
+    </ArgumentTypeCoercion>
+    <DocblockTypeContradiction occurrences="2">
+      <code>! is_string($method)</code>
+      <code>is_string($request)</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="2">
+      <code>$type</code>
+      <code>AbstractValue::XML_STRING</code>
+    </InvalidArgument>
+    <MixedArgument occurrences="1">
+      <code>$type</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="2">
+      <code>$param['type']</code>
+      <code>$param['value']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="11">
+      <code>$arg</code>
+      <code>$arg</code>
+      <code>$arg</code>
+      <code>$arg</code>
+      <code>$argv[]</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$params[]</code>
+      <code>$type</code>
+      <code>$types[]</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="4">
+      <code>children</code>
+      <code>closeElement</code>
+      <code>generateXml</code>
+      <code>openElement</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch occurrences="1">
+      <code>$param-&gt;value</code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement occurrences="1">
+      <code>$generator-&gt;flush()</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="3">
+      <code>$fault</code>
+      <code>$method</code>
+      <code>$xml</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>is_array($args)</code>
+      <code>is_array($this-&gt;xmlRpcParams)</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Request/Http.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>null === $this-&gt;headers</code>
+    </DocblockTypeContradiction>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$key</code>
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="2">
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedOperand occurrences="1">
+      <code>$value</code>
+    </MixedOperand>
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>$headers</code>
+      <code>$xml</code>
+      <code>Http</code>
+      <code>Http</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Request/Stdin.php">
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>Stdin</code>
+      <code>Stdin</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Response.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>is_string($response)</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="1">
+      <code>AbstractValue::XML_STRING</code>
+    </InvalidArgument>
+    <MixedAssignment occurrences="1">
+      <code>$valueXml</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="5">
+      <code>asXML</code>
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>openElement</code>
+      <code>openElement</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch occurrences="2">
+      <code>$xml-&gt;params-&gt;param</code>
+      <code>$xml-&gt;params-&gt;param-&gt;value</code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement occurrences="1">
+      <code>$generator-&gt;flush()</code>
+    </MixedReturnStatement>
+    <PossiblyInvalidPropertyFetch occurrences="2">
+      <code>$xml-&gt;fault</code>
+      <code>$xml-&gt;params</code>
+    </PossiblyInvalidPropertyFetch>
+  </file>
+  <file src="src/Server.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$type</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedInterface occurrences="1">
+      <code>Server</code>
+    </DeprecatedInterface>
+    <DeprecatedMethod occurrences="3">
+      <code>_buildSignature</code>
+      <code>_buildSignature</code>
+      <code>_dispatch</code>
+    </DeprecatedMethod>
+    <DocblockTypeContradiction occurrences="2">
+      <code>! $request</code>
+      <code>! $request</code>
+    </DocblockTypeContradiction>
+    <ImplementedReturnTypeMismatch occurrences="2">
+      <code>Server</code>
+      <code>array</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidNullableReturnType occurrences="1">
+      <code>Response|Fault</code>
+    </InvalidNullableReturnType>
+    <InvalidParamDefault occurrences="1">
+      <code>Request</code>
+    </InvalidParamDefault>
+    <InvalidReturnStatement occurrences="2">
+      <code>$this-&gt;sendArgumentsToAllMethods</code>
+      <code>$this-&gt;table</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="2">
+      <code>array</code>
+      <code>self</code>
+    </InvalidReturnType>
+    <InvalidStringClass occurrences="1">
+      <code>new $responseClass($return)</code>
+    </InvalidStringClass>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>new $responseClass($return)</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument occurrences="3">
+      <code>$argv</code>
+      <code>$method</code>
+      <code>$reflection</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$key</code>
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="5">
+      <code>$method</code>
+      <code>$reflection</code>
+      <code>$return</code>
+      <code>$sigParams</code>
+      <code>$signature</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="2">
+      <code>Server\System</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="2">
+      <code>getParameters</code>
+      <code>new $request()</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;system</code>
+      <code>$this-&gt;typeMap[$type]</code>
+    </MixedReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="3">
+      <code>$class</code>
+      <code>$fault</code>
+      <code>$request</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="1">
+      <code>Response</code>
+    </MoreSpecificReturnType>
+    <PossiblyInvalidPropertyAssignmentValue occurrences="1">
+      <code>$response</code>
+    </PossiblyInvalidPropertyAssignmentValue>
+    <PossiblyNullArgument occurrences="1">
+      <code>$argv</code>
+    </PossiblyNullArgument>
+    <PossiblyNullReference occurrences="2">
+      <code>getInvokeArguments</code>
+      <code>setEncoding</code>
+    </PossiblyNullReference>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$response</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(bool) $flag</code>
+      <code>(bool) $flag</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>$this-&gt;sendArgumentsToAllMethods()</code>
+      <code>is_object($definition)</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;system</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="1">
+      <code>$this-&gt;system</code>
+    </UndefinedThisPropertyFetch>
+    <UnusedVariable occurrences="1">
+      <code>$request</code>
+    </UnusedVariable>
+  </file>
+  <file src="src/Server/Fault.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>! is_string($class)</code>
+    </DocblockTypeContradiction>
+    <InvalidScalarArgument occurrences="1">
+      <code>$code</code>
+    </InvalidScalarArgument>
+    <MixedAssignment occurrences="2">
+      <code>$class</code>
+      <code>$class</code>
+    </MixedAssignment>
+    <UndefinedClass occurrences="1">
+      <code>$observer::observe($this)</code>
+    </UndefinedClass>
+    <UnsafeInstantiation occurrences="1">
+      <code>new static($e)</code>
+    </UnsafeInstantiation>
+  </file>
+  <file src="src/Server/System.php">
+    <InvalidMethodCall occurrences="5">
+      <code>getMethod</code>
+      <code>getMethod</code>
+      <code>getMethods</code>
+      <code>hasMethod</code>
+      <code>hasMethod</code>
+    </InvalidMethodCall>
+    <InvalidScalarArgument occurrences="1">
+      <code>1</code>
+    </InvalidScalarArgument>
+    <MixedArgument occurrences="2">
+      <code>$method['methodName']</code>
+      <code>$table</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="3">
+      <code>$method['methodName']</code>
+      <code>$method['params']</code>
+      <code>$method['prototypes']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="4">
+      <code>$method</code>
+      <code>$method</code>
+      <code>$responses[]</code>
+      <code>$table</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="2">
+      <code>array</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="2">
+      <code>getMethodHelp</code>
+      <code>toArray</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="2">
+      <code>$method['prototypes']</code>
+      <code>$table-&gt;getMethod($method)-&gt;getMethodHelp()</code>
+    </MixedReturnStatement>
+    <PossiblyNullOperand occurrences="1">
+      <code>var_export($methods, 1)</code>
+    </PossiblyNullOperand>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>getCode</code>
+      <code>getMessage</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/Value/AbstractCollection.php">
+    <InvalidArgument occurrences="1">
+      <code>self::AUTO_DETECT_TYPE</code>
+    </InvalidArgument>
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;value[$key]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="3">
+      <code>$value</code>
+      <code>$value</code>
+      <code>$values[$key]</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getValue</code>
+    </MixedMethodCall>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>AbstractCollection</code>
+      <code>AbstractCollection</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $value</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Value/AbstractScalar.php">
+    <MixedMethodCall occurrences="3">
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>openElement</code>
+    </MixedMethodCall>
+  </file>
+  <file src="src/Value/ArrayValue.php">
+    <MixedAssignment occurrences="1">
+      <code>$val</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="5">
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>generateXml</code>
+      <code>openElement</code>
+      <code>openElement</code>
+    </MixedMethodCall>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>ArrayValue</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Value/Base64.php">
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;value</code>
+    </MixedArgument>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Base64</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $value</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Value/BigInteger.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>string</code>
+    </ImplementedReturnTypeMismatch>
+    <MixedArgument occurrences="1">
+      <code>$value</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;value</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>BigInteger</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Value/Boolean.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Boolean</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(bool) $value</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Value/DateTime.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </InvalidScalarArgument>
+    <MixedArgument occurrences="1">
+      <code>$value</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>int</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;value</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>DateTime</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Value/Double.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Double</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(float) $value</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Value/Integer.php">
+    <MixedInferredReturnType occurrences="1">
+      <code>int</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;value</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Integer</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(int) $value</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Value/Nil.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Nil</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Value/Struct.php">
+    <MixedAssignment occurrences="1">
+      <code>$val</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="5">
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>generateXml</code>
+      <code>openElement</code>
+      <code>openElement</code>
+    </MixedMethodCall>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Struct</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Value/Text.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Text</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $value</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="test/AbstractTestProvider.php">
+    <MixedInferredReturnType occurrences="2">
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
+  </file>
+  <file src="test/BigIntegerValueTest.php">
+    <InvalidArgument occurrences="4">
+      <code>AbstractValue::XMLRPC_TYPE_I8</code>
+      <code>AbstractValue::XMLRPC_TYPE_I8</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+    </InvalidArgument>
+    <MissingReturnType occurrences="3">
+      <code>testMarschalBigIntegerFromApacheXmlRpc</code>
+      <code>testMarschalBigIntegerFromXmlRpc</code>
+      <code>testMarshalsIntegerForI8ValueByDefaultIfSystemIs64Bit</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="1">
+      <code>$e-&gt;getMessage()</code>
+    </MixedArgument>
+    <UndefinedClass occurrences="2">
+      <code>$e</code>
+      <code>Exception</code>
+    </UndefinedClass>
+    <UnusedVariable occurrences="2">
+      <code>$bigInteger</code>
+      <code>$bigInteger</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/ClientTest.php">
+    <InvalidArgument occurrences="4">
+      <code>$method</code>
+      <code>'1'</code>
+      <code>'add'</code>
+      <code>AbstractValue::XMLRPC_TYPE_DATETIME</code>
+    </InvalidArgument>
+    <MissingReturnType occurrences="3">
+      <code>mockHttpClient</code>
+      <code>mockIntrospector</code>
+      <code>setServerResponseTo</code>
+    </MissingReturnType>
+    <MixedMethodCall occurrences="20">
+      <code>expects</code>
+      <code>expects</code>
+      <code>expects</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>getValue</code>
+      <code>method</code>
+      <code>method</code>
+      <code>method</code>
+      <code>will</code>
+      <code>will</code>
+      <code>will</code>
+      <code>with</code>
+      <code>with</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <UndefinedInterfaceMethod occurrences="15">
+      <code>addResponse</code>
+      <code>addResponse</code>
+      <code>addResponse</code>
+      <code>addResponse</code>
+      <code>addResponse</code>
+      <code>addResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+      <code>setResponse</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedThisPropertyAssignment occurrences="2">
+      <code>$this-&gt;mockedHttpClient</code>
+      <code>$this-&gt;mockedIntrospector</code>
+    </UndefinedThisPropertyAssignment>
+    <UnusedVariable occurrences="2">
+      <code>$signature</code>
+      <code>$time</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/FaultTest.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>assertInstanceOf</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="1">
+      <code>['foo']</code>
+    </InvalidArgument>
+    <InvalidCast occurrences="1">
+      <code>['foo']</code>
+    </InvalidCast>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>new Fault()</code>
+    </InvalidPropertyAssignmentValue>
+    <InvalidScalarArgument occurrences="1">
+      <code>$xml</code>
+    </InvalidScalarArgument>
+    <MissingReturnType occurrences="3">
+      <code>testLoadXmlThrowsExceptionOnInvalidInput2</code>
+      <code>testLoadXmlThrowsExceptionOnInvalidInput3</code>
+      <code>testLoadXmlThrowsExceptionOnInvalidInput4</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="2">
+      <code>$xml</code>
+      <code>$xml</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="4">
+      <code>$member</code>
+      <code>$parsed</code>
+      <code>$xml</code>
+      <code>$xml</code>
+    </MixedAssignment>
+    <MixedPropertyFetch occurrences="7">
+      <code>$member-&gt;name</code>
+      <code>$member-&gt;value</code>
+      <code>$member-&gt;value-&gt;int</code>
+      <code>$member-&gt;value-&gt;string</code>
+      <code>$sx-&gt;fault-&gt;value</code>
+      <code>$sx-&gt;fault-&gt;value-&gt;struct</code>
+      <code>$sx-&gt;fault-&gt;value-&gt;struct-&gt;member</code>
+    </MixedPropertyFetch>
+    <PossiblyInvalidArgument occurrences="3">
+      <code>$xml</code>
+      <code>$xml</code>
+      <code>$xml</code>
+    </PossiblyInvalidArgument>
+    <UndefinedDocblockClass occurrences="30">
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>$this-&gt;fault</code>
+      <code>XmlRpc\Fault</code>
+    </UndefinedDocblockClass>
+    <UnusedVariable occurrences="2">
+      <code>$parsed</code>
+      <code>$value2</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/GeneratorTest.php">
+    <MissingReturnType occurrences="8">
+      <code>assertXml</code>
+      <code>testCreatingComplexXmlDocument</code>
+      <code>testCreatingSingleElement</code>
+      <code>testCreatingSingleElementWithValue</code>
+      <code>testDifferentEncodings</code>
+      <code>testFluentInterfacesProvided</code>
+      <code>testFlushingGeneratorFlushesEverything</code>
+      <code>testSpecialCharsAreEncoded</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="1">
+      <code>$generator-&gt;flush()</code>
+    </MixedArgument>
+    <MixedMethodCall occurrences="5">
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>closeElement</code>
+      <code>closeElement</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="1">
+      <code>$actual-&gt;getEncoding()</code>
+    </MixedOperand>
+  </file>
+  <file src="test/PhpInputMock.php">
+    <MissingParamType occurrences="5">
+      <code>$count</code>
+      <code>$data</code>
+      <code>$methodName</code>
+      <code>$methodName</code>
+      <code>$returnValue</code>
+    </MissingParamType>
+    <MissingPropertyType occurrences="4">
+      <code>$arguments</code>
+      <code>$data</code>
+      <code>$position</code>
+      <code>$returnValues</code>
+    </MissingPropertyType>
+    <MissingReturnType occurrences="8">
+      <code>argumentsPassedTo</code>
+      <code>methodWillReturn</code>
+      <code>mockInput</code>
+      <code>restoreDefault</code>
+      <code>stream_eof</code>
+      <code>stream_open</code>
+      <code>stream_read</code>
+      <code>stream_stat</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="12">
+      <code>$count</code>
+      <code>$count</code>
+      <code>$methodName</code>
+      <code>$methodName</code>
+      <code>static::$data</code>
+      <code>static::$data</code>
+      <code>static::$data</code>
+      <code>static::$data</code>
+      <code>static::$returnValues</code>
+      <code>static::$returnValues</code>
+      <code>static::$returnValues</code>
+      <code>static::$returnValues</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="5">
+      <code>static::$arguments[$methodName]</code>
+      <code>static::$returnValues[__FUNCTION__]</code>
+      <code>static::$returnValues[__FUNCTION__]</code>
+      <code>static::$returnValues[__FUNCTION__]</code>
+      <code>static::$returnValues[__FUNCTION__]</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="5">
+      <code>static::$arguments[__FUNCTION__]</code>
+      <code>static::$arguments[__FUNCTION__]</code>
+      <code>static::$arguments[__FUNCTION__]</code>
+      <code>static::$arguments[__FUNCTION__]</code>
+      <code>static::$returnValues[$methodName]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="3">
+      <code>$data</code>
+      <code>static::$data</code>
+      <code>static::$returnValues[$methodName]</code>
+    </MixedAssignment>
+    <UnusedFunctionCall occurrences="2">
+      <code>stream_wrapper_restore</code>
+      <code>stream_wrapper_unregister</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="test/Request/HttpTest.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="2">
+      <code>$mode</code>
+      <code>$path</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$value</code>
+      <code>[$path, $mode]</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>getFullRequest</code>
+      <code>getHeaders</code>
+      <code>getRawRequest</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="1">
+      <code>$this-&gt;xml</code>
+    </MixedOperand>
+    <PossiblyNullReference occurrences="1">
+      <code>getCode</code>
+    </PossiblyNullReference>
+    <UndefinedThisPropertyAssignment occurrences="3">
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;server</code>
+      <code>$this-&gt;xml</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="8">
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;server</code>
+      <code>$this-&gt;xml</code>
+      <code>$this-&gt;xml</code>
+      <code>$this-&gt;xml</code>
+    </UndefinedThisPropertyFetch>
+    <UnusedForeachValue occurrences="1">
+      <code>$value</code>
+    </UnusedForeachValue>
+  </file>
+  <file src="test/Request/TestAsset/HTTPTestExtension.php">
+    <MixedAssignment occurrences="1">
+      <code>$this-&gt;method</code>
+    </MixedAssignment>
+    <PropertyNotSetInConstructor occurrences="3">
+      <code>HTTPTestExtension</code>
+      <code>HTTPTestExtension</code>
+      <code>HTTPTestExtension</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="test/RequestTest.php">
+    <InvalidArgument occurrences="2">
+      <code>$method</code>
+      <code>new stdClass()</code>
+    </InvalidArgument>
+    <InvalidCast occurrences="1">
+      <code>new stdClass()</code>
+    </InvalidCast>
+    <MixedArrayAccess occurrences="2">
+      <code>$sx-&gt;params-&gt;param[0]</code>
+      <code>$sx-&gt;params-&gt;param[1]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$param</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getValue</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch occurrences="4">
+      <code>$param-&gt;{$type}</code>
+      <code>$sx-&gt;params-&gt;param</code>
+      <code>$sx-&gt;params-&gt;param[1]-&gt;value</code>
+      <code>$sxl-&gt;params-&gt;param</code>
+    </MixedPropertyFetch>
+    <PossiblyNullReference occurrences="8">
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getMessage</code>
+      <code>getMessage</code>
+      <code>getMessage</code>
+      <code>getMessage</code>
+    </PossiblyNullReference>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_string($method)</code>
+    </RedundantConditionGivenDocblockType>
+    <UnusedVariable occurrences="1">
+      <code>$mName</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/ResponseTest.php">
+    <InvalidArgument occurrences="3">
+      <code>$value</code>
+      <code>[$this, 'trackError']</code>
+      <code>new stdClass()</code>
+    </InvalidArgument>
+    <InvalidCast occurrences="1">
+      <code>new stdClass()</code>
+    </InvalidCast>
+    <MissingReturnType occurrences="2">
+      <code>testLoadXmlCreatesFaultWithMissingNodes2</code>
+      <code>testLoadXmlThrowsExceptionWithMissingNodes3</code>
+    </MissingReturnType>
+    <MixedPropertyFetch occurrences="3">
+      <code>$sx-&gt;params-&gt;param</code>
+      <code>$sx-&gt;params-&gt;param-&gt;value</code>
+      <code>$sx-&gt;params-&gt;param-&gt;value-&gt;string</code>
+    </MixedPropertyFetch>
+    <PossiblyFalseArgument occurrences="3">
+      <code>$sxl-&gt;asXML()</code>
+      <code>$sxl-&gt;asXML()</code>
+      <code>$sxl-&gt;asXML()</code>
+    </PossiblyFalseArgument>
+    <PossiblyNullReference occurrences="4">
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+    </PossiblyNullReference>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>assertFalse</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/Server/CacheTest.php">
+    <MixedAssignment occurrences="2">
+      <code>$actual</code>
+      <code>$expected</code>
+    </MixedAssignment>
+  </file>
+  <file src="test/Server/FaultTest.php">
+    <UnusedVariable occurrences="3">
+      <code>$fault</code>
+      <code>$fault</code>
+      <code>$fault</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/ServerTest.php">
+    <InvalidArgument occurrences="4">
+      <code>$o</code>
+      <code>$o</code>
+      <code>$this</code>
+      <code>'foo'</code>
+    </InvalidArgument>
+    <InvalidMethodCall occurrences="1">
+      <code>getMethod</code>
+    </InvalidMethodCall>
+    <MissingReturnType occurrences="5">
+      <code>testCanMarshalBase64Requests</code>
+      <code>testHandle2</code>
+      <code>testLoadFunctionsThrowsExceptionsWithBadData2</code>
+      <code>testLoadFunctionsThrowsExceptionsWithBadData3</code>
+      <code>testRequestResponseEncoding2</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="5">
+      <code>$help</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$methods</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="13">
+      <code>$actual</code>
+      <code>$expected</code>
+      <code>$help</code>
+      <code>$method</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$prototype</code>
+      <code>$response</code>
+      <code>$response</code>
+      <code>$response</code>
+      <code>$response</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="2">
+      <code>getPrototypes</code>
+      <code>getReturnType</code>
+    </MixedMethodCall>
+    <PossiblyNullReference occurrences="2">
+      <code>getEncoding</code>
+      <code>getEncoding</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="test/TestAsset/SerializableTestClass.php">
+    <MissingConstructor occurrences="1">
+      <code>$property</code>
+    </MissingConstructor>
+  </file>
+  <file src="test/TestAsset/TestClass.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>['test1' =&gt; $this-&gt;value1, 'test2' =&gt; $this-&gt;value2, 'arg' =&gt; func_get_args()]</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>struct</code>
+    </InvalidReturnType>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>(array) $array</code>
+    </MixedArgumentTypeCoercion>
+    <MixedInferredReturnType occurrences="1">
+      <code>base64</code>
+    </MixedInferredReturnType>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array) $array</code>
+      <code>(string) $string</code>
+    </RedundantCastGivenDocblockType>
+    <UndefinedDocblockClass occurrences="3">
+      <code>base64</code>
+      <code>base64</code>
+      <code>struct</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="test/TestAsset/TestClient.php">
+    <DeprecatedInterface occurrences="1">
+      <code>TestClient</code>
+    </DeprecatedInterface>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>TestClient</code>
+      <code>TestClient</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="test/TestAsset/TestRequest.php">
+    <PropertyNotSetInConstructor occurrences="3">
+      <code>TestRequest</code>
+      <code>TestRequest</code>
+      <code>TestRequest</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="test/TestAsset/functions.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>(array) $var1</code>
+    </MixedArgumentTypeCoercion>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $var1</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="test/ValueTest.php">
+    <ForbiddenCode occurrences="1">
+      <code>var_dump($x)</code>
+    </ForbiddenCode>
+    <InvalidArgument occurrences="41">
+      <code>$type</code>
+      <code>$type</code>
+      <code>AbstractValue::AUTO_DETECT_TYPE</code>
+      <code>AbstractValue::XMLRPC_TYPE_ARRAY</code>
+      <code>AbstractValue::XMLRPC_TYPE_BASE64</code>
+      <code>AbstractValue::XMLRPC_TYPE_BASE64</code>
+      <code>AbstractValue::XMLRPC_TYPE_BASE64</code>
+      <code>AbstractValue::XMLRPC_TYPE_BOOLEAN</code>
+      <code>AbstractValue::XMLRPC_TYPE_DATETIME</code>
+      <code>AbstractValue::XMLRPC_TYPE_DATETIME</code>
+      <code>AbstractValue::XMLRPC_TYPE_DATETIME</code>
+      <code>AbstractValue::XMLRPC_TYPE_DATETIME</code>
+      <code>AbstractValue::XMLRPC_TYPE_DATETIME</code>
+      <code>AbstractValue::XMLRPC_TYPE_DOUBLE</code>
+      <code>AbstractValue::XMLRPC_TYPE_DOUBLE</code>
+      <code>AbstractValue::XMLRPC_TYPE_DOUBLE</code>
+      <code>AbstractValue::XMLRPC_TYPE_I4</code>
+      <code>AbstractValue::XMLRPC_TYPE_INTEGER</code>
+      <code>AbstractValue::XMLRPC_TYPE_STRING</code>
+      <code>AbstractValue::XMLRPC_TYPE_STRUCT</code>
+      <code>AbstractValue::XMLRPC_TYPE_STRUCT</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+      <code>AbstractValue::XML_STRING</code>
+    </InvalidArgument>
+    <MissingReturnType occurrences="26">
+      <code>testArrayMustContainDataElement</code>
+      <code>testEmptyXmlRpcArrayResultsInEmptyArray</code>
+      <code>testMarshalArrayFromXmlRpc</code>
+      <code>testMarshalBase64FromString</code>
+      <code>testMarshalBase64FromXmlRpc</code>
+      <code>testMarshalBooleanFromXmlRpc</code>
+      <code>testMarshalDateTimeFromDateTimeAndAutodetectingType</code>
+      <code>testMarshalDateTimeFromFromDateTime</code>
+      <code>testMarshalDateTimeFromXmlRpc</code>
+      <code>testMarshalDoubleFromXmlRpc</code>
+      <code>testMarshalI4FromOverlongNativeThrowsException</code>
+      <code>testMarshalIntegerFromXmlRpc</code>
+      <code>testMarshalNilFromXmlRpc</code>
+      <code>testMarshalSerializedObjectAsBase64</code>
+      <code>testMarshalStringFromDefault</code>
+      <code>testMarshalStringFromXmlRpc</code>
+      <code>testMarshalStructFromXmlRpc</code>
+      <code>testMarshalStructFromXmlRpcWithEntities</code>
+      <code>testMarshallingDoubleWithHigherPrecisionFromNative</code>
+      <code>testMarshallingDoubleWithHigherPrecisionFromNativeWithTrailingZeros</code>
+      <code>testMarshallingNestedStructFromXmlRpc</code>
+      <code>testMarshallingStructWithMemberWithoutName</code>
+      <code>testMarshallingStructWithMemberWithoutValue</code>
+      <code>testMarshallingStructWithMultibyteValueFromXmlRpcRetainsMultibyteValue</code>
+      <code>testMarshallingStructsWithEmptyValueFromXmlRpcShouldRetainKeys</code>
+      <code>testXmlRpcValueBase64GeneratedXmlContainsBase64EncodedText</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="2">
+      <code>$val-&gt;getValue()</code>
+      <code>$val-&gt;getValue()</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="3">
+      <code>$a[0]</code>
+      <code>$a[1]</code>
+      <code>$a[2]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="3">
+      <code>$a</code>
+      <code>$o2</code>
+      <code>$received</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getProperty</code>
+    </MixedMethodCall>
+    <UnusedVariable occurrences="2">
+      <code>$native</code>
+      <code>$val</code>
+    </UnusedVariable>
+  </file>
+</files>

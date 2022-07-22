@@ -20,7 +20,7 @@ class FaultTest extends TestCase
     /**
      * Laminas\XmlRpc\Server\Fault::getInstance() test
      */
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
@@ -31,7 +31,7 @@ class FaultTest extends TestCase
     /**
      * Laminas\XmlRpc\Server\Fault::attachFaultException() test
      */
-    public function testAttachFaultException()
+    public function testAttachFaultException(): void
     {
         Server\Fault::attachFaultException(TestAsset\Exception::class);
         $e     = new TestAsset\Exception('test exception', 411);
@@ -57,10 +57,8 @@ class FaultTest extends TestCase
 
     /**
      * Tests Laminas-1825
-     *
-     * @return void
      */
-    public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses()
+    public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses(): void
     {
         Server\Fault::attachFaultException(TestAsset\Exception::class);
         $e     = new TestAsset\Exception4('test exception', 411);
@@ -73,7 +71,7 @@ class FaultTest extends TestCase
     /**
      * Laminas\XmlRpc\Server\Fault::detachFaultException() test
      */
-    public function testDetachFaultException()
+    public function testDetachFaultException(): void
     {
         Server\Fault::attachFaultException(TestAsset\Exception::class);
         $e     = new TestAsset\Exception('test exception', 411);
@@ -109,7 +107,7 @@ class FaultTest extends TestCase
     /**
      * Laminas\XmlRpc\Server\Fault::attachObserver() test
      */
-    public function testAttachObserver()
+    public function testAttachObserver(): void
     {
         Server\Fault::attachObserver(TestAsset\Observer::class);
         $e        = new Server\Exception\RuntimeException('Checking observers', 411);
@@ -130,7 +128,7 @@ class FaultTest extends TestCase
     /**
      * Laminas\XmlRpc\Server\Fault::detachObserver() test
      */
-    public function testDetachObserver()
+    public function testDetachObserver(): void
     {
         Server\Fault::attachObserver(TestAsset\Observer::class);
         $e     = new Server\Exception\RuntimeException('Checking observers', 411);
@@ -149,7 +147,7 @@ class FaultTest extends TestCase
     /**
      * getCode() test
      */
-    public function testGetCode()
+    public function testGetCode(): void
     {
         $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
@@ -160,7 +158,7 @@ class FaultTest extends TestCase
     /**
      * getException() test
      */
-    public function testGetException()
+    public function testGetException(): void
     {
         $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
@@ -171,7 +169,7 @@ class FaultTest extends TestCase
     /**
      * getMessage() test
      */
-    public function testGetMessage()
+    public function testGetMessage(): void
     {
         $e     = new Server\Exception\RuntimeException('Testing fault', 411);
         $fault = Server\Fault::getInstance($e);
@@ -182,7 +180,7 @@ class FaultTest extends TestCase
     /**
      * __toString() test
      */
-    public function testCastsFaultsToString()
+    public function testCastsFaultsToString(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $r   = $dom->appendChild($dom->createElement('methodResponse'));

@@ -37,7 +37,9 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.3.0",
-        "phpunit/phpunit": "^9.5.8"
+        "phpunit/phpunit": "^9.5.8",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "vimeo/psalm": "^4.24"
     },
     "suggest": {
         "laminas/laminas-cache": "To support Laminas\\XmlRpc\\Server\\Cache usage"
@@ -63,7 +65,8 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "static-analysis": "psalm --shepherd --stats"
     },
     "conflict": {
         "zendframework/zend-xmlrpc": "*"

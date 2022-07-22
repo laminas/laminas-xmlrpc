@@ -39,7 +39,7 @@ class FaultTest extends TestCase
     /**
      * __construct() test
      */
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $this->assertInstanceOf(Fault::class, $this->fault);
         $this->assertEquals(404, $this->fault->getCode());
@@ -49,7 +49,7 @@ class FaultTest extends TestCase
     /**
      * get/setCode() test
      */
-    public function testCode()
+    public function testCode(): void
     {
         $this->fault->setCode('1000');
         $this->assertEquals(1000, $this->fault->getCode());
@@ -58,7 +58,7 @@ class FaultTest extends TestCase
     /**
      * get/setMessage() test
      */
-    public function testMessage()
+    public function testMessage(): void
     {
         $this->fault->setMessage('Message');
         $this->assertEquals('Message', $this->fault->getMessage());
@@ -114,7 +114,7 @@ class FaultTest extends TestCase
     /**
      * loadXml() test
      */
-    public function testLoadXml()
+    public function testLoadXml(): void
     {
         $xml = $this->createXml();
 
@@ -150,7 +150,7 @@ class FaultTest extends TestCase
         );
     }
 
-    public function testLoadXmlThrowsExceptionOnInvalidInput()
+    public function testLoadXmlThrowsExceptionOnInvalidInput(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Failed to parse XML fault');
@@ -181,7 +181,7 @@ class FaultTest extends TestCase
     /**
      * Laminas\XmlRpc\Fault::isFault() test
      */
-    public function testIsFault()
+    public function testIsFault(): void
     {
         $xml = $this->createXml();
 
@@ -224,7 +224,7 @@ class FaultTest extends TestCase
     /**
      * saveXml() test
      */
-    public function testSaveXML()
+    public function testSaveXML(): void
     {
         $this->fault->setCode(1000);
         $this->fault->setMessage('Fault message');
@@ -235,7 +235,7 @@ class FaultTest extends TestCase
     /**
      * __toString() test
      */
-    public function testCanCastFaultToString()
+    public function testCanCastFaultToString(): void
     {
         $this->fault->setCode(1000);
         $this->fault->setMessage('Fault message');
@@ -246,7 +246,7 @@ class FaultTest extends TestCase
     /**
      * Test encoding settings
      */
-    public function testSetGetEncoding()
+    public function testSetGetEncoding(): void
     {
         $this->assertEquals('UTF-8', $this->fault->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
@@ -255,14 +255,14 @@ class FaultTest extends TestCase
         $this->assertEquals('ISO-8859-1', AbstractValue::getGenerator()->getEncoding());
     }
 
-    public function testUnknownErrorIsUsedIfUnknownErrorCodeEndEmptyMessageIsPassed()
+    public function testUnknownErrorIsUsedIfUnknownErrorCodeEndEmptyMessageIsPassed(): void
     {
         $fault = new Fault(1234);
         $this->assertSame(1234, $fault->getCode());
         $this->assertSame('Unknown Error', $fault->getMessage());
     }
 
-    public function testFaultStringWithoutStringTypeDeclaration()
+    public function testFaultStringWithoutStringTypeDeclaration(): void
     {
         $xml = $this->createNonStandardXml();
 

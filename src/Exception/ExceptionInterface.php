@@ -2,6 +2,8 @@
 
 namespace Laminas\XmlRpc\Exception;
 
-interface ExceptionInterface
+use Throwable;
+
+interface ExceptionInterface extends Throwable
 {
 }
