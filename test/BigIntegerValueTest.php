@@ -48,7 +48,7 @@ class BigIntegerValueTest extends TestCase
      * @group Laminas-6445
      * @group Laminas-8623
      */
-    public function testBigIntegerGetValue()
+    public function testBigIntegerGetValue(): void
     {
         $bigIntegerValue = (string) (PHP_INT_MAX + 42);
         $bigInteger      = new BigInteger($bigIntegerValue);
@@ -58,7 +58,7 @@ class BigIntegerValueTest extends TestCase
     /**
      * @group Laminas-6445
      */
-    public function testBigIntegerGetType()
+    public function testBigIntegerGetType(): void
     {
         $bigIntegerValue = (string) (PHP_INT_MAX + 42);
         $bigInteger      = new BigInteger($bigIntegerValue);
@@ -68,7 +68,7 @@ class BigIntegerValueTest extends TestCase
     /**
      * @group Laminas-6445
      */
-    public function testBigIntegerGeneratedXml()
+    public function testBigIntegerGeneratedXml(): void
     {
         $bigIntegerValue = (string) (PHP_INT_MAX + 42);
         $bigInteger      = new BigInteger($bigIntegerValue);
@@ -128,7 +128,7 @@ class BigIntegerValueTest extends TestCase
     /**
      * @group Laminas-6445
      */
-    public function testMarshalBigIntegerFromNative()
+    public function testMarshalBigIntegerFromNative(): void
     {
         $bigIntegerValue = (string) (PHP_INT_MAX + 42);
 

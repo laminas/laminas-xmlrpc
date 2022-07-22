@@ -53,7 +53,7 @@ class ResponseTest extends TestCase
     /**
      * get/setReturnValue() test
      */
-    public function testReturnValue()
+    public function testReturnValue(): void
     {
         $this->response->setReturnValue('string');
         $this->assertEquals('string', $this->response->getReturnValue());
@@ -69,7 +69,7 @@ class ResponseTest extends TestCase
      *
      * Returns: bool
      */
-    public function testIsFault()
+    public function testIsFault(): void
     {
         $this->assertFalse($this->response->isFault());
         $this->response->loadXml('foo');
@@ -79,7 +79,7 @@ class ResponseTest extends TestCase
     /**
      * Tests getFault() returns NULL (no fault) or the fault object
      */
-    public function testGetFault()
+    public function testGetFault(): void
     {
         $this->assertNull($this->response->getFault());
         $this->response->loadXml('foo');
@@ -96,7 +96,7 @@ class ResponseTest extends TestCase
      *
      * Returns: bool
      */
-    public function testLoadXml()
+    public function testLoadXml(): void
     {
         $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
@@ -112,7 +112,7 @@ class ResponseTest extends TestCase
         $this->assertEquals('Return value', $this->response->getReturnValue());
     }
 
-    public function testLoadXmlWithInvalidValue()
+    public function testLoadXmlWithInvalidValue(): void
     {
         $this->assertFalse($this->response->loadXml(new stdClass()));
         $this->assertTrue($this->response->isFault());
@@ -122,7 +122,7 @@ class ResponseTest extends TestCase
     /**
      * @group Laminas-9039
      */
-    public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer()
+    public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer(): void
     {
         set_error_handler([$this, 'trackError']);
         $invalidResponse = 'foo';
@@ -135,7 +135,7 @@ class ResponseTest extends TestCase
     /**
      * @group Laminas-5404
      */
-    public function testNilResponseFromXmlRpcServer()
+    public function testNilResponseFromXmlRpcServer(): void
     {
         // @codingStandardsIgnoreStart
         $rawResponse = <<<EOD
@@ -176,7 +176,7 @@ EOD;
     /**
      * saveXml() test
      */
-    public function testSaveXML()
+    public function testSaveXML(): void
     {
         $this->response->setReturnValue('return value');
         $xml = $this->response->saveXml();
@@ -186,7 +186,7 @@ EOD;
     /**
      * __toString() test
      */
-    public function testCanCastResponseToString()
+    public function testCanCastResponseToString(): void
     {
         $this->response->setReturnValue('return value');
         $xml = $this->response->__toString();
@@ -196,7 +196,7 @@ EOD;
     /**
      * Test encoding settings
      */
-    public function testSetGetEncoding()
+    public function testSetGetEncoding(): void
     {
         $this->assertEquals('UTF-8', $this->response->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
@@ -205,7 +205,7 @@ EOD;
         $this->assertEquals('ISO-8859-1', AbstractValue::getGenerator()->getEncoding());
     }
 
-    public function testLoadXmlCreatesFaultWithMissingNodes()
+    public function testLoadXmlCreatesFaultWithMissingNodes(): void
     {
         $sxl = new SimpleXMLElement(
             '<?xml version="1.0"?><methodResponse><params><param>foo</param></params></methodResponse>'
@@ -248,7 +248,7 @@ EOD;
     /**
      * @group Laminas-12293
      */
-    public function testDoesNotAllowExternalEntities()
+    public function testDoesNotAllowExternalEntities(): void
     {
         $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-response.xml');
         $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
@@ -260,7 +260,7 @@ EOD;
         }
     }
 
-    public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading()
+    public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading(): void
     {
         $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-response.xml');
         $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
