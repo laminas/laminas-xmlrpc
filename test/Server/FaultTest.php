@@ -57,8 +57,6 @@ class FaultTest extends TestCase
 
     /**
      * Tests Laminas-1825
-     *
-     * @return void
      */
     public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses(): void
     {
