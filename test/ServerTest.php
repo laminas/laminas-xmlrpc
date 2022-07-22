@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Server\Definition as ServerDefinition;
@@ -80,14 +82,14 @@ class ServerTest extends TestCase
         $this->server->addFunction('LaminasTest\\XmlRpc\\TestAsset\\testFunction', 'zsr');
 
         $methods = $this->server->listMethods();
-        $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods, var_export($methods, 1));
+        $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods, var_export($methods, true));
 
         $methods = $this->server->listMethods();
         $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods);
         $this->assertNotContains(
             'zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction2',
             $methods,
-            var_export($methods, 1)
+            var_export($methods, true)
         );
     }
 
@@ -324,7 +326,7 @@ class ServerTest extends TestCase
     {
         $sig = $this->server->methodSignature('system.methodSignature');
         $this->assertIsArray($sig);
-        $this->assertEquals(1, count($sig), var_export($sig, 1));
+        $this->assertEquals(1, count($sig), var_export($sig, true));
 
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
@@ -365,9 +367,9 @@ class ServerTest extends TestCase
         );
         $returns = $response->getReturnValue();
         $this->assertIsArray($returns);
-        $this->assertEquals(2, count($returns), var_export($returns, 1));
-        $this->assertIsArray($returns[0], var_export($returns[0], 1));
-        $this->assertIsString($returns[1], var_export($returns[1], 1));
+        $this->assertEquals(2, count($returns), var_export($returns, true));
+        $this->assertIsArray($returns[0], var_export($returns[0], true));
+        $this->assertIsString($returns[1], var_export($returns[1], true));
     }
 
     /**
@@ -397,12 +399,12 @@ class ServerTest extends TestCase
         );
         $returns = $response->getReturnValue();
         $this->assertIsArray($returns);
-        $this->assertEquals(2, count($returns), var_export($returns, 1));
-        $this->assertIsArray($returns[0], var_export($returns[0], 1));
+        $this->assertEquals(2, count($returns), var_export($returns, true));
+        $this->assertIsArray($returns[0], var_export($returns[0], true));
         $this->assertSame([
             'faultCode'   => 620,
             'faultString' => 'Method "undefined" does not exist',
-        ], $returns[1], var_export($returns[1], 1));
+        ], $returns[1], var_export($returns[1], true));
     }
 
     /**
@@ -642,7 +644,7 @@ class ServerTest extends TestCase
         $table  = $server->getDispatchTable();
         $method = $table->getMethod('test1');
         foreach ($method->getPrototypes() as $prototype) {
-            $this->assertNotEquals('void', $prototype->getReturnType(), var_export($prototype, 1));
+            $this->assertNotEquals('void', $prototype->getReturnType(), var_export($prototype, true));
         }
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
@@ -97,7 +99,7 @@ class GeneratorTest extends TestCase
     public function assertXml(string $expected, Generator $actual)
     {
         $expected = trim($expected);
-        $this->assertSame($expected, trim($actual));
+        $this->assertSame($expected, trim((string) $actual));
         $xmlDecl = '<?xml version="1.0" encoding="' . $actual->getEncoding() . '"?>' . "\n";
         $this->assertSame($xmlDecl . $expected, trim($actual->saveXml()));
     }
