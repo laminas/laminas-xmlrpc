@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use DOMDocument;
@@ -76,7 +78,7 @@ class FaultTest extends TestCase
         $member1 = $struct->appendChild($dom->createElement('member'));
         $member1->appendChild($dom->createElement('name', 'faultCode'));
         $value1 = $member1->appendChild($dom->createElement('value'));
-        $value1->appendChild($dom->createElement('int', 1000));
+        $value1->appendChild($dom->createElement('int', '1000'));
 
         $member2 = $struct->appendChild($dom->createElement('member'));
         $member2->appendChild($dom->createElement('name', 'faultString'));
@@ -100,7 +102,7 @@ class FaultTest extends TestCase
         $member1 = $struct->appendChild($dom->createElement('member'));
         $member1->appendChild($dom->createElement('name', 'faultCode'));
         $value1 = $member1->appendChild($dom->createElement('value'));
-        $value1->appendChild($dom->createElement('int', 1000));
+        $value1->appendChild($dom->createElement('int', '1000'));
 
         $member2 = $struct->appendChild($dom->createElement('member'));
         $member2->appendChild($dom->createElement('name', 'faultString'));

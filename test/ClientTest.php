@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Http\Client as HttpClient;

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
-use Laminas\Math\Exception;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;

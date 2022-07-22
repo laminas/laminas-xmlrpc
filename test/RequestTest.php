@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use DOMDocument;
@@ -114,7 +116,7 @@ class RequestTest extends TestCase
         $sxl   = new SimpleXMLElement($xml);
         $param = $sxl->params->param->value;
         $type  = 'dateTime.iso8601';
-        $this->assertTrue(isset($param->{$type}), var_export($param, 1));
+        $this->assertTrue(isset($param->{$type}), var_export($param, true));
         $this->assertEquals($time, strtotime((string) $param->{$type}));
     }
 
@@ -168,7 +170,7 @@ class RequestTest extends TestCase
 
         $param2 = $params->appendChild($dom->createElement('param'));
         $value2 = $param2->appendChild($dom->createElement('value'));
-        $value2->appendChild($dom->createElement('boolean', 1));
+        $value2->appendChild($dom->createElement('boolean', '1'));
 
         $xml = $dom->saveXml();
 

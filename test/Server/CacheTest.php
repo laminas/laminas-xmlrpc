@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc\Server;
 
 use Laminas\XmlRpc\Server;
