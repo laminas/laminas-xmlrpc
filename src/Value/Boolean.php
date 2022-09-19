@@ -2,6 +2,9 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use function filter_var;
+use const FILTER_VALIDATE_BOOLEAN;
+
 class Boolean extends AbstractScalar
 {
     /**

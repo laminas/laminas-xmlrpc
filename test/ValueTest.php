@@ -36,8 +36,6 @@ class ValueTest extends TestCase
 
     /**
      * @dataProvider booleanProvider
-     *
-     * @param bool $native
      */
     public function testFactoryAutodetectsBoolean(bool $native): void
     {
