@@ -15,7 +15,7 @@ class Boolean extends AbstractScalar
         $this->type = self::XMLRPC_TYPE_BOOLEAN;
         // Make sure the value is boolean and then convert it into an integer
         // The double conversion is because a bug in the LaminasOptimizer in PHP version 5.0.4
-        $this->value = (int) (bool) $value;
+        $this->value = (int) filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**

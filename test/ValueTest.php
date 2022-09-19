@@ -34,15 +34,24 @@ class ValueTest extends TestCase
     /** @var string */
     public $xmlRpcDateFormat = 'Ymd\\TH:i:s';
 
-    public function testFactoryAutodetectsBoolean(): void
+    /**
+     * @dataProvider booleanProvider
+     *
+     * @param bool $native
+     */
+    public function testFactoryAutodetectsBoolean(bool $native): void
     {
-        foreach ([true, false] as $native) {
-            $val = AbstractValue::getXmlRpcValue($native);
-            $this->assertXmlRpcType('boolean', $val);
-        }
+        $val = AbstractValue::getXmlRpcValue($native);
+        $this->assertXmlRpcType('boolean', $val);
     }
 
-    public function testMarshalBooleanFromNative(): void
+    public function booleanProvider(): \Generator
+    {
+        yield 'it detects true as a boolean' => [true];
+        yield 'it detects false as a boolean' => [false];
+    }
+
+    public function testMarshalTrueBooleanFromNative(): void
     {
         $native = true;
         $val    = AbstractValue::getXmlRpcValue(
@@ -52,12 +61,72 @@ class ValueTest extends TestCase
 
         $this->assertXmlRpcType('boolean', $val);
         $this->assertSame($native, $val->getValue());
+        $this->assertTrue($val->getValue());
+    }
+
+    public function testMarshalTrueIntBooleanFromNative(): void
+    {
+        $native = 1;
+        $val    = AbstractValue::getXmlRpcValue(
+            $native,
+            AbstractValue::XMLRPC_TYPE_BOOLEAN
+        );
+
+        $this->assertXmlRpcType('boolean', $val);
+        $this->assertSame(true, $val->getValue());
+        $this->assertTrue($val->getValue());
+    }
+
+    public function testMarshalFalseBooleanFromNative(): void
+    {
+        $native = false;
+        $val    = AbstractValue::getXmlRpcValue(
+            $native,
+            AbstractValue::XMLRPC_TYPE_BOOLEAN
+        );
+
+        $this->assertXmlRpcType('boolean', $val);
+        $this->assertSame($native, $val->getValue());
+        $this->assertFalse($val->getValue());
+    }
+
+    public function testMarshalFalseIntBooleanFromNative(): void
+    {
+        $native = 0;
+        $val    = AbstractValue::getXmlRpcValue(
+            $native,
+            AbstractValue::XMLRPC_TYPE_BOOLEAN
+        );
+
+        echo $val->getValue();
+
+        $this->assertXmlRpcType('boolean', $val);
+        $this->assertSame(false, $val->getValue());
+        $this->assertFalse($val->getValue());
     }
 
     /**
      * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
-    public function testMarshalBooleanFromXmlRpc(Generator $generator)
+    public function testMarshalTrueBooleanFromXmlRpc(Generator $generator)
+    {
+        AbstractValue::setGenerator($generator);
+        $xml = '<value><boolean>true</boolean></value>';
+        $val = AbstractValue::getXmlRpcValue(
+            $xml,
+            AbstractValue::XML_STRING
+        );
+
+        $this->assertXmlRpcType('boolean', $val);
+        $this->assertEquals('boolean', $val->getType());
+        $this->assertSame(true, $val->getValue());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXml());
+    }
+
+    /**
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
+     */
+    public function testMarshalTrueIntBooleanFromXmlRpc(Generator $generator)
     {
         AbstractValue::setGenerator($generator);
         $xml = '<value><boolean>1</boolean></value>';
@@ -69,6 +138,42 @@ class ValueTest extends TestCase
         $this->assertXmlRpcType('boolean', $val);
         $this->assertEquals('boolean', $val->getType());
         $this->assertSame(true, $val->getValue());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXml());
+    }
+
+    /**
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
+     */
+    public function testMarshalFalseBooleanFromXmlRpc(Generator $generator)
+    {
+        AbstractValue::setGenerator($generator);
+        $xml = '<value><boolean>false</boolean></value>';
+        $val = AbstractValue::getXmlRpcValue(
+            $xml,
+            AbstractValue::XML_STRING
+        );
+
+        $this->assertXmlRpcType('boolean', $val);
+        $this->assertEquals('boolean', $val->getType());
+        $this->assertSame(false, $val->getValue());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXml());
+    }
+
+    /**
+     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
+     */
+    public function testMarshalFalseIntBooleanFromXmlRpc(Generator $generator)
+    {
+        AbstractValue::setGenerator($generator);
+        $xml = '<value><boolean>0</boolean></value>';
+        $val = AbstractValue::getXmlRpcValue(
+            $xml,
+            AbstractValue::XML_STRING
+        );
+
+        $this->assertXmlRpcType('boolean', $val);
+        $this->assertEquals('boolean', $val->getType());
+        $this->assertSame(false, $val->getValue());
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
