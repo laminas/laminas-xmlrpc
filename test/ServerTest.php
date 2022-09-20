@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Server\Definition as ServerDefinition;
@@ -75,23 +77,23 @@ class ServerTest extends TestCase
      *
      * Returns: void
      */
-    public function testAddFunction()
+    public function testAddFunction(): void
     {
         $this->server->addFunction('LaminasTest\\XmlRpc\\TestAsset\\testFunction', 'zsr');
 
         $methods = $this->server->listMethods();
-        $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods, var_export($methods, 1));
+        $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods, var_export($methods, true));
 
         $methods = $this->server->listMethods();
         $this->assertContains('zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods);
         $this->assertNotContains(
             'zsr.LaminasTest\\XmlRpc\\TestAsset\\testFunction2',
             $methods,
-            var_export($methods, 1)
+            var_export($methods, true)
         );
     }
 
-    public function testAddFunctionThrowsExceptionOnInvalidInput()
+    public function testAddFunctionThrowsExceptionOnInvalidInput(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to attach function; invalid');
@@ -101,7 +103,7 @@ class ServerTest extends TestCase
     /**
      * getReturnResponse() default value
      */
-    public function testEmitResponseByDefault()
+    public function testEmitResponseByDefault(): void
     {
         $server = new Server();
 
@@ -111,7 +113,7 @@ class ServerTest extends TestCase
     /**
      * get/loadFunctions() test
      */
-    public function testFunctions()
+    public function testFunctions(): void
     {
         $expected = $this->server->listMethods();
 
@@ -126,7 +128,7 @@ class ServerTest extends TestCase
     /**
      * setClass() test
      */
-    public function testSetClass()
+    public function testSetClass(): void
     {
         $this->server->setClass(TestAsset\TestClass::class, 'test');
         $methods = $this->server->listMethods();
@@ -139,7 +141,7 @@ class ServerTest extends TestCase
     /**
      * @group Laminas-6526
      */
-    public function testSettingClassWithArguments()
+    public function testSettingClassWithArguments(): void
     {
         $this->server->setClass(TestAsset\TestClass::class, 'test', 'argv-argument');
         $this->assertTrue($this->server->sendArgumentsToAllMethods());
@@ -154,7 +156,7 @@ class ServerTest extends TestCase
         ], $response->getReturnValue());
     }
 
-    public function testSettingClassWithArgumentsOnlyPassingToConstructor()
+    public function testSettingClassWithArgumentsOnlyPassingToConstructor(): void
     {
         $this->server->setClass(TestAsset\TestClass::class, 'test', 'a1', 'a2');
         $this->server->sendArgumentsToAllMethods(false);
@@ -171,7 +173,7 @@ class ServerTest extends TestCase
     /**
      * fault() test
      */
-    public function testFault()
+    public function testFault(): void
     {
         $fault = $this->server->fault('This is a fault', 411);
         $this->assertInstanceOf(\Laminas\XmlRpc\Server\Fault::class, $fault);
@@ -187,7 +189,7 @@ class ServerTest extends TestCase
     /**
      * handle() test - default behavior should be to not return the response
      */
-    public function testHandle()
+    public function testHandle(): void
     {
         $request = new Request();
         $request->setMethod('system.listMethods');
@@ -217,7 +219,7 @@ class ServerTest extends TestCase
      *
      * Returns: Laminas_XmlRpc_Response|Laminas_XmlRpc_Fault
      */
-    public function testHandleWithReturnResponse()
+    public function testHandleWithReturnResponse(): void
     {
         $request = new Request();
         $request->setMethod('system.listMethods');
@@ -242,7 +244,7 @@ class ServerTest extends TestCase
         $this->assertEquals(623, $response->getCode());
     }
 
-    public function testCallingInvalidMethod()
+    public function testCallingInvalidMethod(): void
     {
         $request = new Request();
         $request->setMethod('invalid');
@@ -262,7 +264,7 @@ class ServerTest extends TestCase
      *
      * Returns: bool
      */
-    public function testSetResponseClass()
+    public function testSetResponseClass(): void
     {
         $this->assertTrue($this->server->setResponseClass(TestAsset\TestResponse::class));
         $request = new Request();
@@ -280,7 +282,7 @@ class ServerTest extends TestCase
      *
      * Returns: array
      */
-    public function testListMethods()
+    public function testListMethods(): void
     {
         $methods = $this->server->listMethods();
         $this->assertIsArray($methods);
@@ -300,7 +302,7 @@ class ServerTest extends TestCase
      *
      * Returns: string
      */
-    public function testMethodHelp()
+    public function testMethodHelp(): void
     {
         $help = $this->server->methodHelp('system.methodHelp', 'system.listMethods');
         $this->assertStringContainsString('Display help message for an XMLRPC method', $help);
@@ -320,11 +322,11 @@ class ServerTest extends TestCase
      *
      * Returns: array
      */
-    public function testMethodSignature()
+    public function testMethodSignature(): void
     {
         $sig = $this->server->methodSignature('system.methodSignature');
         $this->assertIsArray($sig);
-        $this->assertEquals(1, count($sig), var_export($sig, 1));
+        $this->assertEquals(1, count($sig), var_export($sig, true));
 
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Method "foo" does not exist');
@@ -341,7 +343,7 @@ class ServerTest extends TestCase
      *
      * Returns: array
      */
-    public function testMulticall()
+    public function testMulticall(): void
     {
         $struct  = [
             [
@@ -365,15 +367,15 @@ class ServerTest extends TestCase
         );
         $returns = $response->getReturnValue();
         $this->assertIsArray($returns);
-        $this->assertEquals(2, count($returns), var_export($returns, 1));
-        $this->assertIsArray($returns[0], var_export($returns[0], 1));
-        $this->assertIsString($returns[1], var_export($returns[1], 1));
+        $this->assertEquals(2, count($returns), var_export($returns, true));
+        $this->assertIsArray($returns[0], var_export($returns[0], true));
+        $this->assertIsString($returns[1], var_export($returns[1], true));
     }
 
     /**
      * @group Laminas-5635
      */
-    public function testMulticallHandlesFaults()
+    public function testMulticallHandlesFaults(): void
     {
         $struct  = [
             [
@@ -397,18 +399,18 @@ class ServerTest extends TestCase
         );
         $returns = $response->getReturnValue();
         $this->assertIsArray($returns);
-        $this->assertEquals(2, count($returns), var_export($returns, 1));
-        $this->assertIsArray($returns[0], var_export($returns[0], 1));
+        $this->assertEquals(2, count($returns), var_export($returns, true));
+        $this->assertIsArray($returns[0], var_export($returns[0], true));
         $this->assertSame([
             'faultCode'   => 620,
             'faultString' => 'Method "undefined" does not exist',
-        ], $returns[1], var_export($returns[1], 1));
+        ], $returns[1], var_export($returns[1], true));
     }
 
     /**
      * Test get/setEncoding()
      */
-    public function testGetSetEncoding()
+    public function testGetSetEncoding(): void
     {
         $this->assertEquals('UTF-8', $this->server->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
@@ -420,7 +422,7 @@ class ServerTest extends TestCase
     /**
      * Test request/response encoding
      */
-    public function testRequestResponseEncoding()
+    public function testRequestResponseEncoding(): void
     {
         $response = $this->server->handle();
         $request  = $this->server->getRequest();
@@ -442,14 +444,14 @@ class ServerTest extends TestCase
         $this->assertEquals('ISO-8859-1', $response->getEncoding());
     }
 
-    public function testAddFunctionWithExtraArgs()
+    public function testAddFunctionWithExtraArgs(): void
     {
         $this->server->addFunction('LaminasTest\\XmlRpc\\TestAsset\\testFunction', 'test', 'arg1');
         $methods = $this->server->listMethods();
         $this->assertContains('test.LaminasTest\\XmlRpc\\TestAsset\\testFunction', $methods);
     }
 
-    public function testAddFunctionThrowsExceptionWithBadData()
+    public function testAddFunctionThrowsExceptionWithBadData(): void
     {
         $o = new stdClass();
         $this->expectException(InvalidArgumentException::class);
@@ -457,7 +459,7 @@ class ServerTest extends TestCase
         $this->server->addFunction($o);
     }
 
-    public function testLoadFunctionsThrowsExceptionWithBadData()
+    public function testLoadFunctionsThrowsExceptionWithBadData(): void
     {
         $o = new stdClass();
         $this->expectException(InvalidArgumentException::class);
@@ -486,7 +488,7 @@ class ServerTest extends TestCase
         $this->server->loadFunctions($o);
     }
 
-    public function testLoadFunctionsReadsMethodsFromServerDefinitionObjects()
+    public function testLoadFunctionsReadsMethodsFromServerDefinitionObjects(): void
     {
         $mockedMethod     = $this->getMockBuilder(MethodDefinition::class)
             ->disableOriginalConstructor()
@@ -503,14 +505,14 @@ class ServerTest extends TestCase
         $this->server->loadFunctions($mockedDefinition);
     }
 
-    public function testSetClassThrowsExceptionWithInvalidClass()
+    public function testSetClassThrowsExceptionWithInvalidClass(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid method class');
         $this->server->setClass('mybogusclass');
     }
 
-    public function testSetRequestUsingString()
+    public function testSetRequestUsingString(): void
     {
         $this->server->setRequest(TestAsset\TestRequest::class);
         $req = $this->server->getRequest();
@@ -520,21 +522,21 @@ class ServerTest extends TestCase
     /**
      * ////////@outputBuffering enabled
      */
-    public function testSetRequestThrowsExceptionOnBadClassName()
+    public function testSetRequestThrowsExceptionOnBadClassName(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid request object');
         $this->server->setRequest('LaminasTest\\XmlRpc\\TestRequest2');
     }
 
-    public function testSetRequestThrowsExceptionOnBadObject()
+    public function testSetRequestThrowsExceptionOnBadObject(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid request object');
         $this->server->setRequest($this);
     }
 
-    public function testHandleObjectMethod()
+    public function testHandleObjectMethod(): void
     {
         $this->server->setClass(TestAsset\TestClass::class);
         $request = new Request();
@@ -545,7 +547,7 @@ class ServerTest extends TestCase
         $this->assertEquals('String: value', $response->getReturnValue());
     }
 
-    public function testHandleClassStaticMethod()
+    public function testHandleClassStaticMethod(): void
     {
         $this->server->setClass(TestAsset\TestClass::class);
         $request = new Request();
@@ -556,7 +558,7 @@ class ServerTest extends TestCase
         $this->assertEquals('value1; value2', $response->getReturnValue());
     }
 
-    public function testHandleFunction()
+    public function testHandleFunction(): void
     {
         $this->server->addFunction('LaminasTest\\XmlRpc\\TestAsset\\testFunction');
         $request = new Request();
@@ -567,7 +569,7 @@ class ServerTest extends TestCase
         $this->assertEquals('key: value1', $response->getReturnValue());
     }
 
-    public function testMulticallReturnsFaultsWithBadData()
+    public function testMulticallReturnsFaultsWithBadData(): void
     {
         // bad method array
         $try      = [
@@ -635,45 +637,45 @@ class ServerTest extends TestCase
     /**
      * @group Laminas-6034
      */
-    public function testPrototypeReturnValueMustReflectDocBlock()
+    public function testPrototypeReturnValueMustReflectDocBlock(): void
     {
         $server = new Server();
         $server->setClass(TestAsset\TestClass::class);
         $table  = $server->getDispatchTable();
         $method = $table->getMethod('test1');
         foreach ($method->getPrototypes() as $prototype) {
-            $this->assertNotEquals('void', $prototype->getReturnType(), var_export($prototype, 1));
+            $this->assertNotEquals('void', $prototype->getReturnType(), var_export($prototype, true));
         }
     }
 
-    public function testCallingUnregisteredMethod()
+    public function testCallingUnregisteredMethod(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Unknown instance method called on server: foobarbaz');
         $this->server->foobarbaz();
     }
 
-    public function testSetPersistenceDoesNothing()
+    public function testSetPersistenceDoesNothing(): void
     {
         $this->assertNull($this->server->setPersistence('foo'));
         $this->assertNull($this->server->setPersistence('whatever'));
     }
 
-    public function testPassingInvalidRequestClassThrowsException()
+    public function testPassingInvalidRequestClassThrowsException(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Invalid request class');
         $this->server->setRequest(stdClass::class);
     }
 
-    public function testPassingInvalidResponseClassThrowsException()
+    public function testPassingInvalidResponseClassThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid response class');
         $this->server->setResponseClass(stdClass::class);
     }
 
-    public function testCreatingFaultWithEmptyMessageResultsInUnknownError()
+    public function testCreatingFaultWithEmptyMessageResultsInUnknownError(): void
     {
         $fault = $this->server->fault('', 123);
         $this->assertSame('Unknown Error', $fault->getMessage());

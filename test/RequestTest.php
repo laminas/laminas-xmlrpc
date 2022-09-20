@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use DOMDocument;
@@ -52,7 +54,7 @@ class RequestTest extends TestCase
     /**
      * get/setMethod() test
      */
-    public function testMethod()
+    public function testMethod(): void
     {
         $this->assertTrue($this->request->setMethod('testMethod'));
         $this->assertTrue($this->request->setMethod('testMethod9'));
@@ -68,7 +70,7 @@ class RequestTest extends TestCase
     /**
      * __construct() test
      */
-    public function testConstructorOptionallySetsMethodAndParams()
+    public function testConstructorOptionallySetsMethodAndParams(): void
     {
         $r = new Request();
         $this->assertEquals('', $r->getMethod());
@@ -84,7 +86,7 @@ class RequestTest extends TestCase
     /**
      * addParam()/getParams() test
      */
-    public function testAddParam()
+    public function testAddParam(): void
     {
         $this->request->addParam('string1');
         $params = $this->request->getParams();
@@ -105,7 +107,7 @@ class RequestTest extends TestCase
         $this->assertSame('foo', $params[2]->getValue());
     }
 
-    public function testAddDateParamGeneratesCorrectXml()
+    public function testAddDateParamGeneratesCorrectXml(): void
     {
         $time = time();
         $this->request->addParam($time, AbstractValue::XMLRPC_TYPE_DATETIME);
@@ -114,14 +116,14 @@ class RequestTest extends TestCase
         $sxl   = new SimpleXMLElement($xml);
         $param = $sxl->params->param->value;
         $type  = 'dateTime.iso8601';
-        $this->assertTrue(isset($param->{$type}), var_export($param, 1));
+        $this->assertTrue(isset($param->{$type}), var_export($param, true));
         $this->assertEquals($time, strtotime((string) $param->{$type}));
     }
 
     /**
      * setParams()/getParams() test
      */
-    public function testSetParams()
+    public function testSetParams(): void
     {
         $params = [
             'string1',
@@ -156,7 +158,7 @@ class RequestTest extends TestCase
     /**
      * loadXml() test
      */
-    public function testLoadXml()
+    public function testLoadXml(): void
     {
         $dom    = new DOMDocument('1.0', 'UTF-8');
         $mCall  = $dom->appendChild($dom->createElement('methodCall'));
@@ -168,7 +170,7 @@ class RequestTest extends TestCase
 
         $param2 = $params->appendChild($dom->createElement('param'));
         $value2 = $param2->appendChild($dom->createElement('value'));
-        $value2->appendChild($dom->createElement('boolean', 1));
+        $value2->appendChild($dom->createElement('boolean', '1'));
 
         $xml = $dom->saveXml();
 
@@ -184,7 +186,7 @@ class RequestTest extends TestCase
         $this->assertFalse($parsed, 'Parsed non-XML string?');
     }
 
-    public function testPassingInvalidTypeToLoadXml()
+    public function testPassingInvalidTypeToLoadXml(): void
     {
         $this->assertFalse($this->request->loadXml(new stdClass()));
         $this->assertTrue($this->request->isFault());
@@ -192,7 +194,7 @@ class RequestTest extends TestCase
         $this->assertSame('Invalid XML provided to request', $this->request->getFault()->getMessage());
     }
 
-    public function testLoadingXmlWithoutMethodNameElement()
+    public function testLoadingXmlWithoutMethodNameElement(): void
     {
         $this->assertFalse($this->request->loadXml('<empty/>'));
         $this->assertTrue($this->request->isFault());
@@ -203,7 +205,7 @@ class RequestTest extends TestCase
         );
     }
 
-    public function testLoadingXmlWithInvalidParams()
+    public function testLoadingXmlWithInvalidParams(): void
     {
         $this->assertFalse($this->request->loadXml(
             '<methodCall>'
@@ -219,7 +221,7 @@ class RequestTest extends TestCase
         );
     }
 
-    public function testExceptionWhileLoadingXmlParamValueIsHandled()
+    public function testExceptionWhileLoadingXmlParamValueIsHandled(): void
     {
         $this->assertFalse($this->request->loadXml(
             '<methodCall>'
@@ -238,7 +240,7 @@ class RequestTest extends TestCase
     /**
      * isFault() test
      */
-    public function testIsFault()
+    public function testIsFault(): void
     {
         $this->assertFalse($this->request->isFault());
         $this->request->loadXml('foo');
@@ -248,7 +250,7 @@ class RequestTest extends TestCase
     /**
      * getFault() test
      */
-    public function testGetFault()
+    public function testGetFault(): void
     {
         $fault = $this->request->getFault();
         $this->assertNull($fault);
@@ -288,7 +290,7 @@ class RequestTest extends TestCase
     /**
      * testSaveXML() test
      */
-    public function testSaveXML()
+    public function testSaveXML(): void
     {
         $argv = ['string', true];
         $this->request->setMethod('do.Something');
@@ -300,7 +302,7 @@ class RequestTest extends TestCase
     /**
      * __toString() test
      */
-    public function testCastToString()
+    public function testCastToString(): void
     {
         $argv = ['string', true];
         $this->request->setMethod('do.Something');
@@ -312,7 +314,7 @@ class RequestTest extends TestCase
     /**
      * Test encoding settings
      */
-    public function testSetGetEncoding()
+    public function testSetGetEncoding(): void
     {
         $this->assertEquals('UTF-8', $this->request->getEncoding());
         $this->assertEquals('UTF-8', AbstractValue::getGenerator()->getEncoding());
@@ -327,7 +329,7 @@ class RequestTest extends TestCase
      * Test should remain, but is defunct since DOCTYPE presence should return FALSE
      * from loadXml()
      */
-    public function testDoesNotAllowExternalEntities()
+    public function testDoesNotAllowExternalEntities(): void
     {
         $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-request.xml');
         $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));
@@ -339,7 +341,7 @@ class RequestTest extends TestCase
         }
     }
 
-    public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading()
+    public function testShouldDisallowsDoctypeInRequestXmlAndReturnFalseOnLoading(): void
     {
         $payload = file_get_contents(dirname(__FILE__) . '/_files/Laminas12293-request.xml');
         $payload = sprintf($payload, 'file://' . realpath(dirname(__FILE__) . '/_files/Laminas12293-payload.txt'));

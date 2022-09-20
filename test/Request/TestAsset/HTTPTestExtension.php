@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc\Request\TestAsset;
 
 use Laminas\XmlRpc\Request\Http;

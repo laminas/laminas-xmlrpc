@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use Laminas\Http\Client as HttpClient;
@@ -49,7 +51,7 @@ class ClientTest extends TestCase
         $this->xmlrpcClient->setHttpClient($this->httpClient);
     }
 
-    public function testGettingDefaultHttpClient()
+    public function testGettingDefaultHttpClient(): void
     {
         $xmlrpcClient = new Client('http://foo');
         $httpClient   = $xmlrpcClient->getHttpClient();
@@ -57,7 +59,7 @@ class ClientTest extends TestCase
         $this->assertSame($httpClient, $xmlrpcClient->getHttpClient());
     }
 
-    public function testSettingAndGettingHttpClient()
+    public function testSettingAndGettingHttpClient(): void
     {
         $xmlrpcClient = new Client('http://foo');
         $httpClient   = new HttpClient('http://foo');
@@ -67,20 +69,20 @@ class ClientTest extends TestCase
         $this->assertSame($httpClient, $xmlrpcClient->getHttpClient());
     }
 
-    public function testSettingHttpClientViaConstructor()
+    public function testSettingHttpClientViaConstructor(): void
     {
         $xmlrpcClient = new Client('http://foo', $this->httpClient);
         $httpClient   = $xmlrpcClient->getHttpClient();
         $this->assertSame($this->httpClient, $httpClient);
     }
 
-    public function testLastRequestAndResponseAreInitiallyNull()
+    public function testLastRequestAndResponseAreInitiallyNull(): void
     {
         $this->assertNull($this->xmlrpcClient->getLastRequest());
         $this->assertNull($this->xmlrpcClient->getLastResponse());
     }
 
-    public function testLastRequestAndResponseAreSetAfterRpcMethodCall()
+    public function testLastRequestAndResponseAreSetAfterRpcMethodCall(): void
     {
         $this->setServerResponseTo(true);
         $this->xmlrpcClient->call('foo');
@@ -89,7 +91,7 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(Response::class, $this->xmlrpcClient->getLastResponse());
     }
 
-    public function testSuccessfulRpcMethodCallWithNoParameters()
+    public function testSuccessfulRpcMethodCallWithNoParameters(): void
     {
         $expectedMethod = 'foo.bar';
         $expectedReturn = 7;
@@ -106,7 +108,7 @@ class ClientTest extends TestCase
         $this->assertFalse($response->isFault());
     }
 
-    public function testSuccessfulRpcMethodCallWithParameters()
+    public function testSuccessfulRpcMethodCallWithParameters(): void
     {
         $expectedMethod = 'foo.bar';
         $expectedParams = [1, 'foo' => 'bar', 1.1, true];
@@ -135,7 +137,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-2090
      */
-    public function testSuccessfullyDetectsEmptyArrayParameterAsArray()
+    public function testSuccessfullyDetectsEmptyArrayParameterAsArray(): void
     {
         $expectedMethod = 'foo.bar';
         $expectedParams = [[]];
@@ -156,7 +158,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-1412
      */
-    public function testSuccessfulRpcMethodCallWithMixedDateParameters()
+    public function testSuccessfulRpcMethodCallWithMixedDateParameters(): void
     {
         $time           = time();
         $expectedMethod = 'foo.bar';
@@ -186,7 +188,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-1797
      */
-    public function testSuccesfulRpcMethodCallWithXmlRpcValueParameters()
+    public function testSuccesfulRpcMethodCallWithXmlRpcValueParameters(): void
     {
         $time   = time();
         $params = [
@@ -213,7 +215,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-2978
      */
-    public function testSkippingSystemCallDisabledByDefault()
+    public function testSkippingSystemCallDisabledByDefault(): void
     {
         $this->assertFalse($this->xmlrpcClient->skipSystemLookup());
     }
@@ -221,7 +223,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-6993
      */
-    public function testWhenPassingAStringAndAnIntegerIsExpectedParamIsConverted()
+    public function testWhenPassingAStringAndAnIntegerIsExpectedParamIsConverted(): void
     {
         $this->mockIntrospector();
         $this->mockedIntrospector
@@ -246,7 +248,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-8074
      */
-    public function testXmlRpcObjectsAreNotConverted()
+    public function testXmlRpcObjectsAreNotConverted(): void
     {
         $this->mockIntrospector();
         $this->mockedIntrospector
@@ -266,13 +268,13 @@ class ClientTest extends TestCase
         );
     }
 
-    public function testAllowsSkippingSystemCallForArrayStructLookup()
+    public function testAllowsSkippingSystemCallForArrayStructLookup(): void
     {
         $this->xmlrpcClient->setSkipSystemLookup(true);
         $this->assertTrue($this->xmlrpcClient->skipSystemLookup());
     }
 
-    public function testSkipsSystemCallWhenDirected()
+    public function testSkipsSystemCallWhenDirected(): void
     {
         $httpAdapter = $this->httpAdapter;
         $response    = $this->makeHttpResponseFor('foo');
@@ -281,7 +283,7 @@ class ClientTest extends TestCase
         $this->assertSame('foo', $this->xmlrpcClient->call('test.method'));
     }
 
-    public function testRpcMethodCallThrowsOnHttpFailure()
+    public function testRpcMethodCallThrowsOnHttpFailure(): void
     {
         $status  = 404;
         $message = 'Not Found';
@@ -296,7 +298,7 @@ class ClientTest extends TestCase
         $this->xmlrpcClient->call('foo');
     }
 
-    public function testRpcMethodCallThrowsOnXmlRpcFault()
+    public function testRpcMethodCallThrowsOnXmlRpcFault(): void
     {
         $code    = 9;
         $message = 'foo';
@@ -313,12 +315,12 @@ class ClientTest extends TestCase
         $this->xmlrpcClient->call('foo');
     }
 
-    public function testGetProxyReturnsServerProxy()
+    public function testGetProxyReturnsServerProxy(): void
     {
         $this->assertInstanceOf(ServerProxy::class, $this->xmlrpcClient->getProxy());
     }
 
-    public function testRpcMethodCallsThroughServerProxy()
+    public function testRpcMethodCallsThroughServerProxy(): void
     {
         $expectedReturn = [7, false, 'foo' => 'bar'];
         $this->setServerResponseTo($expectedReturn);
@@ -330,7 +332,7 @@ class ClientTest extends TestCase
         $this->assertEquals('listMethods', $request->getMethod());
     }
 
-    public function testRpcMethodCallsThroughNestedServerProxies()
+    public function testRpcMethodCallsThroughNestedServerProxies(): void
     {
         $expectedReturn = [7, false, 'foo' => 'bar'];
         $this->setServerResponseTo($expectedReturn);
@@ -342,7 +344,7 @@ class ClientTest extends TestCase
         $this->assertEquals('foo.bar.baz.boo', $request->getMethod());
     }
 
-    public function testClientCachesServerProxies()
+    public function testClientCachesServerProxies(): void
     {
         $proxy = $this->xmlrpcClient->getProxy();
         $this->assertSame($proxy, $this->xmlrpcClient->getProxy());
@@ -351,7 +353,7 @@ class ClientTest extends TestCase
         $this->assertSame($proxy, $this->xmlrpcClient->getProxy('foo'));
     }
 
-    public function testServerProxyCachesNestedProxies()
+    public function testServerProxyCachesNestedProxies(): void
     {
         $proxy = $this->xmlrpcClient->getProxy();
 
@@ -362,7 +364,7 @@ class ClientTest extends TestCase
         $this->assertSame($bar, $proxy->foo->bar);
     }
 
-    public function testGettingDefaultIntrospector()
+    public function testGettingDefaultIntrospector(): void
     {
         $xmlrpcClient = new Client('http://foo');
         $introspector = $xmlrpcClient->getIntrospector();
@@ -370,7 +372,7 @@ class ClientTest extends TestCase
         $this->assertSame($introspector, $xmlrpcClient->getIntrospector());
     }
 
-    public function testSettingAndGettingIntrospector()
+    public function testSettingAndGettingIntrospector(): void
     {
         $xmlrpcClient = new Client('http://foo');
         $introspector = new Client\ServerIntrospection($xmlrpcClient);
@@ -380,7 +382,7 @@ class ClientTest extends TestCase
         $this->assertSame($introspector, $xmlrpcClient->getIntrospector());
     }
 
-    public function testGettingMethodSignature()
+    public function testGettingMethodSignature(): void
     {
         $method     = 'foo';
         $signatures = [['int', 'int', 'int']];
@@ -394,7 +396,7 @@ class ClientTest extends TestCase
         $this->assertEquals([$method], $request->getParams());
     }
 
-    public function testListingMethods()
+    public function testListingMethods(): void
     {
         $methods = ['foo', 'bar', 'baz'];
         $this->setServerResponseTo($methods);
@@ -407,7 +409,7 @@ class ClientTest extends TestCase
         $this->assertEquals([], $request->getParams());
     }
 
-    public function testGettingAllMethodSignaturesByLooping()
+    public function testGettingAllMethodSignaturesByLooping(): void
     {
         // system.listMethods() will return ['foo', 'bar']
         $methods  = ['foo', 'bar'];
@@ -437,7 +439,7 @@ class ClientTest extends TestCase
         $this->assertEquals(['bar'], $request->getParams());
     }
 
-    public function testGettingAllMethodSignaturesByMulticall()
+    public function testGettingAllMethodSignaturesByMulticall(): void
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
@@ -476,7 +478,7 @@ class ClientTest extends TestCase
         $this->assertEquals([$multicallParams], $request->getParams());
     }
 
-    public function testGettingAllMethodSignaturesByMulticallThrowsOnBadCount()
+    public function testGettingAllMethodSignaturesByMulticallThrowsOnBadCount(): void
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
@@ -497,7 +499,7 @@ class ClientTest extends TestCase
         $i->getSignatureForEachMethodByMulticall();
     }
 
-    public function testGettingAllMethodSignaturesByMulticallThrowsOnBadType()
+    public function testGettingAllMethodSignaturesByMulticallThrowsOnBadType(): void
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
@@ -517,7 +519,7 @@ class ClientTest extends TestCase
         $i->getSignatureForEachMethodByMulticall();
     }
 
-    public function testGettingAllMethodSignaturesDefaultsToMulticall()
+    public function testGettingAllMethodSignaturesDefaultsToMulticall(): void
     {
         // system.listMethods() will return ['foo', 'bar']
         $whatListMethodsReturns = ['foo', 'bar'];
@@ -546,7 +548,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-4372
      */
-    public function testSettingUriOnHttpClientIsNotOverwrittenByXmlRpcClient()
+    public function testSettingUriOnHttpClientIsNotOverwrittenByXmlRpcClient(): void
     {
         $changedUri = 'http://bar:80/';
         // Overwrite: http://foo:80
@@ -561,7 +563,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-4372
      */
-    public function testSettingNoHttpClientUriForcesClientToSetUri()
+    public function testSettingNoHttpClientUriForcesClientToSetUri(): void
     {
         $baseUri           = 'http://foo:80/';
         $this->httpAdapter = new Adapter\Test();
@@ -581,7 +583,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-3288
      */
-    public function testCustomHttpClientUserAgentIsNotOverridden()
+    public function testCustomHttpClientUserAgentIsNotOverridden(): void
     {
         $this->assertFalse(
             $this->httpClient->getHeader('user-agent'),
@@ -606,7 +608,7 @@ class ClientTest extends TestCase
     /**
      * @group #27
      */
-    public function testContentTypeIsNotReplaced()
+    public function testContentTypeIsNotReplaced(): void
     {
         $this->assertFalse(
             $this->httpClient->getHeader('Content-Type'),
@@ -624,7 +626,7 @@ class ClientTest extends TestCase
     /**
      * @group #27
      */
-    public function testAcceptIsNotReplaced()
+    public function testAcceptIsNotReplaced(): void
     {
         $this->assertFalse(
             $this->httpClient->getHeader('Accept'),
@@ -642,7 +644,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-8478
      */
-    public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures()
+    public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures(): void
     {
         $introspector = new Client\ServerIntrospection(
             new TestAsset\TestClient('http://localhost/')
@@ -656,7 +658,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-8580
      */
-    public function testCallSelectsCorrectSignatureIfMoreThanOneIsAvailable()
+    public function testCallSelectsCorrectSignatureIfMoreThanOneIsAvailable(): void
     {
         $this->mockIntrospector();
 
@@ -689,7 +691,7 @@ class ClientTest extends TestCase
     /**
      * @group Laminas-1897
      */
-    public function testHandlesLeadingOrTrailingWhitespaceInChunkedResponseProperly()
+    public function testHandlesLeadingOrTrailingWhitespaceInChunkedResponseProperly(): void
     {
         $baseUri           = "http://foo:80";
         $this->httpAdapter = new Adapter\Test();

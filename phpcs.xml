@@ -9,7 +9,7 @@
     <arg name="parallel" value="80"/>
 
     <!-- Show progress -->
-    <arg value="p"/>
+    <arg value="ps"/>
 
     <!-- Paths to check -->
     <file>src</file>
@@ -20,5 +20,10 @@
 
     <rule ref="WebimpressCodingStandard.NamingConventions.Exception.Suffix">
         <exclude-pattern>test/Server/TestAsset/Exception*.php</exclude-pattern>
+    </rule>
+
+    <!-- Strict Types suppression for src-->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <exclude-pattern>src/</exclude-pattern>
     </rule>
 </ruleset>

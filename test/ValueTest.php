@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc;
 
 use DateTime;
@@ -17,7 +19,6 @@ use function ini_get;
 use function serialize;
 use function strtotime;
 use function trim;
-use function ucfirst;
 use function unserialize;
 use function var_dump;
 
@@ -33,7 +34,7 @@ class ValueTest extends TestCase
     /** @var string */
     public $xmlRpcDateFormat = 'Ymd\\TH:i:s';
 
-    public function testFactoryAutodetectsBoolean()
+    public function testFactoryAutodetectsBoolean(): void
     {
         foreach ([true, false] as $native) {
             $val = AbstractValue::getXmlRpcValue($native);
@@ -42,7 +43,7 @@ class ValueTest extends TestCase
         }
     }
 
-    public function testMarshalTrueBooleanFromNative()
+    public function testMarshalTrueBooleanFromNative(): void
     {
         $native = true;
         $val    = AbstractValue::getXmlRpcValue(
@@ -168,13 +169,13 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    public function testFactoryAutodetectsInteger()
+    public function testFactoryAutodetectsInteger(): void
     {
         $val = AbstractValue::getXmlRpcValue(1);
         $this->assertXmlRpcType('integer', $val);
     }
 
-    public function testMarshalIntegerFromNative()
+    public function testMarshalIntegerFromNative(): void
     {
         $native = 1;
         $types  = [
@@ -228,20 +229,20 @@ class ValueTest extends TestCase
     /**
      * @group Laminas-3310
      */
-    public function testMarshalIntegerFromOverlongNativeThrowsException()
+    public function testMarshalIntegerFromOverlongNativeThrowsException(): void
     {
         $this->expectException(ValueException::class);
         $this->expectExceptionMessage('Overlong integer given');
         AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_INTEGER);
     }
 
-    public function testFactoryAutodetectsFloat()
+    public function testFactoryAutodetectsFloat(): void
     {
         $val = AbstractValue::getXmlRpcValue((float) 1);
         $this->assertXmlRpcType('double', $val);
     }
 
-    public function testMarshalDoubleFromNative()
+    public function testMarshalDoubleFromNative(): void
     {
         $native = 1.1;
         $val    = AbstractValue::getXmlRpcValue(
@@ -307,13 +308,13 @@ class ValueTest extends TestCase
         $this->assertSame('<value><double>0.1</double></value>', trim($value->saveXml()));
     }
 
-    public function testFactoryAutodetectsString()
+    public function testFactoryAutodetectsString(): void
     {
         $val = AbstractValue::getXmlRpcValue('');
         $this->assertXmlRpcType('string', $val);
     }
 
-    public function testMarshalStringFromNative()
+    public function testMarshalStringFromNative(): void
     {
         $native = 'foo';
         $val    = AbstractValue::getXmlRpcValue(
@@ -325,7 +326,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
     }
 
-    public function testFactoryAutodetectsStringAndSetsValueInArray()
+    public function testFactoryAutodetectsStringAndSetsValueInArray(): void
     {
         $val = AbstractValue::getXmlRpcValue(
             '<value><array><data>'
@@ -380,13 +381,13 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    public function testFactoryAutodetectsNil()
+    public function testFactoryAutodetectsNil(): void
     {
         $val = AbstractValue::getXmlRpcValue(null);
         $this->assertXmlRpcType('nil', $val);
     }
 
-    public function testMarshalNilFromNative()
+    public function testMarshalNilFromNative(): void
     {
         $native = null;
         $types  = [
@@ -424,13 +425,13 @@ class ValueTest extends TestCase
         }
     }
 
-    public function testFactoryAutodetectsArray()
+    public function testFactoryAutodetectsArray(): void
     {
         $val = AbstractValue::getXmlRpcValue([0, 'foo']);
         $this->assertXmlRpcType('array', $val);
     }
 
-    public function testMarshalArrayFromNative()
+    public function testMarshalArrayFromNative(): void
     {
         $native = [0, 1];
         $val    = AbstractValue::getXmlRpcValue(
@@ -503,19 +504,19 @@ class ValueTest extends TestCase
         $val = AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
     }
 
-    public function testFactoryAutodetectsStruct()
+    public function testFactoryAutodetectsStruct(): void
     {
         $val = AbstractValue::getXmlRpcValue(['foo' => 0]);
         $this->assertXmlRpcType('struct', $val);
     }
 
-    public function testFactoryAutodetectsStructFromObject()
+    public function testFactoryAutodetectsStructFromObject(): void
     {
         $val = AbstractValue::getXmlRpcValue((object) ['foo' => 0]);
         $this->assertXmlRpcType('struct', $val);
     }
 
-    public function testMarshalStructFromNative()
+    public function testMarshalStructFromNative(): void
     {
         $native = ['foo' => 0];
         $val    = AbstractValue::getXmlRpcValue(
@@ -682,7 +683,7 @@ class ValueTest extends TestCase
         $this->assertSame(trim($xml), trim($val->saveXml()));
     }
 
-    public function testMarshalDateTimeFromNativeString()
+    public function testMarshalDateTimeFromNativeString(): void
     {
         $native = '1997-07-16T19:20+01:00';
         $val    = AbstractValue::getXmlRpcValue(
@@ -696,7 +697,7 @@ class ValueTest extends TestCase
         $this->assertSame($expected->format($this->xmlRpcDateFormat), $val->getValue());
     }
 
-    public function testMarshalDateTimeFromNativeStringProducesIsoOutput()
+    public function testMarshalDateTimeFromNativeStringProducesIsoOutput(): void
     {
         $native = '1997-07-16T19:20+01:00';
         $val    = AbstractValue::getXmlRpcValue(
@@ -711,14 +712,14 @@ class ValueTest extends TestCase
         $this->assertEquals($expected->format($this->xmlRpcDateFormat), $received);
     }
 
-    public function testMarshalDateTimeFromInvalidString()
+    public function testMarshalDateTimeFromInvalidString(): void
     {
         $this->expectException(ValueException::class);
         $this->expectExceptionMessage('The timezone could not be found in the database');
         AbstractValue::getXmlRpcValue('foobarbaz', AbstractValue::XMLRPC_TYPE_DATETIME);
     }
 
-    public function testMarshalDateTimeFromNativeInteger()
+    public function testMarshalDateTimeFromNativeInteger(): void
     {
         $native = strtotime('1997-07-16T19:20+01:00');
         $val    = AbstractValue::getXmlRpcValue(
@@ -733,7 +734,7 @@ class ValueTest extends TestCase
     /**
      * @group Laminas-11588
      */
-    public function testMarshalDateTimeBeyondUnixEpochFromNativeStringPassedToConstructor()
+    public function testMarshalDateTimeBeyondUnixEpochFromNativeStringPassedToConstructor(): void
     {
         $native   = '2040-01-01T00:00:00';
         $value    = new Value\DateTime($native);
@@ -802,7 +803,7 @@ class ValueTest extends TestCase
     /**
      * @group Laminas-10776
      */
-    public function testGetValueDatetime()
+    public function testGetValueDatetime(): void
     {
         $expectedValue = '20100101T00:00:00';
         $phpDatetime   = new DateTime('20100101T00:00:00');
@@ -879,7 +880,7 @@ class ValueTest extends TestCase
         $this->assertSame('foobar', $o2->getProperty());
     }
 
-    public function testChangingExceptionResetsGeneratorObject()
+    public function testChangingExceptionResetsGeneratorObject(): void
     {
         $generator = AbstractValue::getGenerator();
         AbstractValue::setEncoding('UTF-8');
@@ -892,20 +893,21 @@ class ValueTest extends TestCase
         $this->assertNotEquals($generator, AbstractValue::getGenerator());
     }
 
-    public function testFactoryThrowsWhenInvalidTypeSpecified()
+    public function testFactoryThrowsWhenInvalidTypeSpecified(): void
     {
         $this->expectException(ValueException::class);
         $this->expectExceptionMessage('Given type is not a Laminas\XmlRpc\AbstractValue constant');
+        /** @psalm-suppress InvalidArgument */
         AbstractValue::getXmlRpcValue('', 'bad type here');
     }
 
-    public function testPassingXmlRpcObjectReturnsTheSameObject()
+    public function testPassingXmlRpcObjectReturnsTheSameObject(): void
     {
         $xmlRpcValue = new Value\Text('foo');
         $this->assertSame($xmlRpcValue, AbstractValue::getXmlRpcValue($xmlRpcValue));
     }
 
-    public function testGetXmlRpcTypeByValue()
+    public function testGetXmlRpcTypeByValue(): void
     {
         $this->assertSame(
             AbstractValue::XMLRPC_TYPE_NIL,
@@ -971,7 +973,7 @@ class ValueTest extends TestCase
         );
     }
 
-    public function testGetXmlRpcTypeByValueThrowsExceptionOnInvalidValue()
+    public function testGetXmlRpcTypeByValueThrowsExceptionOnInvalidValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         AbstractValue::getXmlRpcTypeByValue(fopen(__FILE__, 'r'));
@@ -984,17 +986,36 @@ class ValueTest extends TestCase
     {
         switch ($type) {
             case 'array':
-                $type = 'arrayValue';
+                self::assertInstanceOf(Value\ArrayValue::class, $object);
                 break;
             case 'string':
-                $type = 'text';
+                self::assertInstanceOf(Value\Text::class, $object);
+                break;
+            case 'boolean':
+                self::assertInstanceOf(Value\Boolean::class, $object);
+                break;
+            case 'integer':
+                self::assertInstanceOf(Value\Integer::class, $object);
+                break;
+            case 'double':
+                self::assertInstanceOf(Value\Double::class, $object);
+                break;
+            case 'nil':
+                self::assertInstanceOf(Value\Nil::class, $object);
+                break;
+            case 'struct':
+                self::assertInstanceOf(Value\Struct::class, $object);
+                break;
+            case 'dateTime':
+                self::assertInstanceOf(Value\DateTime::class, $object);
+                break;
+            case 'base64':
+                self::assertInstanceOf(Value\Base64::class, $object);
                 break;
             default:
                 // nothing to do
                 break;
         }
-        $type = 'Laminas\\XmlRpc\\Value\\' . ucfirst($type);
-        $this->assertInstanceOf($type, $object);
     }
 
     public function wrapXml(string $xml): string

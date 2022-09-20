@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc\Request;
 
 use Laminas\XmlRpc\Request;
@@ -76,12 +78,12 @@ EOX;
         PhpInputMock::restoreDefault();
     }
 
-    public function testGetRawRequest()
+    public function testGetRawRequest(): void
     {
         $this->assertEquals($this->xml, $this->request->getRawRequest());
     }
 
-    public function testGetHeaders()
+    public function testGetHeaders(): void
     {
         $expected = [
             'User-Agent'     => 'Laminas_XmlRpc_Client',
@@ -92,7 +94,7 @@ EOX;
         $this->assertEquals($expected, $this->request->getHeaders());
     }
 
-    public function testGetFullRequest()
+    public function testGetFullRequest(): void
     {
         $expected  = <<<EOT
 User-Agent: Laminas_XmlRpc_Client
@@ -106,14 +108,14 @@ EOT;
         $this->assertEquals($expected, $this->request->getFullRequest());
     }
 
-    public function testExtendingClassShouldBeAbleToReceiveMethodAndParams()
+    public function testExtendingClassShouldBeAbleToReceiveMethodAndParams(): void
     {
         $request = new TestAsset\HTTPTestExtension('foo', ['bar', 'baz']);
         $this->assertEquals('foo', $request->getMethod());
         $this->assertEquals(['bar', 'baz'], $request->getParams());
     }
 
-    public function testHttpRequestReadsFromPhpInput()
+    public function testHttpRequestReadsFromPhpInput(): void
     {
         $this->assertNull(PhpInputMock::argumentsPassedTo('stream_open'));
         $request       = new Request\Http();
@@ -123,7 +125,7 @@ EOT;
         $this->assertSame($this->xml, $request->getRawRequest());
     }
 
-    public function testHttpRequestGeneratesFaultIfReadFromPhpInputFails()
+    public function testHttpRequestGeneratesFaultIfReadFromPhpInputFails(): void
     {
         PhpInputMock::methodWillReturn('stream_open', false);
         $request = new Request\Http();

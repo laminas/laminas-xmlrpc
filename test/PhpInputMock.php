@@ -12,7 +12,7 @@ namespace LaminasTest\XmlRpc;
  *         LaminasTest\XmlRpc\PhpInputMock::mockInput('expected string');
  *     }
  *
- *     public function testReadingFromPhpInput()
+ *     public function testReadingFromPhpInput(): void
  *     {
  *         $this->assertSame('expected string', file_get_contents('php://input'));
  *         $this->assertSame('php://input', LaminasTest\XmlRpc\PhpInputMock::getCurrentPath());

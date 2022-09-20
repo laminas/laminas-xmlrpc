@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\XmlRpc\Server;
 
 use Laminas\XmlRpc\Server;
@@ -52,7 +54,7 @@ class CacheTest extends TestCase
     /**
      * Tests functionality of both get() and save()
      */
-    public function testGetSave()
+    public function testGetSave(): void
     {
         if (! is_writable('./')) {
             $this->markTestIncomplete('Directory no writable');
@@ -70,7 +72,7 @@ class CacheTest extends TestCase
     /**
      * Laminas\XmlRpc\Server\Cache::delete() test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         if (! is_writable('./')) {
             $this->markTestIncomplete('Directory no writable');
@@ -80,7 +82,7 @@ class CacheTest extends TestCase
         $this->assertTrue(Server\Cache::delete($this->file));
     }
 
-    public function testShouldReturnFalseWithInvalidCache()
+    public function testShouldReturnFalseWithInvalidCache(): void
     {
         if (! is_writable('./')) {
             $this->markTestIncomplete('Directory no writable');
