@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc;
 
+use Laminas\Math\BigInteger\Exception\RuntimeException;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
@@ -31,7 +32,7 @@ class BigIntegerValueTest extends TestCase
         }
         try {
             new BigInteger(0);
-        } catch (Exception $e) {
+        } catch (RuntimeException $e) {
             $this->markTestSkipped($e->getMessage());
         }
     }
