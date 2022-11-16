@@ -27,7 +27,7 @@
     "extra": {
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "laminas/laminas-code": "^4.4",
         "laminas/laminas-http": "^2.15",
         "laminas/laminas-math": "^3.4.0",
