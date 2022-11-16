@@ -19,7 +19,6 @@ use function count;
 use function func_get_args;
 use function func_num_args;
 use function function_exists;
-use function get_class;
 use function gettype;
 use function is_array;
 use function is_object;
@@ -347,7 +346,7 @@ class Server extends AbstractServer
     {
         if (! is_array($definition) && ! $definition instanceof Definition) {
             if (is_object($definition)) {
-                $type = get_class($definition);
+                $type = $definition::class;
             } else {
                 $type = gettype($definition);
             }

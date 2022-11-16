@@ -14,12 +14,10 @@ use function func_get_args;
 use function func_num_args;
 use function is_array;
 use function is_string;
-use function libxml_disable_entity_loader;
 use function libxml_use_internal_errors;
 use function preg_match;
 use function simplexml_import_dom;
 
-use const PHP_MAJOR_VERSION;
 use const XML_DOCUMENT_TYPE_NODE;
 
 /**
@@ -303,9 +301,6 @@ class Request
             return false;
         }
 
-        // @see Laminas-12293 - disable external entities for security purposes for < PHP 8
-        $isOldPhp      = PHP_MAJOR_VERSION < 8;
-        $loadEntities  = $isOldPhp && libxml_disable_entity_loader(true);
         $xmlErrorsFlag = libxml_use_internal_errors(true);
 
         try {
@@ -321,13 +316,11 @@ class Request
             ErrorHandler::start();
             $xml   = simplexml_import_dom($dom);
             $error = ErrorHandler::stop();
-            $isOldPhp && libxml_disable_entity_loader($loadEntities);
             libxml_use_internal_errors($xmlErrorsFlag);
         } catch (Exception $e) {
             // Not valid XML
             $this->fault = new Fault(631);
             $this->fault->setEncoding($this->getEncoding());
-            $isOldPhp && libxml_disable_entity_loader($loadEntities);
             libxml_use_internal_errors($xmlErrorsFlag);
             return false;
         }
