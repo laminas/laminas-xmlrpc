@@ -22,7 +22,6 @@ use function count;
 use function ob_end_clean;
 use function ob_get_contents;
 use function ob_start;
-use function strstr;
 use function var_export;
 
 /**
@@ -30,40 +29,17 @@ use function var_export;
  */
 class ServerTest extends TestCase
 {
-    /**
-     * Server object
-     *
-     * @var Server
-     */
-    protected $server;
+    private Server $server;
 
-    /**
-     * Setup environment
-     */
     protected function setUp(): void
     {
         $this->server = new Server();
         $this->server->setReturnResponse(true);
     }
 
-    /**
-     * Teardown environment
-     */
     protected function tearDown(): void
     {
         unset($this->server);
-    }
-
-    /**
-     * @param string $errno
-     * @param string $errstr
-     * @return bool|void
-     */
-    public function suppressNotFoundWarnings($errno, $errstr)
-    {
-        if (! strstr($errstr, 'failed')) {
-            return false;
-        }
     }
 
     /**
