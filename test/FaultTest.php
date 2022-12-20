@@ -16,24 +16,12 @@ use SimpleXMLElement;
  */
 class FaultTest extends TestCase
 {
-    /** @var XmlRpc\Fault */
-    protected $fault;
+    private Fault $fault;
 
-    /**
-     * Setup environment
-     */
     protected function setUp(): void
     {
         AbstractValue::setGenerator(null);
         $this->fault = new Fault();
-    }
-
-    /**
-     * Teardown environment
-     */
-    protected function tearDown(): void
-    {
-        unset($this->fault);
     }
 
     /**
@@ -51,6 +39,7 @@ class FaultTest extends TestCase
      */
     public function testCode(): void
     {
+        /** @psalm-suppress InvalidArgument */
         $this->fault->setCode('1000');
         $this->assertEquals(1000, $this->fault->getCode());
     }
@@ -185,6 +174,7 @@ class FaultTest extends TestCase
     {
         $xml = $this->createXml();
 
+        self::assertIsString($xml);
         $this->assertTrue(Fault::isFault($xml), $xml);
         $this->assertFalse(Fault::isFault('foo'));
         $this->assertFalse(Fault::isFault(['foo']));
@@ -265,6 +255,7 @@ class FaultTest extends TestCase
     public function testFaultStringWithoutStringTypeDeclaration(): void
     {
         $xml = $this->createNonStandardXml();
+        self::assertIsString($xml);
 
         $parsed = $this->fault->loadXml($xml);
         $this->assertTrue($parsed, $xml);
