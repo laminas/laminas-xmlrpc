@@ -39,7 +39,7 @@
         "laminas/laminas-coding-standard": "~2.4.0",
         "phpunit/phpunit": "^9.5.27",
         "psalm/plugin-phpunit": "^0.18.4",
-        "vimeo/psalm": "^5.2"
+        "vimeo/psalm": "^5.4"
     },
     "suggest": {
         "laminas/laminas-cache": "To support Laminas\\XmlRpc\\Server\\Cache usage"

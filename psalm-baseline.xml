@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
   <file src="src/AbstractValue.php">
     <DocblockTypeContradiction occurrences="2">
       <code>! static::$generator</code>
@@ -262,9 +262,6 @@
     <MissingReturnType occurrences="1">
       <code>writeTextData</code>
     </MissingReturnType>
-    <MixedAssignment occurrences="1">
-      <code>$this-&gt;currentElement</code>
-    </MixedAssignment>
   </file>
   <file src="src/Generator/GeneratorInterface.php">
     <MissingReturnType occurrences="6">
@@ -307,12 +304,11 @@
       <code>$param['type']</code>
       <code>$param['value']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="11">
+    <MixedAssignment occurrences="10">
       <code>$arg</code>
       <code>$arg</code>
       <code>$arg</code>
       <code>$argv[]</code>
-      <code>$child</code>
       <code>$param</code>
       <code>$param</code>
       <code>$params[]</code>
@@ -329,8 +325,7 @@
       <code>generateXml</code>
       <code>openElement</code>
     </MixedMethodCall>
-    <MixedPropertyFetch occurrences="2">
-      <code>$child-&gt;nodeType</code>
+    <MixedPropertyFetch occurrences="1">
       <code>$param-&gt;value</code>
     </MixedPropertyFetch>
     <MixedReturnStatement occurrences="1">
@@ -345,9 +340,6 @@
       <code>is_array($args)</code>
       <code>is_array($this-&gt;xmlRpcParams)</code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedPropertyFetch occurrences="1">
-      <code>$dom-&gt;childNodes</code>
-    </UndefinedPropertyFetch>
   </file>
   <file src="src/Request/Http.php">
     <DocblockTypeContradiction occurrences="1">
