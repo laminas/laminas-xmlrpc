@@ -324,16 +324,16 @@
         },
         {
             "name": "laminas/laminas-server",
-            "version": "2.14.0",
+            "version": "2.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-server.git",
-                "reference": "11fe2af8dd3c2a350f903b2f2d0536ec3842a7f4"
+                "reference": "7f4862913ab95ea5decd08e6c3717edbb398fde8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-server/zipball/11fe2af8dd3c2a350f903b2f2d0536ec3842a7f4",
-                "reference": "11fe2af8dd3c2a350f903b2f2d0536ec3842a7f4",
+                "url": "https://api.github.com/repos/laminas/laminas-server/zipball/7f4862913ab95ea5decd08e6c3717edbb398fde8",
+                "reference": "7f4862913ab95ea5decd08e6c3717edbb398fde8",
                 "shasum": ""
             },
             "require": {
@@ -381,7 +381,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-09T09:56:49+00:00"
+            "time": "2022-12-27T17:14:59+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
