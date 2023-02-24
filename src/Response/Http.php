@@ -15,10 +15,8 @@ class Http extends XmlRpcResponse
 {
     /**
      * Override __toString() to send HTTP Content-Type header
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if (! headers_sent()) {
             header('Content-Type: text/xml; charset=' . strtolower($this->getEncoding()));
