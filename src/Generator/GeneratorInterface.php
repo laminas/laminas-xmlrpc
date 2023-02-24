@@ -40,5 +40,5 @@ interface GeneratorInterface
 
     public function flush();
 
-    public function __toString();
+    public function __toString(): string;
 }

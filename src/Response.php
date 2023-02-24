@@ -221,10 +221,8 @@ class Response
 
     /**
      * Return XML response
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->saveXML();
     }
