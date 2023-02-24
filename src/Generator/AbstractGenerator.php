@@ -104,10 +104,8 @@ abstract class AbstractGenerator implements GeneratorInterface
 
     /**
      * Returns XML without document declaration
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->stripDeclaration($this->saveXml());
     }
