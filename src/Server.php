@@ -145,6 +145,13 @@ class Server extends AbstractServer
     protected $response;
 
     /**
+     * @internal
+     *
+     * @var Server\System
+     */
+    public $system;
+
+    /**
      * Constructor
      *
      * Creates system.* methods.
