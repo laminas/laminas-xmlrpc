@@ -43,8 +43,6 @@ class BigIntegerValueTest extends TestCase
         $this->useBigIntForI8Flag         = null;
     }
 
-    // BigInteger
-
     public function testBigIntegerGetValue(): void
     {
         $bigInteger = new BigInteger($this->bigIntValue);

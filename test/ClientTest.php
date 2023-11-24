@@ -230,7 +230,7 @@ class ClientTest extends TestCase
              ->expects($this->exactly(2))
              ->method('getMethodSignature')
              ->with('test.method')
-             ->will($this->returnValue([['parameters' => ['int']]]));
+             ->willReturn([['parameters' => ['int']]]);
 
         $expect = 'test.method response';
         $this->setServerResponseTo($expect);
@@ -255,7 +255,7 @@ class ClientTest extends TestCase
              ->expects($this->exactly(1))
              ->method('getMethodSignature')
              ->with('date.method')
-             ->will($this->returnValue([['parameters' => ['dateTime.iso8601', 'string']]]));
+             ->willReturn([['parameters' => ['dateTime.iso8601', 'string']]]);
 
         $expects = 'date.method response';
         $this->setServerResponseTo($expects);
@@ -666,10 +666,10 @@ class ClientTest extends TestCase
              ->expects($this->exactly(2))
              ->method('getMethodSignature')
              ->with('get')
-             ->will($this->returnValue([
+             ->willReturn([
                  ['parameters' => ['int']],
                  ['parameters' => ['array']],
-             ]));
+             ]);
 
         $expectedResult = 'array';
         $this->setServerResponseTo($expectedResult);
@@ -762,11 +762,5 @@ class ClientTest extends TestCase
             ->disableOriginalClone()
             ->getMock();
         $this->xmlrpcClient->setIntrospector($this->mockedIntrospector);
-    }
-
-    public function mockHttpClient()
-    {
-        $this->mockedHttpClient = $this->createMock(HttpClient::class);
-        $this->xmlrpcClient->setHttpClient($this->mockedHttpClient);
     }
 }

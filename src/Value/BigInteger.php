@@ -7,7 +7,7 @@ use Laminas\Math\BigInteger\BigInteger as BigIntegerMath;
 class BigInteger extends Integer
 {
     /**
-     * @param mixed $value
+     * @param string $value
      */
     public function __construct($value)
     {
