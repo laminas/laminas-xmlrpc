@@ -315,21 +315,27 @@ abstract class AbstractValue
 
         switch (static::getXmlRpcTypeByValue($value)) {
             case self::XMLRPC_TYPE_DATETIME:
+                /** @psalm-suppress MixedArgument */
                 return new Value\DateTime($value);
 
             case self::XMLRPC_TYPE_ARRAY:
+                /** @psalm-suppress MixedArgument */
                 return new Value\ArrayValue($value);
 
             case self::XMLRPC_TYPE_STRUCT:
+                /** @psalm-suppress MixedArgument */
                 return new Value\Struct($value);
 
             case self::XMLRPC_TYPE_INTEGER:
+                /** @psalm-suppress MixedArgument */
                 return new Value\Integer($value);
 
             case self::XMLRPC_TYPE_DOUBLE:
+                /** @psalm-suppress MixedArgument */
                 return new Value\Double($value);
 
             case self::XMLRPC_TYPE_BOOLEAN:
+                /** @psalm-suppress MixedArgument */
                 return new Value\Boolean($value);
 
             case self::XMLRPC_TYPE_NIL:
@@ -339,6 +345,7 @@ abstract class AbstractValue
                 // Fall through to the next case
             default:
                 // If type isn't identified (or identified as string), it treated as string
+                /** @psalm-suppress MixedArgument */
                 return new Value\Text($value);
         }
     }

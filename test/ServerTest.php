@@ -477,7 +477,7 @@ class ServerTest extends TestCase
         $mockedDefinition
             ->expects($this->once())
             ->method('getMethods')
-            ->will($this->returnValue(['bar' => $mockedMethod]));
+            ->willReturn(['bar' => $mockedMethod]);
         $this->server->loadFunctions($mockedDefinition);
     }
 
