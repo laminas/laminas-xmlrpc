@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc;
 
-use Laminas\Math\BigInteger\Exception\RuntimeException;
+use Laminas\Math\BigInteger\BigInteger as MathBigInteger;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
@@ -22,19 +22,19 @@ class BigIntegerValueTest extends TestCase
     /** @var null|bool */
     protected $useBigIntForI8Flag;
 
+    /** @var string */
+    protected $bigIntValue;
+
     protected function setUp(): void
     {
+        if (! extension_loaded('gmp') && ! extension_loaded('bcmath')) {
+            $this->markTestSkipped('BigInteger requires gmp or bcmath extension');
+        }
+
         $this->useBigIntForI8Flag         = AbstractValue::$USE_BIGINT_FOR_I8;
         AbstractValue::$USE_BIGINT_FOR_I8 = true;
-
-        if (extension_loaded('gmp')) {
-            $this->markTestSkipped('gmp causes test failure');
-        }
-        try {
-            new BigInteger(0);
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
-        }
+        $this->bigIntValue                = MathBigInteger::factory()
+            ->add((string) PHP_INT_MAX, '42');
     }
 
     protected function tearDown(): void
@@ -45,15 +45,10 @@ class BigIntegerValueTest extends TestCase
 
     // BigInteger
 
-    /**
-     * @group Laminas-6445
-     * @group Laminas-8623
-     */
     public function testBigIntegerGetValue(): void
     {
-        $bigIntegerValue = (string) (PHP_INT_MAX + 42);
-        $bigInteger      = new BigInteger($bigIntegerValue);
-        $this->assertSame($bigIntegerValue, $bigInteger->getValue());
+        $bigInteger = new BigInteger($this->bigIntValue);
+        $this->assertSame($this->bigIntValue, $bigInteger->getValue());
     }
 
     /**
@@ -61,8 +56,7 @@ class BigIntegerValueTest extends TestCase
      */
     public function testBigIntegerGetType(): void
     {
-        $bigIntegerValue = (string) (PHP_INT_MAX + 42);
-        $bigInteger      = new BigInteger($bigIntegerValue);
+        $bigInteger = new BigInteger($this->bigIntValue);
         $this->assertSame(AbstractValue::XMLRPC_TYPE_I8, $bigInteger->getType());
     }
 
@@ -71,11 +65,10 @@ class BigIntegerValueTest extends TestCase
      */
     public function testBigIntegerGeneratedXml(): void
     {
-        $bigIntegerValue = (string) (PHP_INT_MAX + 42);
-        $bigInteger      = new BigInteger($bigIntegerValue);
+        $bigInteger = new BigInteger($this->bigIntValue);
 
         $this->assertEquals(
-            '<value><i8>' . $bigIntegerValue . '</i8></value>',
+            '<value><i8>' . $this->bigIntValue . '</i8></value>',
             $bigInteger->saveXml()
         );
     }
@@ -84,20 +77,18 @@ class BigIntegerValueTest extends TestCase
      * @group Laminas-6445
      * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
-    public function testMarschalBigIntegerFromXmlRpc(Generator $generator)
+    public function testMarshallBigIntegerFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
 
-        $bigIntegerValue = (string) (PHP_INT_MAX + 42);
-        $bigInteger      = new BigInteger($bigIntegerValue);
-        $bigIntegerXml   = '<value><i8>' . $bigIntegerValue . '</i8></value>';
+        $bigIntegerXml = '<value><i8>' . $this->bigIntValue . '</i8></value>';
 
         $value = AbstractValue::getXmlRpcValue(
             $bigIntegerXml,
             AbstractValue::XML_STRING
         );
 
-        $this->assertSame($bigIntegerValue, $value->getValue());
+        $this->assertSame($this->bigIntValue, $value->getValue());
         $this->assertEquals(AbstractValue::XMLRPC_TYPE_I8, $value->getType());
         $this->assertEquals($this->wrapXml($bigIntegerXml), $value->saveXml());
     }
@@ -106,14 +97,12 @@ class BigIntegerValueTest extends TestCase
      * @group Laminas-6445
      * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
      */
-    public function testMarschalBigIntegerFromApacheXmlRpc(Generator $generator)
+    public function testMarshallBigIntegerFromApacheXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
 
-        $bigIntegerValue = (string) (PHP_INT_MAX + 42);
-        $bigInteger      = new BigInteger($bigIntegerValue);
-        $bigIntegerXml   = '<value><ex:i8 xmlns:ex="http://ws.apache.org/xmlrpc/namespaces/extensions">'
-            . $bigIntegerValue
+        $bigIntegerXml = '<value><ex:i8 xmlns:ex="http://ws.apache.org/xmlrpc/namespaces/extensions">'
+            . $this->bigIntValue
             . '</ex:i8></value>';
 
         $value = AbstractValue::getXmlRpcValue(
@@ -121,7 +110,7 @@ class BigIntegerValueTest extends TestCase
             AbstractValue::XML_STRING
         );
 
-        $this->assertSame($bigIntegerValue, $value->getValue());
+        $this->assertSame($this->bigIntValue, $value->getValue());
         $this->assertEquals(AbstractValue::XMLRPC_TYPE_I8, $value->getType());
         $this->assertEquals($this->wrapXml($bigIntegerXml), $value->saveXml());
     }
@@ -131,27 +120,21 @@ class BigIntegerValueTest extends TestCase
      */
     public function testMarshalBigIntegerFromNative(): void
     {
-        $bigIntegerValue = (string) (PHP_INT_MAX + 42);
-
         $value = AbstractValue::getXmlRpcValue(
-            $bigIntegerValue,
+            $this->bigIntValue,
             AbstractValue::XMLRPC_TYPE_I8
         );
 
         $this->assertEquals(AbstractValue::XMLRPC_TYPE_I8, $value->getType());
-        $this->assertSame($bigIntegerValue, $value->getValue());
+        $this->assertSame($this->bigIntValue, $value->getValue());
     }
 
-    /**
-     * @param string $xml
-     * @return string
-     */
-    public function wrapXml($xml)
+    public function wrapXml(string $xml): string
     {
         return $xml . "\n";
     }
 
-    public function testMarshalsIntegerForI8ValueByDefaultIfSystemIs64Bit()
+    public function testMarshalsIntegerForI8ValueByDefaultIfSystemIs64Bit(): void
     {
         if ($this->useBigIntForI8Flag) {
             $this->markTestSkipped('Test only valid for 64bit systems');
