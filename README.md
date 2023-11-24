@@ -1,6 +1,8 @@
 # laminas-xmlrpc
 
-[![Build Status](https://github.com/laminas/laminas-xmlrpc/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-xmlrpc/actions?query=workflow%3A"Continuous+Integration")
+[![Build Status](https://github.com/laminas/laminas-xmlrpc/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-xmlrpc/actions/workflows/continuous-integration.yml)
+[![type-coverage](https://shepherd.dev/github/laminas/laminas-xmlrpc/coverage.svg)](https://shepherd.dev/github/laminas/laminas-xmlrpc)
+[![Psalm level](https://shepherd.dev/github/laminas/laminas-xmlrpc/level.svg)](https://shepherd.dev/github/laminas/laminas-xmlrpc)
 
 > ## 🇷🇺 Русским гражданам
 >
