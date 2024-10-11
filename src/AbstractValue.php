@@ -496,7 +496,7 @@ abstract class AbstractValue
         }
 
         // If no type was specified, the default is string
-        if (! $type) {
+        if (! is_string($type) || $type === '') {
             $type = self::XMLRPC_TYPE_STRING;
             if (empty($value) && preg_match('#^<value>.*</value>$#', $xml->asXML())) {
                 $value = str_replace(['<value>', '</value>'], '', $xml->asXML());

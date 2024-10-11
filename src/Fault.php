@@ -205,12 +205,12 @@ class Fault
         libxml_use_internal_errors($xmlErrorsFlag);
 
         // Check for fault
-        if (! $xml->fault) {
+        if (! isset($xml->fault)) {
             // Not a fault
             return false;
         }
 
-        if (! $xml->fault->value->struct) {
+        if (! isset($xml->fault->value->struct)) {
             // not a proper fault
             throw new Exception\InvalidArgumentException('Invalid fault structure', 500);
         }

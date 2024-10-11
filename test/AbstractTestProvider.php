@@ -8,6 +8,7 @@ use Laminas\XmlRpc\Generator;
 
 abstract class AbstractTestProvider
 {
+    /** @return list<array{0: Generator\GeneratorInterface}> */
     public static function provideGenerators(): array
     {
         return [
@@ -16,6 +17,7 @@ abstract class AbstractTestProvider
         ];
     }
 
+    /** @return list<array{0: Generator\GeneratorInterface}> */
     public static function provideGeneratorsWithAlternateEncodings(): array
     {
         return [
