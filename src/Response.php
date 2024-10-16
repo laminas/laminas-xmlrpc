@@ -4,9 +4,8 @@ namespace Laminas\XmlRpc;
 
 use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
-use Laminas\XmlRpc\AbstractValue;
-use Laminas\XmlRpc\Fault;
 
+use function is_object;
 use function is_string;
 
 /**
@@ -168,7 +167,7 @@ class Response
             return false;
         }
 
-        if (! empty($xml->fault)) {
+        if (isset($xml->fault) && is_object($xml->fault)) {
             // fault response
             $this->fault = new Fault();
             $this->fault->setEncoding($this->getEncoding());
@@ -176,7 +175,7 @@ class Response
             return false;
         }
 
-        if (empty($xml->params)) {
+        if (! isset($xml->params)) {
             // Invalid response
             $this->fault = new Fault(652);
             $this->fault->setEncoding($this->getEncoding());
@@ -184,7 +183,7 @@ class Response
         }
 
         try {
-            if (! isset($xml->params) || ! isset($xml->params->param) || ! isset($xml->params->param->value)) {
+            if (! isset($xml->params->param, $xml->params->param->value)) {
                 throw new Exception\ValueException('Missing XML-RPC value in XML');
             }
             $valueXml = $xml->params->param->value->asXML();

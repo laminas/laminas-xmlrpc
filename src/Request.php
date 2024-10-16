@@ -6,9 +6,9 @@ use DOMDocument;
 use Exception;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\XmlRpc\Exception\ValueException;
-use Laminas\XmlRpc\Fault;
 use SimpleXMLElement;
 
+use function assert;
 use function count;
 use function func_get_args;
 use function func_num_args;
@@ -333,7 +333,7 @@ class Request
         }
 
         // Check for method name
-        if (empty($xml->methodName)) {
+        if (! isset($xml->methodName) || (string) $xml->methodName === '') {
             // Missing method name
             $this->fault = new Fault(632);
             $this->fault->setEncoding($this->getEncoding());
@@ -343,10 +343,12 @@ class Request
         $this->method = (string) $xml->methodName;
 
         // Check for parameters
-        if (! empty($xml->params)) {
-            $types = [];
-            $argv  = [];
-            foreach ($xml->params->children() as $param) {
+        if ($xml->params instanceof SimpleXMLElement && $xml->params->count() > 0) {
+            $types    = [];
+            $argv     = [];
+            $children = $xml->params->children();
+            assert($children !== null);
+            foreach ($children as $param) {
                 if (! isset($param->value)) {
                     $this->fault = new Fault(633);
                     $this->fault->setEncoding($this->getEncoding());

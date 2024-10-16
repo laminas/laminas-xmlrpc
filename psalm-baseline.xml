@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/AbstractValue.php">
     <DocblockTypeContradiction>
-      <code>! static::$generator</code>
-      <code>static::$generator</code>
+      <code><![CDATA[! static::$generator]]></code>
+      <code><![CDATA[static::$generator]]></code>
     </DocblockTypeContradiction>
     <InvalidArgument>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </InvalidArgument>
     <InvalidMethodCall>
-      <code>children</code>
+      <code><![CDATA[children]]></code>
     </InvalidMethodCall>
     <InvalidPropertyFetch>
       <code><![CDATA[$value->member]]></code>
     </InvalidPropertyFetch>
     <MissingReturnType>
-      <code>createSimpleXMLElement</code>
+      <code><![CDATA[createSimpleXMLElement]]></code>
     </MissingReturnType>
     <MixedArgument>
-      <code>$element</code>
+      <code><![CDATA[$element]]></code>
       <code><![CDATA[$member->value]]></code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$data</code>
-      <code>$element</code>
-      <code>$key</code>
-      <code>$member</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$element]]></code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$member]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedPropertyFetch>
       <code><![CDATA[$data->value]]></code>
@@ -54,112 +54,105 @@
       <code><![CDATA[$member->value]]></code>
     </MixedPropertyFetch>
     <NullReference>
-      <code>$type</code>
-      <code>$value</code>
+      <code><![CDATA[$type]]></code>
+      <code><![CDATA[$value]]></code>
     </NullReference>
     <PossiblyInvalidArgument>
       <code><![CDATA[$e->getCode()]]></code>
-      <code>$xml</code>
+      <code><![CDATA[$xml]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidMethodCall>
-      <code>asXML</code>
+      <code><![CDATA[asXML]]></code>
     </PossiblyInvalidMethodCall>
     <RedundantCondition>
       <code><![CDATA[! empty($value) && is_array($value)]]></code>
-      <code>is_array($value)</code>
+      <code><![CDATA[is_array($value)]]></code>
     </RedundantCondition>
-    <ReferenceConstraintViolation>
-      <code>$type</code>
-    </ReferenceConstraintViolation>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($value)]]></code>
+    </RiskyTruthyFalsyComparison>
     <UndefinedMethod>
-      <code>generate</code>
+      <code><![CDATA[generate]]></code>
     </UndefinedMethod>
   </file>
   <file src="src/Client.php">
     <DeprecatedInterface>
-      <code>Client</code>
+      <code><![CDATA[Client]]></code>
     </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[$httpRequest->getUriString() === null]]></code>
-      <code>is_array($params)</code>
+      <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
     <InvalidArgument>
-      <code>$method</code>
+      <code><![CDATA[$method]]></code>
     </InvalidArgument>
-    <MixedArgument>
-      <code>$type</code>
-    </MixedArgument>
     <MixedAssignment>
-      <code>$param</code>
-      <code>$signature</code>
-      <code>$type</code>
+      <code><![CDATA[$param]]></code>
+      <code><![CDATA[$signature]]></code>
+      <code><![CDATA[$type]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>ServerProxy</code>
+      <code><![CDATA[ServerProxy]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->proxyCache[$namespace]]]></code>
       <code><![CDATA[$this->proxyCache[$namespace]]]></code>
     </MixedReturnStatement>
     <PossiblyInvalidMethodCall>
-      <code>addHeaderLine</code>
-      <code>addHeaderLine</code>
-      <code>addHeaderLine</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </PossiblyInvalidMethodCall>
     <PossiblyNullReference>
-      <code>getMessage</code>
+      <code><![CDATA[getMessage]]></code>
     </PossiblyNullReference>
     <PossiblyUndefinedMethod>
-      <code>addHeaderLine</code>
-      <code>addHeaderLine</code>
-      <code>addHeaderLine</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </PossiblyUndefinedMethod>
-    <PossiblyUndefinedVariable>
-      <code>$signatures</code>
-      <code>$signatures</code>
-    </PossiblyUndefinedVariable>
     <PossiblyUnusedReturnValue>
-      <code>ServerIntrospection</code>
-      <code>\Laminas\Http\Client</code>
+      <code><![CDATA[ServerIntrospection]]></code>
+      <code><![CDATA[\Laminas\Http\Client]]></code>
     </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
-      <code>$lastRequest</code>
-      <code>$lastResponse</code>
+      <code><![CDATA[$lastRequest]]></code>
+      <code><![CDATA[$lastResponse]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(bool) $flag</code>
+      <code><![CDATA[(bool) $flag]]></code>
     </RedundantCastGivenDocblockType>
     <UnusedFunctionCall>
-      <code>iconv_set_encoding</code>
-      <code>iconv_set_encoding</code>
-      <code>iconv_set_encoding</code>
+      <code><![CDATA[iconv_set_encoding]]></code>
+      <code><![CDATA[iconv_set_encoding]]></code>
+      <code><![CDATA[iconv_set_encoding]]></code>
     </UnusedFunctionCall>
   </file>
   <file src="src/Client/ServerIntrospection.php">
     <InvalidOperand>
-      <code>$method</code>
+      <code><![CDATA[$method]]></code>
     </InvalidOperand>
     <MixedArgument>
-      <code>$method</code>
+      <code><![CDATA[$method]]></code>
     </MixedArgument>
     <MixedArrayOffset>
-      <code>$signatures[$method]</code>
-      <code>$signatures[$methods[$i]]</code>
+      <code><![CDATA[$signatures[$method]]]></code>
+      <code><![CDATA[$signatures[$methods[$i]]]]></code>
     </MixedArrayOffset>
     <MixedAssignment>
-      <code>$method</code>
-      <code>$method</code>
-      <code>$signature</code>
-      <code>$signatures[$methods[$i]]</code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$signature]]></code>
+      <code><![CDATA[$signatures[$methods[$i]]]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>array</code>
+      <code><![CDATA[array]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->system->listMethods()]]></code>
@@ -167,7 +160,7 @@
   </file>
   <file src="src/Client/ServerProxy.php">
     <MixedInferredReturnType>
-      <code>ServerProxy</code>
+      <code><![CDATA[ServerProxy]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->cache[$namespace]]]></code>
@@ -176,12 +169,12 @@
   </file>
   <file src="src/Fault.php">
     <DocblockTypeContradiction>
-      <code>is_string($fault)</code>
+      <code><![CDATA[is_string($fault)]]></code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$code</code>
-      <code>$message</code>
-      <code>$message</code>
+      <code><![CDATA[$code]]></code>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$struct['faultCode']]]></code>
@@ -194,26 +187,26 @@
       <code><![CDATA[$this->internal[$code]]]></code>
     </MixedArrayTypeCoercion>
     <MixedAssignment>
-      <code>$code</code>
-      <code>$errors</code>
-      <code>$message</code>
-      <code>$message</code>
-      <code>$message</code>
-      <code>$message</code>
-      <code>$message</code>
-      <code>$struct</code>
+      <code><![CDATA[$code]]></code>
+      <code><![CDATA[$errors]]></code>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$struct]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
-      <code>closeElement</code>
-      <code>openElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
     <MixedOperand>
-      <code>$errors</code>
+      <code><![CDATA[$errors]]></code>
       <code><![CDATA[$item->message]]></code>
-      <code>$result</code>
+      <code><![CDATA[$result]]></code>
     </MixedOperand>
     <MixedPropertyFetch>
       <code><![CDATA[$item->message]]></code>
@@ -223,113 +216,100 @@
       <code><![CDATA[$generator->flush()]]></code>
     </MixedReturnStatement>
     <PossiblyInvalidArgument>
-      <code>$code</code>
+      <code><![CDATA[$code]]></code>
     </PossiblyInvalidArgument>
-    <PossiblyNullPropertyFetch>
-      <code><![CDATA[$xml->fault->value->struct]]></code>
-    </PossiblyNullPropertyFetch>
-    <PossiblyNullReference>
-      <code>asXML</code>
-    </PossiblyNullReference>
     <RedundantCastGivenDocblockType>
-      <code>(int) $code</code>
-      <code>(string) $message</code>
+      <code><![CDATA[(int) $code]]></code>
+      <code><![CDATA[(string) $message]]></code>
     </RedundantCastGivenDocblockType>
     <UnsafeInstantiation>
-      <code>new static()</code>
+      <code><![CDATA[new static()]]></code>
     </UnsafeInstantiation>
   </file>
   <file src="src/Generator/AbstractGenerator.php">
     <MissingReturnType>
-      <code>closeXmlElement</code>
-      <code>openXmlElement</code>
-      <code>writeTextData</code>
+      <code><![CDATA[closeXmlElement]]></code>
+      <code><![CDATA[openXmlElement]]></code>
+      <code><![CDATA[writeTextData]]></code>
     </MissingReturnType>
   </file>
   <file src="src/Generator/DomDocument.php">
     <MissingReturnType>
-      <code>writeTextData</code>
+      <code><![CDATA[writeTextData]]></code>
     </MissingReturnType>
   </file>
   <file src="src/Generator/GeneratorInterface.php">
     <MissingReturnType>
-      <code>closeElement</code>
-      <code>flush</code>
-      <code>getEncoding</code>
-      <code>openElement</code>
-      <code>setEncoding</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[flush]]></code>
+      <code><![CDATA[getEncoding]]></code>
+      <code><![CDATA[openElement]]></code>
+      <code><![CDATA[setEncoding]]></code>
     </MissingReturnType>
   </file>
   <file src="src/Generator/XmlWriter.php">
     <InvalidClass>
-      <code>XMLWriter</code>
+      <code><![CDATA[XMLWriter]]></code>
     </InvalidClass>
     <InvalidPropertyAssignmentValue>
-      <code>new \XMLWriter()</code>
+      <code><![CDATA[new \XMLWriter()]]></code>
     </InvalidPropertyAssignmentValue>
     <TooManyArguments>
-      <code>flush</code>
+      <code><![CDATA[flush]]></code>
     </TooManyArguments>
     <UndefinedMethod>
-      <code>endElement</code>
-      <code>startElement</code>
-      <code>text</code>
+      <code><![CDATA[endElement]]></code>
+      <code><![CDATA[startElement]]></code>
+      <code><![CDATA[text]]></code>
     </UndefinedMethod>
   </file>
   <file src="src/Request.php">
     <ArgumentTypeCoercion>
-      <code>$request</code>
+      <code><![CDATA[$request]]></code>
     </ArgumentTypeCoercion>
     <DocblockTypeContradiction>
-      <code>! is_string($method)</code>
-      <code>is_string($request)</code>
+      <code><![CDATA[! is_string($method)]]></code>
+      <code><![CDATA[is_string($request)]]></code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$type</code>
+      <code><![CDATA[$type]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$param['type']]]></code>
       <code><![CDATA[$param['value']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$arg</code>
-      <code>$arg</code>
-      <code>$arg</code>
-      <code>$argv[]</code>
-      <code>$param</code>
-      <code>$param</code>
-      <code>$params[]</code>
-      <code>$type</code>
-      <code>$types[]</code>
-      <code>$value</code>
+      <code><![CDATA[$arg]]></code>
+      <code><![CDATA[$arg]]></code>
+      <code><![CDATA[$arg]]></code>
+      <code><![CDATA[$argv[]]]></code>
+      <code><![CDATA[$param]]></code>
+      <code><![CDATA[$params[]]]></code>
+      <code><![CDATA[$type]]></code>
+      <code><![CDATA[$types[]]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
-      <code>closeElement</code>
-      <code>generateXml</code>
-      <code>openElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[generateXml]]></code>
+      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
-    <MixedPropertyFetch>
-      <code><![CDATA[$param->value]]></code>
-    </MixedPropertyFetch>
     <MixedReturnStatement>
       <code><![CDATA[$generator->flush()]]></code>
     </MixedReturnStatement>
-    <PossiblyNullIterator>
-      <code><![CDATA[$xml->params->children()]]></code>
-    </PossiblyNullIterator>
     <PossiblyUnusedProperty>
-      <code>$xml</code>
+      <code><![CDATA[$xml]]></code>
     </PossiblyUnusedProperty>
     <PropertyNotSetInConstructor>
-      <code>$fault</code>
-      <code>$method</code>
-      <code>$xml</code>
+      <code><![CDATA[$fault]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$xml]]></code>
     </PropertyNotSetInConstructor>
     <RedundantConditionGivenDocblockType>
-      <code>is_array($args)</code>
+      <code><![CDATA[is_array($args)]]></code>
       <code><![CDATA[is_array($this->xmlRpcParams)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -338,196 +318,185 @@
       <code><![CDATA[null === $this->headers]]></code>
     </DocblockTypeContradiction>
     <MixedAssignment>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedOperand>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </MixedOperand>
     <PossiblyUnusedMethod>
-      <code>getFullRequest</code>
+      <code><![CDATA[getFullRequest]]></code>
     </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
-      <code>$headers</code>
-      <code>$xml</code>
-      <code>Http</code>
-      <code>Http</code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$xml]]></code>
+      <code><![CDATA[Http]]></code>
+      <code><![CDATA[Http]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Request/Stdin.php">
     <PropertyNotSetInConstructor>
-      <code>Stdin</code>
-      <code>Stdin</code>
+      <code><![CDATA[Stdin]]></code>
+      <code><![CDATA[Stdin]]></code>
     </PropertyNotSetInConstructor>
     <UnusedClass>
-      <code>Stdin</code>
+      <code><![CDATA[Stdin]]></code>
     </UnusedClass>
   </file>
   <file src="src/Response.php">
     <DocblockTypeContradiction>
-      <code>is_string($response)</code>
+      <code><![CDATA[is_string($response)]]></code>
     </DocblockTypeContradiction>
     <InvalidPropertyFetch>
       <code><![CDATA[$xml->fault]]></code>
       <code><![CDATA[$xml->params]]></code>
     </InvalidPropertyFetch>
-    <MixedAssignment>
-      <code>$valueXml</code>
-    </MixedAssignment>
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
-      <code>asXML</code>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>openElement</code>
-      <code>openElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[openElement]]></code>
+      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
-    <MixedPropertyFetch>
-      <code><![CDATA[$xml->params->param->value]]></code>
-      <code><![CDATA[$xml->params->param->value]]></code>
-    </MixedPropertyFetch>
     <MixedReturnStatement>
       <code><![CDATA[$generator->flush()]]></code>
     </MixedReturnStatement>
     <PossiblyUnusedProperty>
-      <code>$type</code>
+      <code><![CDATA[$type]]></code>
     </PossiblyUnusedProperty>
-    <TypeDoesNotContainType>
-      <code><![CDATA[! isset($xml->params)]]></code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/Server.php">
     <ArgumentTypeCoercion>
-      <code>$type</code>
+      <code><![CDATA[$type]]></code>
     </ArgumentTypeCoercion>
     <DeprecatedInterface>
-      <code>Server</code>
+      <code><![CDATA[Server]]></code>
     </DeprecatedInterface>
     <DeprecatedMethod>
-      <code>_buildSignature</code>
-      <code>_buildSignature</code>
-      <code>_dispatch</code>
+      <code><![CDATA[_buildSignature]]></code>
+      <code><![CDATA[_buildSignature]]></code>
+      <code><![CDATA[_dispatch]]></code>
     </DeprecatedMethod>
     <DocblockTypeContradiction>
-      <code>! $request</code>
-      <code>! $request</code>
+      <code><![CDATA[! $request]]></code>
+      <code><![CDATA[! $request]]></code>
     </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch>
-      <code>Server</code>
-      <code>array</code>
+      <code><![CDATA[Server]]></code>
+      <code><![CDATA[array]]></code>
     </ImplementedReturnTypeMismatch>
     <InvalidNullableReturnType>
-      <code>Response|Fault</code>
+      <code><![CDATA[Response|Fault]]></code>
     </InvalidNullableReturnType>
     <InvalidParamDefault>
-      <code>Request</code>
+      <code><![CDATA[Request]]></code>
     </InvalidParamDefault>
     <InvalidReturnStatement>
       <code><![CDATA[$this->sendArgumentsToAllMethods]]></code>
       <code><![CDATA[$this->table]]></code>
     </InvalidReturnStatement>
     <InvalidReturnType>
-      <code>array</code>
-      <code>self</code>
+      <code><![CDATA[array]]></code>
+      <code><![CDATA[self]]></code>
     </InvalidReturnType>
     <InvalidStringClass>
-      <code>new $responseClass($return)</code>
+      <code><![CDATA[new $responseClass($return)]]></code>
     </InvalidStringClass>
     <LessSpecificReturnStatement>
-      <code>new $responseClass($return)</code>
+      <code><![CDATA[new $responseClass($return)]]></code>
     </LessSpecificReturnStatement>
     <MixedArgument>
-      <code>$argv</code>
-      <code>$method</code>
-      <code>$reflection</code>
+      <code><![CDATA[$argv]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$reflection]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$key</code>
-      <code>$key</code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$key]]></code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$method</code>
-      <code>$reflection</code>
-      <code>$return</code>
-      <code>$sigParams</code>
-      <code>$signature</code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$reflection]]></code>
+      <code><![CDATA[$return]]></code>
+      <code><![CDATA[$sigParams]]></code>
+      <code><![CDATA[$signature]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
-      <code>getParameters</code>
-      <code>new $request()</code>
+      <code><![CDATA[getParameters]]></code>
+      <code><![CDATA[new $request()]]></code>
     </MixedMethodCall>
     <MixedReturnStatement>
       <code><![CDATA[$this->typeMap[$type]]]></code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
-      <code>$class</code>
-      <code>$fault</code>
-      <code>$request</code>
+      <code><![CDATA[$class]]></code>
+      <code><![CDATA[$fault]]></code>
+      <code><![CDATA[$request]]></code>
     </MoreSpecificImplementedParamType>
     <MoreSpecificReturnType>
-      <code>Response</code>
+      <code><![CDATA[Response]]></code>
     </MoreSpecificReturnType>
     <PossiblyInvalidPropertyAssignmentValue>
-      <code>$response</code>
+      <code><![CDATA[$response]]></code>
     </PossiblyInvalidPropertyAssignmentValue>
     <PossiblyNullArgument>
-      <code>$argv</code>
+      <code><![CDATA[$argv]]></code>
     </PossiblyNullArgument>
     <PossiblyNullReference>
-      <code>getInvokeArguments</code>
-      <code>setEncoding</code>
+      <code><![CDATA[getInvokeArguments]]></code>
+      <code><![CDATA[setEncoding]]></code>
     </PossiblyNullReference>
     <PossiblyUnusedMethod>
-      <code>isSubclassOf</code>
+      <code><![CDATA[isSubclassOf]]></code>
     </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
-      <code>$response</code>
+      <code><![CDATA[$response]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(bool) $flag</code>
-      <code>(bool) $flag</code>
+      <code><![CDATA[(bool) $flag]]></code>
+      <code><![CDATA[(bool) $flag]]></code>
     </RedundantCastGivenDocblockType>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[$this->sendArgumentsToAllMethods()]]></code>
-      <code>is_object($definition)</code>
+      <code><![CDATA[is_object($definition)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Server/Fault.php">
     <DocblockTypeContradiction>
-      <code>! is_string($class)</code>
+      <code><![CDATA[! is_string($class)]]></code>
     </DocblockTypeContradiction>
     <MixedAssignment>
-      <code>$class</code>
-      <code>$class</code>
+      <code><![CDATA[$class]]></code>
+      <code><![CDATA[$class]]></code>
     </MixedAssignment>
     <PossiblyInvalidArgument>
-      <code>$code</code>
+      <code><![CDATA[$code]]></code>
     </PossiblyInvalidArgument>
     <UndefinedClass>
-      <code>$observer::observe($this)</code>
+      <code><![CDATA[$observer::observe($this)]]></code>
     </UndefinedClass>
     <UnsafeInstantiation>
-      <code>new static($e)</code>
+      <code><![CDATA[new static($e)]]></code>
     </UnsafeInstantiation>
   </file>
   <file src="src/Server/System.php">
     <InvalidMethodCall>
-      <code>getMethod</code>
-      <code>getMethod</code>
-      <code>getMethods</code>
-      <code>hasMethod</code>
-      <code>hasMethod</code>
+      <code><![CDATA[getMethod]]></code>
+      <code><![CDATA[getMethod]]></code>
+      <code><![CDATA[getMethods]]></code>
+      <code><![CDATA[hasMethod]]></code>
+      <code><![CDATA[hasMethod]]></code>
     </InvalidMethodCall>
     <InvalidScalarArgument>
-      <code>1</code>
+      <code><![CDATA[1]]></code>
     </InvalidScalarArgument>
     <MixedArgument>
       <code><![CDATA[$method['methodName']]]></code>
-      <code>$table</code>
+      <code><![CDATA[$table]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$method['methodName']]]></code>
@@ -535,35 +504,35 @@
       <code><![CDATA[$method['prototypes']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$method</code>
-      <code>$method</code>
-      <code>$responses[]</code>
-      <code>$table</code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$responses[]]]></code>
+      <code><![CDATA[$table]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>array</code>
-      <code>string</code>
+      <code><![CDATA[array]]></code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
-      <code>getMethodHelp</code>
-      <code>toArray</code>
+      <code><![CDATA[getMethodHelp]]></code>
+      <code><![CDATA[toArray]]></code>
     </MixedMethodCall>
     <MixedReturnStatement>
       <code><![CDATA[$method['prototypes']]]></code>
       <code><![CDATA[$table->getMethod($method)->getMethodHelp()]]></code>
     </MixedReturnStatement>
     <PossiblyNullOperand>
-      <code>var_export($methods, 1)</code>
+      <code><![CDATA[var_export($methods, 1)]]></code>
     </PossiblyNullOperand>
     <PossiblyUndefinedMethod>
-      <code>getCode</code>
-      <code>getMessage</code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getMessage]]></code>
     </PossiblyUndefinedMethod>
     <PossiblyUnusedMethod>
-      <code>listMethods</code>
-      <code>methodHelp</code>
-      <code>methodSignature</code>
-      <code>multicall</code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[methodHelp]]></code>
+      <code><![CDATA[methodSignature]]></code>
+      <code><![CDATA[multicall]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Value/AbstractCollection.php">
@@ -571,47 +540,47 @@
       <code><![CDATA[$this->value[$key]]]></code>
     </MixedArrayAssignment>
     <MixedAssignment>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$values[$key]</code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$values[$key]]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>getValue</code>
+      <code><![CDATA[getValue]]></code>
     </MixedMethodCall>
     <PropertyNotSetInConstructor>
-      <code>AbstractCollection</code>
-      <code>AbstractCollection</code>
+      <code><![CDATA[AbstractCollection]]></code>
+      <code><![CDATA[AbstractCollection]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(array) $value</code>
+      <code><![CDATA[(array) $value]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Value/AbstractScalar.php">
     <MixedMethodCall>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>openElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
     <PossiblyUnusedMethod>
-      <code>generate</code>
+      <code><![CDATA[generate]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Value/ArrayValue.php">
     <MixedAssignment>
-      <code>$val</code>
+      <code><![CDATA[$val]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>generateXml</code>
-      <code>openElement</code>
-      <code>openElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[generateXml]]></code>
+      <code><![CDATA[openElement]]></code>
+      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
     <PossiblyUnusedMethod>
-      <code>generate</code>
+      <code><![CDATA[generate]]></code>
     </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
-      <code>ArrayValue</code>
+      <code><![CDATA[ArrayValue]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/Base64.php">
@@ -619,34 +588,34 @@
       <code><![CDATA[$this->value]]></code>
     </MixedArgument>
     <PropertyNotSetInConstructor>
-      <code>Base64</code>
+      <code><![CDATA[Base64]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(string) $value</code>
+      <code><![CDATA[(string) $value]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Value/BigInteger.php">
     <ImplementedReturnTypeMismatch>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </ImplementedReturnTypeMismatch>
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->value]]></code>
     </MixedReturnStatement>
     <PropertyNotSetInConstructor>
-      <code>BigInteger</code>
+      <code><![CDATA[BigInteger]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/Boolean.php">
     <PropertyNotSetInConstructor>
-      <code>Boolean</code>
+      <code><![CDATA[Boolean]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/DateTime.php">
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->value]]></code>
@@ -655,126 +624,120 @@
       <code><![CDATA[$e->getCode()]]></code>
     </PossiblyInvalidArgument>
     <PossiblyUnusedProperty>
-      <code>$isoFormatString</code>
+      <code><![CDATA[$isoFormatString]]></code>
     </PossiblyUnusedProperty>
     <PropertyNotSetInConstructor>
-      <code>DateTime</code>
+      <code><![CDATA[DateTime]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/Double.php">
     <PropertyNotSetInConstructor>
-      <code>Double</code>
+      <code><![CDATA[Double]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(float) $value</code>
+      <code><![CDATA[(float) $value]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Value/Integer.php">
     <MixedInferredReturnType>
-      <code>int</code>
+      <code><![CDATA[int]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->value]]></code>
     </MixedReturnStatement>
     <PropertyNotSetInConstructor>
-      <code>Integer</code>
+      <code><![CDATA[Integer]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(int) $value</code>
+      <code><![CDATA[(int) $value]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Value/Nil.php">
     <PropertyNotSetInConstructor>
-      <code>Nil</code>
+      <code><![CDATA[Nil]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/Struct.php">
     <MixedAssignment>
-      <code>$val</code>
+      <code><![CDATA[$val]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>generateXml</code>
-      <code>openElement</code>
-      <code>openElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[generateXml]]></code>
+      <code><![CDATA[openElement]]></code>
+      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
     <PossiblyUnusedMethod>
-      <code>generate</code>
+      <code><![CDATA[generate]]></code>
     </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
-      <code>Struct</code>
+      <code><![CDATA[Struct]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/Text.php">
     <PropertyNotSetInConstructor>
-      <code>Text</code>
+      <code><![CDATA[Text]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(string) $value</code>
+      <code><![CDATA[(string) $value]]></code>
     </RedundantCastGivenDocblockType>
-  </file>
-  <file src="test/AbstractTestProvider.php">
-    <MixedInferredReturnType>
-      <code>array</code>
-      <code>array</code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/ClientTest.php">
     <InvalidArgument>
-      <code>$method</code>
+      <code><![CDATA[$method]]></code>
       <code><![CDATA['1']]></code>
       <code><![CDATA['add']]></code>
     </InvalidArgument>
     <MissingReturnType>
-      <code>mockIntrospector</code>
-      <code>setServerResponseTo</code>
+      <code><![CDATA[mockIntrospector]]></code>
+      <code><![CDATA[setServerResponseTo]]></code>
     </MissingReturnType>
     <MixedMethodCall>
-      <code>expects</code>
-      <code>expects</code>
-      <code>expects</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>getValue</code>
-      <code>method</code>
-      <code>method</code>
-      <code>method</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>with</code>
-      <code>with</code>
-      <code>with</code>
+      <code><![CDATA[expects]]></code>
+      <code><![CDATA[expects]]></code>
+      <code><![CDATA[expects]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[getValue]]></code>
+      <code><![CDATA[method]]></code>
+      <code><![CDATA[method]]></code>
+      <code><![CDATA[method]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[with]]></code>
+      <code><![CDATA[with]]></code>
+      <code><![CDATA[with]]></code>
     </MixedMethodCall>
     <UndefinedInterfaceMethod>
-      <code>addResponse</code>
-      <code>addResponse</code>
-      <code>addResponse</code>
-      <code>addResponse</code>
-      <code>addResponse</code>
-      <code>addResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
-      <code>setResponse</code>
+      <code><![CDATA[addResponse]]></code>
+      <code><![CDATA[addResponse]]></code>
+      <code><![CDATA[addResponse]]></code>
+      <code><![CDATA[addResponse]]></code>
+      <code><![CDATA[addResponse]]></code>
+      <code><![CDATA[addResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
+      <code><![CDATA[setResponse]]></code>
     </UndefinedInterfaceMethod>
     <UndefinedThisPropertyAssignment>
       <code><![CDATA[$this->mockedIntrospector]]></code>
     </UndefinedThisPropertyAssignment>
     <UnusedVariable>
-      <code>$signature</code>
-      <code>$time</code>
+      <code><![CDATA[$signature]]></code>
+      <code><![CDATA[$time]]></code>
     </UnusedVariable>
   </file>
   <file src="test/FaultTest.php">
@@ -785,12 +748,12 @@
       <code><![CDATA[['foo']]]></code>
     </InvalidCast>
     <MissingReturnType>
-      <code>testLoadXmlThrowsExceptionOnInvalidInput2</code>
-      <code>testLoadXmlThrowsExceptionOnInvalidInput3</code>
-      <code>testLoadXmlThrowsExceptionOnInvalidInput4</code>
+      <code><![CDATA[testLoadXmlThrowsExceptionOnInvalidInput2]]></code>
+      <code><![CDATA[testLoadXmlThrowsExceptionOnInvalidInput3]]></code>
+      <code><![CDATA[testLoadXmlThrowsExceptionOnInvalidInput4]]></code>
     </MissingReturnType>
     <MixedAssignment>
-      <code>$member</code>
+      <code><![CDATA[$member]]></code>
     </MixedAssignment>
     <MixedPropertyFetch>
       <code><![CDATA[$member->name]]></code>
@@ -799,8 +762,8 @@
       <code><![CDATA[$member->value->string]]></code>
     </MixedPropertyFetch>
     <PossiblyInvalidArgument>
-      <code>$xml</code>
-      <code>$xml</code>
+      <code><![CDATA[$xml]]></code>
+      <code><![CDATA[$xml]]></code>
     </PossiblyInvalidArgument>
     <PossiblyNullIterator>
       <code><![CDATA[$sx->fault->value->struct->member]]></code>
@@ -811,35 +774,35 @@
       <code><![CDATA[$sx->fault->value->struct->member]]></code>
     </PossiblyNullPropertyFetch>
     <RedundantCondition>
-      <code>assertNotFalse</code>
-      <code>assertNotFalse</code>
-      <code>assertNotFalse</code>
+      <code><![CDATA[assertNotFalse]]></code>
+      <code><![CDATA[assertNotFalse]]></code>
+      <code><![CDATA[assertNotFalse]]></code>
     </RedundantCondition>
     <UnusedVariable>
-      <code>$parsed</code>
-      <code>$value2</code>
+      <code><![CDATA[$parsed]]></code>
+      <code><![CDATA[$value2]]></code>
     </UnusedVariable>
   </file>
   <file src="test/GeneratorTest.php">
     <MissingReturnType>
-      <code>assertXml</code>
-      <code>testCreatingComplexXmlDocument</code>
-      <code>testCreatingSingleElement</code>
-      <code>testCreatingSingleElementWithValue</code>
-      <code>testDifferentEncodings</code>
-      <code>testFluentInterfacesProvided</code>
-      <code>testFlushingGeneratorFlushesEverything</code>
-      <code>testSpecialCharsAreEncoded</code>
+      <code><![CDATA[assertXml]]></code>
+      <code><![CDATA[testCreatingComplexXmlDocument]]></code>
+      <code><![CDATA[testCreatingSingleElement]]></code>
+      <code><![CDATA[testCreatingSingleElementWithValue]]></code>
+      <code><![CDATA[testDifferentEncodings]]></code>
+      <code><![CDATA[testFluentInterfacesProvided]]></code>
+      <code><![CDATA[testFlushingGeneratorFlushesEverything]]></code>
+      <code><![CDATA[testSpecialCharsAreEncoded]]></code>
     </MissingReturnType>
     <MixedArgument>
       <code><![CDATA[$generator->flush()]]></code>
     </MixedArgument>
     <MixedMethodCall>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>closeElement</code>
-      <code>closeElement</code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
+      <code><![CDATA[closeElement]]></code>
     </MixedMethodCall>
     <MixedOperand>
       <code><![CDATA[$actual->getEncoding()]]></code>
@@ -847,93 +810,93 @@
   </file>
   <file src="test/PhpInputMock.php">
     <MissingParamType>
-      <code>$count</code>
-      <code>$data</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$returnValue</code>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$methodName]]></code>
+      <code><![CDATA[$methodName]]></code>
+      <code><![CDATA[$returnValue]]></code>
     </MissingParamType>
     <MissingPropertyType>
-      <code>$arguments</code>
-      <code>$data</code>
-      <code>$position</code>
-      <code>$returnValues</code>
+      <code><![CDATA[$arguments]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$position]]></code>
+      <code><![CDATA[$returnValues]]></code>
     </MissingPropertyType>
     <MissingReturnType>
-      <code>argumentsPassedTo</code>
-      <code>methodWillReturn</code>
-      <code>mockInput</code>
-      <code>restoreDefault</code>
-      <code>stream_eof</code>
-      <code>stream_open</code>
-      <code>stream_read</code>
-      <code>stream_stat</code>
+      <code><![CDATA[argumentsPassedTo]]></code>
+      <code><![CDATA[methodWillReturn]]></code>
+      <code><![CDATA[mockInput]]></code>
+      <code><![CDATA[restoreDefault]]></code>
+      <code><![CDATA[stream_eof]]></code>
+      <code><![CDATA[stream_open]]></code>
+      <code><![CDATA[stream_read]]></code>
+      <code><![CDATA[stream_stat]]></code>
     </MissingReturnType>
     <MixedArgument>
-      <code>$count</code>
-      <code>$count</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>static::$data</code>
-      <code>static::$data</code>
-      <code>static::$data</code>
-      <code>static::$data</code>
-      <code>static::$returnValues</code>
-      <code>static::$returnValues</code>
-      <code>static::$returnValues</code>
-      <code>static::$returnValues</code>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$methodName]]></code>
+      <code><![CDATA[$methodName]]></code>
+      <code><![CDATA[static::$data]]></code>
+      <code><![CDATA[static::$data]]></code>
+      <code><![CDATA[static::$data]]></code>
+      <code><![CDATA[static::$data]]></code>
+      <code><![CDATA[static::$returnValues]]></code>
+      <code><![CDATA[static::$returnValues]]></code>
+      <code><![CDATA[static::$returnValues]]></code>
+      <code><![CDATA[static::$returnValues]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>static::$arguments[$methodName]</code>
-      <code>static::$returnValues[__FUNCTION__]</code>
-      <code>static::$returnValues[__FUNCTION__]</code>
-      <code>static::$returnValues[__FUNCTION__]</code>
-      <code>static::$returnValues[__FUNCTION__]</code>
+      <code><![CDATA[static::$arguments[$methodName]]]></code>
+      <code><![CDATA[static::$returnValues[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$returnValues[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$returnValues[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$returnValues[__FUNCTION__]]]></code>
     </MixedArrayAccess>
     <MixedArrayAssignment>
-      <code>static::$arguments[__FUNCTION__]</code>
-      <code>static::$arguments[__FUNCTION__]</code>
-      <code>static::$arguments[__FUNCTION__]</code>
-      <code>static::$arguments[__FUNCTION__]</code>
-      <code>static::$returnValues[$methodName]</code>
+      <code><![CDATA[static::$arguments[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$arguments[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$arguments[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$arguments[__FUNCTION__]]]></code>
+      <code><![CDATA[static::$returnValues[$methodName]]]></code>
     </MixedArrayAssignment>
     <MixedAssignment>
-      <code>$data</code>
-      <code>static::$data</code>
-      <code>static::$returnValues[$methodName]</code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[static::$data]]></code>
+      <code><![CDATA[static::$returnValues[$methodName]]]></code>
     </MixedAssignment>
     <PossiblyUnusedMethod>
-      <code>stream_eof</code>
-      <code>stream_open</code>
-      <code>stream_read</code>
-      <code>stream_stat</code>
+      <code><![CDATA[stream_eof]]></code>
+      <code><![CDATA[stream_open]]></code>
+      <code><![CDATA[stream_read]]></code>
+      <code><![CDATA[stream_stat]]></code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedProperty>
-      <code>$position</code>
+      <code><![CDATA[$position]]></code>
     </PossiblyUnusedProperty>
     <UnusedFunctionCall>
-      <code>stream_wrapper_restore</code>
-      <code>stream_wrapper_unregister</code>
+      <code><![CDATA[stream_wrapper_restore]]></code>
+      <code><![CDATA[stream_wrapper_unregister]]></code>
     </UnusedFunctionCall>
   </file>
   <file src="test/Request/HttpTest.php">
     <MixedArrayAccess>
-      <code>$mode</code>
-      <code>$path</code>
+      <code><![CDATA[$mode]]></code>
+      <code><![CDATA[$path]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>[$path, $mode]</code>
+      <code><![CDATA[[$path, $mode]]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>getFullRequest</code>
-      <code>getHeaders</code>
-      <code>getRawRequest</code>
+      <code><![CDATA[getFullRequest]]></code>
+      <code><![CDATA[getHeaders]]></code>
+      <code><![CDATA[getRawRequest]]></code>
     </MixedMethodCall>
     <MixedOperand>
       <code><![CDATA[$this->xml]]></code>
     </MixedOperand>
     <PossiblyNullReference>
-      <code>getCode</code>
+      <code><![CDATA[getCode]]></code>
     </PossiblyNullReference>
     <UndefinedThisPropertyAssignment>
       <code><![CDATA[$this->request]]></code>
@@ -951,7 +914,7 @@
       <code><![CDATA[$this->xml]]></code>
     </UndefinedThisPropertyFetch>
     <UnusedForeachValue>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </UnusedForeachValue>
   </file>
   <file src="test/Request/TestAsset/HTTPTestExtension.php">
@@ -959,25 +922,25 @@
       <code><![CDATA[$this->method]]></code>
     </MixedAssignment>
     <PropertyNotSetInConstructor>
-      <code>HTTPTestExtension</code>
-      <code>HTTPTestExtension</code>
-      <code>HTTPTestExtension</code>
+      <code><![CDATA[HTTPTestExtension]]></code>
+      <code><![CDATA[HTTPTestExtension]]></code>
+      <code><![CDATA[HTTPTestExtension]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/RequestTest.php">
     <InvalidArgument>
-      <code>$method</code>
-      <code>new stdClass()</code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[new stdClass()]]></code>
     </InvalidArgument>
     <InvalidCast>
-      <code>new stdClass()</code>
+      <code><![CDATA[new stdClass()]]></code>
     </InvalidCast>
     <MixedMethodCall>
-      <code>getValue</code>
+      <code><![CDATA[getValue]]></code>
     </MixedMethodCall>
     <PossiblyNullArgument>
-      <code>$result</code>
-      <code>$result</code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
       <code><![CDATA[$sx->params->param[0]]]></code>
@@ -993,34 +956,34 @@
       <code><![CDATA[$sxl->params->param->value]]></code>
     </PossiblyNullPropertyFetch>
     <PossiblyNullReference>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getMessage</code>
-      <code>getMessage</code>
-      <code>getMessage</code>
-      <code>getMessage</code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getMessage]]></code>
+      <code><![CDATA[getMessage]]></code>
+      <code><![CDATA[getMessage]]></code>
+      <code><![CDATA[getMessage]]></code>
     </PossiblyNullReference>
     <RedundantConditionGivenDocblockType>
-      <code>is_string($method)</code>
+      <code><![CDATA[is_string($method)]]></code>
     </RedundantConditionGivenDocblockType>
     <UnusedVariable>
-      <code>$mName</code>
+      <code><![CDATA[$mName]]></code>
     </UnusedVariable>
   </file>
   <file src="test/ResponseTest.php">
     <InvalidArgument>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
       <code><![CDATA[[$this, 'trackError']]]></code>
-      <code>new stdClass()</code>
+      <code><![CDATA[new stdClass()]]></code>
     </InvalidArgument>
     <InvalidCast>
-      <code>new stdClass()</code>
+      <code><![CDATA[new stdClass()]]></code>
     </InvalidCast>
     <MissingReturnType>
-      <code>testLoadXmlCreatesFaultWithMissingNodes2</code>
-      <code>testLoadXmlThrowsExceptionWithMissingNodes3</code>
+      <code><![CDATA[testLoadXmlCreatesFaultWithMissingNodes2]]></code>
+      <code><![CDATA[testLoadXmlThrowsExceptionWithMissingNodes3]]></code>
     </MissingReturnType>
     <PossiblyNullPropertyFetch>
       <code><![CDATA[$sx->params->param]]></code>
@@ -1028,99 +991,99 @@
       <code><![CDATA[$sx->params->param->value->string]]></code>
     </PossiblyNullPropertyFetch>
     <PossiblyNullReference>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getCode</code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
     </PossiblyNullReference>
     <PossiblyUnusedMethod>
-      <code>trackError</code>
+      <code><![CDATA[trackError]]></code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
-      <code>$error</code>
+      <code><![CDATA[$error]]></code>
     </PossiblyUnusedParam>
     <RedundantCondition>
-      <code>assertNotFalse</code>
-      <code>assertNotFalse</code>
-      <code>assertNotFalse</code>
-      <code>assertNotFalse</code>
+      <code><![CDATA[assertNotFalse]]></code>
+      <code><![CDATA[assertNotFalse]]></code>
+      <code><![CDATA[assertNotFalse]]></code>
+      <code><![CDATA[assertNotFalse]]></code>
     </RedundantCondition>
     <RedundantConditionGivenDocblockType>
-      <code>assertFalse</code>
+      <code><![CDATA[assertFalse]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Server/CacheTest.php">
     <MixedAssignment>
-      <code>$actual</code>
-      <code>$expected</code>
+      <code><![CDATA[$actual]]></code>
+      <code><![CDATA[$expected]]></code>
     </MixedAssignment>
   </file>
   <file src="test/Server/FaultTest.php">
     <UnusedVariable>
-      <code>$fault</code>
-      <code>$fault</code>
-      <code>$fault</code>
+      <code><![CDATA[$fault]]></code>
+      <code><![CDATA[$fault]]></code>
+      <code><![CDATA[$fault]]></code>
     </UnusedVariable>
   </file>
   <file src="test/Server/TestAsset/Observer.php">
     <PossiblyUnusedMethod>
-      <code>observe</code>
+      <code><![CDATA[observe]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ServerTest.php">
     <InvalidArgument>
-      <code>$o</code>
-      <code>$o</code>
-      <code>$this</code>
+      <code><![CDATA[$o]]></code>
+      <code><![CDATA[$o]]></code>
+      <code><![CDATA[$this]]></code>
       <code><![CDATA['foo']]></code>
     </InvalidArgument>
     <InvalidMethodCall>
-      <code>getMethod</code>
+      <code><![CDATA[getMethod]]></code>
     </InvalidMethodCall>
     <MissingReturnType>
-      <code>testCanMarshalBase64Requests</code>
-      <code>testHandle2</code>
-      <code>testLoadFunctionsThrowsExceptionsWithBadData2</code>
-      <code>testLoadFunctionsThrowsExceptionsWithBadData3</code>
-      <code>testRequestResponseEncoding2</code>
+      <code><![CDATA[testCanMarshalBase64Requests]]></code>
+      <code><![CDATA[testHandle2]]></code>
+      <code><![CDATA[testLoadFunctionsThrowsExceptionsWithBadData2]]></code>
+      <code><![CDATA[testLoadFunctionsThrowsExceptionsWithBadData3]]></code>
+      <code><![CDATA[testRequestResponseEncoding2]]></code>
     </MissingReturnType>
     <MixedArgument>
-      <code>$help</code>
-      <code>$methods</code>
-      <code>$methods</code>
-      <code>$methods</code>
-      <code>$methods</code>
+      <code><![CDATA[$help]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$methods]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$actual</code>
-      <code>$expected</code>
-      <code>$help</code>
-      <code>$method</code>
-      <code>$methods</code>
-      <code>$methods</code>
-      <code>$methods</code>
-      <code>$methods</code>
-      <code>$prototype</code>
-      <code>$response</code>
-      <code>$response</code>
-      <code>$response</code>
-      <code>$response</code>
+      <code><![CDATA[$actual]]></code>
+      <code><![CDATA[$expected]]></code>
+      <code><![CDATA[$help]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$methods]]></code>
+      <code><![CDATA[$prototype]]></code>
+      <code><![CDATA[$response]]></code>
+      <code><![CDATA[$response]]></code>
+      <code><![CDATA[$response]]></code>
+      <code><![CDATA[$response]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>getPrototypes</code>
-      <code>getReturnType</code>
+      <code><![CDATA[getPrototypes]]></code>
+      <code><![CDATA[getReturnType]]></code>
     </MixedMethodCall>
     <PossiblyNullReference>
-      <code>getEncoding</code>
-      <code>getEncoding</code>
+      <code><![CDATA[getEncoding]]></code>
+      <code><![CDATA[getEncoding]]></code>
     </PossiblyNullReference>
   </file>
   <file src="test/TestAsset/SerializableTestClass.php">
     <MissingConstructor>
-      <code>$property</code>
+      <code><![CDATA[$property]]></code>
     </MissingConstructor>
     <PossiblyUnusedMethod>
-      <code>getProperty</code>
+      <code><![CDATA[getProperty]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/TestClass.php">
@@ -1128,65 +1091,65 @@
       <code><![CDATA[['test1' => $this->value1, 'test2' => $this->value2, 'arg' => func_get_args()]]]></code>
     </InvalidReturnStatement>
     <InvalidReturnType>
-      <code>struct</code>
+      <code><![CDATA[struct]]></code>
     </InvalidReturnType>
     <MixedArgumentTypeCoercion>
-      <code>(array) $array</code>
+      <code><![CDATA[(array) $array]]></code>
     </MixedArgumentTypeCoercion>
     <MixedInferredReturnType>
-      <code>base64</code>
+      <code><![CDATA[base64]]></code>
     </MixedInferredReturnType>
     <PossiblyUnusedMethod>
-      <code>__construct</code>
-      <code>base64</code>
-      <code>test1</code>
-      <code>test2</code>
-      <code>test3</code>
-      <code>test4</code>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[base64]]></code>
+      <code><![CDATA[test1]]></code>
+      <code><![CDATA[test2]]></code>
+      <code><![CDATA[test3]]></code>
+      <code><![CDATA[test4]]></code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
-      <code>$data</code>
+      <code><![CDATA[$data]]></code>
     </PossiblyUnusedParam>
     <RedundantCastGivenDocblockType>
-      <code>(array) $array</code>
-      <code>(string) $string</code>
+      <code><![CDATA[(array) $array]]></code>
+      <code><![CDATA[(string) $string]]></code>
     </RedundantCastGivenDocblockType>
     <UndefinedDocblockClass>
-      <code>base64</code>
-      <code>base64</code>
-      <code>struct</code>
+      <code><![CDATA[base64]]></code>
+      <code><![CDATA[base64]]></code>
+      <code><![CDATA[struct]]></code>
     </UndefinedDocblockClass>
   </file>
   <file src="test/TestAsset/TestClient.php">
     <DeprecatedInterface>
-      <code>TestClient</code>
+      <code><![CDATA[TestClient]]></code>
     </DeprecatedInterface>
     <PropertyNotSetInConstructor>
-      <code>TestClient</code>
-      <code>TestClient</code>
+      <code><![CDATA[TestClient]]></code>
+      <code><![CDATA[TestClient]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/TestAsset/TestRequest.php">
     <PropertyNotSetInConstructor>
-      <code>TestRequest</code>
-      <code>TestRequest</code>
-      <code>TestRequest</code>
+      <code><![CDATA[TestRequest]]></code>
+      <code><![CDATA[TestRequest]]></code>
+      <code><![CDATA[TestRequest]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/TestAsset/functions.php">
     <MixedArgumentTypeCoercion>
-      <code>(array) $var1</code>
+      <code><![CDATA[(array) $var1]]></code>
     </MixedArgumentTypeCoercion>
     <RedundantCastGivenDocblockType>
-      <code>(array) $var1</code>
+      <code><![CDATA[(array) $var1]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="test/ValueTest.php">
     <ForbiddenCode>
-      <code>var_dump($x)</code>
+      <code><![CDATA[var_dump($x)]]></code>
     </ForbiddenCode>
     <MissingReturnType>
-      <code>testMarshalBase64FromString</code>
+      <code><![CDATA[testMarshalBase64FromString]]></code>
     </MissingReturnType>
     <MixedArgument>
       <code><![CDATA[$val->getValue()]]></code>
@@ -1194,21 +1157,21 @@
       <code><![CDATA[$val->getValue()]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$a[0]</code>
-      <code>$a[1]</code>
-      <code>$a[2]</code>
+      <code><![CDATA[$a[0]]]></code>
+      <code><![CDATA[$a[1]]]></code>
+      <code><![CDATA[$a[2]]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$a</code>
-      <code>$o2</code>
-      <code>$received</code>
+      <code><![CDATA[$a]]></code>
+      <code><![CDATA[$o2]]></code>
+      <code><![CDATA[$received]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>getProperty</code>
+      <code><![CDATA[getProperty]]></code>
     </MixedMethodCall>
     <UnusedVariable>
-      <code>$native</code>
-      <code>$val</code>
+      <code><![CDATA[$native]]></code>
+      <code><![CDATA[$val]]></code>
     </UnusedVariable>
   </file>
 </files>

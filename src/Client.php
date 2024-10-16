@@ -12,14 +12,14 @@ use Laminas\XmlRpc\Client\ServerIntrospection;
 use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Exception\ExceptionInterface;
 use Laminas\XmlRpc\Exception\ValueException;
-use Laminas\XmlRpc\Request;
-use Laminas\XmlRpc\Response;
 
+use function assert;
 use function count;
 use function iconv_set_encoding;
 use function in_array;
 use function ini_set;
 use function is_array;
+use function is_string;
 use function substr;
 use function trim;
 
@@ -307,6 +307,8 @@ class Client implements ServerClient
                         continue;
                     }
 
+                    assert(isset($signatures));
+
                     if (count($signatures) > 1) {
                         $type = AbstractValue::getXmlRpcTypeByValue($param);
                         foreach ($signatures as $signature) {
@@ -325,9 +327,11 @@ class Client implements ServerClient
                         $type = null;
                     }
 
-                    if (empty($type) || ! in_array($type, $validTypes)) {
+                    if (! is_string($type) || ! in_array($type, $validTypes)) {
                         $type = AbstractValue::AUTO_DETECT_TYPE;
                     }
+
+                    /** @psalm-var AbstractValue::XMLRPC_TYPE_* $type */
 
                     $params[$key] = AbstractValue::getXmlRpcValue($param, $type);
                 }
