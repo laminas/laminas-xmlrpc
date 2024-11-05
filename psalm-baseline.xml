@@ -681,6 +681,12 @@
       <code><![CDATA[(string) $value]]></code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="test/AbstractTestProvider.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[provideGenerators]]></code>
+      <code><![CDATA[provideGeneratorsWithAlternateEncodings]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/ClientTest.php">
     <InvalidArgument>
       <code><![CDATA[$method]]></code>
@@ -889,7 +895,6 @@
   </file>
   <file src="test/RequestTest.php">
     <InvalidArgument>
-      <code><![CDATA[$method]]></code>
       <code><![CDATA[new stdClass()]]></code>
     </InvalidArgument>
     <InvalidCast>
@@ -934,7 +939,6 @@
   </file>
   <file src="test/ResponseTest.php">
     <InvalidArgument>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[[$this, 'trackError']]]></code>
       <code><![CDATA[new stdClass()]]></code>
     </InvalidArgument>

@@ -10,6 +10,9 @@ use Laminas\XmlRpc\Exception\InvalidArgumentException;
 use Laminas\XmlRpc\Exception\ValueException;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value;
+use LaminasTest\XmlRpc\AbstractTestProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -26,9 +29,8 @@ use const PHP_INT_MAX;
 
 /**
  * Test case for Value
- *
- * @group      Laminas_XmlRpc
  */
+#[Group('Laminas_XmlRpc')]
 class ValueTest extends TestCase
 {
     /** @var string */
@@ -97,9 +99,7 @@ class ValueTest extends TestCase
         $this->assertFalse($val->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalTrueBooleanFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -115,9 +115,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalTrueIntBooleanFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -133,9 +131,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalFalseBooleanFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -151,9 +147,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalFalseIntBooleanFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -190,9 +184,7 @@ class ValueTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalIntegerFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -215,9 +207,7 @@ class ValueTest extends TestCase
         }
     }
 
-    /**
-     * @group Laminas-3310
-     */
+    #[Group('Laminas-3310')]
     public function testMarshalI4FromOverlongNativeThrowsException(): void
     {
         $this->expectException(ValueException::class);
@@ -226,9 +216,7 @@ class ValueTest extends TestCase
         var_dump($x);
     }
 
-    /**
-     * @group Laminas-3310
-     */
+    #[Group('Laminas-3310')]
     public function testMarshalIntegerFromOverlongNativeThrowsException(): void
     {
         $this->expectException(ValueException::class);
@@ -254,9 +242,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalDoubleFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -273,10 +259,8 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @group Laminas-7712
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-7712')]
     public function testMarshallingDoubleWithHigherPrecisionFromNative(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -291,10 +275,8 @@ class ValueTest extends TestCase
         $this->assertSame('<value><double>0.1234567</double></value>', trim($value->saveXml()));
     }
 
-    /**
-     * @group Laminas-7712
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-7712')]
     public function testMarshallingDoubleWithHigherPrecisionFromNativeWithTrailingZeros(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -343,9 +325,7 @@ class ValueTest extends TestCase
         $this->assertSame('false', $a[2]);
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalStringFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -362,9 +342,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalStringFromDefault(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -402,9 +380,7 @@ class ValueTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalNilFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -443,9 +419,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalArrayFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -464,9 +438,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testEmptyXmlRpcArrayResultsInEmptyArray(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -488,9 +460,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, $value->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testArrayMustContainDataElement(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -528,9 +498,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalStructFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -550,9 +518,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshallingNestedStructFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -572,9 +538,7 @@ class ValueTest extends TestCase
         $this->assertSame(trim($xml), trim($val->saveXml()));
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshallingStructWithMemberWithoutValue(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -596,9 +560,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshallingStructWithMemberWithoutName(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -620,10 +582,8 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @group Laminas-7639
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-7639')]
     public function testMarshalStructFromXmlRpcWithEntities(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -636,10 +596,8 @@ class ValueTest extends TestCase
         $this->assertSame($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @group Laminas-3947
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-3947')]
     public function testMarshallingStructsWithEmptyValueFromXmlRpcShouldRetainKeys(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -658,9 +616,7 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshallingStructWithMultibyteValueFromXmlRpcRetainsMultibyteValue(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -731,9 +687,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, strtotime($val->getValue()));
     }
 
-    /**
-     * @group Laminas-11588
-     */
+    #[Group('Laminas-11588')]
     public function testMarshalDateTimeBeyondUnixEpochFromNativeStringPassedToConstructor(): void
     {
         $native   = '2040-01-01T00:00:00';
@@ -742,9 +696,7 @@ class ValueTest extends TestCase
         $this->assertSame($expected->format($this->xmlRpcDateFormat), $value->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalDateTimeFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -763,10 +715,8 @@ class ValueTest extends TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXml());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     * @group Laminas-4249
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-4249')]
     public function testMarshalDateTimeFromFromDateTime(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -782,10 +732,8 @@ class ValueTest extends TestCase
         $this->assertEquals(trim($xml), trim($val->saveXml()));
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     * @group Laminas-4249
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-4249')]
     public function testMarshalDateTimeFromDateTimeAndAutodetectingType(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -800,9 +748,7 @@ class ValueTest extends TestCase
         $this->assertEquals(trim($xml), trim($val->saveXml()));
     }
 
-    /**
-     * @group Laminas-10776
-     */
+    #[Group('Laminas-10776')]
     public function testGetValueDatetime(): void
     {
         $expectedValue = '20100101T00:00:00';
@@ -828,9 +774,7 @@ class ValueTest extends TestCase
         $this->assertSame($native, $val->getValue());
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testMarshalBase64FromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -862,9 +806,7 @@ class ValueTest extends TestCase
         $this->assertStringContainsString($encoded, $xml);
     }
 
-    /**
-     * @group Laminas-3862
-     */
+    #[Group('Laminas-3862')]
     public function testMarshalSerializedObjectAsBase64(): void
     {
         $o = new TestAsset\SerializableTestClass();

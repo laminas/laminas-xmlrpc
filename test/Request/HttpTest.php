@@ -6,14 +6,13 @@ namespace LaminasTest\XmlRpc\Request;
 
 use Laminas\XmlRpc\Request;
 use LaminasTest\XmlRpc\PhpInputMock;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function str_starts_with;
 use function strlen;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class HttpTest extends TestCase
 {
     private string $xml;

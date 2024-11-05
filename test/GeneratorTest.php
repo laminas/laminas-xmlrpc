@@ -5,19 +5,18 @@ declare(strict_types=1);
 namespace LaminasTest\XmlRpc;
 
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
+use LaminasTest\XmlRpc\AbstractTestProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
 use function trim;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class GeneratorTest extends TestCase
 {
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testCreatingSingleElement(Generator $generator)
     {
         $generator->openElement('element');
@@ -25,9 +24,7 @@ class GeneratorTest extends TestCase
         $this->assertXml('<element/>', $generator);
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testCreatingSingleElementWithValue(Generator $generator)
     {
         $generator->openElement('element', 'value');
@@ -35,9 +32,7 @@ class GeneratorTest extends TestCase
         $this->assertXml('<element>value</element>', $generator);
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testCreatingComplexXmlDocument(Generator $generator)
     {
         $generator->openElement('root');
@@ -52,9 +47,7 @@ class GeneratorTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testFlushingGeneratorFlushesEverything(Generator $generator)
     {
         $generator->openElement('test')->closeElement('test');
@@ -63,9 +56,7 @@ class GeneratorTest extends TestCase
         $this->assertSame('', (string) $generator);
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testSpecialCharsAreEncoded(Generator $generator)
     {
         $generator->openElement('element', '<>&"\'€')->closeElement('element');
@@ -78,18 +69,14 @@ class GeneratorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGeneratorsWithAlternateEncodings
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGeneratorsWithAlternateEncodings')]
     public function testDifferentEncodings(Generator $generator)
     {
         $generator->openElement('element', '€')->closeElement('element');
         $this->assertXml('<element>&#8364;</element>', $generator);
     }
 
-    /**
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testFluentInterfacesProvided(Generator $generator)
     {
         $this->assertSame($generator, $generator->openElement('foo'));

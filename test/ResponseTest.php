@@ -8,6 +8,7 @@ use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Response;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 use stdClass;
@@ -18,9 +19,7 @@ use function realpath;
 use function set_error_handler;
 use function sprintf;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class ResponseTest extends TestCase
 {
     /**
@@ -118,9 +117,7 @@ class ResponseTest extends TestCase
         $this->assertSame(650, $this->response->getFault()->getCode());
     }
 
-    /**
-     * @group Laminas-9039
-     */
+    #[Group('Laminas-9039')]
     public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer(): void
     {
         set_error_handler([$this, 'trackError']);
@@ -131,9 +128,7 @@ class ResponseTest extends TestCase
         $this->assertFalse($this->errorOccurred);
     }
 
-    /**
-     * @group Laminas-5404
-     */
+    #[Group('Laminas-5404')]
     public function testNilResponseFromXmlRpcServer(): void
     {
         // @codingStandardsIgnoreStart
@@ -244,9 +239,7 @@ EOD;
         $this->errorOccurred = true;
     }
 
-    /**
-     * @group Laminas-12293
-     */
+    #[Group('Laminas-12293')]
     public function testDoesNotAllowExternalEntities(): void
     {
         $payload = file_get_contents(__DIR__ . '/_files/Laminas12293-response.xml');
@@ -255,7 +248,7 @@ EOD;
         $value = $this->response->getReturnValue();
         $this->assertEmpty($value);
         if (is_string($value)) {
-            $this->assertNotContains('Local file inclusion', $value);
+            $this->assertStringNotContainsString('Local file inclusion', $value);
         }
     }
 

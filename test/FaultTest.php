@@ -8,12 +8,11 @@ use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Exception;
 use Laminas\XmlRpc\Fault;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class FaultTest extends TestCase
 {
     private Fault $fault;

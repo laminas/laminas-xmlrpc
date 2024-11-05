@@ -14,6 +14,7 @@ use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Server;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -24,9 +25,7 @@ use function ob_get_contents;
 use function ob_start;
 use function var_export;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class ServerTest extends TestCase
 {
     private Server $server;
@@ -114,9 +113,7 @@ class ServerTest extends TestCase
         $this->assertNotContains('test.__construct', $methods);
     }
 
-    /**
-     * @group Laminas-6526
-     */
+    #[Group('Laminas-6526')]
     public function testSettingClassWithArguments(): void
     {
         $this->server->setClass(TestAsset\TestClass::class, 'test', 'argv-argument');
@@ -348,9 +345,7 @@ class ServerTest extends TestCase
         $this->assertIsString($returns[1], var_export($returns[1], true));
     }
 
-    /**
-     * @group Laminas-5635
-     */
+    #[Group('Laminas-5635')]
     public function testMulticallHandlesFaults(): void
     {
         $struct  = [
@@ -466,14 +461,8 @@ class ServerTest extends TestCase
 
     public function testLoadFunctionsReadsMethodsFromServerDefinitionObjects(): void
     {
-        $mockedMethod     = $this->getMockBuilder(MethodDefinition::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
-        $mockedDefinition = $this->getMockBuilder(ServerDefinition::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $mockedMethod     = $this->createMock(MethodDefinition::class);
+        $mockedDefinition = $this->createMock(ServerDefinition::class);
         $mockedDefinition
             ->expects($this->once())
             ->method('getMethods')
@@ -595,9 +584,7 @@ class ServerTest extends TestCase
         $this->assertEquals(605, $response['faultCode']);
     }
 
-    /**
-     * @group Laminas-2872
-     */
+    #[Group('Laminas-2872')]
     public function testCanMarshalBase64Requests()
     {
         $this->server->setClass(TestAsset\TestClass::class, 'test');
@@ -610,9 +597,7 @@ class ServerTest extends TestCase
         $this->assertEquals($data, $response->getReturnValue());
     }
 
-    /**
-     * @group Laminas-6034
-     */
+    #[Group('Laminas-6034')]
     public function testPrototypeReturnValueMustReflectDocBlock(): void
     {
         $server = new Server();

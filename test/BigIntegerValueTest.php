@@ -8,15 +8,16 @@ use Laminas\Math\BigInteger\BigInteger as MathBigInteger;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
+use LaminasTest\XmlRpc\AbstractTestProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function extension_loaded;
 
 use const PHP_INT_MAX;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class BigIntegerValueTest extends TestCase
 {
     /** @var null|bool */
@@ -49,18 +50,14 @@ class BigIntegerValueTest extends TestCase
         $this->assertSame($this->bigIntValue, $bigInteger->getValue());
     }
 
-    /**
-     * @group Laminas-6445
-     */
+    #[Group('Laminas-6445')]
     public function testBigIntegerGetType(): void
     {
         $bigInteger = new BigInteger($this->bigIntValue);
         $this->assertSame(AbstractValue::XMLRPC_TYPE_I8, $bigInteger->getType());
     }
 
-    /**
-     * @group Laminas-6445
-     */
+    #[Group('Laminas-6445')]
     public function testBigIntegerGeneratedXml(): void
     {
         $bigInteger = new BigInteger($this->bigIntValue);
@@ -71,10 +68,8 @@ class BigIntegerValueTest extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-6445
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-6445')]
     public function testMarshallBigIntegerFromXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -91,10 +86,8 @@ class BigIntegerValueTest extends TestCase
         $this->assertEquals($this->wrapXml($bigIntegerXml), $value->saveXml());
     }
 
-    /**
-     * @group Laminas-6445
-     * @dataProvider \LaminasTest\XmlRpc\AbstractTestProvider::provideGenerators
-     */
+    #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
+    #[Group('Laminas-6445')]
     public function testMarshallBigIntegerFromApacheXmlRpc(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
@@ -113,9 +106,7 @@ class BigIntegerValueTest extends TestCase
         $this->assertEquals($this->wrapXml($bigIntegerXml), $value->saveXml());
     }
 
-    /**
-     * @group Laminas-6445
-     */
+    #[Group('Laminas-6445')]
     public function testMarshalBigIntegerFromNative(): void
     {
         $value = AbstractValue::getXmlRpcValue(

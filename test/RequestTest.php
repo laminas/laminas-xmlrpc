@@ -9,6 +9,7 @@ use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Value;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 use stdClass;
@@ -22,9 +23,7 @@ use function strtotime;
 use function time;
 use function var_export;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class RequestTest extends TestCase
 {
     /**
@@ -323,11 +322,9 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group Laminas-12293
-     *
-     * Test should remain, but is defunct since DOCTYPE presence should return FALSE
-     * from loadXml()
+     * Test should remain, but is defunct since DOCTYPE presence should return FALSE from loadXml()
      */
+    #[Group('Laminas-12293')]
     public function testDoesNotAllowExternalEntities(): void
     {
         $payload = file_get_contents(__DIR__ . '/_files/Laminas12293-request.xml');
@@ -336,7 +333,7 @@ class RequestTest extends TestCase
         $method = $this->request->getMethod();
         $this->assertEmpty($method);
         if (is_string($method)) {
-            $this->assertNotContains('Local file inclusion', $method);
+            $this->assertStringNotContainsString('Local file inclusion', $method);
         }
     }
 

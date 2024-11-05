@@ -16,6 +16,7 @@ use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Value;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -25,9 +26,7 @@ use function implode;
 use function strlen;
 use function time;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class ClientTest extends TestCase
 {
     /** @var AdapterInterface */
@@ -136,9 +135,7 @@ class ClientTest extends TestCase
         $this->assertFalse($response->isFault());
     }
 
-    /**
-     * @group Laminas-2090
-     */
+    #[Group('Laminas-2090')]
     public function testSuccessfullyDetectsEmptyArrayParameterAsArray(): void
     {
         $expectedMethod = 'foo.bar';
@@ -157,9 +154,7 @@ class ClientTest extends TestCase
         $this->assertSame($expectedParams[0], $params[0]->getValue());
     }
 
-    /**
-     * @group Laminas-1412
-     */
+    #[Group('Laminas-1412')]
     public function testSuccessfulRpcMethodCallWithMixedDateParameters(): void
     {
         $time           = time();
@@ -187,9 +182,7 @@ class ClientTest extends TestCase
         $this->assertFalse($response->isFault());
     }
 
-    /**
-     * @group Laminas-1797
-     */
+    #[Group('Laminas-1797')]
     public function testSuccesfulRpcMethodCallWithXmlRpcValueParameters(): void
     {
         $time   = time();
@@ -214,17 +207,13 @@ class ClientTest extends TestCase
         $this->assertFalse($response->isFault());
     }
 
-    /**
-     * @group Laminas-2978
-     */
+    #[Group('Laminas-2978')]
     public function testSkippingSystemCallDisabledByDefault(): void
     {
         $this->assertFalse($this->xmlrpcClient->skipSystemLookup());
     }
 
-    /**
-     * @group Laminas-6993
-     */
+    #[Group('Laminas-6993')]
     public function testWhenPassingAStringAndAnIntegerIsExpectedParamIsConverted(): void
     {
         $this->mockIntrospector();
@@ -247,9 +236,7 @@ class ClientTest extends TestCase
         $this->assertSame(1, $params[0]->getValue());
     }
 
-    /**
-     * @group Laminas-8074
-     */
+    #[Group('Laminas-8074')]
     public function testXmlRpcObjectsAreNotConverted(): void
     {
         $this->mockIntrospector();
@@ -547,9 +534,7 @@ class ClientTest extends TestCase
         $this->assertEquals('system.multicall', $request->getMethod());
     }
 
-    /**
-     * @group Laminas-4372
-     */
+    #[Group('Laminas-4372')]
     public function testSettingUriOnHttpClientIsNotOverwrittenByXmlRpcClient(): void
     {
         $changedUri = 'http://bar:80/';
@@ -562,9 +547,7 @@ class ClientTest extends TestCase
         $this->assertEquals($changedUri, $uri);
     }
 
-    /**
-     * @group Laminas-4372
-     */
+    #[Group('Laminas-4372')]
     public function testSettingNoHttpClientUriForcesClientToSetUri(): void
     {
         $baseUri           = 'http://foo:80/';
@@ -582,9 +565,7 @@ class ClientTest extends TestCase
         $this->assertEquals($baseUri, $uri->toString());
     }
 
-    /**
-     * @group Laminas-3288
-     */
+    #[Group('Laminas-3288')]
     public function testCustomHttpClientUserAgentIsNotOverridden(): void
     {
         $this->assertFalse(
@@ -607,9 +588,7 @@ class ClientTest extends TestCase
         $this->assertSame($expectedUserAgent, $this->httpClient->getHeader('user-agent'));
     }
 
-    /**
-     * @group #27
-     */
+    #[Group('#27')]
     public function testContentTypeIsNotReplaced(): void
     {
         $this->assertFalse(
@@ -625,9 +604,7 @@ class ClientTest extends TestCase
         $this->assertSame($expectedContentType, $this->httpClient->getHeader('Content-Type'));
     }
 
-    /**
-     * @group #27
-     */
+    #[Group('#27')]
     public function testAcceptIsNotReplaced(): void
     {
         $this->assertFalse(
@@ -643,9 +620,7 @@ class ClientTest extends TestCase
         $this->assertSame($expectedAccept, $this->httpClient->getHeader('Accept'));
     }
 
-    /**
-     * @group Laminas-8478
-     */
+    #[Group('Laminas-8478')]
     public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures(): void
     {
         $introspector = new Client\ServerIntrospection(
@@ -657,9 +632,7 @@ class ClientTest extends TestCase
         $signature = $introspector->getMethodSignature('add');
     }
 
-    /**
-     * @group Laminas-8580
-     */
+    #[Group('Laminas-8580')]
     public function testCallSelectsCorrectSignatureIfMoreThanOneIsAvailable(): void
     {
         $this->mockIntrospector();
@@ -690,9 +663,7 @@ class ClientTest extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-1897
-     */
+    #[Group('Laminas-1897')]
     public function testHandlesLeadingOrTrailingWhitespaceInChunkedResponseProperly(): void
     {
         $baseUri           = "http://foo:80";
@@ -759,10 +730,7 @@ class ClientTest extends TestCase
 
     public function mockIntrospector()
     {
-        $this->mockedIntrospector = $this->getMockBuilder(Client\ServerIntrospection::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $this->mockedIntrospector = $this->createMock(Client\ServerIntrospection::class);
         $this->xmlrpcClient->setIntrospector($this->mockedIntrospector);
     }
 }

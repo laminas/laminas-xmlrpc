@@ -7,14 +7,13 @@ namespace LaminasTest\XmlRpc\Server;
 use DOMDocument;
 use Laminas\XmlRpc\Server;
 use Laminas\XmlRpc\Server\Fault;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_shift;
 use function trim;
 
-/**
- * @group      Laminas_XmlRpc
- */
+#[Group('Laminas_XmlRpc')]
 class FaultTest extends TestCase
 {
     /**
