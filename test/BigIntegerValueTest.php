@@ -8,7 +8,6 @@ use Brick\Math\BigInteger as MathBigInteger;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
-use LaminasTest\XmlRpc\AbstractTestProvider;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +34,7 @@ class BigIntegerValueTest extends TestCase
         $this->useBigIntForI8Flag         = AbstractValue::$USE_BIGINT_FOR_I8;
         AbstractValue::$USE_BIGINT_FOR_I8 = true;
         $this->bigIntValue                = MathBigInteger::of((string) PHP_INT_MAX)
-            ->plus( '42');
+            ->plus('42');
     }
 
     protected function tearDown(): void
