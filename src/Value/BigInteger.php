@@ -2,7 +2,7 @@
 
 namespace Laminas\XmlRpc\Value;
 
-use Laminas\Math\BigInteger\BigInteger as BigIntegerMath;
+use Brick\Math\BigInteger as BigIntegerMath;
 
 class BigInteger extends Integer
 {
@@ -11,7 +11,7 @@ class BigInteger extends Integer
      */
     public function __construct($value)
     {
-        $this->value = BigIntegerMath::factory()->init($value, 10);
+        $this->value = BigIntegerMath::of($value);
         $this->type  = self::XMLRPC_TYPE_I8;
     }
 

@@ -29,9 +29,9 @@
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-simplexml": "*",
+        "brick/math": "^0.13.1",
         "laminas/laminas-code": "^4.4",
         "laminas/laminas-http": "^2.15",
-        "laminas/laminas-math": "^3.4.0",
         "laminas/laminas-server": "^2.11",
         "laminas/laminas-stdlib": "^3.10.1",
         "laminas/laminas-xml": "^1.4.0"
