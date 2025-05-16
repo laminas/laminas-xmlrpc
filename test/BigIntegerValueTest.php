@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc;
 
-use Laminas\Math\BigInteger\BigInteger as MathBigInteger;
+use Brick\Math\BigInteger as MathBigInteger;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
@@ -34,8 +34,8 @@ class BigIntegerValueTest extends TestCase
 
         $this->useBigIntForI8Flag         = AbstractValue::$USE_BIGINT_FOR_I8;
         AbstractValue::$USE_BIGINT_FOR_I8 = true;
-        $this->bigIntValue                = MathBigInteger::factory()
-            ->add((string) PHP_INT_MAX, '42');
+        $this->bigIntValue                = MathBigInteger::of((string) PHP_INT_MAX)
+            ->plus( '42');
     }
 
     protected function tearDown(): void
