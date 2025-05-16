@@ -33,7 +33,7 @@ class BigIntegerValueTest extends TestCase
 
         $this->useBigIntForI8Flag         = AbstractValue::$USE_BIGINT_FOR_I8;
         AbstractValue::$USE_BIGINT_FOR_I8 = true;
-        $this->bigIntValue                = (string)MathBigInteger::of((string) PHP_INT_MAX)
+        $this->bigIntValue                = (string) MathBigInteger::of((string) PHP_INT_MAX)
             ->plus('42');
     }
 

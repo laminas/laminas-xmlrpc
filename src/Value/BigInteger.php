@@ -11,7 +11,7 @@ class BigInteger extends Integer
      */
     public function __construct($value)
     {
-        $this->value = BigIntegerMath::of($value);
+        $this->value = (string) BigIntegerMath::of($value);
         $this->type  = self::XMLRPC_TYPE_I8;
     }
 
