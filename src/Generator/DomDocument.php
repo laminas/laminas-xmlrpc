@@ -32,6 +32,7 @@ class DomDocument extends AbstractGenerator
      * Write XML text data into the currently opened XML element
      *
      * @param string $text
+     * @return void
      */
     protected function writeTextData($text)
     {

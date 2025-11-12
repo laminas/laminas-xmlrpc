@@ -125,6 +125,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * Start XML element
      *
      * @param string $name XML element name
+     * @return void
      */
     abstract protected function openXmlElement($name);
 
@@ -132,6 +133,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * Write XML text data into the currently opened XML element
      *
      * @param string $text
+     * @return void
      */
     abstract protected function writeTextData($text);
 
@@ -139,6 +141,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * End XML element
      *
      * @param string $name
+     * @return void
      */
     abstract protected function closeXmlElement($name);
 }
