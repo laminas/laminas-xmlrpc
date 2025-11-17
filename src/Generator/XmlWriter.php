@@ -10,7 +10,7 @@ class XmlWriter extends AbstractGenerator
     /**
      * XMLWriter instance
      *
-     * @var XMLWriter
+     * @var XmlWriter
      */
     protected $xmlWriter;
 

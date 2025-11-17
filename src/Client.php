@@ -2,16 +2,19 @@
 
 namespace Laminas\XmlRpc;
 
-use Laminas\Http;
-use Laminas\Http\Client\Exception\RuntimeException;
-use Laminas\Http\Exception\InvalidArgumentException;
-use Laminas\Server\Client as ServerClient;
+use Laminas\Server\ClientInterface as ServerClient;
 use Laminas\XmlRpc\Client\Exception\FaultException;
 use Laminas\XmlRpc\Client\Exception\HttpException;
+use Laminas\XmlRpc\Client\Exception\InvalidArgumentException;
+use Laminas\XmlRpc\Client\Exception\RuntimeException;
 use Laminas\XmlRpc\Client\ServerIntrospection;
 use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Exception\ExceptionInterface;
 use Laminas\XmlRpc\Exception\ValueException;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 use function assert;
 use function count;
@@ -34,16 +37,29 @@ class Client implements ServerClient
      * Full address of the XML-RPC service
      *
      * @var string
-     * @example http://time.xmlrpc.com/RPC2
      */
     protected $serverAddress;
 
     /**
-     * HTTP Client to use for requests
+     * PSR-18 HTTP Client to use for requests
      *
-     * @var \Laminas\Http\Client
+     * @var HttpClientInterface
      */
     protected $httpClient;
+
+    /**
+     * PSR-17 Request factory
+     *
+     * @var RequestFactoryInterface|null
+     */
+    protected $requestFactory;
+
+    /**
+     * PSR-17 Stream factory
+     *
+     * @var StreamFactoryInterface|null
+     */
+    protected $streamFactory;
 
     /**
      * Introspection object
@@ -55,21 +71,21 @@ class Client implements ServerClient
     /**
      * Request of the last method call
      *
-     * @var Request
+     * @var Request|null
      */
     protected $lastRequest;
 
     /**
      * Response received from the last method call
      *
-     * @var Response
+     * @var Response|null
      */
     protected $lastResponse;
 
     /**
-     * Proxy object for more convenient method calls
+     * Proxy object cache
      *
-     * @var array of Laminas\XmlRpc\Client\ServerProxy
+     * @var array<string, ServerProxy>
      */
     protected $proxyCache = [];
 
@@ -85,15 +101,20 @@ class Client implements ServerClient
      *
      * @param  string $server      Full address of the XML-RPC service
      *                             (e.g. http://time.xmlrpc.com/RPC2)
-     * @param  \Laminas\Http\Client $httpClient HTTP Client to use for requests
+     * @param  HttpClientInterface|null $httpClient HTTP Client to use for requests
      */
-    public function __construct($server, ?Http\Client $httpClient = null)
-    {
+    public function __construct(
+        string $server,
+        HttpClientInterface|null $httpClient = null,
+        RequestFactoryInterface|null $requestFactory = null,
+        StreamFactoryInterface|null $streamFactory = null
+    ) {
         if ($httpClient === null) {
-            $this->httpClient = new Http\Client();
-        } else {
-            $this->httpClient = $httpClient;
+            throw new InvalidArgumentException("Client cannot be null");
         }
+        $this->httpClient     = $httpClient;
+        $this->requestFactory = $requestFactory;
+        $this->streamFactory  = $streamFactory;
 
         $this->introspector  = new ServerIntrospection($this);
         $this->serverAddress = $server;
@@ -102,9 +123,9 @@ class Client implements ServerClient
     /**
      * Sets the HTTP client object to use for connecting the XML-RPC server.
      *
-     * @return \Laminas\Http\Client
+     * @return HttpClientInterface
      */
-    public function setHttpClient(Http\Client $httpClient)
+    public function setHttpClient(HttpClientInterface $httpClient)
     {
         return $this->httpClient = $httpClient;
     }
@@ -112,7 +133,7 @@ class Client implements ServerClient
     /**
      * Gets the HTTP client object.
      *
-     * @return \Laminas\Http\Client
+     * @return HttpClientInterface
      */
     public function getHttpClient()
     {
@@ -224,37 +245,30 @@ class Client implements ServerClient
             ini_set('default_charset', 'UTF-8');
         }
 
-        $http        = $this->getHttpClient();
-        $httpRequest = $http->getRequest();
-        if ($httpRequest->getUriString() === null) {
-            $http->setUri($this->serverAddress);
-        }
-
-        $headers = $httpRequest->getHeaders();
-
-        if (! $headers->has('Content-Type')) {
-            $headers->addHeaderLine('Content-Type', 'text/xml; charset=utf-8');
-        }
-
-        if (! $headers->has('Accept')) {
-            $headers->addHeaderLine('Accept', 'text/xml');
-        }
-
-        if (! $headers->has('user-agent')) {
-            $headers->addHeaderLine('user-agent', 'Laminas_XmlRpc_Client');
-        }
-
         $xml = $this->lastRequest->__toString();
-        $http->setRawBody($xml);
-        $httpResponse = $http->setMethod('POST')->send();
 
-        if (! $httpResponse->isSuccess()) {
-            /**
-             * Exception thrown when an HTTP error occurs
-             */
+        // Build PSR-7 request
+        $psrRequest = $this->requestFactory
+            ->createRequest('POST', $this->serverAddress)
+            ->withHeader('Content-Type', 'text/xml; charset=utf-8')
+            ->withHeader('Accept', 'text/xml')
+            ->withHeader('User-Agent', 'Laminas_XmlRpc_Client');
+
+        $stream     = $this->streamFactory->createStream($xml);
+        $psrRequest = $psrRequest->withBody($stream);
+
+        try {
+            $psrResponse = $this->httpClient->sendRequest($psrRequest);
+        } catch (ClientExceptionInterface $e) {
+            // Wrap the client-specific exception in your existing HttpException
+            throw new HttpException($e->getMessage(), 0, $e);
+        }
+
+        $statusCode = $psrResponse->getStatusCode();
+        if ($statusCode < 200 || $statusCode >= 300) {
             throw new HttpException(
-                $httpResponse->getReasonPhrase(),
-                $httpResponse->getStatusCode()
+                $psrResponse->getReasonPhrase(),
+                $statusCode
             );
         }
 
@@ -263,7 +277,8 @@ class Client implements ServerClient
         }
 
         $this->lastResponse = $response;
-        $this->lastResponse->loadXml(trim($httpResponse->getBody()), $libXmlOptions);
+        $body               = (string) $psrResponse->getBody();
+        $this->lastResponse->loadXml(trim($body), $libXmlOptions);
     }
 
     /**
