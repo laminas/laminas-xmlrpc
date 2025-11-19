@@ -276,8 +276,8 @@ class Client implements ServerClient
             $response = new Response();
         }
 
-        $this->lastResponse = $response;
         $body               = (string) $psrResponse->getBody();
+        $this->lastResponse = $response;
         $this->lastResponse->loadXml(trim($body), $libXmlOptions);
     }
 

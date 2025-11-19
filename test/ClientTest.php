@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc;
 
-use Http\Mock\Client as MockHttpClient;
 use Laminas\Diactoros\RequestFactory as DiactorosRequestFactory;
 use Laminas\Diactoros\Response\Serializer as ResponseSerializer;
 use Laminas\Diactoros\StreamFactory as DiactorosStreamFactory;
@@ -16,6 +15,7 @@ use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Value;
+use LaminasTest\XmlRpc\TestAsset\TestPsr18Client;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -24,15 +24,20 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
 use function count;
+use function ctype_xdigit;
 use function file_get_contents;
+use function hexdec;
 use function implode;
 use function strlen;
+use function strpos;
+use function substr;
 use function time;
+use function trim;
 
 #[Group('Laminas_XmlRpc')]
 class ClientTest extends TestCase
 {
-    /** @var MockHttpClient */
+    /** @var TestPsr18Client */
     protected $httpClient;
 
     /** @var RequestFactoryInterface */
@@ -48,7 +53,7 @@ class ClientTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->httpClient     = new MockHttpClient();
+        $this->httpClient     = new TestPsr18Client();
         $this->requestFactory = new DiactorosRequestFactory();
         $this->streamFactory  = new DiactorosStreamFactory();
 
@@ -62,7 +67,7 @@ class ClientTest extends TestCase
 
     public function testSettingAndGettingHttpClient(): void
     {
-        $httpClient1 = new MockHttpClient();
+        $httpClient1 = new TestPsr18Client();
 
         $xmlrpcClient = new Client(
             'http://foo',
@@ -71,7 +76,7 @@ class ClientTest extends TestCase
             $this->streamFactory
         );
 
-        $httpClient2 = new MockHttpClient();
+        $httpClient2 = new TestPsr18Client();
         $this->assertNotSame($httpClient2, $xmlrpcClient->getHttpClient());
 
         $xmlrpcClient->setHttpClient($httpClient2);
@@ -184,7 +189,7 @@ class ClientTest extends TestCase
     }
 
     #[Group('Laminas-1797')]
-    public function testSuccesfulRpcMethodCallWithXmlRpcValueParameters(): void
+    public function testSuccessfulRpcMethodCallWithXmlRpcValueParameters(): void
     {
         $params = [
             new Value\Boolean(true),
@@ -355,7 +360,7 @@ class ClientTest extends TestCase
 
     public function testGettingDefaultIntrospector(): void
     {
-        $httpClient     = new MockHttpClient();
+        $httpClient     = new TestPsr18Client();
         $requestFactory = new DiactorosRequestFactory();
         $streamFactory  = new DiactorosStreamFactory();
 
@@ -373,7 +378,7 @@ class ClientTest extends TestCase
 
     public function testSettingAndGettingIntrospector(): void
     {
-        $httpClient     = new MockHttpClient();
+        $httpClient     = new TestPsr18Client();
         $requestFactory = new DiactorosRequestFactory();
         $streamFactory  = new DiactorosStreamFactory();
 
@@ -563,7 +568,7 @@ class ClientTest extends TestCase
 
         $this->expectException(Client\Exception\IntrospectException::class);
         $this->expectExceptionMessage('Invalid signature for method "add"');
-        $introspector->getMethodSignature(['add']);
+        $introspector->getMethodSignature('add');
     }
 
     #[Group('Laminas-8580')]
@@ -601,19 +606,70 @@ class ClientTest extends TestCase
     public function testHandlesLeadingOrTrailingWhitespaceInChunkedResponseProperly(): void
     {
         $baseUri            = "http://foo:80";
-        $this->httpClient   = new MockHttpClient();
+        $this->httpClient   = new TestPsr18Client();
         $this->xmlrpcClient = new Client(
             $baseUri,
             $this->httpClient,
             $this->requestFactory,
             $this->streamFactory
         );
+        $this->xmlrpcClient->setSkipSystemLookup(true);
 
-        $respBody = file_get_contents(__DIR__ . "/_files/Laminas1897-response-chunked.txt");
-        $response = ResponseSerializer::fromString($respBody);
-        $this->httpClient->addResponse($response);
+        $raw         = file_get_contents(__DIR__ . "/_files/Laminas1897-response-chunked.txt");
+        $decodedBody = $this->decodeChunkedBody($raw);
+        $response    = new \Laminas\Diactoros\Response(
+            $this->streamFactory->createStream($decodedBody),
+            200,
+            ['Content-Type' => 'text/xml; charset=utf-8']
+        );
+        $this->httpClient->setResponse($response);
 
         $this->assertEquals('FOO', $this->xmlrpcClient->call('foo'));
+    }
+
+    private function decodeChunkedBody(string $raw): string
+    {
+        // Split headers and body
+        $position = strpos($raw, "\r\n\r\n");
+        if ($position === false) {
+            // Not an HTTP message as expected; just return raw
+            return $raw;
+        }
+
+        $chunked = substr($raw, $position + 4); // skip header + \r\n\r\n
+        $decoded = '';
+
+        while ($chunked !== '') {
+            // Find the next chunk length line
+            $newlinePosition = strpos($chunked, "\r\n");
+            if ($newlinePosition === false) {
+                break;
+            }
+
+            $lenHex = substr($chunked, 0, $newlinePosition);
+            $lenHex = trim($lenHex);
+
+            // Safety: empty or invalid hex -> stop
+            if ($lenHex === '' || ! ctype_xdigit($lenHex)) {
+                break;
+            }
+
+            $length  = hexdec($lenHex);
+            $chunked = substr($chunked, $newlinePosition + 2); // skip "len\r\n"
+
+            if ($length === 0) {
+                // End of chunks
+                break;
+            }
+
+            // Take exactly $length bytes as the chunk payload
+            $decoded .= substr($chunked, 0, $length);
+
+            // Skip the chunk data + trailing CRLF
+            $chunked = substr($chunked, $length + 2);
+        }
+
+        return $decoded;
     }
 
     /**
@@ -622,7 +678,7 @@ class ClientTest extends TestCase
     public function setServerResponseTo($nativeVars): void
     {
         $response = $this->getServerResponseFor($nativeVars);
-        $this->httpClient->addResponse($response);
+        $this->httpClient->setResponse($response);
     }
 
     /**
@@ -650,7 +706,8 @@ class ClientTest extends TestCase
             'Content-Type: text/xml; charset=utf-8',
             'Content-Length: ' . strlen($data),
         ];
-        $raw     = implode("\r\n", $headers) . "\r\n\r\n$data\r\n\r\n";
+
+        $raw = implode("\r\n", $headers) . "\r\n\r\n" . $data . "\r\n";
 
         return ResponseSerializer::fromString($raw);
     }
