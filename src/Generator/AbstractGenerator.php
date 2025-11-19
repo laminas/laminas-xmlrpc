@@ -40,7 +40,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * Method opens a new XML element with an element name and an optional value
      *
      * @param string $name XML tag name
-     * @param string $value Optional value of the XML tag
+     * @param mixed $value Optional value of the XML tag
      * @return AbstractGenerator Fluent interface
      */
     public function openElement($name, $value = null)
@@ -82,12 +82,11 @@ abstract class AbstractGenerator implements GeneratorInterface
      * Set XML encoding
      *
      * @param  string $encoding
-     * @return AbstractGenerator
+     * @return void
      */
     public function setEncoding($encoding)
     {
         $this->encoding = $encoding;
-        return $this;
     }
 
     /**
@@ -132,7 +131,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * Write XML text data into the currently opened XML element
      *
-     * @param string $text
+     * @param mixed $text
      * @return void
      */
     abstract protected function writeTextData($text);

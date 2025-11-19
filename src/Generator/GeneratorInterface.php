@@ -14,13 +14,13 @@ interface GeneratorInterface
 
     /**
      * @param string $encoding
-     * @return static
+     * @return void
      */
     public function setEncoding($encoding);
 
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      * @return AbstractGenerator
      */
     public function openElement($name, $value = null);

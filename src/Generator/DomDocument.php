@@ -31,12 +31,12 @@ class DomDocument extends AbstractGenerator
     /**
      * Write XML text data into the currently opened XML element
      *
-     * @param string $text
+     * @param mixed $text
      * @return void
      */
     protected function writeTextData($text)
     {
-        $this->currentElement->appendChild($this->dom->createTextNode($text));
+        $this->currentElement->appendChild($this->dom->createTextNode((string) $text));
     }
 
     /**

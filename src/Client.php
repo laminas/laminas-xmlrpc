@@ -71,14 +71,14 @@ class Client implements ServerClient
     /**
      * Request of the last method call
      *
-     * @var Request|null
+     * @var Request
      */
     protected $lastRequest;
 
     /**
      * Response received from the last method call
      *
-     * @var Response|null
+     * @var Response
      */
     protected $lastResponse;
 
@@ -123,11 +123,11 @@ class Client implements ServerClient
     /**
      * Sets the HTTP client object to use for connecting the XML-RPC server.
      *
-     * @return HttpClientInterface
+     * @return void
      */
     public function setHttpClient(HttpClientInterface $httpClient)
     {
-        return $this->httpClient = $httpClient;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -248,12 +248,18 @@ class Client implements ServerClient
         $xml = $this->lastRequest->__toString();
 
         // Build PSR-7 request
+        if ($this->requestFactory === null) {
+            throw new HttpException("No requestFactory defined");
+        }
         $psrRequest = $this->requestFactory
             ->createRequest('POST', $this->serverAddress)
             ->withHeader('Content-Type', 'text/xml; charset=utf-8')
             ->withHeader('Accept', 'text/xml')
             ->withHeader('User-Agent', 'Laminas_XmlRpc_Client');
 
+        if ($this->streamFactory === null) {
+            throw new HttpException("No streamFactory defined");
+        }
         $stream     = $this->streamFactory->createStream($xml);
         $psrRequest = $psrRequest->withBody($stream);
 

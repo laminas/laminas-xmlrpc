@@ -33,7 +33,7 @@ class Struct extends AbstractCollection
             foreach ($this->value as $name => $val) {
                 $generator
                     ->openElement('member')
-                    ->openElement('name', $name)
+                    ->openElement('name', (string) $name)
                     ->closeElement('name');
                 $val->generateXml();
                 $generator->closeElement('member');

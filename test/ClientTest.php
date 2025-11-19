@@ -397,7 +397,7 @@ class ClientTest extends TestCase
 
     public function testGettingMethodSignature(): void
     {
-        $method     = ['foo'];
+        $method     = 'foo';
         $signatures = [['int', 'int', 'int']];
         $this->setServerResponseTo($signatures);
 

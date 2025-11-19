@@ -25,9 +25,9 @@ final class TestClient extends Client
     ) {
         parent::__construct(
             $server,
-            new TestPsr18Client(),
-            new DiactorosRequestFactory(),
-            new DiactorosStreamFactory()
+            $httpClient ?? new TestPsr18Client(),
+            $requestFactory ?? new DiactorosRequestFactory(),
+            $streamFactory ?? new DiactorosStreamFactory()
         );
     }
 
