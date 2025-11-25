@@ -80,46 +80,18 @@
       <code><![CDATA[Client]]></code>
     </DeprecatedInterface>
     <DocblockTypeContradiction>
-      <code><![CDATA[$httpRequest->getUriString() === null]]></code>
       <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[$method]]></code>
-    </InvalidArgument>
     <MixedAssignment>
       <code><![CDATA[$param]]></code>
       <code><![CDATA[$signature]]></code>
       <code><![CDATA[$type]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[ServerProxy]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->proxyCache[$namespace]]]></code>
-      <code><![CDATA[$this->proxyCache[$namespace]]]></code>
-    </MixedReturnStatement>
-    <PossiblyInvalidMethodCall>
-      <code><![CDATA[addHeaderLine]]></code>
-      <code><![CDATA[addHeaderLine]]></code>
-      <code><![CDATA[addHeaderLine]]></code>
-      <code><![CDATA[has]]></code>
-      <code><![CDATA[has]]></code>
-      <code><![CDATA[has]]></code>
-    </PossiblyInvalidMethodCall>
     <PossiblyNullReference>
       <code><![CDATA[getMessage]]></code>
     </PossiblyNullReference>
-    <PossiblyUndefinedMethod>
-      <code><![CDATA[addHeaderLine]]></code>
-      <code><![CDATA[addHeaderLine]]></code>
-      <code><![CDATA[addHeaderLine]]></code>
-      <code><![CDATA[has]]></code>
-      <code><![CDATA[has]]></code>
-      <code><![CDATA[has]]></code>
-    </PossiblyUndefinedMethod>
     <PossiblyUnusedReturnValue>
       <code><![CDATA[ServerIntrospection]]></code>
-      <code><![CDATA[\Laminas\Http\Client]]></code>
     </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
       <code><![CDATA[$lastRequest]]></code>
@@ -135,9 +107,6 @@
     </UnusedFunctionCall>
   </file>
   <file src="src/Client/ServerIntrospection.php">
-    <InvalidOperand>
-      <code><![CDATA[$method]]></code>
-    </InvalidOperand>
     <MixedArgument>
       <code><![CDATA[$method]]></code>
     </MixedArgument>
@@ -196,13 +165,6 @@
       <code><![CDATA[$message]]></code>
       <code><![CDATA[$struct]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[openElement]]></code>
-    </MixedMethodCall>
     <MixedOperand>
       <code><![CDATA[$errors]]></code>
       <code><![CDATA[$item->message]]></code>
@@ -212,9 +174,6 @@
       <code><![CDATA[$item->message]]></code>
       <code><![CDATA[$item->message]]></code>
     </MixedPropertyFetch>
-    <MixedReturnStatement>
-      <code><![CDATA[$generator->flush()]]></code>
-    </MixedReturnStatement>
     <PossiblyInvalidArgument>
       <code><![CDATA[$code]]></code>
     </PossiblyInvalidArgument>
@@ -226,47 +185,7 @@
       <code><![CDATA[new static()]]></code>
     </UnsafeInstantiation>
   </file>
-  <file src="src/Generator/AbstractGenerator.php">
-    <MissingReturnType>
-      <code><![CDATA[closeXmlElement]]></code>
-      <code><![CDATA[openXmlElement]]></code>
-      <code><![CDATA[writeTextData]]></code>
-    </MissingReturnType>
-  </file>
-  <file src="src/Generator/DomDocument.php">
-    <MissingReturnType>
-      <code><![CDATA[writeTextData]]></code>
-    </MissingReturnType>
-  </file>
-  <file src="src/Generator/GeneratorInterface.php">
-    <MissingReturnType>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[flush]]></code>
-      <code><![CDATA[getEncoding]]></code>
-      <code><![CDATA[openElement]]></code>
-      <code><![CDATA[setEncoding]]></code>
-    </MissingReturnType>
-  </file>
-  <file src="src/Generator/XmlWriter.php">
-    <InvalidClass>
-      <code><![CDATA[XMLWriter]]></code>
-    </InvalidClass>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[new \XMLWriter()]]></code>
-    </InvalidPropertyAssignmentValue>
-    <TooManyArguments>
-      <code><![CDATA[flush]]></code>
-    </TooManyArguments>
-    <UndefinedMethod>
-      <code><![CDATA[endElement]]></code>
-      <code><![CDATA[startElement]]></code>
-      <code><![CDATA[text]]></code>
-    </UndefinedMethod>
-  </file>
   <file src="src/Request.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$request]]></code>
-    </ArgumentTypeCoercion>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($method)]]></code>
       <code><![CDATA[is_string($request)]]></code>
@@ -289,17 +208,9 @@
       <code><![CDATA[$types[]]]></code>
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
     <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
       <code><![CDATA[generateXml]]></code>
-      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$generator->flush()]]></code>
-    </MixedReturnStatement>
     <PossiblyUnusedProperty>
       <code><![CDATA[$xml]]></code>
     </PossiblyUnusedProperty>
@@ -347,18 +258,6 @@
       <code><![CDATA[$xml->fault]]></code>
       <code><![CDATA[$xml->params]]></code>
     </InvalidPropertyFetch>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[openElement]]></code>
-      <code><![CDATA[openElement]]></code>
-    </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$generator->flush()]]></code>
-    </MixedReturnStatement>
     <PossiblyUnusedProperty>
       <code><![CDATA[$type]]></code>
     </PossiblyUnusedProperty>
@@ -445,7 +344,6 @@
       <code><![CDATA[$argv]]></code>
     </PossiblyNullArgument>
     <PossiblyNullReference>
-      <code><![CDATA[getInvokeArguments]]></code>
       <code><![CDATA[setEncoding]]></code>
     </PossiblyNullReference>
     <PossiblyUnusedMethod>
@@ -554,11 +452,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Value/AbstractScalar.php">
-    <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[openElement]]></code>
-    </MixedMethodCall>
     <PossiblyUnusedMethod>
       <code><![CDATA[generate]]></code>
     </PossiblyUnusedMethod>
@@ -568,11 +461,7 @@
       <code><![CDATA[$val]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
       <code><![CDATA[generateXml]]></code>
-      <code><![CDATA[openElement]]></code>
-      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
     <PossiblyUnusedMethod>
       <code><![CDATA[generate]]></code>
@@ -660,11 +549,7 @@
       <code><![CDATA[$val]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
       <code><![CDATA[generateXml]]></code>
-      <code><![CDATA[openElement]]></code>
-      <code><![CDATA[openElement]]></code>
     </MixedMethodCall>
     <PossiblyUnusedMethod>
       <code><![CDATA[generate]]></code>
@@ -689,14 +574,8 @@
   </file>
   <file src="test/ClientTest.php">
     <InvalidArgument>
-      <code><![CDATA[$method]]></code>
       <code><![CDATA['1']]></code>
-      <code><![CDATA['add']]></code>
     </InvalidArgument>
-    <MissingReturnType>
-      <code><![CDATA[mockIntrospector]]></code>
-      <code><![CDATA[setServerResponseTo]]></code>
-    </MissingReturnType>
     <MixedMethodCall>
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
@@ -707,27 +586,6 @@
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
     </MixedMethodCall>
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[addResponse]]></code>
-      <code><![CDATA[addResponse]]></code>
-      <code><![CDATA[addResponse]]></code>
-      <code><![CDATA[addResponse]]></code>
-      <code><![CDATA[addResponse]]></code>
-      <code><![CDATA[addResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-      <code><![CDATA[setResponse]]></code>
-    </UndefinedInterfaceMethod>
-    <UnusedVariable>
-      <code><![CDATA[$signature]]></code>
-      <code><![CDATA[$time]]></code>
-    </UnusedVariable>
   </file>
   <file src="test/FaultTest.php">
     <InvalidArgument>
@@ -783,19 +641,6 @@
       <code><![CDATA[testFlushingGeneratorFlushesEverything]]></code>
       <code><![CDATA[testSpecialCharsAreEncoded]]></code>
     </MissingReturnType>
-    <MixedArgument>
-      <code><![CDATA[$generator->flush()]]></code>
-    </MixedArgument>
-    <MixedMethodCall>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
-      <code><![CDATA[closeElement]]></code>
-    </MixedMethodCall>
-    <MixedOperand>
-      <code><![CDATA[$actual->getEncoding()]]></code>
-    </MixedOperand>
   </file>
   <file src="test/PhpInputMock.php">
     <MissingParamType>
