@@ -4,6 +4,7 @@ namespace Laminas\XmlRpc;
 
 use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
+use Psr\Http\Message\ResponseInterface;
 use Stringable;
 
 use function is_object;
@@ -51,11 +52,15 @@ class Response implements Stringable
      * return value can be set via {@link setReturnValue()}.
      *
      * @param mixed $return
-     * @param string $type
+     * @param string|null $type
      */
     public function __construct($return = null, $type = null)
     {
         $this->setReturnValue($return, $type);
+    }
+
+    public static function fromPsr7Response(ResponseInterface $psrResponse)
+    {
     }
 
     /**
@@ -87,7 +92,7 @@ class Response implements Stringable
      * Sets the return value, with optional type hinting if provided.
      *
      * @param mixed $value
-     * @param string $type
+     * @param string|null $type
      * @return void
      */
     public function setReturnValue($value, $type = null)

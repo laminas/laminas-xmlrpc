@@ -18,164 +18,100 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 use function assert;
 use function count;
-use function iconv_set_encoding;
 use function in_array;
-use function ini_set;
 use function is_array;
 use function is_string;
 use function str_starts_with;
 use function trim;
 
-use const PHP_VERSION_ID;
-
 /**
  * An XML-RPC client implementation
  */
-class Client implements ServerClient
+final class Client implements ServerClient
 {
     /**
-     * Full address of the XML-RPC service
-     *
-     * @var string
-     */
-    protected $serverAddress;
-
-    /**
-     * PSR-18 HTTP Client to use for requests
-     *
-     * @var HttpClientInterface
-     */
-    protected $httpClient;
-
-    /**
-     * PSR-17 Request factory
-     *
-     * @var RequestFactoryInterface|null
-     */
-    protected $requestFactory;
-
-    /**
-     * PSR-17 Stream factory
-     *
-     * @var StreamFactoryInterface|null
-     */
-    protected $streamFactory;
-
-    /**
      * Introspection object
-     *
-     * @var ServerIntrospection
      */
-    protected $introspector;
+    protected ServerIntrospection $introspector;
 
     /**
      * Request of the last method call
-     *
-     * @var Request
      */
-    protected $lastRequest;
+    protected Request|null $lastRequest = null;
 
     /**
      * Response received from the last method call
-     *
-     * @var Response
      */
-    protected $lastResponse;
+    protected Response|null $lastResponse = null;
 
     /**
      * Proxy object cache
      *
      * @var array<string, ServerProxy>
      */
-    protected $proxyCache = [];
+    protected array $proxyCache = [];
 
     /**
      * Flag for skipping system lookup
-     *
-     * @var bool
      */
-    protected $skipSystemLookup = false;
+    protected bool $skipSystemLookup = false;
+
+    private const USERAGENT = 'Laminas_XmlRpc_Client';
 
     /**
      * Create a new XML-RPC client to a remote server
      *
-     * @param  string $server      Full address of the XML-RPC service
+     * @param  string $serverAddress      Full address of the XML-RPC service
      *                             (e.g. http://time.xmlrpc.com/RPC2)
-     * @param  HttpClientInterface|null $httpClient HTTP Client to use for requests
+     * @param  HttpClientInterface $httpClient HTTP Client to use for requests
+     * @param RequestFactoryInterface $requestFactory PSR17 request factory
+     * @param StreamFactoryInterface $streamFactory PSR17 stream factory
      */
     public function __construct(
-        string $server,
-        HttpClientInterface|null $httpClient = null,
-        RequestFactoryInterface|null $requestFactory = null,
-        StreamFactoryInterface|null $streamFactory = null
+        private readonly string $serverAddress,
+        private readonly HttpClientInterface $httpClient,
+        private readonly RequestFactoryInterface $requestFactory,
+        private readonly StreamFactoryInterface $streamFactory
     ) {
-        if ($httpClient === null) {
-            throw new InvalidArgumentException("Client cannot be null");
-        }
-        $this->httpClient     = $httpClient;
-        $this->requestFactory = $requestFactory;
-        $this->streamFactory  = $streamFactory;
-
-        $this->introspector  = new ServerIntrospection($this);
-        $this->serverAddress = $server;
-    }
-
-    /**
-     * Sets the HTTP client object to use for connecting the XML-RPC server.
-     *
-     * @return void
-     */
-    public function setHttpClient(HttpClientInterface $httpClient)
-    {
-        $this->httpClient = $httpClient;
+        $this->introspector = new ServerIntrospection($this);
     }
 
     /**
      * Gets the HTTP client object.
-     *
-     * @return HttpClientInterface
      */
-    public function getHttpClient()
+    public function getHttpClient(): HttpClientInterface
     {
         return $this->httpClient;
     }
 
     /**
      * Sets the object used to introspect remote servers
-     *
-     * @return ServerIntrospection
      */
-    public function setIntrospector(ServerIntrospection $introspector)
+    public function setIntrospector(ServerIntrospection $introspector): ServerIntrospection
     {
         return $this->introspector = $introspector;
     }
 
     /**
      * Gets the introspection object.
-     *
-     * @return ServerIntrospection
      */
-    public function getIntrospector()
+    public function getIntrospector(): ServerIntrospection
     {
         return $this->introspector;
     }
 
     /**
      * The request of the last method call
-     *
-     * @return Request
      */
-    public function getLastRequest()
+    public function getLastRequest(): Request|null
     {
         return $this->lastRequest;
     }
 
     /**
      * The response received from the last method call
-     *
-     * @return Response
      */
-    public function getLastResponse()
+    public function getLastResponse(): Response|null
     {
         return $this->lastResponse;
     }
@@ -184,9 +120,8 @@ class Client implements ServerClient
      * Returns a proxy object for more convenient method calls
      *
      * @param string $namespace  Namespace to proxy or empty string for none
-     * @return ServerProxy
      */
-    public function getProxy($namespace = '')
+    public function getProxy(string $namespace = ''): ServerProxy
     {
         if (empty($this->proxyCache[$namespace])) {
             $proxy                        = new ServerProxy($this, $namespace);
@@ -197,22 +132,17 @@ class Client implements ServerClient
 
     /**
      * Set skip system lookup flag
-     *
-     * @param  bool $flag
-     * @return Client
      */
-    public function setSkipSystemLookup($flag = true)
+    public function setSkipSystemLookup(bool $flag = true): Client
     {
-        $this->skipSystemLookup = (bool) $flag;
+        $this->skipSystemLookup = $flag;
         return $this;
     }
 
     /**
      * Skip system lookup when determining if parameter should be array or struct?
-     *
-     * @return bool
      */
-    public function skipSystemLookup()
+    public function skipSystemLookup(): bool
     {
         return $this->skipSystemLookup;
     }
@@ -224,26 +154,15 @@ class Client implements ServerClient
      * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
      * See https://www.php.net/manual/en/libxml.constants.php for a full list.
      *
-     * @param Request $request
-     * @param null|Response $response
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws HttpException
      * @throws ValueException
-     * @return void
      */
-    public function doRequest($request, $response = null, int $libXmlOptions = 0)
+    public function doRequest(Request $request, int $libXmlOptions = 0): void
     {
         $this->lastRequest = $request;
-
-        if (PHP_VERSION_ID < 50600) {
-            iconv_set_encoding('input_encoding', 'UTF-8');
-            iconv_set_encoding('output_encoding', 'UTF-8');
-            iconv_set_encoding('internal_encoding', 'UTF-8');
-        } else {
-            ini_set('default_charset', 'UTF-8');
-        }
 
         $xml = $this->lastRequest->__toString();
 
@@ -255,7 +174,7 @@ class Client implements ServerClient
             ->createRequest('POST', $this->serverAddress)
             ->withHeader('Content-Type', 'text/xml; charset=utf-8')
             ->withHeader('Accept', 'text/xml')
-            ->withHeader('User-Agent', 'Laminas_XmlRpc_Client');
+            ->withHeader('User-Agent', self::USERAGENT);
 
         if ($this->streamFactory === null) {
             throw new HttpException("No streamFactory defined");
@@ -278,11 +197,16 @@ class Client implements ServerClient
             );
         }
 
-        if ($response === null) {
-            $response = new Response();
+        $psrBody = $psrResponse->getBody();
+        if ($psrBody->isSeekable()) {
+            $psrBody->rewind();
+            $body = $psrBody->getContents();
+        } else {
+            $body = (string) $psrResponse->getBody();
         }
 
-        $body               = (string) $psrResponse->getBody();
+        $response = new Response();
+
         $this->lastResponse = $response;
         $this->lastResponse->loadXml(trim($body), $libXmlOptions);
     }

@@ -65,24 +65,6 @@ class ClientTest extends TestCase
         );
     }
 
-    public function testSettingAndGettingHttpClient(): void
-    {
-        $httpClient1 = new TestPsr18Client();
-
-        $xmlrpcClient = new Client(
-            'http://foo',
-            $httpClient1,
-            $this->requestFactory,
-            $this->streamFactory
-        );
-
-        $httpClient2 = new TestPsr18Client();
-        $this->assertNotSame($httpClient2, $xmlrpcClient->getHttpClient());
-
-        $xmlrpcClient->setHttpClient($httpClient2);
-        $this->assertSame($httpClient2, $xmlrpcClient->getHttpClient());
-    }
-
     public function testLastRequestAndResponseAreInitiallyNull(): void
     {
         $this->assertNull($this->xmlrpcClient->getLastRequest());
@@ -562,12 +544,24 @@ class ClientTest extends TestCase
     #[Group('Laminas-8478')]
     public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures(): void
     {
-        $introspector = new Client\ServerIntrospection(
-            new TestAsset\TestClient('http://localhost/')
+        $httpClient = new TestPsr18Client();
+        $client = new Client(
+            'http://localhost/',
+            $httpClient,
+            $this->requestFactory,
+            $this->streamFactory
         );
+
+        $introspector = new Client\ServerIntrospection($client);
+
+        $malformedSignatures = 1;
+        $response = $this->getServerResponseFor($malformedSignatures);
+
+        $httpClient->setResponse($response);
 
         $this->expectException(Client\Exception\IntrospectException::class);
         $this->expectExceptionMessage('Invalid signature for method "add"');
+
         $introspector->getMethodSignature('add');
     }
 
