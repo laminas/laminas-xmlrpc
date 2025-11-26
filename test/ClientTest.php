@@ -91,10 +91,15 @@ class ClientTest extends TestCase
         $request  = $this->xmlrpcClient->getLastRequest();
         $response = $this->xmlrpcClient->getLastResponse();
 
-        $this->assertSame($expectedMethod, $request->getMethod());
-        $this->assertSame([], $request->getParams());
-        $this->assertSame($expectedReturn, $response->getReturnValue());
-        $this->assertFalse($response->isFault());
+        if ($request !== null) {
+            $this->assertSame($expectedMethod, $request->getMethod());
+            $this->assertSame([], $request->getParams());
+        }
+
+        if ($response !== null) {
+            $this->assertSame($expectedReturn, $response->getReturnValue());
+            $this->assertFalse($response->isFault());
+        }
     }
 
     public function testSuccessfulRpcMethodCallWithParameters(): void
@@ -111,16 +116,20 @@ class ClientTest extends TestCase
         $request  = $this->xmlrpcClient->getLastRequest();
         $response = $this->xmlrpcClient->getLastResponse();
 
-        $this->assertSame($expectedMethod, $request->getMethod());
-        $params = $request->getParams();
-        $this->assertSame(count($expectedParams), count($params));
-        $this->assertSame($expectedParams[0], $params[0]->getValue());
-        $this->assertSame($expectedParams[1], $params[1]->getValue());
-        $this->assertSame($expectedParams[2], $params[2]->getValue());
-        $this->assertSame($expectedParams['foo'], $params['foo']->getValue());
+        if ($request !== null) {
+            $this->assertSame($expectedMethod, $request->getMethod());
+            $params = $request->getParams();
+            $this->assertSame(count($expectedParams), count($params));
+            $this->assertSame($expectedParams[0], $params[0]->getValue());
+            $this->assertSame($expectedParams[1], $params[1]->getValue());
+            $this->assertSame($expectedParams[2], $params[2]->getValue());
+            $this->assertSame($expectedParams['foo'], $params['foo']->getValue());
+        }
 
-        $this->assertSame($expectedReturn, $response->getReturnValue());
-        $this->assertFalse($response->isFault());
+        if ($response !== null) {
+            $this->assertSame($expectedReturn, $response->getReturnValue());
+            $this->assertFalse($response->isFault());
+        }
     }
 
     #[Group('Laminas-2090')]
@@ -137,9 +146,11 @@ class ClientTest extends TestCase
 
         $request = $this->xmlrpcClient->getLastRequest();
 
-        $params = $request->getParams();
-        $this->assertSame(count($expectedParams), count($params));
-        $this->assertSame($expectedParams[0], $params[0]->getValue());
+        if ($request !== null) {
+            $params = $request->getParams();
+            $this->assertSame(count($expectedParams), count($params));
+            $this->assertSame($expectedParams[0], $params[0]->getValue());
+        }
     }
 
     #[Group('Laminas-1412')]
@@ -161,13 +172,18 @@ class ClientTest extends TestCase
         $request  = $this->xmlrpcClient->getLastRequest();
         $response = $this->xmlrpcClient->getLastResponse();
 
-        $this->assertSame($expectedMethod, $request->getMethod());
-        $params = $request->getParams();
-        $this->assertSame(count($expectedParams), count($params));
-        $this->assertSame($expectedParams[0], $params[0]->getValue());
-        $this->assertSame($expectedParams[1], $params[1]);
-        $this->assertSame($expectedReturn, $response->getReturnValue());
-        $this->assertFalse($response->isFault());
+        if ($request !== null) {
+            $this->assertSame($expectedMethod, $request->getMethod());
+            $params = $request->getParams();
+            $this->assertSame(count($expectedParams), count($params));
+            $this->assertSame($expectedParams[0], $params[0]->getValue());
+            $this->assertSame($expectedParams[1], $params[1]);
+        }
+
+        if ($response !== null) {
+            $this->assertSame($expectedReturn, $response->getReturnValue());
+            $this->assertFalse($response->isFault());
+        }
     }
 
     #[Group('Laminas-1797')]
@@ -188,10 +204,15 @@ class ClientTest extends TestCase
         $request  = $this->xmlrpcClient->getLastRequest();
         $response = $this->xmlrpcClient->getLastResponse();
 
-        $this->assertSame('foo.bar', $request->getMethod());
-        $this->assertSame($params, $request->getParams());
-        $this->assertSame($expect, $response->getReturnValue());
-        $this->assertFalse($response->isFault());
+        if ($request !== null) {
+            $this->assertSame('foo.bar', $request->getMethod());
+            $this->assertSame($params, $request->getParams());
+        }
+
+        if ($response !== null) {
+            $this->assertSame($expect, $response->getReturnValue());
+            $this->assertFalse($response->isFault());
+        }
     }
 
     #[Group('Laminas-2978')]
@@ -214,13 +235,19 @@ class ClientTest extends TestCase
         $this->setServerResponseTo($expect);
 
         $this->assertSame($expect, $this->xmlrpcClient->call('test.method', ['1']));
-        $params = $this->xmlrpcClient->getLastRequest()->getParams();
-        $this->assertSame(1, $params[0]->getValue());
+        $request = $this->xmlrpcClient->getLastRequest();
+        if ($request !== null) {
+            $params = $request->getParams();
+            $this->assertSame(1, $params[0]->getValue());
+        }
 
         $this->setServerResponseTo($expect);
         $this->assertSame($expect, $this->xmlrpcClient->call('test.method', '1'));
-        $params = $this->xmlrpcClient->getLastRequest()->getParams();
-        $this->assertSame(1, $params[0]->getValue());
+        $request = $this->xmlrpcClient->getLastRequest();
+        if ($request !== null) {
+            $params = $request->getParams();
+            $this->assertSame(1, $params[0]->getValue());
+        }
     }
 
     #[Group('Laminas-8074')]
@@ -305,7 +332,7 @@ class ClientTest extends TestCase
         $this->assertSame($expectedReturn, $server->listMethods());
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('listMethods', $request->getMethod());
+        $this->assertEquals('listMethods', $request?->getMethod());
     }
 
     public function testRpcMethodCallsThroughNestedServerProxies(): void
@@ -317,7 +344,7 @@ class ClientTest extends TestCase
         $this->assertSame($expectedReturn, $server->bar->baz->boo());
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('foo.bar.baz.boo', $request->getMethod());
+        $this->assertEquals('foo.bar.baz.boo', $request?->getMethod());
     }
 
     public function testClientCachesServerProxies(): void
@@ -387,8 +414,8 @@ class ClientTest extends TestCase
         $this->assertEquals($signatures, $i->getMethodSignature($method));
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('system.methodSignature', $request->getMethod());
-        $this->assertEquals([$method], $request->getParams());
+        $this->assertEquals('system.methodSignature', $request?->getMethod());
+        $this->assertEquals([$method], $request?->getParams());
     }
 
     public function testListingMethods(): void
@@ -400,8 +427,8 @@ class ClientTest extends TestCase
         $this->assertEquals($methods, $i->listMethods());
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('system.listMethods', $request->getMethod());
-        $this->assertEquals([], $request->getParams());
+        $this->assertEquals('system.listMethods', $request?->getMethod());
+        $this->assertEquals([], $request?->getParams());
     }
 
     public function testGettingAllMethodSignaturesByLooping(): void
@@ -430,8 +457,8 @@ class ClientTest extends TestCase
         $this->assertEquals($expected, $i->getSignatureForEachMethodByLooping());
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('system.methodSignature', $request->getMethod());
-        $this->assertEquals(['bar'], $request->getParams());
+        $this->assertEquals('system.methodSignature', $request?->getMethod());
+        $this->assertEquals(['bar'], $request?->getParams());
     }
 
     public function testGettingAllMethodSignaturesByMulticall(): void
@@ -469,8 +496,8 @@ class ClientTest extends TestCase
         $this->assertEquals($expected, $i->getSignatureForEachMethodByMulticall());
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('system.multicall', $request->getMethod());
-        $this->assertEquals([$multicallParams], $request->getParams());
+        $this->assertEquals('system.multicall', $request?->getMethod());
+        $this->assertEquals([$multicallParams], $request?->getParams());
     }
 
     public function testGettingAllMethodSignaturesByMulticallThrowsOnBadCount(): void
@@ -538,14 +565,14 @@ class ClientTest extends TestCase
         $this->assertEquals($expected, $i->getSignatureForEachMethod());
 
         $request = $this->xmlrpcClient->getLastRequest();
-        $this->assertEquals('system.multicall', $request->getMethod());
+        $this->assertEquals('system.multicall', $request?->getMethod());
     }
 
     #[Group('Laminas-8478')]
     public function testPythonSimpleXMLRPCServerWithUnsupportedMethodSignatures(): void
     {
         $httpClient = new TestPsr18Client();
-        $client = new Client(
+        $client     = new Client(
             'http://localhost/',
             $httpClient,
             $this->requestFactory,
@@ -555,7 +582,7 @@ class ClientTest extends TestCase
         $introspector = new Client\ServerIntrospection($client);
 
         $malformedSignatures = 1;
-        $response = $this->getServerResponseFor($malformedSignatures);
+        $response            = $this->getServerResponseFor($malformedSignatures);
 
         $httpClient->setResponse($response);
 

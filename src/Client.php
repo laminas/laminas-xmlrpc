@@ -77,14 +77,6 @@ final class Client implements ServerClient
     }
 
     /**
-     * Gets the HTTP client object.
-     */
-    public function getHttpClient(): HttpClientInterface
-    {
-        return $this->httpClient;
-    }
-
-    /**
      * Sets the object used to introspect remote servers
      */
     public function setIntrospector(ServerIntrospection $introspector): ServerIntrospection
@@ -167,18 +159,12 @@ final class Client implements ServerClient
         $xml = $this->lastRequest->__toString();
 
         // Build PSR-7 request
-        if ($this->requestFactory === null) {
-            throw new HttpException("No requestFactory defined");
-        }
         $psrRequest = $this->requestFactory
             ->createRequest('POST', $this->serverAddress)
             ->withHeader('Content-Type', 'text/xml; charset=utf-8')
             ->withHeader('Accept', 'text/xml')
             ->withHeader('User-Agent', self::USERAGENT);
 
-        if ($this->streamFactory === null) {
-            throw new HttpException("No streamFactory defined");
-        }
         $stream     = $this->streamFactory->createStream($xml);
         $psrRequest = $psrRequest->withBody($stream);
 
@@ -287,6 +273,10 @@ final class Client implements ServerClient
 
         $this->doRequest($request);
 
+        if ($this->lastResponse === null) {
+            return null;
+        }
+
         if ($this->lastResponse->isFault()) {
             $fault = $this->lastResponse->getFault();
             /**
@@ -303,12 +293,8 @@ final class Client implements ServerClient
 
     /**
      * Create request object
-     *
-     * @param string $method
-     * @param array $params
-     * @return Request
      */
-    protected function createRequest($method, $params)
+    protected function createRequest(string|null $method = null, array|null $params = null): Request
     {
         return new Request($method, $params);
     }

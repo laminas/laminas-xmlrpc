@@ -4,7 +4,6 @@ namespace Laminas\XmlRpc;
 
 use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
-use Psr\Http\Message\ResponseInterface;
 use Stringable;
 
 use function is_object;
@@ -57,10 +56,6 @@ class Response implements Stringable
     public function __construct($return = null, $type = null)
     {
         $this->setReturnValue($return, $type);
-    }
-
-    public static function fromPsr7Response(ResponseInterface $psrResponse)
-    {
     }
 
     /**

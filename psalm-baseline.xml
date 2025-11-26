@@ -93,18 +93,6 @@
     <PossiblyUnusedReturnValue>
       <code><![CDATA[ServerIntrospection]]></code>
     </PossiblyUnusedReturnValue>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$lastRequest]]></code>
-      <code><![CDATA[$lastResponse]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $flag]]></code>
-    </RedundantCastGivenDocblockType>
-    <UnusedFunctionCall>
-      <code><![CDATA[iconv_set_encoding]]></code>
-      <code><![CDATA[iconv_set_encoding]]></code>
-      <code><![CDATA[iconv_set_encoding]]></code>
-    </UnusedFunctionCall>
   </file>
   <file src="src/Client/ServerIntrospection.php">
     <MixedArgument>
@@ -928,15 +916,6 @@
       <code><![CDATA[base64]]></code>
       <code><![CDATA[struct]]></code>
     </UndefinedDocblockClass>
-  </file>
-  <file src="test/TestAsset/TestClient.php">
-    <DeprecatedInterface>
-      <code><![CDATA[TestClient]]></code>
-    </DeprecatedInterface>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[TestClient]]></code>
-      <code><![CDATA[TestClient]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="test/TestAsset/TestRequest.php">
     <PropertyNotSetInConstructor>
