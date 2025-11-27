@@ -186,10 +186,9 @@ final class Client implements ServerClient
         $psrBody = $psrResponse->getBody();
         if ($psrBody->isSeekable()) {
             $psrBody->rewind();
-            $body = $psrBody->getContents();
-        } else {
-            $body = (string) $psrResponse->getBody();
         }
+
+        $body = $psrBody->getContents();
 
         $response = new Response();
 
@@ -273,9 +272,7 @@ final class Client implements ServerClient
 
         $this->doRequest($request);
 
-        if ($this->lastResponse === null) {
-            return null;
-        }
+        assert($this->lastResponse !== null);
 
         if ($this->lastResponse->isFault()) {
             $fault = $this->lastResponse->getFault();
