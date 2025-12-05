@@ -31,30 +31,38 @@ final class Client implements ServerClient
 {
     /**
      * Introspection object
+     *
+     * @var ServerIntrospection
      */
-    protected ServerIntrospection $introspector;
+    protected $introspector;
 
     /**
      * Request of the last method call
+     *
+     * @var Request|null
      */
-    protected Request|null $lastRequest = null;
+    protected $lastRequest;
 
     /**
      * Response received from the last method call
+     *
+     * @var Response|null
      */
-    protected Response|null $lastResponse = null;
+    protected $lastResponse;
 
     /**
      * Proxy object for more convenient method calls
      *
      * @var array<string, ServerProxy>
      */
-    protected array $proxyCache = [];
+    protected $proxyCache = [];
 
     /**
      * Flag for skipping system lookup
+     *
+     * @var bool
      */
-    protected bool $skipSystemLookup = false;
+    protected $skipSystemLookup = false;
 
     private const USERAGENT = 'Laminas_XmlRpc_Client';
 
@@ -78,32 +86,40 @@ final class Client implements ServerClient
 
     /**
      * Sets the object used to introspect remote servers
+     *
+     * @return ServerIntrospection
      */
-    public function setIntrospector(ServerIntrospection $introspector): ServerIntrospection
+    public function setIntrospector(ServerIntrospection $introspector)
     {
         return $this->introspector = $introspector;
     }
 
     /**
      * Gets the introspection object.
+     *
+     * @return ServerIntrospection
      */
-    public function getIntrospector(): ServerIntrospection
+    public function getIntrospector()
     {
         return $this->introspector;
     }
 
     /**
      * The request of the last method call
+     *
+     * @return Request|null
      */
-    public function getLastRequest(): Request|null
+    public function getLastRequest()
     {
         return $this->lastRequest;
     }
 
     /**
      * The response received from the last method call
+     *
+     * @return Response|null
      */
-    public function getLastResponse(): Response|null
+    public function getLastResponse()
     {
         return $this->lastResponse;
     }
@@ -112,8 +128,9 @@ final class Client implements ServerClient
      * Returns a proxy object for more convenient method calls
      *
      * @param string $namespace  Namespace to proxy or empty string for none
+     * @return ServerProxy
      */
-    public function getProxy(string $namespace = ''): ServerProxy
+    public function getProxy(string $namespace = '')
     {
         if (empty($this->proxyCache[$namespace])) {
             $proxy                        = new ServerProxy($this, $namespace);
@@ -124,8 +141,11 @@ final class Client implements ServerClient
 
     /**
      * Set skip system lookup flag
+     *
+     * @param bool $flag
+     * @return Client
      */
-    public function setSkipSystemLookup(bool $flag = true): Client
+    public function setSkipSystemLookup($flag = true)
     {
         $this->skipSystemLookup = $flag;
         return $this;
@@ -133,8 +153,10 @@ final class Client implements ServerClient
 
     /**
      * Skip system lookup when determining if parameter should be array or struct?
+     *
+     * @return bool
      */
-    public function skipSystemLookup(): bool
+    public function skipSystemLookup()
     {
         return $this->skipSystemLookup;
     }
@@ -146,13 +168,15 @@ final class Client implements ServerClient
      * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
      * See https://www.php.net/manual/en/libxml.constants.php for a full list.
      *
+     * @param Request $request
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws HttpException
      * @throws ValueException
+     * @return void
      */
-    public function doRequest(Request $request, int $libXmlOptions = 0): void
+    public function doRequest($request, int $libXmlOptions = 0)
     {
         $this->lastRequest = $request;
 
@@ -285,8 +309,12 @@ final class Client implements ServerClient
 
     /**
      * Create request object
+     *
+     * @param string|null $method
+     * @param array|null $params
+     * @return Request
      */
-    protected function createRequest(string|null $method = null, array|null $params = null): Request
+    protected function createRequest($method = null, $params = null)
     {
         return new Request($method, $params);
     }
