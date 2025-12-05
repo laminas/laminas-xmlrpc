@@ -45,7 +45,7 @@ final class Client implements ServerClient
     protected Response|null $lastResponse = null;
 
     /**
-     * Proxy object cache
+     * Proxy object for more convenient method calls
      *
      * @var array<string, ServerProxy>
      */
@@ -183,12 +183,7 @@ final class Client implements ServerClient
             );
         }
 
-        $psrBody = $psrResponse->getBody();
-        if ($psrBody->isSeekable()) {
-            $psrBody->rewind();
-        }
-
-        $body = $psrBody->getContents();
+        $body = $psrResponse->getBody()->__toString();
 
         $response = new Response();
 
