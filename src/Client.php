@@ -130,7 +130,7 @@ final class Client implements ServerClient
      * @param string $namespace  Namespace to proxy or empty string for none
      * @return ServerProxy
      */
-    public function getProxy(string $namespace = '')
+    public function getProxy($namespace = '')
     {
         if (empty($this->proxyCache[$namespace])) {
             $proxy                        = new ServerProxy($this, $namespace);
