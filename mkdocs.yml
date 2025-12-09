@@ -2,10 +2,18 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - Home: index.md
-    - Introduction: intro.md
-    - Reference:
-        - "XML-RPC Clients": client.md
-        - "XML-RPC Servers": server.md
+    - v3:
+        - Introduction: v3/intro.md
+        - Reference:
+            - "XML-RPC Clients": v3/client.md
+            - "XML-RPC Servers": v3/server.md
+        - Migration:
+            - "Migration to version 3": v3/migration.md
+    - v2:
+        - Introduction: v2/intro.md
+        - Reference:
+            - "XML-RPC Clients": v2/client.md
+            - "XML-RPC Servers": v2/server.md
 site_name: laminas-xmlrpc
 site_description: "Fully-featured XML-RPC server and client implementations"
 repo_url: 'https://github.com/laminas/laminas-xmlrpc'
