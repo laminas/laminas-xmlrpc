@@ -9,6 +9,7 @@ The following features were removed for version 3.
 XMLRPC no longer provides a client. It it is now required to provide your own  `psr/http-client` supported client.
 
 Several client suggestions:
+
 - [Guzzle](https://github.com/guzzle/guzzle);
 - [Symfony](https://github.com/symfony/http-client);
 
