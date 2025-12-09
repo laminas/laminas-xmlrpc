@@ -23,4 +23,4 @@ It is no longer possible to retrieve a HTTP client using `getHttpClient` method.
 
 ### Laminas HTTP removed
 
-This version no longer relies on the `laminas/laminas-http` package. That is the reason why you now need to provide your own client. 
+This version no longer relies on the `laminas/laminas-http` package. That is the reason why you now need to provide your own client.
