@@ -147,7 +147,7 @@ final class Client implements ServerClient
      */
     public function setSkipSystemLookup($flag = true)
     {
-        $this->skipSystemLookup = $flag;
+        $this->skipSystemLookup = (bool) $flag;
         return $this;
     }
 
