@@ -1,6 +1,6 @@
 # Migration to Version 3
 
-### XmlRpc Client
+## XmlRpc Client
 
 Version 3 removes the dependency on [laminas/laminas-http](https://docs.laminas.dev/laminas-http/) and replaces it with [PSR-18 (HTTP Client)](https://www.php-fig.org/psr/psr-18/), along with [PSR-7 (HTTP Messages)](https://www.php-fig.org/psr/psr-7/) and [PSR-17 (HTTP Message Factories)](https://www.php-fig.org/psr/psr-17/).
 This change gives greater flexibility in how HTTP requests are made, but also changes how the XML-RPC client instance is created, and requires that you provide an HTTP client via the constructor.
