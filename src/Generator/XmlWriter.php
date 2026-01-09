@@ -40,7 +40,7 @@ class XmlWriter extends AbstractGenerator
     /**
      * Write XML text data into the currently opened XML element
      *
-     * @param mixed $text XML text data
+     * @param string $text XML text data
      * @return void
      */
     protected function writeTextData($text)

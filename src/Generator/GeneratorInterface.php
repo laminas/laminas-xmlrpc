@@ -20,7 +20,7 @@ interface GeneratorInterface
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param string $value
      * @return AbstractGenerator
      */
     public function openElement($name, $value = null);
