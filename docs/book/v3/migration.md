@@ -28,20 +28,9 @@ With version 3, the HTTP client **must** be a PSR-18 HTTP client implementation,
 The below example uses the [php-http/curl-client package](https://docs.php-http.org/en/latest/clients/curl-client.html) to provide the HTTP client, and [Laminas Diactoros](https://docs.laminas.dev/laminas-diatoros/) to provide HTTP message factories:
 
 ```php
-use Http\Client\Curl\Client as HttpClient;
-use Http\Message\MessageFactory\DiactorosMessageFactory;
-use Laminas\Diactoros\RequestFactory;
-use Laminas\Diactoros\StreamFactory;
-use Laminas\XmlRpc\Client as XmlRpcClient;
-
-$requestFactory = new RequestFactory();
-$messageFactory = new MessageFactory();
-$streamFactory  = new StreamFactory();
-
-$http    = new HttpClient($messageFactory, $streamFactory);
-$xmlrpc = new XmlRpcClient(
+$xmlrpc = new Laminas\XmlRpc\Client(
     'http://time.xmlrpc.com/RPC2',
-    $http,
+    $httpClient,
     $requestFactory,
     $streamFactory
 );
