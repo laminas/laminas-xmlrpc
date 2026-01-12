@@ -173,6 +173,16 @@
       <code><![CDATA[new static()]]></code>
     </UnsafeInstantiation>
   </file>
+  <file src="src/Generator/DomDocument.php">
+    <MoreSpecificImplementedParamType>
+      <code><![CDATA[$text]]></code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src/Generator/XmlWriter.php">
+    <MoreSpecificImplementedParamType>
+      <code><![CDATA[$text]]></code>
+    </MoreSpecificImplementedParamType>
+  </file>
   <file src="src/Request.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($method)]]></code>
@@ -420,11 +430,17 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Value/AbstractCollection.php">
+    <MixedArrayAssignment>
+      <code><![CDATA[$this->value[$key]]]></code>
+    </MixedArrayAssignment>
     <MixedAssignment>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$values[$key]]]></code>
     </MixedAssignment>
+    <MixedMethodCall>
+      <code><![CDATA[getValue]]></code>
+    </MixedMethodCall>
     <PropertyNotSetInConstructor>
       <code><![CDATA[AbstractCollection]]></code>
       <code><![CDATA[AbstractCollection]]></code>
@@ -453,6 +469,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/Base64.php">
+    <MixedArgument>
+      <code><![CDATA[$this->value]]></code>
+    </MixedArgument>
     <PropertyNotSetInConstructor>
       <code><![CDATA[Base64]]></code>
     </PropertyNotSetInConstructor>
@@ -464,6 +483,12 @@
     <ImplementedReturnTypeMismatch>
       <code><![CDATA[string]]></code>
     </ImplementedReturnTypeMismatch>
+    <MixedInferredReturnType>
+      <code><![CDATA[string]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->value]]></code>
+    </MixedReturnStatement>
     <PropertyNotSetInConstructor>
       <code><![CDATA[BigInteger]]></code>
     </PropertyNotSetInConstructor>
@@ -474,6 +499,12 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/DateTime.php">
+    <MixedInferredReturnType>
+      <code><![CDATA[string]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->value]]></code>
+    </MixedReturnStatement>
     <PossiblyInvalidArgument>
       <code><![CDATA[$e->getCode()]]></code>
     </PossiblyInvalidArgument>
@@ -493,6 +524,12 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Value/Integer.php">
+    <MixedInferredReturnType>
+      <code><![CDATA[int]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->value]]></code>
+    </MixedReturnStatement>
     <PropertyNotSetInConstructor>
       <code><![CDATA[Integer]]></code>
     </PropertyNotSetInConstructor>
