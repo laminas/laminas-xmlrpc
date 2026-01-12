@@ -45,7 +45,7 @@ class XmlWriter extends AbstractGenerator
      */
     protected function writeTextData($text)
     {
-        $this->xmlWriter->text((string) $text);
+        $this->xmlWriter->text($text);
     }
 
     /**

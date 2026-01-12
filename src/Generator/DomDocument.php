@@ -36,7 +36,7 @@ class DomDocument extends AbstractGenerator
      */
     protected function writeTextData($text)
     {
-        $this->currentElement->appendChild($this->dom->createTextNode((string) $text));
+        $this->currentElement->appendChild($this->dom->createTextNode($text));
     }
 
     /**
