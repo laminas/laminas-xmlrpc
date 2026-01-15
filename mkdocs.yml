@@ -19,3 +19,13 @@ site_description: "Fully-featured XML-RPC server and client implementations"
 repo_url: 'https://github.com/laminas/laminas-xmlrpc'
 extra:
     project: Components
+    current_version: v3
+    versions:
+        - v3
+        - v2
+plugins:
+    redirects:
+        redirect_maps:
+            intro.md: v3/intro.md
+            client.md: v3/client.md
+            server.md: v3/server.md
