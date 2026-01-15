@@ -87,7 +87,7 @@ class PhpInputMock
             return static::$returnValues[__FUNCTION__];
         }
 
-        return (0 == strlen(static::$data));
+        return (0 === strlen(static::$data));
     }
 
     public function stream_read($count)

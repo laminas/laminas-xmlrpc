@@ -564,7 +564,11 @@ class Server extends AbstractServer
             throw new Server\Exception\RuntimeException('Method "' . $method . '" does not exist', 620);
         }
 
-        $info   = $this->table->getMethod($method);
+        $info = $this->table->getMethod($method);
+        if ($info === null || $info === false) {
+            throw new Server\Exception\RuntimeException('Method "' . $method . '" does not exist', 620);
+        }
+
         $params = $request->getParams();
         $argv   = $info->getInvokeArguments();
         if (0 < count($argv) && $this->sendArgumentsToAllMethods()) {

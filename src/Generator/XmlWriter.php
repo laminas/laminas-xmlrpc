@@ -10,7 +10,7 @@ class XmlWriter extends AbstractGenerator
     /**
      * XMLWriter instance
      *
-     * @var XMLWriter
+     * @var \XMLWriter
      */
     protected $xmlWriter;
 
@@ -52,13 +52,11 @@ class XmlWriter extends AbstractGenerator
      * Close a previously opened XML element
      *
      * @param string $name
-     * @return XmlWriter
+     * @return void
      */
     protected function closeXmlElement($name)
     {
         $this->xmlWriter->endElement();
-
-        return $this;
     }
 
     /**
@@ -68,6 +66,6 @@ class XmlWriter extends AbstractGenerator
      */
     public function saveXml()
     {
-        return $this->xmlWriter->flush(false);
+        return (string) $this->xmlWriter->flush(false);
     }
 }

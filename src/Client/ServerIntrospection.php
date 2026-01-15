@@ -113,7 +113,7 @@ class ServerIntrospection
     /**
      * Call system.methodSignature() for the given method
      *
-     * @param  array  $method
+     * @param  string  $method
      * @throws Exception\IntrospectException
      * @return array  array(array(return, param, param, param...))
      */

@@ -21,23 +21,30 @@
             "php": "8.1.99"
         },
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": false
         }
     },
     "extra": {
     },
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+		"ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-libxml": "*",
         "ext-simplexml": "*",
+		"ext-xmlwriter": "*",
         "brick/math": "^0.13.1",
         "laminas/laminas-code": "^4.4",
-        "laminas/laminas-http": "^2.15",
         "laminas/laminas-server": "^2.11",
         "laminas/laminas-stdlib": "^3.10.1",
-        "laminas/laminas-xml": "^1.4.0"
-    },
+        "laminas/laminas-xml": "^1.4.0",
+        "psr/http-client": "^1.0"
+	},
     "require-dev": {
         "laminas/laminas-coding-standard": "~3.1.0",
+		"laminas/laminas-diactoros": "^3.7",
+        "php-http/mock-client": "^1.6",
         "phpunit/phpunit": "^10.5.36",
         "psalm/plugin-phpunit": "^0.19.0",
         "vimeo/psalm": "^5.26.1"

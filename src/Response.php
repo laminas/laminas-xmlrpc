@@ -51,7 +51,7 @@ class Response implements Stringable
      * return value can be set via {@link setReturnValue()}.
      *
      * @param mixed $return
-     * @param string $type
+     * @param string|null $type
      */
     public function __construct($return = null, $type = null)
     {
@@ -87,7 +87,7 @@ class Response implements Stringable
      * Sets the return value, with optional type hinting if provided.
      *
      * @param mixed $value
-     * @param string $type
+     * @param string|null $type
      * @return void
      */
     public function setReturnValue($value, $type = null)
