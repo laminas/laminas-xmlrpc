@@ -11,10 +11,8 @@ class Boolean extends AbstractScalar
     /**
      * Set the value of a boolean native type
      * We hold the boolean type as an integer (0 or 1)
-     *
-     * @param bool $value
      */
-    public function __construct($value)
+    public function __construct(bool $value)
     {
         $this->type = self::XMLRPC_TYPE_BOOLEAN;
         // Make sure the value is boolean and then convert it into an integer
@@ -24,10 +22,8 @@ class Boolean extends AbstractScalar
 
     /**
      * Return the value of this object, convert the XML-RPC native boolean value into a PHP boolean
-     *
-     * @return bool
      */
-    public function getValue()
+    public function getValue(): bool
     {
         return (bool) $this->value;
     }

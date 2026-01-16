@@ -7,8 +7,8 @@ namespace Laminas\XmlRpc\Server;
  */
 class Cache extends \Laminas\Server\Cache
 {
-    /** @var array Skip system methods when caching XML-RPC server */
-    protected static $skipMethods = [
+    /** Skip system methods when caching XML-RPC server */
+    protected static array $skipMethods = [
         'system.listMethods',
         'system.methodHelp',
         'system.methodSignature',

@@ -24,10 +24,8 @@ class ServerIntrospection
      * Returns the signature for each method on the server,
      * autodetecting whether system.multicall() is supported and
      * using it if so.
-     *
-     * @return array
      */
-    public function getSignatureForEachMethod()
+    public function getSignatureForEachMethod(): array
     {
         $methods = $this->listMethods();
 
@@ -49,11 +47,10 @@ class ServerIntrospection
      * This is a boxcar feature of XML-RPC and is found on fewer servers.  However,
      * can significantly improve performance if present.
      *
-     * @param  array $methods
      * @throws Exception\IntrospectException
      * @return array array(array(return, param, param, param...))
      */
-    public function getSignatureForEachMethodByMulticall($methods = null)
+    public function getSignatureForEachMethodByMulticall(array|null $methods = null): array
     {
         if ($methods === null) {
             $methods = $this->listMethods();
@@ -93,10 +90,8 @@ class ServerIntrospection
      * Get the method signatures for every method by
      * successively calling system.methodSignature
      *
-     * @param array $methods
-     * @return array
      */
-    public function getSignatureForEachMethodByLooping($methods = null)
+    public function getSignatureForEachMethodByLooping(array|null $methods = null): array
     {
         if ($methods === null) {
             $methods = $this->listMethods();
@@ -113,11 +108,10 @@ class ServerIntrospection
     /**
      * Call system.methodSignature() for the given method
      *
-     * @param  string  $method
      * @throws Exception\IntrospectException
      * @return array  array(array(return, param, param, param...))
      */
-    public function getMethodSignature($method)
+    public function getMethodSignature(string $method): array
     {
         $signature = $this->system->methodSignature($method);
         if (! is_array($signature)) {
@@ -132,7 +126,7 @@ class ServerIntrospection
      *
      * @return array  array(method, method, method...)
      */
-    public function listMethods()
+    public function listMethods(): array
     {
         return $this->system->listMethods();
     }

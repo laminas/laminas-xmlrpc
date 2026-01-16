@@ -8,10 +8,8 @@ class Struct extends AbstractCollection
 {
     /**
      * Set the value of a struct native type
-     *
-     * @param array $value
      */
-    public function __construct($value)
+    public function __construct(array $value)
     {
         $this->type = self::XMLRPC_TYPE_STRUCT;
         parent::__construct($value);
@@ -19,10 +17,8 @@ class Struct extends AbstractCollection
 
     /**
      * Generate the XML code that represent struct native MXL-RPC value
-     *
-     * @return void
      */
-    protected function generate()
+    protected function generate(): void
     {
         $generator = static::getGenerator();
         $generator

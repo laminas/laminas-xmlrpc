@@ -24,17 +24,13 @@ class Http extends XmlRpcRequest
 {
     /**
      * Array of headers
-     *
-     * @var array
      */
-    protected $headers;
+    protected array $headers;
 
     /**
      * Raw XML as received via request
-     *
-     * @var string
      */
-    protected $xml;
+    protected string $xml;
 
     /**
      * Constructor
@@ -60,10 +56,8 @@ class Http extends XmlRpcRequest
 
     /**
      * Retrieve the raw XML request
-     *
-     * @return string
      */
-    public function getRawRequest()
+    public function getRawRequest(): string
     {
         return $this->xml;
     }
@@ -72,10 +66,8 @@ class Http extends XmlRpcRequest
      * Get headers
      *
      * Gets all headers as key => value pairs and returns them.
-     *
-     * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         if (null === $this->headers) {
             $this->headers = [];
@@ -96,10 +88,8 @@ class Http extends XmlRpcRequest
 
     /**
      * Retrieve the full HTTP request, including headers and XML
-     *
-     * @return string
      */
-    public function getFullRequest()
+    public function getFullRequest(): string
     {
         $request = '';
         foreach ($this->getHeaders() as $key => $value) {

@@ -10,10 +10,8 @@ class Double extends AbstractScalar
 {
     /**
      * Set the value of a double native type
-     *
-     * @param float $value
      */
-    public function __construct($value)
+    public function __construct(float $value)
     {
         $this->type   = self::XMLRPC_TYPE_DOUBLE;
         $precision    = (int) ini_get('precision');
@@ -23,10 +21,8 @@ class Double extends AbstractScalar
 
     /**
      * Return the value of this object, convert the XML-RPC native double value into a PHP float
-     *
-     * @return float
      */
-    public function getValue()
+    public function getValue(): float
     {
         return (float) $this->value;
     }

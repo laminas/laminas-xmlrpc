@@ -36,60 +36,43 @@ class Request implements Stringable
 {
     /**
      * Request character encoding
-     *
-     * @var string
      */
-    protected $encoding = 'UTF-8';
+    protected string $encoding = 'UTF-8';
 
     /**
      * Method to call
-     *
-     * @var string
      */
-    protected $method;
+    protected string $method;
 
     /**
      * XML request
-     *
-     * @var string
      */
-    protected $xml;
+    protected string $xml;
 
     /**
      * Method parameters
-     *
-     * @var array
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * Fault object, if any
-     *
-     * @var Fault
      */
-    protected $fault;
+    protected Fault $fault;
 
     /**
      * XML-RPC type for each param
-     *
-     * @var array
      */
-    protected $types = [];
+    protected array $types = [];
 
     /**
      * XML-RPC request params
-     *
-     * @var array
      */
-    protected $xmlRpcParams = [];
+    protected array $xmlRpcParams = [];
 
     /**
      * Create a new XML-RPC request
-     *
-     * @param string $method (optional)
-     * @param array $params  (optional)
      */
-    public function __construct($method = null, $params = null)
+    public function __construct(string|null $method = null, array|null $params = null)
     {
         if ($method !== null) {
             $this->setMethod($method);
@@ -102,11 +85,8 @@ class Request implements Stringable
 
     /**
      * Set encoding to use in request
-     *
-     * @param string $encoding
-     * @return Request
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): Request
     {
         $this->encoding = $encoding;
         AbstractValue::setEncoding($encoding);
@@ -115,10 +95,8 @@ class Request implements Stringable
 
     /**
      * Retrieve current request encoding
-     *
-     * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
@@ -126,10 +104,9 @@ class Request implements Stringable
     /**
      * Set method to call
      *
-     * @param string $method
      * @return bool Returns true on success, false if method name is invalid
      */
-    public function setMethod($method)
+    public function setMethod(string $method): bool
     {
         if (! is_string($method) || ! preg_match('/^[a-z0-9_.:\\\\\/]+$/i', $method)) {
             $this->fault = new Fault(634, 'Invalid method name ("' . $method . '")');
@@ -143,10 +120,8 @@ class Request implements Stringable
 
     /**
      * Retrieve call method
-     *
-     * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -157,11 +132,9 @@ class Request implements Stringable
      * Adds a parameter to the parameter stack, associating it with the type
      * $type if provided
      *
-     * @param mixed $value
      * @param string $type Optional; type hinting
-     * @return void
      */
-    public function addParam($value, $type = null)
+    public function addParam(mixed $value, string|null $type = null): void
     {
         $this->params[] = $value;
         if (null === $type) {
@@ -196,9 +169,8 @@ class Request implements Stringable
      * </code>
      *
      * @access public
-     * @return void
      */
-    public function setParams()
+    public function setParams(): void
     {
         $argc = func_num_args();
         $argv = func_get_args();
@@ -264,20 +236,16 @@ class Request implements Stringable
 
     /**
      * Retrieve the array of parameters
-     *
-     * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
     /**
      * Return parameter types
-     *
-     * @return array
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -289,12 +257,11 @@ class Request implements Stringable
      * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
      * See https://www.php.net/manual/en/libxml.constants.php for a full list.
      *
-     * @param string $request
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */
-    public function loadXml($request, int $libXmlOptions = 0)
+    public function loadXml(string $request, int $libXmlOptions = 0): bool
     {
         if (! is_string($request)) {
             $this->fault = new Fault(635);
@@ -379,30 +346,24 @@ class Request implements Stringable
     /**
      * Does the current request contain errors and should it return a fault
      * response?
-     *
-     * @return bool
      */
-    public function isFault()
+    public function isFault(): bool
     {
         return $this->fault instanceof Fault;
     }
 
     /**
      * Retrieve the fault response, if any
-     *
-     * @return null|Fault
      */
-    public function getFault()
+    public function getFault(): null|Fault
     {
         return $this->fault;
     }
 
     /**
      * Retrieve method parameters as XMLRPC values
-     *
-     * @return array
      */
-    protected function getXmlRpcParams()
+    protected function getXmlRpcParams(): array
     {
         $params = [];
         if (is_array($this->xmlRpcParams)) {
@@ -422,10 +383,8 @@ class Request implements Stringable
 
     /**
      * Create XML request
-     *
-     * @return string
      */
-    public function saveXml()
+    public function saveXml(): string
     {
         $args   = $this->getXmlRpcParams();
         $method = $this->getMethod();

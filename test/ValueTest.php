@@ -33,8 +33,7 @@ use const PHP_INT_MAX;
 #[Group('Laminas_XmlRpc')]
 class ValueTest extends TestCase
 {
-    /** @var string */
-    public $xmlRpcDateFormat = 'Ymd\\TH:i:s';
+    public string $xmlRpcDateFormat = 'Ymd\\TH:i:s';
 
     public function testFactoryAutodetectsBoolean(): void
     {
@@ -762,7 +761,7 @@ class ValueTest extends TestCase
         $this->assertEquals($expectedValue, $xmlRpcValueDateTime->getValue());
     }
 
-    public function testMarshalBase64FromString()
+    public function testMarshalBase64FromString(): void
     {
         $native = 'foo';
         $val    = AbstractValue::getXmlRpcValue(
@@ -920,11 +919,8 @@ class ValueTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         AbstractValue::getXmlRpcTypeByValue(fopen(__FILE__, 'r'));
     }
-
-    /**
-     * @param mixed $object
-     */
-    public function assertXmlRpcType(string $type, $object): void
+    
+    public function assertXmlRpcType(string $type, mixed $object): void
     {
         switch ($type) {
             case 'array':

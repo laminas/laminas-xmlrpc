@@ -9,30 +9,16 @@ use function implode;
 
 class TestClass
 {
-    /** @var mixed */
-    private $value1;
-    /** @var mixed */
-    private $value2;
-
-    /**
-     * @param mixed $value1
-     * @param mixed $value2
-     */
-    public function __construct($value1 = null, $value2 = null)
+    public function __construct(private mixed $value1 = null, private mixed $value2 = null)
     {
-        $this->value1 = $value1;
-        $this->value2 = $value2;
     }
 
     /**
      * Test1
      *
      * Returns 'String: ' . $string
-     *
-     * @param string $string
-     * @return string
      */
-    public function test1($string)
+    public function test1(string $string): string
     {
         return 'String: ' . (string) $string;
     }
@@ -41,11 +27,8 @@ class TestClass
      * Test2
      *
      * Returns imploded array
-     *
-     * @param array $array
-     * @return string
      */
-    public static function test2($array)
+    public static function test2(array $array): string
     {
         return implode('; ', (array) $array);
     }
@@ -57,15 +40,14 @@ class TestClass
      *
      * @return void
      */
-    protected function test3()
+    protected function test3(): void
     {
     }
 
     /**
-     * @param string $arg
      * @return struct
      */
-    public function test4($arg)
+    public function test4(string $arg): array
     {
         return ['test1' => $this->value1, 'test2' => $this->value2, 'arg' => func_get_args()];
     }

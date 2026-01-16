@@ -13,29 +13,17 @@ use function ltrim;
  */
 class ServerProxy
 {
-    private XMLRPCClient $client;
-
-    private string $namespace = '';
-
     /** @var array of \Laminas\XmlRpc\Client\ServerProxy */
     private array $cache = [];
 
-    /**
-     * @param string             $namespace
-     */
-    public function __construct(XMLRPCClient $client, $namespace = '')
+    public function __construct(private XMLRPCClient $client, private $namespace = '')
     {
-        $this->client    = $client;
-        $this->namespace = $namespace;
     }
 
     /**
      * Get the next successive namespace
-     *
-     * @param string $namespace
-     * @return ServerProxy
      */
-    public function __get($namespace)
+    public function __get(string $namespace): ServerProxy
     {
         $namespace = ltrim("$this->namespace.$namespace", '.');
         if (! isset($this->cache[$namespace])) {
@@ -46,12 +34,8 @@ class ServerProxy
 
     /**
      * Call a method in this namespace.
-     *
-     * @param  string $method
-     * @param  array $args
-     * @return mixed
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args): mixed
     {
         $method = ltrim("{$this->namespace}.{$method}", '.');
         return $this->client->call($method, $args);

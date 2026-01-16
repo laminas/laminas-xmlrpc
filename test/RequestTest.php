@@ -28,10 +28,8 @@ class RequestTest extends TestCase
 {
     /**
      * \Laminas\XmlRpc\Request object
-     *
-     * @var Request
      */
-    protected $request;
+    protected Request $request;
 
     /**
      * Setup environment
@@ -259,11 +257,8 @@ class RequestTest extends TestCase
 
     /**
      * helper for saveXml() and __toString() tests
-     *
-     * @param string $xml
-     * @param array $argv
      */
-    protected function assertXmlRequest($xml, $argv): void
+    protected function assertXmlRequest(string $xml, array $argv): void
     {
         $sx = new SimpleXMLElement($xml);
 

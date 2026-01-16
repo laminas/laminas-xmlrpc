@@ -19,11 +19,9 @@ use const PHP_INT_MAX;
 #[Group('Laminas_XmlRpc')]
 class BigIntegerValueTest extends TestCase
 {
-    /** @var null|bool */
-    protected $useBigIntForI8Flag;
+    protected null|bool $useBigIntForI8Flag;
 
-    /** @var string */
-    protected $bigIntValue;
+    protected string $bigIntValue;
 
     protected function setUp(): void
     {

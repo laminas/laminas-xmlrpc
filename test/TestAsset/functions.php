@@ -10,12 +10,8 @@ use function implode;
  * testFunction
  *
  * Function for use with xmlrpc server unit tests
- *
- * @param array $var1
- * @param string $var2
- * @return string
  */
-function testFunction($var1, $var2 = 'optional')
+function testFunction(array $var1, string $var2 = 'optional'): string
 {
     return $var2 . ': ' . implode(',', (array) $var1);
 }
@@ -24,10 +20,8 @@ function testFunction($var1, $var2 = 'optional')
  * testFunction2
  *
  * Function for use with xmlrpc server unit tests
- *
- * @return string
  */
-function testFunction2()
+function testFunction2(): string
 {
     return 'function2';
 }

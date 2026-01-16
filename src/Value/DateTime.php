@@ -11,28 +11,24 @@ class DateTime extends AbstractScalar
 {
     /**
      * PHP compatible format string for XML/RPC datetime values
-     *
-     * @var string
      */
-    protected $phpFormatString = 'Ymd\\TH:i:s';
+    protected string $phpFormatString = 'Ymd\\TH:i:s';
 
     /**
      * ISO compatible format string for XML/RPC datetime values
-     *
-     * @var string
      */
-    protected $isoFormatString = 'yyyyMMddTHH:mm:ss';
+    protected string $isoFormatString = 'yyyyMMddTHH:mm:ss';
 
     /**
      * Set the value of a dateTime.iso8601 native type
      *
      * The value is in iso8601 format, minus any timezone information or dashes
      *
-     * @param int|string|\DateTime $value Integer of the unix timestamp or any string that can be parsed
+     * @param  int|string|\DateTime $value Integer of the unix timestamp or any string that can be parsed
      *                     to a unix timestamp using the PHP strtotime() function
      * @throws Exception\ValueException If unable to create a DateTime object from $value.
      */
-    public function __construct($value)
+    public function __construct(int|string|\DateTime $value)
     {
         $this->type = self::XMLRPC_TYPE_DATETIME;
 
@@ -56,7 +52,7 @@ class DateTime extends AbstractScalar
      *
      * @return string Formatted datetime
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }

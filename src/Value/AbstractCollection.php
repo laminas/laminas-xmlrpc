@@ -8,10 +8,8 @@ abstract class AbstractCollection extends AbstractValue
 {
     /**
      * Set the value of a collection type (array and struct) native types
-     *
-     * @param array $value
      */
-    public function __construct($value)
+    public function __construct(array $value)
     {
         $values = (array) $value;   // Make sure that the value is an array
         foreach ($values as $key => $value) {
@@ -26,10 +24,8 @@ abstract class AbstractCollection extends AbstractValue
 
     /**
      * Return the value of this object, convert the XML-RPC native collection values into a PHP array
-     *
-     * @return array
      */
-    public function getValue()
+    public function getValue(): array
     {
         $values = (array) $this->value;
         foreach ($values as $key => $value) {

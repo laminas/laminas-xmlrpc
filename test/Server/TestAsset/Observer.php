@@ -10,8 +10,7 @@ class Observer
 {
     private static ?Observer $instance = null;
 
-    /** @var array */
-    public $observed = [];
+    public array $observed = [];
 
     private function __construct()
     {

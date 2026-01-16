@@ -18,17 +18,13 @@ class CacheTest extends TestCase
 {
     /**
      * Server object
-     *
-     * @var Server
      */
-    protected $server;
+    protected Server $server;
 
     /**
      * Local file for caching
-     *
-     * @var string
      */
-    protected $file;
+    protected string $file;
 
     /**
      * Setup environment

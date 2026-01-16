@@ -18,53 +18,39 @@ class Response implements Stringable
 {
     /**
      * Return value
-     *
-     * @var mixed
      */
-    protected $return;
+    protected mixed $return;
 
     /**
      * Return type
-     *
-     * @var string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * Response character encoding
-     *
-     * @var string
      */
-    protected $encoding = 'UTF-8';
+    protected string $encoding = 'UTF-8';
 
     /**
      * Fault, if response is a fault response
-     *
-     * @var null|Fault
      */
-    protected $fault;
+    protected null|Fault $fault;
 
     /**
      * Constructor
      *
      * Can optionally pass in the return value and type hinting; otherwise, the
      * return value can be set via {@link setReturnValue()}.
-     *
-     * @param mixed $return
-     * @param string|null $type
      */
-    public function __construct($return = null, $type = null)
+    public function __construct(mixed $return = null, string|null $type = null)
     {
         $this->setReturnValue($return, $type);
     }
 
     /**
      * Set encoding to use in response
-     *
-     * @param string $encoding
-     * @return Response
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): Response
     {
         $this->encoding = $encoding;
         AbstractValue::setEncoding($encoding);
@@ -73,10 +59,8 @@ class Response implements Stringable
 
     /**
      * Retrieve current response encoding
-     *
-     * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
@@ -85,12 +69,8 @@ class Response implements Stringable
      * Set the return value
      *
      * Sets the return value, with optional type hinting if provided.
-     *
-     * @param mixed $value
-     * @param string|null $type
-     * @return void
      */
-    public function setReturnValue($value, $type = null)
+    public function setReturnValue(mixed $value, string|null $type = null): void
     {
         $this->return = $value;
         $this->type   = (string) $type;
@@ -98,40 +78,32 @@ class Response implements Stringable
 
     /**
      * Retrieve the return value
-     *
-     * @return mixed
      */
-    public function getReturnValue()
+    public function getReturnValue(): mixed
     {
         return $this->return;
     }
 
     /**
      * Retrieve the XMLRPC value for the return value
-     *
-     * @return AbstractValue
      */
-    protected function getXmlRpcReturn()
+    protected function getXmlRpcReturn(): AbstractValue
     {
         return AbstractValue::getXmlRpcValue($this->return);
     }
 
     /**
      * Is the response a fault response?
-     *
-     * @return bool
      */
-    public function isFault()
+    public function isFault(): bool
     {
         return $this->fault instanceof Fault;
     }
 
     /**
      * Returns the fault, if any.
-     *
-     * @return null|Fault
      */
-    public function getFault()
+    public function getFault(): null|Fault
     {
         return $this->fault;
     }
@@ -146,13 +118,12 @@ class Response implements Stringable
      * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
      * See https://www.php.net/manual/en/libxml.constants.php for a full list.
      *
-     * @param string $response
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws Exception\ValueException If invalid XML.
      * @return bool True if a valid XMLRPC response, false if a fault
      * response or invalid input
      */
-    public function loadXml($response, int $libXmlOptions = 0)
+    public function loadXml(string $response, int $libXmlOptions = 0): bool
     {
         if (! is_string($response)) {
             $this->fault = new Fault(650);
@@ -201,10 +172,8 @@ class Response implements Stringable
 
     /**
      * Return response as XML
-     *
-     * @return string
      */
-    public function saveXml()
+    public function saveXml(): string
     {
         $value     = $this->getXmlRpcReturn();
         $generator = AbstractValue::getGenerator();

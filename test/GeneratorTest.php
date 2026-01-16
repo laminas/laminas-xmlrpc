@@ -17,7 +17,7 @@ use function trim;
 class GeneratorTest extends TestCase
 {
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
-    public function testCreatingSingleElement(Generator $generator)
+    public function testCreatingSingleElement(Generator $generator): void
     {
         $generator->openElement('element');
         $generator->closeElement('element');
@@ -25,7 +25,7 @@ class GeneratorTest extends TestCase
     }
 
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
-    public function testCreatingSingleElementWithValue(Generator $generator)
+    public function testCreatingSingleElementWithValue(Generator $generator): void
     {
         $generator->openElement('element', 'value');
         $generator->closeElement('element');
@@ -33,7 +33,7 @@ class GeneratorTest extends TestCase
     }
 
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
-    public function testCreatingComplexXmlDocument(Generator $generator)
+    public function testCreatingComplexXmlDocument(Generator $generator): void
     {
         $generator->openElement('root');
         $generator->openElement('children');
@@ -48,7 +48,7 @@ class GeneratorTest extends TestCase
     }
 
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
-    public function testFlushingGeneratorFlushesEverything(Generator $generator)
+    public function testFlushingGeneratorFlushesEverything(Generator $generator): void
     {
         $generator->openElement('test')->closeElement('test');
         $this->assertXml('<test/>', $generator);
@@ -57,7 +57,7 @@ class GeneratorTest extends TestCase
     }
 
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
-    public function testSpecialCharsAreEncoded(Generator $generator)
+    public function testSpecialCharsAreEncoded(Generator $generator): void
     {
         $generator->openElement('element', '<>&"\'€')->closeElement('element');
         $variant1 = '<element>&lt;&gt;&amp;"\'€</element>';
@@ -70,20 +70,20 @@ class GeneratorTest extends TestCase
     }
 
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGeneratorsWithAlternateEncodings')]
-    public function testDifferentEncodings(Generator $generator)
+    public function testDifferentEncodings(Generator $generator): void
     {
         $generator->openElement('element', '€')->closeElement('element');
         $this->assertXml('<element>&#8364;</element>', $generator);
     }
 
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
-    public function testFluentInterfacesProvided(Generator $generator)
+    public function testFluentInterfacesProvided(Generator $generator): void
     {
         $this->assertSame($generator, $generator->openElement('foo'));
         $this->assertSame($generator, $generator->closeElement('foo'));
     }
 
-    public function assertXml(string $expected, Generator $actual)
+    public function assertXml(string $expected, Generator $actual): void
     {
         $expected = trim($expected);
         $this->assertSame($expected, trim((string) $actual));

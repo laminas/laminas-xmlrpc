@@ -11,10 +11,9 @@ class Integer extends AbstractScalar
     /**
      * Set the value of an integer native type
      *
-     * @param int $value
      * @throws Exception\ValueException
      */
-    public function __construct($value)
+    public function __construct(int $value)
     {
         if ($value > PHP_INT_MAX) {
             throw new Exception\ValueException('Overlong integer given');
@@ -26,10 +25,8 @@ class Integer extends AbstractScalar
 
     /**
      * Return the value of this object, convert the XML-RPC native integer value into a PHP integer
-     *
-     * @return int
      */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }

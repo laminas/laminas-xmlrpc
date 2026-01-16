@@ -17,25 +17,19 @@ use function var_export;
  */
 class System
 {
-    /** @var Server */
-    protected $server;
-
     /**
      * Constructor
      */
-    public function __construct(Server $server)
+    public function __construct(protected Server $server)
     {
-        $this->server = $server;
     }
 
     /**
      * List all available XMLRPC methods
      *
      * Returns an array of methods.
-     *
-     * @return array
      */
-    public function listMethods()
+    public function listMethods(): array
     {
         $table = $this->server->getDispatchTable()->getMethods();
         return array_keys($table);
@@ -44,11 +38,9 @@ class System
     /**
      * Display help message for an XMLRPC method
      *
-     * @param string $method
      * @throws InvalidArgumentException
-     * @return string
      */
-    public function methodHelp($method)
+    public function methodHelp(string $method): string
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
@@ -61,11 +53,9 @@ class System
     /**
      * Return a method signature
      *
-     * @param string $method
      * @throws InvalidArgumentException
-     * @return array
      */
-    public function methodSignature($method)
+    public function methodSignature(string $method): array
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
@@ -89,11 +79,8 @@ class System
      * struct with a fault response.
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
-     *
-     * @param  array $methods
-     * @return array
      */
-    public function multicall($methods)
+    public function multicall(array $methods): array
     {
         $responses = [];
         foreach ($methods as $method) {

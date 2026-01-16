@@ -11,10 +11,8 @@ abstract class AbstractGenerator implements GeneratorInterface
 {
     /**
      * XML encoding string
-     *
-     * @var string
      */
-    protected $encoding;
+    protected string $encoding;
 
     /**
      * Construct new instance of the generator
@@ -43,7 +41,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * @param mixed $value Optional value of the XML tag
      * @return AbstractGenerator Fluent interface
      */
-    public function openElement($name, $value = null)
+    public function openElement(string $name, mixed $value = null): AbstractGenerator
     {
         $this->openXmlElement($name);
         if ($value !== null) {
@@ -61,7 +59,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * @param string $name XML tag name
      * @return AbstractGenerator Fluent interface
      */
-    public function closeElement($name)
+    public function closeElement(string $name): AbstractGenerator
     {
         $this->closeXmlElement($name);
 
@@ -70,31 +68,24 @@ abstract class AbstractGenerator implements GeneratorInterface
 
     /**
      * Return encoding
-     *
-     * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
 
     /**
      * Set XML encoding
-     *
-     * @param  string $encoding
-     * @return void
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): void
     {
         $this->encoding = $encoding;
     }
 
     /**
      * Returns the XML as a string and flushes all internal buffers
-     *
-     * @return string
      */
-    public function flush()
+    public function flush(): string
     {
         $xml = $this->saveXml();
         $this->init();
@@ -111,11 +102,8 @@ abstract class AbstractGenerator implements GeneratorInterface
 
     /**
      * Removes XML declaration from a string
-     *
-     * @param  string $xml
-     * @return string
      */
-    public function stripDeclaration($xml)
+    public function stripDeclaration(string $xml): string
     {
         return preg_replace('/<\?xml version="1.0"( encoding="[^\"]*")?\?>\n/u', '', $xml);
     }
@@ -124,23 +112,16 @@ abstract class AbstractGenerator implements GeneratorInterface
      * Start XML element
      *
      * @param string $name XML element name
-     * @return void
      */
-    abstract protected function openXmlElement($name);
+    abstract protected function openXmlElement(string $name): void;
 
     /**
      * Write XML text data into the currently opened XML element
-     *
-     * @param mixed $text
-     * @return void
      */
-    abstract protected function writeTextData($text);
+    abstract protected function writeTextData(string $text): void;
 
     /**
      * End XML element
-     *
-     * @param string $name
-     * @return void
      */
-    abstract protected function closeXmlElement($name);
+    abstract protected function closeXmlElement(string $name): void;
 }

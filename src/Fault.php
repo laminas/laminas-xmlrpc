@@ -26,31 +26,23 @@ class Fault implements Stringable
 {
     /**
      * Fault code
-     *
-     * @var int
      */
-    protected $code;
+    protected int $code;
 
     /**
      * Fault character encoding
-     *
-     * @var string
      */
-    protected $encoding = 'UTF-8';
+    protected string $encoding = 'UTF-8';
 
     /**
      * Fault message
-     *
-     * @var string
      */
-    protected $message;
+    protected string $message;
 
     /**
      * Internal fault codes => messages
-     *
-     * @var array
      */
-    protected $internal = [
+    protected array $internal = [
         404 => 'Unknown Error',
 
         // 610 - 619 reflection errors
@@ -86,11 +78,8 @@ class Fault implements Stringable
 
     /**
      * Constructor
-     *
-     * @param int    $code
-     * @param string $message
      */
-    public function __construct($code = 404, $message = '')
+    public function __construct(int $code = 404, string $message = '')
     {
         $this->setCode($code);
         $code = $this->getCode();
@@ -105,11 +94,8 @@ class Fault implements Stringable
 
     /**
      * Set the fault code
-     *
-     * @param int $code
-     * @return Fault
      */
-    public function setCode($code)
+    public function setCode(int $code): Fault
     {
         $this->code = (int) $code;
         return $this;
@@ -117,21 +103,16 @@ class Fault implements Stringable
 
     /**
      * Return fault code
-     *
-     * @return int
      */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
     }
 
     /**
      * Retrieve fault message
-     *
-     * @param string $message
-     * @return Fault
      */
-    public function setMessage($message)
+    public function setMessage(string $message): Fault
     {
         $this->message = (string) $message;
         return $this;
@@ -139,21 +120,16 @@ class Fault implements Stringable
 
     /**
      * Retrieve fault message
-     *
-     * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
     /**
      * Set encoding to use in fault response
-     *
-     * @param string $encoding
-     * @return Fault
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): Fault
     {
         $this->encoding = $encoding;
         AbstractValue::setEncoding($encoding);
@@ -162,10 +138,8 @@ class Fault implements Stringable
 
     /**
      * Retrieve current fault encoding
-     *
-     * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
@@ -173,13 +147,12 @@ class Fault implements Stringable
     /**
      * Load an XMLRPC fault from XML
      *
-     * @param string $fault
      * @return bool Returns true if successfully loaded fault response, false
      * if response was not a fault response
      * @throws Exception\ExceptionInterface If no or faulty XML provided, or if fault
      * response does not contain either code or message.
      */
-    public function loadXml($fault)
+    public function loadXml(string $fault): bool
     {
         if (! is_string($fault)) {
             throw new Exception\InvalidArgumentException('Invalid XML provided to fault');
@@ -251,11 +224,8 @@ class Fault implements Stringable
 
     /**
      * Determine if an XML response is an XMLRPC fault
-     *
-     * @param string $xml
-     * @return bool
      */
-    public static function isFault($xml)
+    public static function isFault(string $xml): bool
     {
         $fault = new static();
         try {
@@ -269,10 +239,8 @@ class Fault implements Stringable
 
     /**
      * Serialize fault to XML
-     *
-     * @return string
      */
-    public function saveXml()
+    public function saveXml(): string
     {
         // Create fault value
         $faultStruct = [
