@@ -4,6 +4,9 @@ namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\AbstractValue;
 
+/**
+ * @extends AbstractScalar<array>
+ */
 abstract class AbstractCollection extends AbstractValue
 {
     /**

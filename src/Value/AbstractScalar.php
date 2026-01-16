@@ -4,6 +4,10 @@ namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\AbstractValue;
 
+/**
+ * @template TValue
+ * @extends AbstractValue<TValue>
+ */
 abstract class AbstractScalar extends AbstractValue
 {
     /**

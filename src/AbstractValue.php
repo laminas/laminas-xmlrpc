@@ -37,17 +37,11 @@ use const PHP_INT_SIZE;
  *
  * Using this function, users/Laminas\XmlRpc\Client object can create the Laminas\XmlRpc\Value objects
  * from PHP variables, XML string or by specifying the exact XML-RPC native type
+ * 
+ * @template TValue
  */
 abstract class AbstractValue
 {
-    /**
-     * The native XML-RPC representation of this object's value
-     *
-     * If the native type of this object is array or struct, this will be an array
-     * of Value objects
-     */
-    protected mixed $value;
-
     /**
      * The native XML-RPC type of this object
      * One of the XMLRPC_TYPE_* constants
@@ -95,6 +89,17 @@ abstract class AbstractValue
     public const XMLRPC_TYPE_STRUCT    = 'struct';
     public const XMLRPC_TYPE_NIL       = 'nil';
     public const XMLRPC_TYPE_APACHENIL = 'ex:nil';
+
+    /**
+     * @param TValue $value 
+     * The native XML-RPC representation of this object's value
+     *
+     * If the native type of this object is array or struct, this will be an array
+     * of Value objects
+     */
+    public function __construct(protected mixed $value)
+    {
+    }
 
     /**
      * Get the native XML-RPC type (the type is one of the Value::XMLRPC_TYPE_* constants)

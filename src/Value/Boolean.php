@@ -6,7 +6,10 @@ use function filter_var;
 
 use const FILTER_VALIDATE_BOOLEAN;
 
-class Boolean extends AbstractScalar
+/**
+ * @extends AbstractScalar<bool>
+ */
+final class Boolean extends AbstractScalar
 {
     /**
      * Set the value of a boolean native type

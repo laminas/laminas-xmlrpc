@@ -15,7 +15,7 @@ class BigInteger extends Integer
     /**
      * Return bigint value object
      */
-    public function getValue(): string
+    public function getValue(): string|int
     {
         return $this->value;
     }

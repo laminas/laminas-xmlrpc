@@ -6,7 +6,10 @@ use Laminas\XmlRpc\Exception;
 
 use const PHP_INT_MAX;
 
-class Integer extends AbstractScalar
+/**
+ * @extends AbstractScalar<int>
+ */
+final class Integer extends AbstractScalar
 {
     /**
      * Set the value of an integer native type
@@ -26,7 +29,7 @@ class Integer extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native integer value into a PHP integer
      */
-    public function getValue(): int
+    public function getValue(): string|int
     {
         return $this->value;
     }

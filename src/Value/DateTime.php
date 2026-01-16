@@ -7,7 +7,10 @@ use Laminas\XmlRpc\Exception;
 use function date;
 use function is_numeric;
 
-class DateTime extends AbstractScalar
+/**
+ * @extends AbstractScalar<string>
+ */
+final class DateTime extends AbstractScalar
 {
     /**
      * PHP compatible format string for XML/RPC datetime values

@@ -6,7 +6,10 @@ use function ini_get;
 use function rtrim;
 use function sprintf;
 
-class Double extends AbstractScalar
+/**
+ * @extends AbstractScalar<float>
+ */
+final class Double extends AbstractScalar
 {
     /**
      * Set the value of a double native type

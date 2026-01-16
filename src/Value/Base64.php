@@ -5,7 +5,10 @@ namespace Laminas\XmlRpc\Value;
 use function base64_decode;
 use function base64_encode;
 
-class Base64 extends AbstractScalar
+/**
+ * @extends AbstractScalar<string>
+ */
+final class Base64 extends AbstractScalar
 {
     /**
      * Set the value of a base64 native type

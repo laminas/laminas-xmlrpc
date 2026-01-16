@@ -2,7 +2,10 @@
 
 namespace Laminas\XmlRpc\Value;
 
-class Text extends AbstractScalar
+/**
+ * @extends AbstractScalar<string>
+ */
+final class Text extends AbstractScalar
 {
     /**
      * Set the value of a string native type
