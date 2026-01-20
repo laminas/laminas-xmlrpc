@@ -17,6 +17,7 @@ use Laminas\XmlRpc\Server;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypeError;
 
 use function base64_encode;
 use function count;
@@ -496,8 +497,10 @@ class ServerTest extends TestCase
 
     public function testSetRequestThrowsExceptionOnBadObject(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid request object');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            'Laminas\XmlRpc\Server::setRequest(): Argument #1 ($request) must be of type Laminas\XmlRpc\Request|string'
+        );
         $this->server->setRequest($this);
     }
 

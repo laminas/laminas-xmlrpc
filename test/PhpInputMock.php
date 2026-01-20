@@ -1,4 +1,5 @@
 <?php // @codingStandardsIgnoreFile
+
 namespace LaminasTest\XmlRpc;
 
 /**
@@ -52,7 +53,7 @@ class PhpInputMock
         stream_wrapper_restore('php');
     }
 
-    public static function methodWillReturn(string $methodName, $returnValue): void
+    public static function methodWillReturn(string $methodName, bool $returnValue): void
     {
         $methodName = strtolower($methodName);
         static::$returnValues[$methodName] = $returnValue;
@@ -68,6 +69,9 @@ class PhpInputMock
         return;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function stream_open(): bool
     {
         static::$arguments[__FUNCTION__] = func_get_args();
@@ -79,6 +83,9 @@ class PhpInputMock
         return true;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function stream_eof()
     {
         static::$arguments[__FUNCTION__] = func_get_args();
@@ -90,6 +97,9 @@ class PhpInputMock
         return (0 === strlen(static::$data));
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function stream_read($count): mixed
     {
         static::$arguments[__FUNCTION__] = func_get_args();
@@ -110,6 +120,9 @@ class PhpInputMock
         return $data;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function stream_stat(): array
     {
         static::$arguments[__FUNCTION__] = func_get_args();

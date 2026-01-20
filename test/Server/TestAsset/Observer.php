@@ -25,6 +25,9 @@ class Observer
         return static::$instance;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public static function observe(Fault $fault): void
     {
         self::getInstance()->observed[] = $fault;

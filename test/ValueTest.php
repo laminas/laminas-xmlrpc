@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypeError;
 
 use function base64_encode;
 use function fopen;
@@ -209,8 +210,10 @@ class ValueTest extends TestCase
     #[Group('Laminas-3310')]
     public function testMarshalI4FromOverlongNativeThrowsException(): void
     {
-        $this->expectException(ValueException::class);
-        $this->expectExceptionMessage('Overlong integer given');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            'Laminas\XmlRpc\Value\Integer::__construct(): Argument #1 ($value) must be of type int, float given'
+        );
         $x = AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_I4);
         var_dump($x);
     }
@@ -218,8 +221,10 @@ class ValueTest extends TestCase
     #[Group('Laminas-3310')]
     public function testMarshalIntegerFromOverlongNativeThrowsException(): void
     {
-        $this->expectException(ValueException::class);
-        $this->expectExceptionMessage('Overlong integer given');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            'Laminas\XmlRpc\Value\Integer::__construct(): Argument #1 ($value) must be of type int, float given'
+        );
         AbstractValue::getXmlRpcValue(PHP_INT_MAX + 5000, AbstractValue::XMLRPC_TYPE_INTEGER);
     }
 
@@ -463,14 +468,13 @@ class ValueTest extends TestCase
     public function testArrayMustContainDataElement(Generator $generator): void
     {
         AbstractValue::setGenerator($generator);
-        $native = [];
-        $xml    = '<value><array/></value>';
+        $xml = '<value><array/></value>';
 
         $this->expectException(ValueException::class);
         $this->expectExceptionMessage(
             'Invalid XML for XML-RPC native array type: ARRAY tag must contain DATA tag'
         );
-        $val = AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
+        AbstractValue::getXmlRpcValue($xml, AbstractValue::XML_STRING);
     }
 
     public function testFactoryAutodetectsStruct(): void
@@ -919,8 +923,8 @@ class ValueTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         AbstractValue::getXmlRpcTypeByValue(fopen(__FILE__, 'r'));
     }
-    
-    public function assertXmlRpcType(string $type, mixed $object): void
+
+    public function assertXmlRpcType(string $type, AbstractValue $object): void
     {
         switch ($type) {
             case 'array':

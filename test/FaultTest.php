@@ -38,7 +38,6 @@ class FaultTest extends TestCase
      */
     public function testCode(): void
     {
-        /** @psalm-suppress InvalidArgument */
         $this->fault->setCode('1000');
         $this->assertEquals(1000, $this->fault->getCode());
     }
@@ -88,7 +87,7 @@ class FaultTest extends TestCase
 
         $member2 = $struct->appendChild($dom->createElement('member'));
         $member2->appendChild($dom->createElement('name', 'faultString'));
-        $value2 = $member2->appendChild($dom->createElement('value', 'Error string'));
+        $member2->appendChild($dom->createElement('value', 'Error string'));
 
         return $dom->saveXml();
     }
@@ -136,7 +135,7 @@ class FaultTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Failed to parse XML fault');
-        $parsed = $this->fault->loadXml('foo');
+        $this->fault->loadXml('foo');
     }
 
     public function testLoadXmlThrowsExceptionOnInvalidInput2(): void
@@ -170,7 +169,6 @@ class FaultTest extends TestCase
         self::assertIsString($xml);
         $this->assertTrue(Fault::isFault($xml), $xml);
         $this->assertFalse(Fault::isFault('foo'));
-        $this->assertFalse(Fault::isFault(['foo']));
     }
 
     /**

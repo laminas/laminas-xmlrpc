@@ -28,6 +28,8 @@ class System
      * List all available XMLRPC methods
      *
      * Returns an array of methods.
+     *
+     * @return (int|string)[]
      */
     public function listMethods(): array
     {
@@ -38,7 +40,9 @@ class System
     /**
      * Display help message for an XMLRPC method
      *
+     * @param string $method Is required for PHPUnit
      * @throws InvalidArgumentException
+     * @return string Type Is required for PHPUnit
      */
     public function methodHelp(string $method): string
     {
@@ -54,6 +58,7 @@ class System
      * Return a method signature
      *
      * @throws InvalidArgumentException
+     * @return array<int, array<string, string|array>>
      */
     public function methodSignature(string $method): array
     {
@@ -79,6 +84,12 @@ class System
      * struct with a fault response.
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
+     *
+     * @param array<string, mixed> $methods
+     *
+     * @return (array|mixed)[]
+     *
+     * @psalm-return list<array{faultCode: mixed, faultString: mixed}|mixed>
      */
     public function multicall(array $methods): array
     {

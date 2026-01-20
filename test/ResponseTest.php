@@ -225,9 +225,6 @@ EOD;
         $this->assertEquals(652, $fault->getCode());
     }
 
-    /**
-     * @param mixed $error
-     */
     public function trackError(mixed $error): void
     {
         $this->errorOccurred = true;

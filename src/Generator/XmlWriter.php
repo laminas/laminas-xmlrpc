@@ -14,8 +14,6 @@ class XmlWriter extends AbstractGenerator
 
     /**
      * Initialized XMLWriter instance
-     *
-     * @return void
      */
     protected function init(): void
     {
@@ -46,8 +44,6 @@ class XmlWriter extends AbstractGenerator
 
     /**
      * Close a previously opened XML element
-     *
-     * @param string $name
      */
     protected function closeXmlElement(string $name): void
     {

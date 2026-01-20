@@ -15,7 +15,7 @@ final class Boolean extends AbstractScalar
      * Set the value of a boolean native type
      * We hold the boolean type as an integer (0 or 1)
      */
-    public function __construct(bool $value)
+    public function __construct(bool|string|int $value)
     {
         $this->type = self::XMLRPC_TYPE_BOOLEAN;
         // Make sure the value is boolean and then convert it into an integer
@@ -28,6 +28,6 @@ final class Boolean extends AbstractScalar
      */
     public function getValue(): bool
     {
-        return (bool) $this->value;
+        return filter_var($this->value, FILTER_VALIDATE_BOOLEAN);
     }
 }

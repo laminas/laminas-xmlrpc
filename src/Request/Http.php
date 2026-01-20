@@ -25,7 +25,7 @@ class Http extends XmlRpcRequest
     /**
      * Array of headers
      */
-    protected array $headers;
+    protected array|null $headers = null;
 
     /**
      * Raw XML as received via request

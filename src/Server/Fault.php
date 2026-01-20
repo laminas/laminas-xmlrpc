@@ -30,10 +30,18 @@ class Fault extends \Laminas\XmlRpc\Fault
 {
     protected Exception $exception;
 
-    /** Array of exception classes that may define xmlrpc faults */
+    /**
+     * Array of exception classes that may define xmlrpc faults
+     *
+     * @var array<class-string, bool>
+     */
     protected static array $faultExceptionClasses = [ExceptionInterface::class => true];
 
-    /** Array of fault observers */
+    /**
+     * Array of fault observers
+     *
+     * @var array<int, Exception>
+     */
     protected static array $observers = [];
 
     public function __construct(Exception $e)
@@ -89,7 +97,7 @@ class Fault extends \Laminas\XmlRpc\Fault
     /**
      * Detach fault exception classes
      *
-     * @param string|array $classes Class name or array of class names
+     * @param class-string|array<int, class-string> $classes Class name or array of class names
      */
     public static function detachFaultException(string|array $classes): void
     {
@@ -112,6 +120,8 @@ class Fault extends \Laminas\XmlRpc\Fault
      *
      * Expects a valid class name; that class must have a public static method
      * 'observe' that accepts an exception as its sole argument.
+     *
+     * @param class-string $class
      */
     public static function attachObserver(string $class): bool
     {

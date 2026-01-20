@@ -38,10 +38,10 @@ abstract class AbstractGenerator implements GeneratorInterface
      * Method opens a new XML element with an element name and an optional value
      *
      * @param string $name XML tag name
-     * @param mixed $value Optional value of the XML tag
+     * @param string|null $value Optional value of the XML tag
      * @return AbstractGenerator Fluent interface
      */
-    public function openElement(string $name, mixed $value = null): AbstractGenerator
+    public function openElement(string $name, string|null $value = null): AbstractGenerator
     {
         $this->openXmlElement($name);
         if ($value !== null) {

@@ -6,6 +6,9 @@ use Brick\Math\BigInteger as BigIntegerMath;
 
 class BigInteger extends Integer
 {
+    /**
+     * @param numeric-string $value
+     */
     public function __construct(string $value)
     {
         $this->value = (string) BigIntegerMath::of($value);

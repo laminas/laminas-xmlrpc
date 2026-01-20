@@ -702,7 +702,10 @@ class ClientTest extends TestCase
         $this->httpClient->setResponse($response);
     }
 
-    public function getServerResponseFor(mixed $nativeVars): ResponseInterface
+    /**
+     * @param ((string|string[])[]|string)[]|int|string|bool $nativeVars
+     */
+    public function getServerResponseFor(array|int|string|bool $nativeVars): ResponseInterface
     {
         $response = new Response();
         $response->setReturnValue($nativeVars);

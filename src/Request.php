@@ -42,7 +42,7 @@ class Request implements Stringable
     /**
      * Method to call
      */
-    protected string $method;
+    protected string|null $method = null;
 
     /**
      * XML request
@@ -57,7 +57,7 @@ class Request implements Stringable
     /**
      * Fault object, if any
      */
-    protected Fault $fault;
+    protected Fault|null $fault = null;
 
     /**
      * XML-RPC type for each param
@@ -121,7 +121,7 @@ class Request implements Stringable
     /**
      * Retrieve call method
      */
-    public function getMethod(): string
+    public function getMethod(): string|null
     {
         return $this->method;
     }
@@ -132,9 +132,10 @@ class Request implements Stringable
      * Adds a parameter to the parameter stack, associating it with the type
      * $type if provided
      *
+     * @param ((string|string[])[]|string)[]|Value\Text|int|string $value
      * @param string $type Optional; type hinting
      */
-    public function addParam(mixed $value, string|null $type = null): void
+    public function addParam(array|string|int|Value\Text $value, string|null $type = null): void
     {
         $this->params[] = $value;
         if (null === $type) {
@@ -261,7 +262,7 @@ class Request implements Stringable
      * @throws ValueException If invalid XML.
      * @return bool True on success, false if an error occurred.
      */
-    public function loadXml(string $request, int $libXmlOptions = 0): bool
+    public function loadXml(string|object $request, int $libXmlOptions = 0): bool
     {
         if (! is_string($request)) {
             $this->fault = new Fault(635);

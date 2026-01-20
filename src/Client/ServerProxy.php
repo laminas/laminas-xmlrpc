@@ -13,10 +13,10 @@ use function ltrim;
  */
 class ServerProxy
 {
-    /** @var array of \Laminas\XmlRpc\Client\ServerProxy */
+    /** @var array<string, ServerProxy> */
     private array $cache = [];
 
-    public function __construct(private XMLRPCClient $client, private $namespace = '')
+    public function __construct(private XMLRPCClient $client, private string $namespace = '')
     {
     }
 
@@ -34,6 +34,8 @@ class ServerProxy
 
     /**
      * Call a method in this namespace.
+     *
+     * @param array<int, mixed> $args
      */
     public function __call(string $method, array $args): mixed
     {

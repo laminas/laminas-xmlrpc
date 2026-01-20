@@ -34,7 +34,7 @@ class Response implements Stringable
     /**
      * Fault, if response is a fault response
      */
-    protected null|Fault $fault;
+    protected null|Fault $fault = null;
 
     /**
      * Constructor
@@ -69,8 +69,10 @@ class Response implements Stringable
      * Set the return value
      *
      * Sets the return value, with optional type hinting if provided.
+     *
+     * @param string|string[]|int|bool|null $value
      */
-    public function setReturnValue(mixed $value, string|null $type = null): void
+    public function setReturnValue(string|int|array|bool|null $value, string|null $type = null): void
     {
         $this->return = $value;
         $this->type   = (string) $type;
@@ -123,7 +125,7 @@ class Response implements Stringable
      * @return bool True if a valid XMLRPC response, false if a fault
      * response or invalid input
      */
-    public function loadXml(string $response, int $libXmlOptions = 0): bool
+    public function loadXml(string|object $response, int $libXmlOptions = 0): bool
     {
         if (! is_string($response)) {
             $this->fault = new Fault(650);

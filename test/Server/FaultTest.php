@@ -109,8 +109,8 @@ class FaultTest extends TestCase
     public function testAttachObserver(): void
     {
         Server\Fault::attachObserver(TestAsset\Observer::class);
-        $e        = new Server\Exception\RuntimeException('Checking observers', 411);
-        $fault    = Server\Fault::getInstance($e);
+        $e = new Server\Exception\RuntimeException('Checking observers', 411);
+        Server\Fault::getInstance($e);
         $observed = TestAsset\Observer::getObserved();
         TestAsset\Observer::clearObserved();
         Server\Fault::detachObserver(TestAsset\Observer::class);
@@ -130,13 +130,13 @@ class FaultTest extends TestCase
     public function testDetachObserver(): void
     {
         Server\Fault::attachObserver(TestAsset\Observer::class);
-        $e     = new Server\Exception\RuntimeException('Checking observers', 411);
-        $fault = Server\Fault::getInstance($e);
+        $e = new Server\Exception\RuntimeException('Checking observers', 411);
+        Server\Fault::getInstance($e);
         TestAsset\Observer::clearObserved();
         Server\Fault::detachObserver(TestAsset\Observer::class);
 
-        $e        = new Server\Exception\RuntimeException('Checking observers', 411);
-        $fault    = Server\Fault::getInstance($e);
+        $e = new Server\Exception\RuntimeException('Checking observers', 411);
+        Server\Fault::getInstance($e);
         $observed = TestAsset\Observer::getObserved();
         $this->assertEmpty($observed);
 

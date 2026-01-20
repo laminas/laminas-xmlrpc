@@ -156,9 +156,9 @@ class RequestTest extends TestCase
      */
     public function testLoadXml(): void
     {
-        $dom    = new DOMDocument('1.0', 'UTF-8');
-        $mCall  = $dom->appendChild($dom->createElement('methodCall'));
-        $mName  = $mCall->appendChild($dom->createElement('methodName', 'do.Something'));
+        $dom   = new DOMDocument('1.0', 'UTF-8');
+        $mCall = $dom->appendChild($dom->createElement('methodCall'));
+        $mCall->appendChild($dom->createElement('methodName', 'do.Something'));
         $params = $mCall->appendChild($dom->createElement('params'));
         $param1 = $params->appendChild($dom->createElement('param'));
         $value1 = $param1->appendChild($dom->createElement('value'));

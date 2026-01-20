@@ -3,6 +3,7 @@
 namespace Laminas\XmlRpc\Value;
 
 use function ini_get;
+use function is_float;
 use function rtrim;
 use function sprintf;
 
@@ -14,12 +15,17 @@ final class Double extends AbstractScalar
     /**
      * Set the value of a double native type
      */
-    public function __construct(float $value)
+    public function __construct(float|string $value)
     {
-        $this->type   = self::XMLRPC_TYPE_DOUBLE;
-        $precision    = (int) ini_get('precision');
-        $formatString = '%1.' . $precision . 'F';
-        $this->value  = rtrim(sprintf($formatString, (float) $value), '0');
+        $this->type = self::XMLRPC_TYPE_DOUBLE;
+
+        if (is_float($value)) {
+            $this->value = $value;
+        } else {
+            $precision    = (int) ini_get('precision');
+            $formatString = '%1.' . $precision . 'F';
+            $this->value  = (float) rtrim(sprintf($formatString, $value), '0');
+        }
     }
 
     /**
@@ -27,6 +33,6 @@ final class Double extends AbstractScalar
      */
     public function getValue(): float
     {
-        return (float) $this->value;
+        return $this->value;
     }
 }

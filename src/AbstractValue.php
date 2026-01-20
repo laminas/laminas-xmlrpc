@@ -37,7 +37,7 @@ use const PHP_INT_SIZE;
  *
  * Using this function, users/Laminas\XmlRpc\Client object can create the Laminas\XmlRpc\Value objects
  * from PHP variables, XML string or by specifying the exact XML-RPC native type
- * 
+ *
  * @template TValue
  */
 abstract class AbstractValue
@@ -51,7 +51,7 @@ abstract class AbstractValue
     /**
      * XML code representation of this object (will be calculated only once)
      */
-    protected string $xml;
+    protected string|null $xml = null;
 
     /**
      * True if BigInteger should be used for XMLRPC i8 types
@@ -61,7 +61,7 @@ abstract class AbstractValue
     // phpcs:ignore
     public static bool $USE_BIGINT_FOR_I8 = PHP_INT_SIZE < 8;
 
-    protected static GeneratorInterface $generator;
+    protected static GeneratorInterface|null $generator = null;
 
     /**
      * Specify that the XML-RPC native type will be auto detected from a PHP variable type
@@ -91,7 +91,8 @@ abstract class AbstractValue
     public const XMLRPC_TYPE_APACHENIL = 'ex:nil';
 
     /**
-     * @param TValue $value 
+     * @psalm-suppress PossiblyUnusedMethod
+     * @param TValue $value
      * The native XML-RPC representation of this object's value
      *
      * If the native type of this object is array or struct, this will be an array
@@ -182,12 +183,16 @@ abstract class AbstractValue
      * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
      * See https://www.php.net/manual/en/libxml.constants.php for a full list.
      *
+     * @param ((string|string[])[]|int|string)[]|bool|float|int|null|object|string $value
      * @param self::AUTO_DETECT_TYPE|self::XML* $type
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException
      */
-    public static function getXmlRpcValue(mixed $value, $type = self::AUTO_DETECT_TYPE, int $libXmlOptions = 0): AbstractValue
-    {
+    public static function getXmlRpcValue(
+        array|float|string|int|bool|object|null $value,
+        $type = self::AUTO_DETECT_TYPE,
+        int $libXmlOptions = 0
+    ): AbstractValue {
         switch ($type) {
             case self::AUTO_DETECT_TYPE:
                 // Auto detect the XML-RPC native type from the PHP type of $value
@@ -334,8 +339,10 @@ abstract class AbstractValue
      * @throws ValueException
      * @static
      */
-    protected static function xmlStringToNativeXmlRpc(string|SimpleXMLElement $xml, int $libXmlOptions = 0): AbstractValue
-    {
+    protected static function xmlStringToNativeXmlRpc(
+        string|SimpleXMLElement $xml,
+        int $libXmlOptions = 0
+    ): AbstractValue {
         static::createSimpleXMLElement($xml, $libXmlOptions);
 
         static::extractTypeAndValue($xml, $type, $value);
@@ -422,7 +429,7 @@ abstract class AbstractValue
 
         return $xmlrpcValue;
     }
-    
+
     protected static function createSimpleXMLElement(SimpleXMLElement|string &$xml, int $libXmlOptions = 0): void
     {
         if ($xml instanceof SimpleXMLElement) {
@@ -447,7 +454,7 @@ abstract class AbstractValue
      * @param string $type Type bind variable
      * @param string $value Value bind variable
      */
-    protected static function extractTypeAndValue(SimpleXMLElement $xml, string &$type, string &$value): void
+    protected static function extractTypeAndValue(SimpleXMLElement $xml, string|null &$type, string|null &$value): void
     {
         // Casting is necessary to work with strict-typed systems
         foreach ((array) $xml as $type => $value) {

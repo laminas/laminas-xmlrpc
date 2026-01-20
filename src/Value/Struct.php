@@ -9,13 +9,14 @@ class Struct extends AbstractCollection
     /**
      * Set the value of a struct native type
      */
-    public function __construct(array $value)
+    public function __construct(array|object $value)
     {
         $this->type = self::XMLRPC_TYPE_STRUCT;
         parent::__construct($value);
     }
 
     /**
+     * @psalm-suppress PossiblyUnusedMethod
      * Generate the XML code that represent struct native MXL-RPC value
      */
     protected function generate(): void

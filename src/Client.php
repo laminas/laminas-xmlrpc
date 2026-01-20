@@ -37,12 +37,12 @@ final class Client implements ServerClient
     /**
      * Request of the last method call
      */
-    protected Request|null $lastRequest;
+    protected Request|null $lastRequest = null;
 
     /**
      * Response received from the last method call
      */
-    protected Response|null $lastResponse;
+    protected Response|null $lastResponse = null;
 
     /**
      * Proxy object for more convenient method calls
@@ -196,10 +196,9 @@ final class Client implements ServerClient
      *
      * @param  string $method Name of the method we want to call
      * @param  array $params Array of parameters for the method
-     * @return mixed
      * @throws FaultException
      */
-    public function call(string $method, array $params = []): mixed
+    public function call($method, $params = []): mixed
     {
         if (! $this->skipSystemLookup() && (! str_starts_with($method, 'system.'))) {
             // Ensure empty array/struct params are cast correctly

@@ -79,7 +79,7 @@ class Fault implements Stringable
     /**
      * Constructor
      */
-    public function __construct(int $code = 404, string $message = '')
+    public function __construct(int|string $code = 404, string $message = '')
     {
         $this->setCode($code);
         $code = $this->getCode();
@@ -95,7 +95,7 @@ class Fault implements Stringable
     /**
      * Set the fault code
      */
-    public function setCode(int $code): Fault
+    public function setCode(int|string $code): Fault
     {
         $this->code = (int) $code;
         return $this;

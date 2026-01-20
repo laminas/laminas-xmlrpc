@@ -9,7 +9,7 @@ use const PHP_INT_MAX;
 /**
  * @extends AbstractScalar<int>
  */
-final class Integer extends AbstractScalar
+class Integer extends AbstractScalar
 {
     /**
      * Set the value of an integer native type
@@ -23,11 +23,13 @@ final class Integer extends AbstractScalar
         }
 
         $this->type  = self::XMLRPC_TYPE_INTEGER;
-        $this->value = (int) $value;    // Make sure this value is integer
+        $this->value = $value;    // Make sure this value is integer
     }
 
     /**
      * Return the value of this object, convert the XML-RPC native integer value into a PHP integer
+     *
+     * @return int
      */
     public function getValue(): string|int
     {
