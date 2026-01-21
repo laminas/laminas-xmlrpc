@@ -4,6 +4,7 @@ namespace Laminas\XmlRpc\Server;
 
 use Exception;
 use Laminas\XmlRpc\Server\Exception\ExceptionInterface;
+use Throwable;
 
 use function array_keys;
 use function class_exists;
@@ -154,7 +155,7 @@ class Fault extends \Laminas\XmlRpc\Fault
      *
      * @access public
      */
-    public function getException(): Exception
+    public function getException(): Throwable
     {
         return $this->exception;
     }

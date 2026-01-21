@@ -183,7 +183,7 @@ abstract class AbstractValue
      * $libXmlOptions parameter; as an example, you might use LIBXML_PARSEHUGE.
      * See https://www.php.net/manual/en/libxml.constants.php for a full list.
      *
-     * @param ((string|string[])[]|int|string)[]|bool|float|int|null|object|string $value
+     * @param mixed $value
      * @param self::AUTO_DETECT_TYPE|self::XML* $type
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException

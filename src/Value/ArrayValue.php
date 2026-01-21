@@ -19,8 +19,6 @@ class ArrayValue extends AbstractCollection
 
     /**
      * Generate the XML code that represent an array native MXL-RPC value
-     *
-     * @psalm-suppress PossiblyUnusedMethod
      */
     protected function generate(): void
     {

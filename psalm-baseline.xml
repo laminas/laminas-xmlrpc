@@ -3,22 +3,7 @@
   <file src="src/AbstractValue.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
     </ArgumentTypeCoercion>
-    <InvalidArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </InvalidArgument>
     <InvalidMethodCall>
       <code><![CDATA[children]]></code>
     </InvalidMethodCall>
@@ -32,6 +17,20 @@
     <MixedArgument>
       <code><![CDATA[$element]]></code>
       <code><![CDATA[$member->value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedAssignment>
       <code><![CDATA[$data]]></code>
@@ -50,18 +49,25 @@
     </MixedPropertyFetch>
     <PossiblyInvalidArgument>
       <code><![CDATA[$e->getCode()]]></code>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$xml]]></code>
     </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
     <PossiblyInvalidMethodCall>
       <code><![CDATA[asXML]]></code>
     </PossiblyInvalidMethodCall>
     <PossiblyNullArgument>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
@@ -103,9 +109,6 @@
       <code><![CDATA[count($signatures) > 1]]></code>
       <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$param]]></code>
-    </MixedArgument>
     <MixedAssignment>
       <code><![CDATA[$param]]></code>
       <code><![CDATA[$signature]]></code>
@@ -193,11 +196,7 @@
   </file>
   <file src="src/Request.php">
     <MixedArgument>
-      <code><![CDATA[$arg]]></code>
-      <code><![CDATA[$arg]]></code>
-      <code><![CDATA[$arg['value']]]></code>
       <code><![CDATA[$type]]></code>
-      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$param['type']]]></code>
@@ -254,7 +253,6 @@
     </InvalidPropertyFetch>
     <MixedArgument>
       <code><![CDATA[$return]]></code>
-      <code><![CDATA[$this->return]]></code>
       <code><![CDATA[$value->getValue()]]></code>
     </MixedArgument>
     <PossiblyUnusedProperty>
@@ -285,7 +283,6 @@
     <MixedArgument>
       <code><![CDATA[$argv]]></code>
       <code><![CDATA[$method]]></code>
-      <code><![CDATA[$params[$i]]]></code>
       <code><![CDATA[$reflection]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
@@ -392,6 +389,10 @@
     <MixedReturnStatement>
       <code><![CDATA[$method['prototypes']]]></code>
     </MixedReturnStatement>
+    <MixedReturnTypeCoercion>
+      <code><![CDATA[array<int, string>]]></code>
+      <code><![CDATA[array_keys($table)]]></code>
+    </MixedReturnTypeCoercion>
     <PossiblyFalseReference>
       <code><![CDATA[getMethodHelp]]></code>
       <code><![CDATA[toArray]]></code>
@@ -423,11 +424,6 @@
     <MissingTemplateParam>
       <code><![CDATA[AbstractCollection]]></code>
     </MissingTemplateParam>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <MixedArrayAssignment>
       <code><![CDATA[$this->value[$key]]]></code>
       <code><![CDATA[$values[$key]]]></code>
@@ -466,6 +462,9 @@
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$this->value]]></code>
     </MixedArgumentTypeCoercion>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[generate]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Value/ArrayValue.php">
     <MixedAssignment>
@@ -474,15 +473,13 @@
     <MixedMethodCall>
       <code><![CDATA[generateXml]]></code>
     </MixedMethodCall>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[generate]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Value/BigInteger.php">
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[(string) BigIntegerMath::of($value)]]></code>
-    </InvalidPropertyAssignmentValue>
-  </file>
-  <file src="src/Value/Boolean.php">
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[(int) filter_var($value, FILTER_VALIDATE_BOOLEAN)]]></code>
     </InvalidPropertyAssignmentValue>
   </file>
   <file src="src/Value/DateTime.php">

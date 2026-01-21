@@ -29,7 +29,7 @@ class System
      *
      * Returns an array of methods.
      *
-     * @return (int|string)[]
+     * @return array<int, string>
      */
     public function listMethods(): array
     {

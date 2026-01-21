@@ -12,8 +12,6 @@ abstract class AbstractScalar extends AbstractValue
 {
     /**
      * Generate the XML code that represent a scalar native MXL-RPC value
-     *
-     * @psalm-suppress PossiblyUnusedMethod
      */
     protected function generate(): void
     {
