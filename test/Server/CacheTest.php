@@ -14,7 +14,7 @@ use function is_writable;
 use function realpath;
 use function unlink;
 
-class CacheTest extends TestCase
+final class CacheTest extends TestCase
 {
     /**
      * Server object

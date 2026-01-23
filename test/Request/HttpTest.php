@@ -13,7 +13,7 @@ use function str_starts_with;
 use function strlen;
 
 #[Group('Laminas_XmlRpc')]
-class HttpTest extends TestCase
+final class HttpTest extends TestCase
 {
     private string $xml;
     private Request\Http $request;

@@ -14,7 +14,7 @@ use function array_shift;
 use function trim;
 
 #[Group('Laminas_XmlRpc')]
-class FaultTest extends TestCase
+final class FaultTest extends TestCase
 {
     /**
      * Laminas\XmlRpc\Server\Fault::getInstance() test

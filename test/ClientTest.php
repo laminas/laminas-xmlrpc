@@ -35,7 +35,7 @@ use function time;
 use function trim;
 
 #[Group('Laminas_XmlRpc')]
-class ClientTest extends TestCase
+final class ClientTest extends TestCase
 {
     /** @var TestPsr18Client */
     protected $httpClient;

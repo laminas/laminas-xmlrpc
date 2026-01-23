@@ -17,7 +17,7 @@ use function extension_loaded;
 use const PHP_INT_MAX;
 
 #[Group('Laminas_XmlRpc')]
-class BigIntegerValueTest extends TestCase
+final class BigIntegerValueTest extends TestCase
 {
     protected null|bool $useBigIntForI8Flag;
 

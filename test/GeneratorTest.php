@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use function trim;
 
 #[Group('Laminas_XmlRpc')]
-class GeneratorTest extends TestCase
+final class GeneratorTest extends TestCase
 {
     #[DataProviderExternal(AbstractTestProvider::class, 'provideGenerators')]
     public function testCreatingSingleElement(Generator $generator): void

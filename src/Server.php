@@ -36,7 +36,7 @@ use function str_starts_with;
  * <code>
  * use Laminas\XmlRpc;
  *
- * // Instantiate server
+ final  * // Instantiate server
  * $server = new XmlRpc\Server();
  *
  * // Allow some exceptions to report as fault responses:

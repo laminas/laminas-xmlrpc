@@ -20,7 +20,7 @@ use function set_error_handler;
 use function sprintf;
 
 #[Group('Laminas_XmlRpc')]
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     /**
      * Response object

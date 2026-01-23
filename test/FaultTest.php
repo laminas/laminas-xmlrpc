@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
 #[Group('Laminas_XmlRpc')]
-class FaultTest extends TestCase
+final class FaultTest extends TestCase
 {
     private Fault $fault;
 

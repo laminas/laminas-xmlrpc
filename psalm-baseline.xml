@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+<files psalm-version="6.14.3@d0b040a91f280f071c1abcb1b77ce3822058725a">
   <file src="src/AbstractValue.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
@@ -134,9 +134,6 @@
       <code><![CDATA[$signature]]></code>
       <code><![CDATA[$signatures[$methods[$i]]]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array<int, string>]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->system->listMethods()]]></code>
     </MixedReturnStatement>
@@ -296,9 +293,6 @@
       <code><![CDATA[$sigParams]]></code>
       <code><![CDATA[$signature]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
     <MixedMethodCall>
       <code><![CDATA[getParameters]]></code>
       <code><![CDATA[new $request()]]></code>
@@ -383,9 +377,6 @@
       <code><![CDATA[$method]]></code>
       <code><![CDATA[$responses[]]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array<int, array<string, string|array>>]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$method['prototypes']]]></code>
     </MixedReturnStatement>
@@ -438,9 +429,6 @@
       <code><![CDATA[$values]]></code>
       <code><![CDATA[$values[$key]]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-    </MixedInferredReturnType>
     <MixedMethodCall>
       <code><![CDATA[getValue]]></code>
     </MixedMethodCall>
@@ -578,10 +566,6 @@
       <code><![CDATA[$data]]></code>
       <code><![CDATA[static::$data]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[bool]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[static::$returnValues[__FUNCTION__]]]></code>
       <code><![CDATA[static::$returnValues[__FUNCTION__]]]></code>
@@ -667,9 +651,6 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[trackError]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$error]]></code>
-    </PossiblyUnusedParam>
     <RedundantCondition>
       <code><![CDATA[assertNotFalse]]></code>
       <code><![CDATA[assertNotFalse]]></code>
@@ -762,14 +743,6 @@
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$array]]></code>
     </MixedArgumentTypeCoercion>
-    <MixedInferredReturnType>
-      <code><![CDATA[base64]]></code>
-      <code><![CDATA[struct|array|mixed[]]]></code>
-    </MixedInferredReturnType>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$arg]]></code>
-      <code><![CDATA[$data]]></code>
-    </PossiblyUnusedParam>
     <UndefinedDocblockClass>
       <code><![CDATA[base64]]></code>
       <code><![CDATA[base64]]></code>

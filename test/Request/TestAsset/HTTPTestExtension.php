@@ -6,7 +6,7 @@ namespace LaminasTest\XmlRpc\Request\TestAsset;
 
 use Laminas\XmlRpc\Request\Http;
 
-class HTTPTestExtension extends Http
+final class HTTPTestExtension extends Http
 {
     public function __construct(mixed $method = null, mixed $params = null)
     {

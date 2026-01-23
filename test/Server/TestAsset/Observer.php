@@ -6,7 +6,7 @@ namespace LaminasTest\XmlRpc\Server\TestAsset;
 
 use Laminas\XmlRpc\Server\Fault;
 
-class Observer
+final class Observer
 {
     private static ?Observer $instance = null;
 

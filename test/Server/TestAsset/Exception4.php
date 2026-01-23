@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc\Server\TestAsset;
 
-class Exception4 extends Exception
+final class Exception4 extends Exception
 {
 }

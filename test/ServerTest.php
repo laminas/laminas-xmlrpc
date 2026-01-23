@@ -27,7 +27,7 @@ use function ob_start;
 use function var_export;
 
 #[Group('Laminas_XmlRpc')]
-class ServerTest extends TestCase
+final class ServerTest extends TestCase
 {
     private Server $server;
 
