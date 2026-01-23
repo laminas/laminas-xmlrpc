@@ -926,38 +926,19 @@ class ValueTest extends TestCase
 
     public function assertXmlRpcType(string $type, AbstractValue $object): void
     {
-        switch ($type) {
-            case 'array':
-                self::assertInstanceOf(Value\ArrayValue::class, $object);
-                break;
-            case 'string':
-                self::assertInstanceOf(Value\Text::class, $object);
-                break;
-            case 'boolean':
-                self::assertInstanceOf(Value\Boolean::class, $object);
-                break;
-            case 'integer':
-                self::assertInstanceOf(Value\Integer::class, $object);
-                break;
-            case 'double':
-                self::assertInstanceOf(Value\Double::class, $object);
-                break;
-            case 'nil':
-                self::assertInstanceOf(Value\Nil::class, $object);
-                break;
-            case 'struct':
-                self::assertInstanceOf(Value\Struct::class, $object);
-                break;
-            case 'dateTime':
-                self::assertInstanceOf(Value\DateTime::class, $object);
-                break;
-            case 'base64':
-                self::assertInstanceOf(Value\Base64::class, $object);
-                break;
-            default:
+        match ($type) {
+            'array' => self::assertInstanceOf(Value\ArrayValue::class, $object),
+            'string' => self::assertInstanceOf(Value\Text::class, $object),
+            'boolean' => self::assertInstanceOf(Value\Boolean::class, $object),
+            'integer' => self::assertInstanceOf(Value\Integer::class, $object),
+            'double' => self::assertInstanceOf(Value\Double::class, $object),
+            'nil' => self::assertInstanceOf(Value\Nil::class, $object),
+            'struct' => self::assertInstanceOf(Value\Struct::class, $object),
+            'dateTime' => self::assertInstanceOf(Value\DateTime::class, $object),
+            'base64' => self::assertInstanceOf(Value\Base64::class, $object),
+            default => null,
                 // nothing to do
-                break;
-        }
+        };
     }
 
     public function wrapXml(string $xml): string
