@@ -7,9 +7,11 @@ use Exception;
 use Laminas\Server\AbstractServer;
 use Laminas\Server\Definition;
 use Laminas\Server\Reflection;
+use Laminas\XmlRpc\Fault as XmlRpcFault;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Response\Http;
 use Laminas\XmlRpc\Server\Exception\InvalidArgumentException;
+use Laminas\XmlRpc\Server\Fault;
 
 use function array_merge;
 use function array_slice;
@@ -62,24 +64,18 @@ class Server extends AbstractServer
 {
     /**
      * Character encoding
-     *
-     * @var string
      */
-    protected $encoding = 'UTF-8';
+    protected string $encoding = 'UTF-8';
 
     /**
      * Request processed
-     *
-     * @var null|Request
      */
-    protected $request;
+    protected null|Request $request = null;
 
     /**
      * Class to use for responses; defaults to {@link Response\Http}
-     *
-     * @var string
      */
-    protected $responseClass = Http::class;
+    protected string $responseClass = Http::class;
 
     /**
      * Dispatch table of name => method pairs
@@ -90,10 +86,8 @@ class Server extends AbstractServer
 
     /**
      * PHP types => XML-RPC types
-     *
-     * @var array
      */
-    protected $typeMap = [
+    protected array $typeMap = [
         'i4'               => 'i4',
         'int'              => 'int',
         'integer'          => 'int',
@@ -124,32 +118,22 @@ class Server extends AbstractServer
 
     /**
      * Send arguments to all methods or just constructor?
-     *
-     * @var bool
      */
-    protected $sendArgumentsToAllMethods = true;
+    protected bool $sendArgumentsToAllMethods = true;
 
     /**
      * Flag: whether or not {@link handle()} should return a response instead
      * of automatically emitting it.
-     *
-     * @var bool
      */
-    protected $returnResponse = false;
+    protected bool $returnResponse = false;
 
     /**
      * Last response results.
-     *
-     * @var Response
      */
-    protected $response;
+    protected Response|Fault|XmlRpcFault $response;
 
-    /**
-     * @internal
-     *
-     * @var Server\System
-     */
-    public $system;
+    /** @internal */
+    public Server\System $system;
 
     /**
      * Constructor
@@ -165,12 +149,9 @@ class Server extends AbstractServer
     /**
      * Proxy calls to system object
      *
-     * @param  string $method
-     * @param  array $params
-     * @return mixed
      * @throws Server\Exception\BadMethodCallException
      */
-    public function __call($method, $params)
+    public function __call(string $method, array $params): mixed
     {
         $system = $this->getSystem();
         if (! method_exists($system, $method)) {
@@ -193,9 +174,8 @@ class Server extends AbstractServer
      * @param string|array|callable $function  Valid callback
      * @param string                $namespace Optional namespace prefix
      * @throws InvalidArgumentException
-     * @return void
      */
-    public function addFunction($function, $namespace = '')
+    public function addFunction($function, $namespace = ''): void
     {
         if (! is_string($function) && ! is_array($function)) {
             throw new InvalidArgumentException('Unable to attach function; invalid', 611);
@@ -231,10 +211,9 @@ class Server extends AbstractServer
      * @param string|object $class
      * @param string $namespace Optional
      * @param mixed $argv Optional arguments to pass to methods
-     * @return void
      * @throws InvalidArgumentException On invalid input.
      */
-    public function setClass($class, $namespace = '', $argv = null)
+    public function setClass($class, $namespace = '', mixed $argv = null): void
     {
         if (is_string($class) && ! class_exists($class)) {
             throw new InvalidArgumentException('Invalid method class', 610);
@@ -254,11 +233,10 @@ class Server extends AbstractServer
     /**
      * Raise an xmlrpc server fault
      *
-     * @param string|Exception $fault
+     * @param string|Exception|null $fault
      * @param int $code
-     * @return Server\Fault
      */
-    public function fault($fault = null, $code = 404)
+    public function fault($fault = null, $code = 404): Fault
     {
         if (! $fault instanceof Exception) {
             $fault = (string) $fault;
@@ -268,7 +246,7 @@ class Server extends AbstractServer
             $fault = new Server\Exception\RuntimeException($fault, $code);
         }
 
-        return Server\Fault::getInstance($fault);
+        return Fault::getInstance($fault);
     }
 
     /**
@@ -279,10 +257,9 @@ class Server extends AbstractServer
      *
      * The response is always available via {@link getResponse()}.
      *
-     * @param  bool $flag
-     * @return Server
+     * @param bool $flag
      */
-    public function setReturnResponse($flag = true)
+    public function setReturnResponse($flag = true): Server
     {
         $this->returnResponse = (bool) $flag;
         return $this;
@@ -290,10 +267,8 @@ class Server extends AbstractServer
 
     /**
      * Retrieve return response flag
-     *
-     * @return bool
      */
-    public function getReturnResponse()
+    public function getReturnResponse(): bool
     {
         return $this->returnResponse;
     }
@@ -301,10 +276,9 @@ class Server extends AbstractServer
     /**
      * Handle an xmlrpc call
      *
-     * @param  Request $request Optional
-     * @return Response|Fault
+     * @param Request|bool $request
      */
-    public function handle($request = false)
+    public function handle($request = false): Response|Fault|XmlRpcFault|null
     {
         // Get request
         if (
@@ -333,7 +307,7 @@ class Server extends AbstractServer
 
         if (! $this->returnResponse) {
             echo $response;
-            return;
+            return null;
         }
 
         return $response;
@@ -345,11 +319,10 @@ class Server extends AbstractServer
      * Typically, you will not use this method; it will be called using the
      * results pulled from {@link Laminas\XmlRpc\Server\Cache::get()}.
      *
-     * @param  array|Definition $definition
-     * @return void
+     * @param array<int, Definition>|Definition $definition
      * @throws InvalidArgumentException On invalid input.
      */
-    public function loadFunctions($definition)
+    public function loadFunctions($definition): void
     {
         if (! is_array($definition) && ! $definition instanceof Definition) {
             if (is_object($definition)) {
@@ -380,11 +353,8 @@ class Server extends AbstractServer
 
     /**
      * Set encoding
-     *
-     * @param  string $encoding
-     * @return Server
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): Server
     {
         $this->encoding = $encoding;
         AbstractValue::setEncoding($encoding);
@@ -393,32 +363,25 @@ class Server extends AbstractServer
 
     /**
      * Retrieve current encoding
-     *
-     * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
 
     /**
      * Do nothing; persistence is handled via {@link Laminas\XmlRpc\Server\Cache}
-     *
-     * @param  mixed $mode
-     * @return void
      */
-    public function setPersistence($mode)
+    public function setPersistence(mixed $mode): void
     {
     }
 
     /**
      * Set the request object
      *
-     * @param  string|Request $request
-     * @return Server
      * @throws InvalidArgumentException On invalid request class or object.
      */
-    public function setRequest($request)
+    public function setRequest(string|Request $request): Server
     {
         if (is_string($request) && class_exists($request)) {
             $request = new $request();
@@ -436,20 +399,16 @@ class Server extends AbstractServer
 
     /**
      * Return currently registered request object
-     *
-     * @return null|Request
      */
-    public function getRequest()
+    public function getRequest(): null|Request
     {
         return $this->request;
     }
 
     /**
      * Last response.
-     *
-     * @return Response
      */
-    public function getResponse()
+    public function getResponse(): Response|Fault|XmlRpcFault
     {
         return $this->response;
     }
@@ -457,11 +416,10 @@ class Server extends AbstractServer
     /**
      * Set the class to use for the response
      *
-     * @param  string $class
      * @throws InvalidArgumentException If invalid response class.
      * @return bool True if class was set, false if not
      */
-    public function setResponseClass($class)
+    public function setResponseClass(string $class): bool
     {
         if (! class_exists($class) || ! is_subclass_of($class, Response::class)) {
             throw new InvalidArgumentException('Invalid response class');
@@ -472,20 +430,16 @@ class Server extends AbstractServer
 
     /**
      * Retrieve current response class
-     *
-     * @return string
      */
-    public function getResponseClass()
+    public function getResponseClass(): string
     {
         return $this->responseClass;
     }
 
     /**
      * Retrieve dispatch table
-     *
-     * @return array
      */
-    public function getDispatchTable()
+    public function getDispatchTable(): Definition
     {
         return $this->table;
     }
@@ -495,20 +449,16 @@ class Server extends AbstractServer
      *
      * Returns an array of dispatchables (Laminas\Server\Reflection\ReflectionFunction,
      * ReflectionMethod, and ReflectionClass items).
-     *
-     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return $this->table->toArray();
     }
 
     /**
      * Retrieve system object
-     *
-     * @return Server\System
      */
-    public function getSystem()
+    public function getSystem(): Server\System
     {
         return $this->system;
     }
@@ -520,28 +470,24 @@ class Server extends AbstractServer
      * how to handle arguments. If set to true, all methods including constructor
      * will receive the arguments. If set to false, only constructor will receive the
      * arguments
-     *
-     * @param  bool|null $flag
-     * @return self
      */
-    public function sendArgumentsToAllMethods($flag = null)
+    public function sendArgumentsToAllMethods(bool|null $flag = null): self|bool
     {
         if ($flag === null) {
             return $this->sendArgumentsToAllMethods;
         }
 
-        $this->sendArgumentsToAllMethods = (bool) $flag;
+        $this->sendArgumentsToAllMethods = $flag;
         return $this;
     }
 
     // @codingStandardsIgnoreStart
     /**
      * Map PHP type to XML-RPC type
-     *
-     * @param  string $type
-     * @return string
+     * 
+     * @param string $type
      */
-    protected function _fixType($type)
+    protected function _fixType($type): string
     {
         return $this->typeMap[$type] ?? 'void';
     }
@@ -550,12 +496,11 @@ class Server extends AbstractServer
     /**
      * Handle an xmlrpc call (actual work)
      *
-     * @return Response
      * @throws Server\Exception\RuntimeException
      * Laminas\XmlRpc\Server\Exceptions are thrown for internal errors; otherwise,
      * any other exception may be thrown by the callback
      */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): Response
     {
         $method = $request->getMethod();
 
@@ -607,30 +552,11 @@ class Server extends AbstractServer
 
     /**
      * Register system methods with the server
-     *
-     * @return void
      */
-    protected function registerSystemMethods()
+    protected function registerSystemMethods(): void
     {
         $system       = new Server\System($this);
         $this->system = $system;
         $this->setClass($system, 'system');
-    }
-
-    /**
-     * Checks if the object has this class as one of its parents
-     *
-     * @deprecated since laminas 2.3 requires PHP >= 5.3.23
-     *
-     * @see https://bugs.php.net/bug.php?id=53727
-     * @see https://github.com/zendframework/zf2/pull/1807
-     *
-     * @param string $className
-     * @param string $type
-     * @return bool
-     */
-    protected static function isSubclassOf($className, $type)
-    {
-        return is_subclass_of($className, $type);
     }
 }

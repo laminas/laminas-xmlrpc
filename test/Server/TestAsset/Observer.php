@@ -10,8 +10,7 @@ class Observer
 {
     private static ?Observer $instance = null;
 
-    /** @var array */
-    public $observed = [];
+    public array $observed = [];
 
     private function __construct()
     {
@@ -26,6 +25,9 @@ class Observer
         return static::$instance;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public static function observe(Fault $fault): void
     {
         self::getInstance()->observed[] = $fault;

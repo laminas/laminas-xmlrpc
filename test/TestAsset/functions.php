@@ -17,7 +17,7 @@ use function implode;
  */
 function testFunction($var1, $var2 = 'optional')
 {
-    return $var2 . ': ' . implode(',', (array) $var1);
+    return $var2 . ': ' . implode(',', $var1);
 }
 
 /**

@@ -17,6 +17,7 @@ use Laminas\XmlRpc\Server;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypeError;
 
 use function base64_encode;
 use function count;
@@ -207,7 +208,7 @@ class ServerTest extends TestCase
     /**
      * Test that only calling methods using a valid parameter signature works
      */
-    public function testHandle2()
+    public function testHandle2(): void
     {
         $request = new Request();
         $request->setMethod('system.methodHelp');
@@ -405,7 +406,7 @@ class ServerTest extends TestCase
     /**
      * Test request/response encoding (alternate encoding)
      */
-    public function testRequestResponseEncoding2()
+    public function testRequestResponseEncoding2(): void
     {
         $this->server->setEncoding('ISO-8859-1');
         $response = $this->server->handle();
@@ -440,7 +441,7 @@ class ServerTest extends TestCase
         $this->server->loadFunctions($o);
     }
 
-    public function testLoadFunctionsThrowsExceptionsWithBadData2()
+    public function testLoadFunctionsThrowsExceptionsWithBadData2(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -449,7 +450,7 @@ class ServerTest extends TestCase
         $this->server->loadFunctions('foo');
     }
 
-    public function testLoadFunctionsThrowsExceptionsWithBadData3()
+    public function testLoadFunctionsThrowsExceptionsWithBadData3(): void
     {
         $o = new stdClass();
         $o = [$o];
@@ -496,8 +497,10 @@ class ServerTest extends TestCase
 
     public function testSetRequestThrowsExceptionOnBadObject(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid request object');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            'Laminas\XmlRpc\Server::setRequest(): Argument #1 ($request) must be of type Laminas\XmlRpc\Request|string'
+        );
         $this->server->setRequest($this);
     }
 
@@ -585,7 +588,7 @@ class ServerTest extends TestCase
     }
 
     #[Group('Laminas-2872')]
-    public function testCanMarshalBase64Requests()
+    public function testCanMarshalBase64Requests(): void
     {
         $this->server->setClass(TestAsset\TestClass::class, 'test');
         $data    = base64_encode('this is the payload');

@@ -1,4 +1,5 @@
 <?php // @codingStandardsIgnoreFile
+
 namespace LaminasTest\XmlRpc;
 
 /**
@@ -27,22 +28,22 @@ namespace LaminasTest\XmlRpc;
  */
 class PhpInputMock
 {
-    protected static $data;
+    protected static mixed $data;
 
-    protected static $returnValues = [];
+    protected static array $returnValues = [];
 
-    protected static $arguments = [];
+    protected static array $arguments = [];
 
-    protected $position = 0;
+    protected int $position = 0;
 
-    public static function mockInput($data)
+    public static function mockInput(mixed $data): void
     {
         stream_wrapper_unregister('php');
         stream_wrapper_register('php', \LaminasTest\XmlRpc\PhpInputMock::class);
         static::$data = $data;
     }
 
-    public static function restoreDefault()
+    public static function restoreDefault(): void
     {
         // Reset static values
         static::$returnValues = [];
@@ -52,13 +53,13 @@ class PhpInputMock
         stream_wrapper_restore('php');
     }
 
-    public static function methodWillReturn($methodName, $returnValue)
+    public static function methodWillReturn(string $methodName, bool $returnValue): void
     {
         $methodName = strtolower($methodName);
         static::$returnValues[$methodName] = $returnValue;
     }
 
-    public static function argumentsPassedTo($methodName)
+    public static function argumentsPassedTo(string $methodName)
     {
         $methodName = strtolower($methodName);
         if (isset(static::$arguments[$methodName])) {
@@ -68,7 +69,10 @@ class PhpInputMock
         return;
     }
 
-    public function stream_open()
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public function stream_open(): bool
     {
         static::$arguments[__FUNCTION__] = func_get_args();
 
@@ -79,6 +83,9 @@ class PhpInputMock
         return true;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function stream_eof()
     {
         static::$arguments[__FUNCTION__] = func_get_args();
@@ -90,7 +97,10 @@ class PhpInputMock
         return (0 === strlen(static::$data));
     }
 
-    public function stream_read($count)
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public function stream_read($count): mixed
     {
         static::$arguments[__FUNCTION__] = func_get_args();
 
@@ -110,7 +120,10 @@ class PhpInputMock
         return $data;
     }
 
-    public function stream_stat()
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public function stream_stat(): array
     {
         static::$arguments[__FUNCTION__] = func_get_args();
 

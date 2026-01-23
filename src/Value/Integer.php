@@ -6,22 +6,24 @@ use Laminas\XmlRpc\Exception;
 
 use const PHP_INT_MAX;
 
+/**
+ * @extends AbstractScalar<int>
+ */
 class Integer extends AbstractScalar
 {
     /**
      * Set the value of an integer native type
      *
-     * @param int $value
      * @throws Exception\ValueException
      */
-    public function __construct($value)
+    public function __construct(int $value)
     {
         if ($value > PHP_INT_MAX) {
             throw new Exception\ValueException('Overlong integer given');
         }
 
         $this->type  = self::XMLRPC_TYPE_INTEGER;
-        $this->value = (int) $value;    // Make sure this value is integer
+        $this->value = $value;    // Make sure this value is integer
     }
 
     /**
@@ -29,7 +31,7 @@ class Integer extends AbstractScalar
      *
      * @return int
      */
-    public function getValue()
+    public function getValue(): string|int
     {
         return $this->value;
     }

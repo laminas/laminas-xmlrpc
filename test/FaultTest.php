@@ -38,7 +38,6 @@ class FaultTest extends TestCase
      */
     public function testCode(): void
     {
-        /** @psalm-suppress InvalidArgument */
         $this->fault->setCode('1000');
         $this->assertEquals(1000, $this->fault->getCode());
     }
@@ -52,10 +51,7 @@ class FaultTest extends TestCase
         $this->assertEquals('Message', $this->fault->getMessage());
     }
 
-    /**
-     * @return bool|string
-     */
-    protected function createXml()
+    protected function createXml(): bool|string
     {
         $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
@@ -76,10 +72,7 @@ class FaultTest extends TestCase
         return $dom->saveXml();
     }
 
-    /**
-     * @return bool|string
-     */
-    protected function createNonStandardXml()
+    protected function createNonStandardXml(): bool|string
     {
         $dom      = new DOMDocument('1.0', 'UTF-8');
         $response = $dom->appendChild($dom->createElement('methodResponse'));
@@ -94,7 +87,7 @@ class FaultTest extends TestCase
 
         $member2 = $struct->appendChild($dom->createElement('member'));
         $member2->appendChild($dom->createElement('name', 'faultString'));
-        $value2 = $member2->appendChild($dom->createElement('value', 'Error string'));
+        $member2->appendChild($dom->createElement('value', 'Error string'));
 
         return $dom->saveXml();
     }
@@ -142,24 +135,24 @@ class FaultTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Failed to parse XML fault');
-        $parsed = $this->fault->loadXml('foo');
+        $this->fault->loadXml('foo');
     }
 
-    public function testLoadXmlThrowsExceptionOnInvalidInput2()
+    public function testLoadXmlThrowsExceptionOnInvalidInput2(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid fault structure');
         $this->assertFalse($this->fault->loadXml('<methodResponse><fault/></methodResponse>'));
     }
 
-    public function testLoadXmlThrowsExceptionOnInvalidInput3()
+    public function testLoadXmlThrowsExceptionOnInvalidInput3(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid fault structure');
         $this->fault->loadXml('<methodResponse><fault/></methodResponse>');
     }
 
-    public function testLoadXmlThrowsExceptionOnInvalidInput4()
+    public function testLoadXmlThrowsExceptionOnInvalidInput4(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Fault code and string required');
@@ -176,16 +169,12 @@ class FaultTest extends TestCase
         self::assertIsString($xml);
         $this->assertTrue(Fault::isFault($xml), $xml);
         $this->assertFalse(Fault::isFault('foo'));
-        $this->assertFalse(Fault::isFault(['foo']));
     }
 
     /**
      * helper for saveXml() and __toString() tests
-     *
-     * @param string $xml
-     * @return void
      */
-    protected function assertXmlFault($xml)
+    protected function assertXmlFault(string $xml): void
     {
         $sx = new SimpleXMLElement($xml);
 

@@ -17,15 +17,11 @@ use function var_export;
  */
 class System
 {
-    /** @var Server */
-    protected $server;
-
     /**
      * Constructor
      */
-    public function __construct(Server $server)
+    public function __construct(protected Server $server)
     {
-        $this->server = $server;
     }
 
     /**
@@ -33,9 +29,9 @@ class System
      *
      * Returns an array of methods.
      *
-     * @return array
+     * @return array<int, string>
      */
-    public function listMethods()
+    public function listMethods(): array
     {
         $table = $this->server->getDispatchTable()->getMethods();
         return array_keys($table);
@@ -44,11 +40,11 @@ class System
     /**
      * Display help message for an XMLRPC method
      *
-     * @param string $method
+     * @param string $method Is required for PHPUnit
      * @throws InvalidArgumentException
-     * @return string
+     * @return string Type Is required for PHPUnit
      */
-    public function methodHelp($method)
+    public function methodHelp(string $method): string
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
@@ -61,11 +57,10 @@ class System
     /**
      * Return a method signature
      *
-     * @param string $method
      * @throws InvalidArgumentException
-     * @return array
+     * @return array<int, array<string, string|array>>
      */
-    public function methodSignature($method)
+    public function methodSignature(string $method): array
     {
         $table = $this->server->getDispatchTable();
         if (! $table->hasMethod($method)) {
@@ -90,10 +85,13 @@ class System
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
      *
-     * @param  array $methods
-     * @return array
+     * @param array<string, mixed> $methods
+     *
+     * @return (array|mixed)[]
+     *
+     * @psalm-return list<array{faultCode: mixed, faultString: mixed}|mixed>
      */
-    public function multicall($methods)
+    public function multicall(array $methods): array
     {
         $responses = [];
         foreach ($methods as $method) {

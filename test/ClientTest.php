@@ -703,9 +703,9 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @param mixed $nativeVars
+     * @param ((string|string[])[]|string)[]|int|string|bool $nativeVars
      */
-    public function getServerResponseFor($nativeVars): ResponseInterface
+    public function getServerResponseFor(array|int|string|bool $nativeVars): ResponseInterface
     {
         $response = new Response();
         $response->setReturnValue($nativeVars);
@@ -714,12 +714,7 @@ class ClientTest extends TestCase
         return $this->makeHttpResponseFrom($xml);
     }
 
-    /**
-     * @param string $data
-     * @param int $status
-     * @param string $message
-     */
-    public function makeHttpResponseFrom($data, $status = 200, $message = 'OK'): ResponseInterface
+    public function makeHttpResponseFrom(string $data, int $status = 200, string $message = 'OK'): ResponseInterface
     {
         $headers = [
             "HTTP/1.1 $status $message",
@@ -733,10 +728,7 @@ class ClientTest extends TestCase
         return ResponseSerializer::fromString($raw);
     }
 
-    /**
-     * @param mixed $nativeVars
-     */
-    public function makeHttpResponseFor($nativeVars): ResponseInterface
+    public function makeHttpResponseFor(mixed $nativeVars): ResponseInterface
     {
         return $this->getServerResponseFor($nativeVars);
     }

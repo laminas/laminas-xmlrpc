@@ -24,13 +24,10 @@ class ResponseTest extends TestCase
 {
     /**
      * Response object
-     *
-     * @var Response
      */
-    protected $response;
+    protected Response $response;
 
-    /** @var bool */
-    protected $errorOccurred = false;
+    protected bool $errorOccurred = false;
 
     /**
      * Setup environment
@@ -152,11 +149,8 @@ EOD;
 
     /**
      * helper for saveXml() and __toString() tests
-     *
-     * @param string $xml
-     * @return void
      */
-    protected function assertXmlResponse($xml)
+    protected function assertXmlResponse(string $xml): void
     {
         $sx = new SimpleXMLElement($xml);
 
@@ -211,7 +205,7 @@ EOD;
         $this->assertEquals(653, $fault->getCode());
     }
 
-    public function testLoadXmlCreatesFaultWithMissingNodes2()
+    public function testLoadXmlCreatesFaultWithMissingNodes2(): void
     {
         $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><params>foo</params></methodResponse>');
 
@@ -221,7 +215,7 @@ EOD;
         $this->assertEquals(653, $fault->getCode());
     }
 
-    public function testLoadXmlThrowsExceptionWithMissingNodes3()
+    public function testLoadXmlThrowsExceptionWithMissingNodes3(): void
     {
         $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><bar>foo</bar></methodResponse>');
 
@@ -231,10 +225,7 @@ EOD;
         $this->assertEquals(652, $fault->getCode());
     }
 
-    /**
-     * @param mixed $error
-     */
-    public function trackError($error): void
+    public function trackError(mixed $error): void
     {
         $this->errorOccurred = true;
     }

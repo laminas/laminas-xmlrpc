@@ -9,9 +9,9 @@ class ArrayValue extends AbstractCollection
     /**
      * Set the value of an array native type
      *
-     * @param array $value
+     * @param list<mixed> $value
      */
-    public function __construct($value)
+    public function __construct(array|object $value)
     {
         $this->type = self::XMLRPC_TYPE_ARRAY;
         parent::__construct($value);
@@ -19,10 +19,8 @@ class ArrayValue extends AbstractCollection
 
     /**
      * Generate the XML code that represent an array native MXL-RPC value
-     *
-     * @return void
      */
-    protected function generate()
+    protected function generate(): void
     {
         $generator = static::getGenerator();
         $generator

@@ -7,47 +7,22 @@ namespace Laminas\XmlRpc\Generator;
  */
 interface GeneratorInterface
 {
-    /**
-     * @return string
-     */
-    public function getEncoding();
+    public function getEncoding(): string;
 
-    /**
-     * @param string $encoding
-     * @return void
-     */
-    public function setEncoding($encoding);
+    public function setEncoding(string $encoding): void;
 
-    /**
-     * @param string $name
-     * @param string $value
-     * @return AbstractGenerator
-     */
-    public function openElement($name, $value = null);
+    public function openElement(string $name, string|null $value = null): AbstractGenerator;
 
-    /**
-     * @param string $name
-     * @return AbstractGenerator
-     */
-    public function closeElement($name);
+    public function closeElement(string $name): AbstractGenerator;
 
     /**
      * Return XML as a string
-     *
-     * @return string
      */
-    public function saveXml();
+    public function saveXml(): string;
 
-    /**
-     * @param string $xml
-     * @return string
-     */
-    public function stripDeclaration($xml);
+    public function stripDeclaration(string $xml): string;
 
-    /**
-     * @return string
-     */
-    public function flush();
+    public function flush(): string;
 
     public function __toString(): string;
 }

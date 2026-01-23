@@ -7,54 +7,49 @@ namespace LaminasTest\XmlRpc\TestAsset;
 use function func_get_args;
 use function implode;
 
+/**
+ * Docblock types are required for testing and parsing
+ */
 class TestClass
 {
-    /** @var mixed */
-    private $value1;
-    /** @var mixed */
-    private $value2;
-
     /**
-     * @param mixed $value1
-     * @param mixed $value2
+     * @psalm-suppress PossiblyUnusedMethod
      */
-    public function __construct($value1 = null, $value2 = null)
+    public function __construct(private mixed $value1 = null, private mixed $value2 = null)
     {
-        $this->value1 = $value1;
-        $this->value2 = $value2;
     }
 
     /**
+     * @psalm-suppress PossiblyUnusedMethod
      * Test1
      *
      * Returns 'String: ' . $string
-     *
      * @param string $string
      * @return string
      */
     public function test1($string)
     {
-        return 'String: ' . (string) $string;
+        return 'String: ' . $string;
     }
 
     /**
+     * @psalm-suppress PossiblyUnusedMethod
      * Test2
      *
      * Returns imploded array
-     *
      * @param array $array
      * @return string
      */
     public static function test2($array)
     {
-        return implode('; ', (array) $array);
+        return implode('; ', $array);
     }
 
     /**
+     * @psalm-suppress PossiblyUnusedMethod
      * Test3
      *
      * Should not be available...
-     *
      * @return void
      */
     protected function test3()
@@ -62,10 +57,11 @@ class TestClass
     }
 
     /**
+     * @psalm-suppress PossiblyUnusedMethod
      * @param string $arg
-     * @return struct
+     * @return struct|array|mixed[]
      */
-    public function test4($arg)
+    public function test4($arg): array
     {
         return ['test1' => $this->value1, 'test2' => $this->value2, 'arg' => func_get_args()];
     }
@@ -73,6 +69,7 @@ class TestClass
     /**
      * Test base64 encoding in request and response
      *
+     * @psalm-suppress PossiblyUnusedMethod
      * @param  base64 $data
      * @return base64
      */

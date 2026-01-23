@@ -37,46 +37,31 @@ use const PHP_INT_SIZE;
  *
  * Using this function, users/Laminas\XmlRpc\Client object can create the Laminas\XmlRpc\Value objects
  * from PHP variables, XML string or by specifying the exact XML-RPC native type
+ *
+ * @template TValue
  */
 abstract class AbstractValue
 {
     /**
-     * The native XML-RPC representation of this object's value
-     *
-     * If the native type of this object is array or struct, this will be an array
-     * of Value objects
-     *
-     * @var mixed
-     */
-    protected $value;
-
-    /**
      * The native XML-RPC type of this object
      * One of the XMLRPC_TYPE_* constants
-     *
-     * @var string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * XML code representation of this object (will be calculated only once)
-     *
-     * @var string
      */
-    protected $xml;
+    protected string|null $xml = null;
 
     /**
      * True if BigInteger should be used for XMLRPC i8 types
      *
      * @internal
-     *
-     * @var bool
      */
     // phpcs:ignore
-    public static $USE_BIGINT_FOR_I8 = PHP_INT_SIZE < 8;
+    public static bool $USE_BIGINT_FOR_I8 = PHP_INT_SIZE < 8;
 
-    /** @var GeneratorInterface */
-    protected static $generator;
+    protected static GeneratorInterface|null $generator = null;
 
     /**
      * Specify that the XML-RPC native type will be auto detected from a PHP variable type
@@ -106,21 +91,29 @@ abstract class AbstractValue
     public const XMLRPC_TYPE_APACHENIL = 'ex:nil';
 
     /**
-     * Get the native XML-RPC type (the type is one of the Value::XMLRPC_TYPE_* constants)
+     * @psalm-suppress PossiblyUnusedMethod
+     * @param TValue $value
+     * The native XML-RPC representation of this object's value
      *
-     * @return string
+     * If the native type of this object is array or struct, this will be an array
+     * of Value objects
      */
-    public function getType()
+    public function __construct(protected mixed $value)
+    {
+    }
+
+    /**
+     * Get the native XML-RPC type (the type is one of the Value::XMLRPC_TYPE_* constants)
+     */
+    public function getType(): string
     {
         return $this->type;
     }
 
     /**
      * Get XML generator instance
-     *
-     * @return GeneratorInterface
      */
-    public static function getGenerator()
+    public static function getGenerator(): GeneratorInterface
     {
         if (! static::$generator) {
             if (extension_loaded('xmlwriter')) {
@@ -135,21 +128,16 @@ abstract class AbstractValue
 
     /**
      * Sets XML generator instance
-     *
-     * @return void
      */
-    public static function setGenerator(?Generator\GeneratorInterface $generator = null)
+    public static function setGenerator(?Generator\GeneratorInterface $generator = null): void
     {
         static::$generator = $generator;
     }
 
     /**
      * Changes the encoding of the generator
-     *
-     * @param string $encoding
-     * @return void
      */
-    public static function setEncoding($encoding)
+    public static function setEncoding(string $encoding): void
     {
         $generator    = static::getGenerator();
         $newGenerator = new $generator($encoding);
@@ -158,17 +146,13 @@ abstract class AbstractValue
 
     /**
      * Return the value of this object, convert the XML-RPC native value into a PHP variable
-     *
-     * @return mixed
      */
-    abstract public function getValue();
+    abstract public function getValue(): mixed;
 
     /**
      * Return the XML code that represent a native MXL-RPC value
-     *
-     * @return string
      */
-    public function saveXml()
+    public function saveXml(): string
     {
         if (! $this->xml) {
             $this->generateXml();
@@ -179,10 +163,8 @@ abstract class AbstractValue
 
     /**
      * Generate XML code that represent a native XML/RPC value
-     *
-     * @return void
      */
-    public function generateXml()
+    public function generateXml(): void
     {
         $this->generate();
     }
@@ -205,10 +187,12 @@ abstract class AbstractValue
      * @param self::AUTO_DETECT_TYPE|self::XML* $type
      * @param int $libXmlOptions Bitmask of LIBXML options to use for XML * operations
      * @throws ValueException
-     * @return AbstractValue
      */
-    public static function getXmlRpcValue($value, $type = self::AUTO_DETECT_TYPE, int $libXmlOptions = 0)
-    {
+    public static function getXmlRpcValue(
+        array|float|string|int|bool|object|null $value,
+        $type = self::AUTO_DETECT_TYPE,
+        int $libXmlOptions = 0
+    ): AbstractValue {
         switch ($type) {
             case self::AUTO_DETECT_TYPE:
                 // Auto detect the XML-RPC native type from the PHP type of $value
@@ -263,11 +247,9 @@ abstract class AbstractValue
      * Get XML-RPC type for a PHP native variable
      *
      * @static
-     * @param mixed $value
      * @throws InvalidArgumentException
-     * @return string
      */
-    public static function getXmlRpcTypeByValue($value)
+    public static function getXmlRpcTypeByValue(mixed $value): string
     {
         if (is_object($value)) {
             if ($value instanceof AbstractValue) {
@@ -303,10 +285,9 @@ abstract class AbstractValue
      *
      * @param mixed $value The PHP variable for conversion
      * @throws InvalidArgumentException
-     * @return AbstractValue
      * @static
      */
-    protected static function phpVarToNativeXmlRpc($value)
+    protected static function phpVarToNativeXmlRpc(mixed $value): AbstractValue
     {
         // @see https://getlaminas.org/issues/browse/Laminas-8623
         if ($value instanceof AbstractValue) {
@@ -356,11 +337,12 @@ abstract class AbstractValue
      * @param string|SimpleXMLElement $xml A SimpleXMLElement object represent the XML string
      * It can be also a valid XML string for conversion
      * @throws ValueException
-     * @return AbstractValue
      * @static
      */
-    protected static function xmlStringToNativeXmlRpc($xml, int $libXmlOptions = 0)
-    {
+    protected static function xmlStringToNativeXmlRpc(
+        string|SimpleXMLElement $xml,
+        int $libXmlOptions = 0
+    ): AbstractValue {
         static::createSimpleXMLElement($xml, $libXmlOptions);
 
         static::extractTypeAndValue($xml, $type, $value);
@@ -448,10 +430,7 @@ abstract class AbstractValue
         return $xmlrpcValue;
     }
 
-    /**
-     * @param SimpleXMLElement|string $xml
-     */
-    protected static function createSimpleXMLElement(&$xml, int $libXmlOptions = 0)
+    protected static function createSimpleXMLElement(SimpleXMLElement|string &$xml, int $libXmlOptions = 0): void
     {
         if ($xml instanceof SimpleXMLElement) {
             return;
@@ -474,9 +453,8 @@ abstract class AbstractValue
      *
      * @param string $type Type bind variable
      * @param string $value Value bind variable
-     * @return void
      */
-    protected static function extractTypeAndValue(SimpleXMLElement $xml, &$type, &$value)
+    protected static function extractTypeAndValue(SimpleXMLElement $xml, string|null &$type, string|null &$value): void
     {
         // Casting is necessary to work with strict-typed systems
         foreach ((array) $xml as $type => $value) {
@@ -504,11 +482,7 @@ abstract class AbstractValue
         }
     }
 
-    /**
-     * @param string $xml
-     * @return void
-     */
-    protected function setXML($xml)
+    protected function setXML(string $xml): void
     {
         $this->xml = static::getGenerator()->stripDeclaration($xml);
     }

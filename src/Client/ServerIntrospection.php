@@ -25,9 +25,10 @@ class ServerIntrospection
      * autodetecting whether system.multicall() is supported and
      * using it if so.
      *
-     * @return array
+     * @return (array|string)[]
+     * @psalm-return array<int, array<int, mixed>|string>
      */
-    public function getSignatureForEachMethod()
+    public function getSignatureForEachMethod(): array
     {
         $methods = $this->listMethods();
 
@@ -49,11 +50,10 @@ class ServerIntrospection
      * This is a boxcar feature of XML-RPC and is found on fewer servers.  However,
      * can significantly improve performance if present.
      *
-     * @param  array $methods
      * @throws Exception\IntrospectException
-     * @return array array(array(return, param, param, param...))
+     * @return array<int, array<int, mixed>>
      */
-    public function getSignatureForEachMethodByMulticall($methods = null)
+    public function getSignatureForEachMethodByMulticall(array|null $methods = null): array
     {
         if ($methods === null) {
             $methods = $this->listMethods();
@@ -93,10 +93,10 @@ class ServerIntrospection
      * Get the method signatures for every method by
      * successively calling system.methodSignature
      *
-     * @param array $methods
-     * @return array
+     * @param array<int, string>|null $methods
+     * @return array{string, array{array{'returnType': string, 'parameters': array}}}
      */
-    public function getSignatureForEachMethodByLooping($methods = null)
+    public function getSignatureForEachMethodByLooping(array|null $methods = null): array
     {
         if ($methods === null) {
             $methods = $this->listMethods();
@@ -113,11 +113,10 @@ class ServerIntrospection
     /**
      * Call system.methodSignature() for the given method
      *
-     * @param  string  $method
      * @throws Exception\IntrospectException
-     * @return array  array(array(return, param, param, param...))
+     * @return array{array{'returnType': string, 'parameters': array}}
      */
-    public function getMethodSignature($method)
+    public function getMethodSignature(string $method): array
     {
         $signature = $this->system->methodSignature($method);
         if (! is_array($signature)) {
@@ -130,9 +129,9 @@ class ServerIntrospection
     /**
      * Call system.listMethods()
      *
-     * @return array  array(method, method, method...)
+     * @return array<int, string>
      */
-    public function listMethods()
+    public function listMethods(): array
     {
         return $this->system->listMethods();
     }

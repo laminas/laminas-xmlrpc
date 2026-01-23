@@ -4,6 +4,7 @@ namespace Laminas\XmlRpc\Server;
 
 use Exception;
 use Laminas\XmlRpc\Server\Exception\ExceptionInterface;
+use Throwable;
 
 use function array_keys;
 use function class_exists;
@@ -28,14 +29,21 @@ use function is_string;
  */
 class Fault extends \Laminas\XmlRpc\Fault
 {
-    /** @var Exception */
-    protected $exception;
+    protected Exception $exception;
 
-    /** @var array Array of exception classes that may define xmlrpc faults */
-    protected static $faultExceptionClasses = [ExceptionInterface::class => true];
+    /**
+     * Array of exception classes that may define xmlrpc faults
+     *
+     * @var array<class-string, bool>
+     */
+    protected static array $faultExceptionClasses = [ExceptionInterface::class => true];
 
-    /** @var array Array of fault observers */
-    protected static $observers = [];
+    /**
+     * Array of fault observers
+     *
+     * @var array<int, Exception>
+     */
+    protected static array $observers = [];
 
     public function __construct(Exception $e)
     {
@@ -63,10 +71,8 @@ class Fault extends \Laminas\XmlRpc\Fault
 
     /**
      * Return Laminas\XmlRpc\Server\Fault instance
-     *
-     * @return Fault
      */
-    public static function getInstance(Exception $e)
+    public static function getInstance(Exception $e): Fault
     {
         return new static($e);
     }
@@ -75,9 +81,8 @@ class Fault extends \Laminas\XmlRpc\Fault
      * Attach valid exceptions that can be used to define xmlrpc faults
      *
      * @param string|array $classes Class name or array of class names
-     * @return void
      */
-    public static function attachFaultException($classes)
+    public static function attachFaultException(string|array $classes): void
     {
         if (! is_array($classes)) {
             $classes = (array) $classes;
@@ -93,10 +98,9 @@ class Fault extends \Laminas\XmlRpc\Fault
     /**
      * Detach fault exception classes
      *
-     * @param string|array $classes Class name or array of class names
-     * @return void
+     * @param class-string|array<int, class-string> $classes Class name or array of class names
      */
-    public static function detachFaultException($classes)
+    public static function detachFaultException(string|array $classes): void
     {
         if (! is_array($classes)) {
             $classes = (array) $classes;
@@ -118,10 +122,9 @@ class Fault extends \Laminas\XmlRpc\Fault
      * Expects a valid class name; that class must have a public static method
      * 'observe' that accepts an exception as its sole argument.
      *
-     * @param string $class
-     * @return bool
+     * @param class-string $class
      */
-    public static function attachObserver($class)
+    public static function attachObserver(string $class): bool
     {
         if (! is_string($class) || ! class_exists($class) || ! is_callable([$class, 'observe'])) {
             return false;
@@ -136,11 +139,8 @@ class Fault extends \Laminas\XmlRpc\Fault
 
     /**
      * Detach an observer
-     *
-     * @param string $class
-     * @return bool
      */
-    public static function detachObserver($class)
+    public static function detachObserver(string $class): bool
     {
         if (! isset(static::$observers[$class])) {
             return false;
@@ -154,9 +154,8 @@ class Fault extends \Laminas\XmlRpc\Fault
      * Retrieve the exception
      *
      * @access public
-     * @return Exception
      */
-    public function getException()
+    public function getException(): Throwable
     {
         return $this->exception;
     }

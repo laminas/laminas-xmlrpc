@@ -6,8 +6,7 @@ namespace LaminasTest\XmlRpc\TestAsset;
 
 class SerializableTestClass
 {
-    /** @var string */
-    protected $property;
+    protected string $property;
 
     public function setProperty(string $property): void
     {

@@ -7,9 +7,9 @@ use Brick\Math\BigInteger as BigIntegerMath;
 class BigInteger extends Integer
 {
     /**
-     * @param string $value
+     * @param numeric-string $value
      */
-    public function __construct($value)
+    public function __construct(string $value)
     {
         $this->value = (string) BigIntegerMath::of($value);
         $this->type  = self::XMLRPC_TYPE_I8;
@@ -17,10 +17,8 @@ class BigInteger extends Integer
 
     /**
      * Return bigint value object
-     *
-     * @return string
      */
-    public function getValue()
+    public function getValue(): string|int
     {
         return $this->value;
     }

@@ -9,19 +9,14 @@ use DOMNode;
  */
 class DomDocument extends AbstractGenerator
 {
-    /** @var \DOMDocument */
-    protected $dom;
+    protected \DOMDocument $dom;
 
-    /** @var DOMNode */
-    protected $currentElement;
+    protected DOMNode $currentElement;
 
     /**
      * Start XML element
-     *
-     * @param string $name
-     * @return void
      */
-    protected function openXmlElement($name)
+    protected function openXmlElement(string $name): void
     {
         $newElement = $this->dom->createElement($name);
 
@@ -30,11 +25,8 @@ class DomDocument extends AbstractGenerator
 
     /**
      * Write XML text data into the currently opened XML element
-     *
-     * @param string $text
-     * @return void
      */
-    protected function writeTextData($text)
+    protected function writeTextData(string $text): void
     {
         $this->currentElement->appendChild($this->dom->createTextNode($text));
     }
@@ -43,11 +35,8 @@ class DomDocument extends AbstractGenerator
      * Close a previously opened XML element
      *
      * Resets $currentElement to the next parent node in the hierarchy
-     *
-     * @param string $name
-     * @return void
      */
-    protected function closeXmlElement($name)
+    protected function closeXmlElement(string $name): void
     {
         if (isset($this->currentElement->parentNode)) {
             $this->currentElement = $this->currentElement->parentNode;
@@ -56,20 +45,16 @@ class DomDocument extends AbstractGenerator
 
     /**
      * Save XML as a string
-     *
-     * @return string
      */
-    public function saveXml()
+    public function saveXml(): string
     {
         return $this->dom->saveXml();
     }
 
     /**
      * Initializes internal objects
-     *
-     * @return void
      */
-    protected function init()
+    protected function init(): void
     {
         $this->dom            = new \DOMDocument('1.0', $this->encoding);
         $this->currentElement = $this->dom;

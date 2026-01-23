@@ -8,11 +8,7 @@ use Laminas\XmlRpc\Request\Http;
 
 class HTTPTestExtension extends Http
 {
-    /**
-     * @param mixed $method
-     * @param mixed $params
-     */
-    public function __construct($method = null, $params = null)
+    public function __construct(mixed $method = null, mixed $params = null)
     {
         $this->method = $method;
         $this->params = (array) $params;
