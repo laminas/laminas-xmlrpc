@@ -7,6 +7,7 @@ use Laminas\XmlRpc\Client\Exception\FaultException;
 use Laminas\XmlRpc\Client\Exception\HttpException;
 use Laminas\XmlRpc\Client\Exception\InvalidArgumentException;
 use Laminas\XmlRpc\Client\Exception\RuntimeException;
+use Laminas\XmlRpc\Client\IntrospectInterface;
 use Laminas\XmlRpc\Client\ServerIntrospection;
 use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Exception\ExceptionInterface;
@@ -33,7 +34,7 @@ final class Client implements ServerClient
     /**
      * Introspection object
      */
-    protected ServerIntrospection $introspector;
+    protected IntrospectInterface $introspector;
 
     /**
      * Request of the last method call
@@ -80,7 +81,7 @@ final class Client implements ServerClient
     /**
      * Sets the object used to introspect remote servers
      */
-    public function setIntrospector(ServerIntrospection $introspector): ServerIntrospection
+    public function setIntrospector(IntrospectInterface $introspector): IntrospectInterface
     {
         return $this->introspector = $introspector;
     }
@@ -88,7 +89,7 @@ final class Client implements ServerClient
     /**
      * Gets the introspection object.
      */
-    public function getIntrospector(): ServerIntrospection
+    public function getIntrospector(): IntrospectInterface
     {
         return $this->introspector;
     }

@@ -3,6 +3,8 @@
 namespace Laminas\XmlRpc\Client;
 
 use Laminas\XmlRpc\Client as XMLRPCClient;
+use Laminas\XmlRpc\Client\IntrospectInterface;
+use Override;
 
 use function count;
 use function gettype;
@@ -10,10 +12,8 @@ use function is_array;
 
 /**
  * Wraps the XML-RPC system.* introspection methods
- *
- * @final Class should not be extended
  */
-class ServerIntrospection
+final class ServerIntrospection implements IntrospectInterface
 {
     private readonly ServerProxy $system;
 
@@ -30,6 +30,7 @@ class ServerIntrospection
      * @return (array|string)[]
      * @psalm-return array<int, array<int, mixed>|string>
      */
+    #[Override]
     public function getSignatureForEachMethod(): array
     {
         $methods = $this->listMethods();
@@ -55,6 +56,7 @@ class ServerIntrospection
      * @throws Exception\IntrospectException
      * @return array<int, array<int, mixed>>
      */
+    #[Override]
     public function getSignatureForEachMethodByMulticall(array|null $methods = null): array
     {
         if ($methods === null) {
@@ -98,6 +100,7 @@ class ServerIntrospection
      * @param array<int, string>|null $methods
      * @return array{string, array{array{'returnType': string, 'parameters': array}}}
      */
+    #[Override]
     public function getSignatureForEachMethodByLooping(array|null $methods = null): array
     {
         if ($methods === null) {
@@ -118,6 +121,7 @@ class ServerIntrospection
      * @throws Exception\IntrospectException
      * @return array{array{'returnType': string, 'parameters': array}}
      */
+    #[Override]
     public function getMethodSignature(string $method): array
     {
         $signature = $this->system->methodSignature($method);
@@ -133,6 +137,7 @@ class ServerIntrospection
      *
      * @return array<int, string>
      */
+    #[Override]
     public function listMethods(): array
     {
         return $this->system->listMethods();

@@ -9,6 +9,7 @@ use Laminas\Diactoros\Response\Serializer as ResponseSerializer;
 use Laminas\Diactoros\StreamFactory as DiactorosStreamFactory;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Client;
+use Laminas\XmlRpc\Client\IntrospectInterface;
 use Laminas\XmlRpc\Client\ServerIntrospection;
 use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Fault;
@@ -50,7 +51,7 @@ final class ClientTest extends TestCase
     /** @var Client */
     protected $xmlrpcClient;
 
-    private MockObject $mockedIntrospector;
+    private MockObject|IntrospectInterface $mockedIntrospector;
 
     #[Override]
     protected function setUp(): void
@@ -737,7 +738,7 @@ final class ClientTest extends TestCase
 
     public function mockIntrospector(): void
     {
-        $this->mockedIntrospector = $this->createMock(Client\ServerIntrospection::class);
+        $this->mockedIntrospector = $this->createMock(IntrospectInterface::class);
         $this->xmlrpcClient->setIntrospector($this->mockedIntrospector);
     }
 }

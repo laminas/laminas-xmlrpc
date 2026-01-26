@@ -106,7 +106,6 @@
       <code><![CDATA[Client]]></code>
     </DeprecatedInterface>
     <DocblockTypeContradiction>
-      <code><![CDATA[count($signatures) > 1]]></code>
       <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
     <MixedAssignment>
@@ -118,7 +117,7 @@
       <code><![CDATA[getMessage]]></code>
     </PossiblyNullReference>
     <PossiblyUnusedReturnValue>
-      <code><![CDATA[ServerIntrospection]]></code>
+      <code><![CDATA[IntrospectInterface]]></code>
     </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Client/ServerIntrospection.php">
@@ -141,6 +140,9 @@
       <code><![CDATA[$signatures]]></code>
       <code><![CDATA[array<int, array<int, mixed>>]]></code>
     </MixedReturnTypeCoercion>
+    <MoreSpecificImplementedParamType>
+      <code><![CDATA[$methods]]></code>
+    </MoreSpecificImplementedParamType>
     <MoreSpecificReturnType>
       <code><![CDATA[array{array{'returnType': string, 'parameters': array}}]]></code>
       <code><![CDATA[array{string, array{array{'returnType': string, 'parameters': array}}}]]></code>
@@ -531,6 +533,15 @@
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
+      <code><![CDATA[method]]></code>
+      <code><![CDATA[method]]></code>
+      <code><![CDATA[method]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[with]]></code>
+      <code><![CDATA[with]]></code>
+      <code><![CDATA[with]]></code>
     </MixedMethodCall>
     <MixedPropertyFetch>
       <code><![CDATA[$proxy->foo->bar]]></code>
@@ -542,6 +553,11 @@
     <PossiblyInvalidArgument>
       <code><![CDATA[$nativeVars]]></code>
     </PossiblyInvalidArgument>
+    <PossiblyUndefinedMethod>
+      <code><![CDATA[expects]]></code>
+      <code><![CDATA[expects]]></code>
+      <code><![CDATA[expects]]></code>
+    </PossiblyUndefinedMethod>
     <UndefinedMagicMethod>
       <code><![CDATA[listMethods]]></code>
     </UndefinedMagicMethod>
