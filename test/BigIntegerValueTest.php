@@ -8,6 +8,7 @@ use Brick\Math\BigInteger as MathBigInteger;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
+use Override;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +24,7 @@ final class BigIntegerValueTest extends TestCase
 
     protected string $bigIntValue;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('gmp') && ! extension_loaded('bcmath')) {
@@ -36,7 +37,7 @@ final class BigIntegerValueTest extends TestCase
             ->plus('42');
     }
 
-    #[\Override]
+    #[Override]
     protected function tearDown(): void
     {
         AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;

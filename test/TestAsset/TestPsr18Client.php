@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc\TestAsset;
 
+use Override;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -27,7 +28,7 @@ final class TestPsr18Client implements ClientInterface
         $this->responses = [$response];
     }
 
-    #[\Override]
+    #[Override]
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         if ($this->responses === []) {

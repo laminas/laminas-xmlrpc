@@ -6,6 +6,7 @@ namespace LaminasTest\XmlRpc\Request;
 
 use Laminas\XmlRpc\Request;
 use LaminasTest\XmlRpc\PhpInputMock;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +23,7 @@ final class HttpTest extends TestCase
     /**
      * Setup environment
      */
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->xml     = <<<EOX
@@ -75,7 +76,7 @@ EOX;
     /**
      * Teardown environment
      */
-    #[\Override]
+    #[Override]
     protected function tearDown(): void
     {
         $_SERVER = $this->server;

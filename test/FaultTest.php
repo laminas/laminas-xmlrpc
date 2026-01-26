@@ -8,6 +8,7 @@ use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Exception;
 use Laminas\XmlRpc\Fault;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -17,7 +18,7 @@ final class FaultTest extends TestCase
 {
     private Fault $fault;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         AbstractValue::setGenerator(null);

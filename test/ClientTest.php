@@ -16,6 +16,7 @@ use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Value;
 use LaminasTest\XmlRpc\TestAsset\TestPsr18Client;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -51,7 +52,7 @@ final class ClientTest extends TestCase
 
     private MockObject $mockedIntrospector;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->httpClient     = new TestPsr18Client();

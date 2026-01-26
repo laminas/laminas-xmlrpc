@@ -2,6 +2,8 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use Override;
+
 /**
  * @extends AbstractScalar<null>
  */
@@ -19,7 +21,7 @@ final class Nil extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native nill value into a PHP NULL
      */
-    #[\Override]
+    #[Override]
     public function getValue(): null
     {
         return null;

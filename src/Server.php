@@ -12,6 +12,7 @@ use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Response\Http;
 use Laminas\XmlRpc\Server\Exception\InvalidArgumentException;
 use Laminas\XmlRpc\Server\Fault;
+use Override;
 
 use function array_merge;
 use function array_slice;
@@ -175,7 +176,7 @@ final class Server extends AbstractServer
      * @param string                $namespace Optional namespace prefix
      * @throws InvalidArgumentException
      */
-    #[\Override]
+    #[Override]
     public function addFunction($function, $namespace = ''): void
     {
         if (! is_string($function) && ! is_array($function)) {
@@ -214,7 +215,7 @@ final class Server extends AbstractServer
      * @param mixed $argv Optional arguments to pass to methods
      * @throws InvalidArgumentException On invalid input.
      */
-    #[\Override]
+    #[Override]
     public function setClass($class, $namespace = '', mixed $argv = null): void
     {
         if (is_string($class) && ! class_exists($class)) {
@@ -238,7 +239,7 @@ final class Server extends AbstractServer
      * @param string|Exception|null $fault
      * @param int $code
      */
-    #[\Override]
+    #[Override]
     public function fault($fault = null, $code = 404): Fault
     {
         if (! $fault instanceof Exception) {
@@ -262,7 +263,7 @@ final class Server extends AbstractServer
      *
      * @param bool $flag
      */
-    #[\Override]
+    #[Override]
     public function setReturnResponse($flag = true): Server
     {
         $this->returnResponse = (bool) $flag;
@@ -272,7 +273,7 @@ final class Server extends AbstractServer
     /**
      * Retrieve return response flag
      */
-    #[\Override]
+    #[Override]
     public function getReturnResponse(): bool
     {
         return $this->returnResponse;
@@ -283,7 +284,7 @@ final class Server extends AbstractServer
      *
      * @param Request|bool $request
      */
-    #[\Override]
+    #[Override]
     public function handle($request = false): Response|Fault|XmlRpcFault|null
     {
         // Get request
@@ -328,7 +329,7 @@ final class Server extends AbstractServer
      * @param array<int, Definition>|Definition $definition
      * @throws InvalidArgumentException On invalid input.
      */
-    #[\Override]
+    #[Override]
     public function loadFunctions($definition): void
     {
         if (! is_array($definition) && ! $definition instanceof Definition) {
@@ -379,7 +380,7 @@ final class Server extends AbstractServer
     /**
      * Do nothing; persistence is handled via {@link Laminas\XmlRpc\Server\Cache}
      */
-    #[\Override]
+    #[Override]
     public function setPersistence(mixed $mode): void
     {
     }
@@ -416,7 +417,7 @@ final class Server extends AbstractServer
     /**
      * Last response.
      */
-    #[\Override]
+    #[Override]
     public function getResponse(): Response|Fault|XmlRpcFault
     {
         return $this->response;
@@ -459,7 +460,7 @@ final class Server extends AbstractServer
      * Returns an array of dispatchables (Laminas\Server\Reflection\ReflectionFunction,
      * ReflectionMethod, and ReflectionClass items).
      */
-    #[\Override]
+    #[Override]
     public function getFunctions(): array
     {
         return $this->table->toArray();

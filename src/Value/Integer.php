@@ -3,6 +3,7 @@
 namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\Exception;
+use Override;
 
 use const PHP_INT_MAX;
 
@@ -31,7 +32,7 @@ class Integer extends AbstractScalar
      *
      * @return int
      */
-    #[\Override]
+    #[Override]
     public function getValue(): string|int
     {
         return $this->value;

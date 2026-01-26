@@ -4,6 +4,7 @@ namespace Laminas\XmlRpc;
 
 use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
+use Override;
 use SimpleXMLElement;
 use Stringable;
 
@@ -262,7 +263,7 @@ class Fault implements Stringable
     /**
      * Return XML fault response
      */
-    #[\Override]
+    #[Override]
     public function __toString(): string
     {
         return $this->saveXML();

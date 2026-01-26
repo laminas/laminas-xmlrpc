@@ -2,6 +2,8 @@
 
 namespace Laminas\XmlRpc\Generator;
 
+use Override;
+
 /**
  * XML generator adapter based on XMLWriter
  */
@@ -15,7 +17,7 @@ final class XmlWriter extends AbstractGenerator
     /**
      * Initialized XMLWriter instance
      */
-    #[\Override]
+    #[Override]
     protected function init(): void
     {
         $this->xmlWriter = new \XMLWriter();
@@ -28,7 +30,7 @@ final class XmlWriter extends AbstractGenerator
      *
      * @param string $name XML element name
      */
-    #[\Override]
+    #[Override]
     protected function openXmlElement(string $name): void
     {
         $this->xmlWriter->startElement($name);
@@ -39,7 +41,7 @@ final class XmlWriter extends AbstractGenerator
      *
      * @param string $text XML text data
      */
-    #[\Override]
+    #[Override]
     protected function writeTextData(string $text): void
     {
         $this->xmlWriter->text($text);
@@ -48,7 +50,7 @@ final class XmlWriter extends AbstractGenerator
     /**
      * Close a previously opened XML element
      */
-    #[\Override]
+    #[Override]
     protected function closeXmlElement(string $name): void
     {
         $this->xmlWriter->endElement();
@@ -57,7 +59,7 @@ final class XmlWriter extends AbstractGenerator
     /**
      * Emit XML document
      */
-    #[\Override]
+    #[Override]
     public function saveXml(): string
     {
         return (string) $this->xmlWriter->flush(false);

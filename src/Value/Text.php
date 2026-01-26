@@ -2,6 +2,8 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use Override;
+
 /**
  * @extends AbstractScalar<string>
  */
@@ -21,7 +23,7 @@ final class Text extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native string value into a PHP string
      */
-    #[\Override]
+    #[Override]
     public function getValue(): string
     {
         return $this->value;

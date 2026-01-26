@@ -2,6 +2,8 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use Override;
+
 use function ini_get;
 use function is_float;
 use function rtrim;
@@ -31,7 +33,7 @@ final class Double extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native double value into a PHP float
      */
-    #[\Override]
+    #[Override]
     public function getValue(): float
     {
         return $this->value;

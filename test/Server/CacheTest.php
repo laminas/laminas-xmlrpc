@@ -6,6 +6,7 @@ namespace LaminasTest\XmlRpc\Server;
 
 use Laminas\XmlRpc\Server;
 use Laminas\XmlRpc\Server\Cache;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function file_exists;
@@ -29,7 +30,7 @@ final class CacheTest extends TestCase
     /**
      * Setup environment
      */
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->file   = realpath(__DIR__) . '/xmlrpc.cache';
@@ -40,7 +41,7 @@ final class CacheTest extends TestCase
     /**
      * Teardown environment
      */
-    #[\Override]
+    #[Override]
     protected function tearDown(): void
     {
         if (file_exists($this->file)) {

@@ -6,6 +6,7 @@ use DOMDocument;
 use Exception;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\XmlRpc\Exception\ValueException;
+use Override;
 use SimpleXMLElement;
 use Stringable;
 
@@ -413,7 +414,7 @@ class Request implements Stringable
     /**
      * Return XML request
      */
-    #[\Override]
+    #[Override]
     public function __toString(): string
     {
         return $this->saveXML();

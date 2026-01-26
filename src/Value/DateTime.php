@@ -3,6 +3,7 @@
 namespace Laminas\XmlRpc\Value;
 
 use Laminas\XmlRpc\Exception;
+use Override;
 
 use function date;
 use function is_numeric;
@@ -55,7 +56,7 @@ final class DateTime extends AbstractScalar
      *
      * @return string Formatted datetime
      */
-    #[\Override]
+    #[Override]
     public function getValue(): string
     {
         return $this->value;

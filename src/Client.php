@@ -11,6 +11,7 @@ use Laminas\XmlRpc\Client\ServerIntrospection;
 use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Exception\ExceptionInterface;
 use Laminas\XmlRpc\Exception\ValueException;
+use Override;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -198,7 +199,7 @@ final class Client implements ServerClient
      * @param  array $params Array of parameters for the method
      * @throws FaultException
      */
-    #[\Override]
+    #[Override]
     public function call($method, $params = []): mixed
     {
         if (! $this->skipSystemLookup() && (! str_starts_with($method, 'system.'))) {

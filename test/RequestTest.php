@@ -9,6 +9,7 @@ use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Value;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -34,7 +35,7 @@ final class RequestTest extends TestCase
     /**
      * Setup environment
      */
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->request = new Request();
@@ -43,7 +44,7 @@ final class RequestTest extends TestCase
     /**
      * Teardown environment
      */
-    #[\Override]
+    #[Override]
     protected function tearDown(): void
     {
         unset($this->request);
