@@ -31,6 +31,7 @@ class Integer extends AbstractScalar
      *
      * @return int
      */
+    #[\Override]
     public function getValue(): string|int
     {
         return $this->value;

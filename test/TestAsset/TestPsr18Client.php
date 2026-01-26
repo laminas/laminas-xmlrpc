@@ -27,6 +27,7 @@ final class TestPsr18Client implements ClientInterface
         $this->responses = [$response];
     }
 
+    #[\Override]
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         if ($this->responses === []) {

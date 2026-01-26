@@ -36,6 +36,7 @@ abstract class AbstractCollection extends AbstractValue
     /**
      * Return the value of this object, convert the XML-RPC native collection values into a PHP array
      */
+    #[\Override]
     public function getValue(): array
     {
         $values = $this->value;

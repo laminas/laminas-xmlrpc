@@ -193,6 +193,7 @@ class Response implements Stringable
     /**
      * Return XML response
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->saveXML();

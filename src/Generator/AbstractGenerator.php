@@ -41,6 +41,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * @param string|null $value Optional value of the XML tag
      * @return AbstractGenerator Fluent interface
      */
+    #[\Override]
     public function openElement(string $name, string|null $value = null): AbstractGenerator
     {
         $this->openXmlElement($name);
@@ -59,6 +60,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      * @param string $name XML tag name
      * @return AbstractGenerator Fluent interface
      */
+    #[\Override]
     public function closeElement(string $name): AbstractGenerator
     {
         $this->closeXmlElement($name);
@@ -69,6 +71,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * Return encoding
      */
+    #[\Override]
     public function getEncoding(): string
     {
         return $this->encoding;
@@ -77,6 +80,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * Set XML encoding
      */
+    #[\Override]
     public function setEncoding(string $encoding): void
     {
         $this->encoding = $encoding;
@@ -85,6 +89,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * Returns the XML as a string and flushes all internal buffers
      */
+    #[\Override]
     public function flush(): string
     {
         $xml = $this->saveXml();
@@ -103,6 +108,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * Removes XML declaration from a string
      */
+    #[\Override]
     public function stripDeclaration(string $xml): string
     {
         return preg_replace('/<\?xml version="1.0"( encoding="[^\"]*")?\?>\n/u', '', $xml);

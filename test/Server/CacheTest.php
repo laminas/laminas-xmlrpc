@@ -29,6 +29,7 @@ final class CacheTest extends TestCase
     /**
      * Setup environment
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->file   = realpath(__DIR__) . '/xmlrpc.cache';
@@ -39,6 +40,7 @@ final class CacheTest extends TestCase
     /**
      * Teardown environment
      */
+    #[\Override]
     protected function tearDown(): void
     {
         if (file_exists($this->file)) {

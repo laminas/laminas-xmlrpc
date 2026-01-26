@@ -4,7 +4,7 @@ namespace Laminas\XmlRpc\Value;
 
 use function is_array;
 
-class ArrayValue extends AbstractCollection
+final class ArrayValue extends AbstractCollection
 {
     /**
      * Set the value of an array native type

@@ -30,6 +30,7 @@ final class Base64 extends AbstractScalar
      * Return the value of this object, convert the XML-RPC native base64 value into a PHP string
      * We return this value decoded (a normal string)
      */
+    #[\Override]
     public function getValue(): string
     {
         return base64_decode($this->value);

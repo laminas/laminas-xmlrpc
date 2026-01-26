@@ -145,6 +145,11 @@
       <code><![CDATA[array{array{'returnType': string, 'parameters': array}}]]></code>
       <code><![CDATA[array{string, array{array{'returnType': string, 'parameters': array}}}]]></code>
     </MoreSpecificReturnType>
+    <UndefinedMagicMethod>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[methodSignature]]></code>
+      <code><![CDATA[multicall]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="src/Fault.php">
     <MixedArgument>
@@ -190,6 +195,14 @@
     <UnsafeInstantiation>
       <code><![CDATA[new static()]]></code>
     </UnsafeInstantiation>
+  </file>
+  <file src="src/Generator/AbstractGenerator.php">
+    <InvalidNullableReturnType>
+      <code><![CDATA[string]]></code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement>
+      <code><![CDATA[preg_replace('/<\?xml version="1.0"( encoding="[^\"]*")?\?>\n/u', '', $xml)]]></code>
+    </NullableReturnStatement>
   </file>
   <file src="src/Request.php">
     <MixedArgument>
@@ -239,6 +252,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Request/Stdin.php">
+    <PossiblyFalseOperand>
+      <code><![CDATA[fgets($fh)]]></code>
+    </PossiblyFalseOperand>
     <UnusedClass>
       <code><![CDATA[Stdin]]></code>
     </UnusedClass>
@@ -358,9 +374,6 @@
     <UndefinedClass>
       <code><![CDATA[$observer::observe($this)]]></code>
     </UndefinedClass>
-    <UnsafeInstantiation>
-      <code><![CDATA[new static($e)]]></code>
-    </UnsafeInstantiation>
   </file>
   <file src="src/Server/System.php">
     <InvalidScalarArgument>
@@ -504,7 +517,12 @@
       <code><![CDATA[$nativeVars]]></code>
       <code><![CDATA[$nativeVars]]></code>
     </MixedArgument>
+    <MixedAssignment>
+      <code><![CDATA[$bar]]></code>
+      <code><![CDATA[$foo]]></code>
+    </MixedAssignment>
     <MixedMethodCall>
+      <code><![CDATA[boo]]></code>
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
@@ -514,9 +532,23 @@
       <code><![CDATA[getValue]]></code>
       <code><![CDATA[getValue]]></code>
     </MixedMethodCall>
+    <MixedPropertyFetch>
+      <code><![CDATA[$proxy->foo->bar]]></code>
+      <code><![CDATA[$server->bar->baz]]></code>
+    </MixedPropertyFetch>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$raw]]></code>
+    </PossiblyFalseArgument>
     <PossiblyInvalidArgument>
       <code><![CDATA[$nativeVars]]></code>
     </PossiblyInvalidArgument>
+    <UndefinedMagicMethod>
+      <code><![CDATA[listMethods]]></code>
+    </UndefinedMagicMethod>
+    <UndefinedMagicPropertyFetch>
+      <code><![CDATA[$proxy->foo]]></code>
+      <code><![CDATA[$server->bar]]></code>
+    </UndefinedMagicPropertyFetch>
   </file>
   <file src="test/FaultTest.php">
     <MixedAssignment>
@@ -605,6 +637,14 @@
     <MixedMethodCall>
       <code><![CDATA[getValue]]></code>
     </MixedMethodCall>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$payload]]></code>
+      <code><![CDATA[$payload]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand>
+      <code><![CDATA[realpath(__DIR__ . '/_files/Laminas12293-payload.txt')]]></code>
+      <code><![CDATA[realpath(__DIR__ . '/_files/Laminas12293-payload.txt')]]></code>
+    </PossiblyFalseOperand>
     <PossiblyNullArgument>
       <code><![CDATA[$result]]></code>
       <code><![CDATA[$result]]></code>
@@ -637,6 +677,17 @@
     <InvalidArgument>
       <code><![CDATA[[$this, 'trackError']]]></code>
     </InvalidArgument>
+    <MixedAssignment>
+      <code><![CDATA[$value]]></code>
+    </MixedAssignment>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$payload]]></code>
+      <code><![CDATA[$payload]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand>
+      <code><![CDATA[realpath(__DIR__ . '/_files/Laminas12293-payload.txt')]]></code>
+      <code><![CDATA[realpath(__DIR__ . '/_files/Laminas12293-payload.txt')]]></code>
+    </PossiblyFalseOperand>
     <PossiblyNullPropertyFetch>
       <code><![CDATA[$sx->params->param]]></code>
       <code><![CDATA[$sx->params->param->value]]></code>
@@ -660,12 +711,22 @@
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[assertFalse]]></code>
     </RedundantConditionGivenDocblockType>
+    <UnusedParam>
+      <code><![CDATA[$error]]></code>
+    </UnusedParam>
   </file>
   <file src="test/Server/CacheTest.php">
     <MixedAssignment>
       <code><![CDATA[$actual]]></code>
       <code><![CDATA[$expected]]></code>
     </MixedAssignment>
+    <PossiblyFalseOperand>
+      <code><![CDATA[realpath(__DIR__)]]></code>
+    </PossiblyFalseOperand>
+    <UndefinedMagicMethod>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/Server/FaultTest.php">
     <ArgumentTypeCoercion>
@@ -730,6 +791,21 @@
       <code><![CDATA[getReturnValue]]></code>
       <code><![CDATA[getReturnValue]]></code>
     </PossiblyNullReference>
+    <UndefinedMagicMethod>
+      <code><![CDATA[foobarbaz]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[listMethods]]></code>
+      <code><![CDATA[methodHelp]]></code>
+      <code><![CDATA[methodHelp]]></code>
+      <code><![CDATA[methodSignature]]></code>
+      <code><![CDATA[methodSignature]]></code>
+      <code><![CDATA[multicall]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/TestAsset/SerializableTestClass.php">
     <MissingConstructor>
@@ -748,6 +824,10 @@
       <code><![CDATA[base64]]></code>
       <code><![CDATA[struct|array|mixed[]]]></code>
     </UndefinedDocblockClass>
+    <UnusedParam>
+      <code><![CDATA[$arg]]></code>
+      <code><![CDATA[$data]]></code>
+    </UnusedParam>
     <UnusedProperty>
       <code><![CDATA[$value1]]></code>
       <code><![CDATA[$value2]]></code>

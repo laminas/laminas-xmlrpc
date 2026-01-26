@@ -55,6 +55,7 @@ final class DateTime extends AbstractScalar
      *
      * @return string Formatted datetime
      */
+    #[\Override]
     public function getValue(): string
     {
         return $this->value;

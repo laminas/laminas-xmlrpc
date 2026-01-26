@@ -31,12 +31,14 @@ final class ServerTest extends TestCase
 {
     private Server $server;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->server = new Server();
         $this->server->setReturnResponse(true);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         unset($this->server);

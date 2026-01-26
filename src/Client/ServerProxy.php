@@ -11,7 +11,7 @@ use function ltrim;
  * calling XML-RPC namespaced functions like "foo.bar.baz()"
  * as "$remote->foo->bar->baz()".
  */
-class ServerProxy
+final class ServerProxy
 {
     /** @var array<string, ServerProxy> */
     private array $cache = [];

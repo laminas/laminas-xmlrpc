@@ -23,6 +23,7 @@ final class BigIntegerValueTest extends TestCase
 
     protected string $bigIntValue;
 
+    #[\Override]
     protected function setUp(): void
     {
         if (! extension_loaded('gmp') && ! extension_loaded('bcmath')) {
@@ -35,6 +36,7 @@ final class BigIntegerValueTest extends TestCase
             ->plus('42');
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;

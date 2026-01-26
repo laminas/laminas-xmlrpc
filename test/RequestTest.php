@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_typesfinal =1);
+declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc;
 
@@ -24,7 +24,7 @@ use function time;
 use function var_export;
 
 #[Group('Laminas_XmlRpc')]
-class RequestTest extends TestCase
+final class RequestTest extends TestCase
 {
     /**
      * \Laminas\XmlRpc\Request object
@@ -34,6 +34,7 @@ class RequestTest extends TestCase
     /**
      * Setup environment
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->request = new Request();
@@ -42,6 +43,7 @@ class RequestTest extends TestCase
     /**
      * Teardown environment
      */
+    #[\Override]
     protected function tearDown(): void
     {
         unset($this->request);

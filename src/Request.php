@@ -413,6 +413,7 @@ class Request implements Stringable
     /**
      * Return XML request
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->saveXML();

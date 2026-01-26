@@ -31,6 +31,7 @@ final class Double extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native double value into a PHP float
      */
+    #[\Override]
     public function getValue(): float
     {
         return $this->value;

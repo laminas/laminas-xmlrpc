@@ -262,6 +262,7 @@ class Fault implements Stringable
     /**
      * Return XML fault response
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->saveXML();

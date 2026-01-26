@@ -22,6 +22,7 @@ final class HttpTest extends TestCase
     /**
      * Setup environment
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->xml     = <<<EOX
@@ -74,6 +75,7 @@ EOX;
     /**
      * Teardown environment
      */
+    #[\Override]
     protected function tearDown(): void
     {
         $_SERVER = $this->server;

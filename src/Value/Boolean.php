@@ -24,6 +24,7 @@ final class Boolean extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native boolean value into a PHP boolean
      */
+    #[\Override]
     public function getValue(): bool
     {
         return $this->value;

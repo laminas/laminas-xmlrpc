@@ -10,6 +10,8 @@ use function is_array;
 
 /**
  * Wraps the XML-RPC system.* introspection methods
+ * 
+ * @final Class should not be extended
  */
 class ServerIntrospection
 {

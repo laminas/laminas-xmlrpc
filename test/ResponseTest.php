@@ -32,6 +32,7 @@ final class ResponseTest extends TestCase
     /**
      * Setup environment
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->response = new Response();
@@ -40,6 +41,7 @@ final class ResponseTest extends TestCase
     /**
      * Teardown environment
      */
+    #[\Override]
     protected function tearDown(): void
     {
         unset($this->response);

@@ -17,6 +17,7 @@ final class FaultTest extends TestCase
 {
     private Fault $fault;
 
+    #[\Override]
     protected function setUp(): void
     {
         AbstractValue::setGenerator(null);

@@ -1,10 +1,10 @@
-final <?php
+<?php
 
 declare(strict_types=1);
 
 namespace LaminasTest\XmlRpc\TestAsset;
 
-class SerializableTestClass
+final class SerializableTestClass
 {
     protected string $property;
 

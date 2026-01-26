@@ -19,6 +19,7 @@ final class Nil extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native nill value into a PHP NULL
      */
+    #[\Override]
     public function getValue(): null
     {
         return null;

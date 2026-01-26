@@ -51,6 +51,7 @@ final class ClientTest extends TestCase
 
     private MockObject $mockedIntrospector;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->httpClient     = new TestPsr18Client();

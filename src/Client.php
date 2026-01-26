@@ -198,6 +198,7 @@ final class Client implements ServerClient
      * @param  array $params Array of parameters for the method
      * @throws FaultException
      */
+    #[\Override]
     public function call($method, $params = []): mixed
     {
         if (! $this->skipSystemLookup() && (! str_starts_with($method, 'system.'))) {

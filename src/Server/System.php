@@ -15,7 +15,7 @@ use function var_export;
 /**
  * XML-RPC system.* methods
  */
-class System
+final class System
 {
     /**
      * Constructor

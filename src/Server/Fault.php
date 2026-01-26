@@ -27,7 +27,7 @@ use function is_string;
  * To allow method chaining, you may use the {@link getInstance()} factory
  * to instantiate a Laminas\XmlRpc\Server\Fault.
  */
-class Fault extends \Laminas\XmlRpc\Fault
+final class Fault extends \Laminas\XmlRpc\Fault
 {
     protected Exception $exception;
 
