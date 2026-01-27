@@ -106,6 +106,7 @@
       <code><![CDATA[Client]]></code>
     </DeprecatedInterface>
     <DocblockTypeContradiction>
+      <code><![CDATA[count($signatures) > 1]]></code>
       <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
     <MixedAssignment>
@@ -140,9 +141,6 @@
       <code><![CDATA[$signatures]]></code>
       <code><![CDATA[array<int, array<int, mixed>>]]></code>
     </MixedReturnTypeCoercion>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$methods]]></code>
-    </MoreSpecificImplementedParamType>
     <MoreSpecificReturnType>
       <code><![CDATA[array{array{'returnType': string, 'parameters': array}}]]></code>
       <code><![CDATA[array{string, array{array{'returnType': string, 'parameters': array}}}]]></code>
@@ -416,6 +414,8 @@
       <code><![CDATA[getCode]]></code>
       <code><![CDATA[getMessage]]></code>
     </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/Server/SystemInterface.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[listMethods]]></code>
       <code><![CDATA[methodHelp]]></code>

@@ -15,7 +15,7 @@ use function is_array;
  */
 final class ServerIntrospection implements IntrospectInterface
 {
-    private readonly ServerProxy $system;
+    private readonly ProxyInterface $system;
 
     public function __construct(XMLRPCClient $client)
     {

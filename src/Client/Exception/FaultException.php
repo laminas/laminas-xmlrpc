@@ -6,7 +6,9 @@ use Laminas\XmlRpc\Exception;
 
 /**
  * Thrown by Laminas\XmlRpc\Client when an XML-RPC fault response is returned.
+ *
+ * @psalm-suppress ClassMustBeFinal
  */
-final class FaultException extends Exception\BadMethodCallException implements ExceptionInterface
+class FaultException extends Exception\BadMethodCallException implements ExceptionInterface
 {
 }

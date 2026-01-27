@@ -4,7 +4,9 @@ namespace Laminas\XmlRpc\Client\Exception;
 
 /**
  * Thrown by Laminas\XmlRpc\Client\ServerIntrospection when any error occurs.
+ *
+ * @psalm-suppress ClassMustBeFinal
  */
-final class IntrospectException extends InvalidArgumentException
+class IntrospectException extends InvalidArgumentException
 {
 }
