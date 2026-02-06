@@ -122,15 +122,20 @@
     </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Client/ServerIntrospection.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[$signatures]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[array<int, array<int, mixed>|string>]]></code>
+    </InvalidReturnType>
     <LessSpecificReturnStatement>
       <code><![CDATA[$signature]]></code>
       <code><![CDATA[$signatures]]></code>
     </LessSpecificReturnStatement>
-    <MixedArrayOffset>
-      <code><![CDATA[$signatures[$methods[$i]]]]></code>
-    </MixedArrayOffset>
+    <MixedArrayTypeCoercion>
+      <code><![CDATA[$methods[$i]]]></code>
+    </MixedArrayTypeCoercion>
     <MixedAssignment>
-      <code><![CDATA[$method]]></code>
       <code><![CDATA[$signature]]></code>
       <code><![CDATA[$signatures[$methods[$i]]]]></code>
     </MixedAssignment>
@@ -139,7 +144,7 @@
     </MixedReturnStatement>
     <MixedReturnTypeCoercion>
       <code><![CDATA[$signatures]]></code>
-      <code><![CDATA[array<int, array<int, mixed>>]]></code>
+      <code><![CDATA[array<string, array<int, mixed>>]]></code>
     </MixedReturnTypeCoercion>
     <MoreSpecificReturnType>
       <code><![CDATA[array{array{'returnType': string, 'parameters': array}}]]></code>

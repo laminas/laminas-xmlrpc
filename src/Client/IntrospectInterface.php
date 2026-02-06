@@ -18,8 +18,9 @@ interface IntrospectInterface
      * This is a boxcar feature of XML-RPC and is found on fewer servers.  However,
      * can significantly improve performance if present.
      *
+     * @param array<int, string>|null $methods
      * @throws Exception\IntrospectException
-     * @return array<int, array<int, mixed>>
+     * @return array<string, array<int, mixed>>
      */
     public function getSignatureForEachMethodByMulticall(array|null $methods = null): array;
 
