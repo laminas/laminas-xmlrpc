@@ -8,6 +8,7 @@ use Brick\Math\BigInteger as MathBigInteger;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Generator\GeneratorInterface as Generator;
 use Laminas\XmlRpc\Value\BigInteger;
+use Override;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -17,12 +18,13 @@ use function extension_loaded;
 use const PHP_INT_MAX;
 
 #[Group('Laminas_XmlRpc')]
-class BigIntegerValueTest extends TestCase
+final class BigIntegerValueTest extends TestCase
 {
     protected null|bool $useBigIntForI8Flag;
 
     protected string $bigIntValue;
 
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('gmp') && ! extension_loaded('bcmath')) {
@@ -35,6 +37,7 @@ class BigIntegerValueTest extends TestCase
             ->plus('42');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         AbstractValue::$USE_BIGINT_FOR_I8 = $this->useBigIntForI8Flag;

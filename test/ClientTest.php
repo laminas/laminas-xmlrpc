@@ -9,6 +9,7 @@ use Laminas\Diactoros\Response\Serializer as ResponseSerializer;
 use Laminas\Diactoros\StreamFactory as DiactorosStreamFactory;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Client;
+use Laminas\XmlRpc\Client\IntrospectInterface;
 use Laminas\XmlRpc\Client\ServerIntrospection;
 use Laminas\XmlRpc\Client\ServerProxy;
 use Laminas\XmlRpc\Fault;
@@ -16,6 +17,7 @@ use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Value;
 use LaminasTest\XmlRpc\TestAsset\TestPsr18Client;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +37,7 @@ use function time;
 use function trim;
 
 #[Group('Laminas_XmlRpc')]
-class ClientTest extends TestCase
+final class ClientTest extends TestCase
 {
     /** @var TestPsr18Client */
     protected $httpClient;
@@ -49,8 +51,9 @@ class ClientTest extends TestCase
     /** @var Client */
     protected $xmlrpcClient;
 
-    private MockObject $mockedIntrospector;
+    private MockObject|IntrospectInterface $mockedIntrospector;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->httpClient     = new TestPsr18Client();
@@ -735,7 +738,7 @@ class ClientTest extends TestCase
 
     public function mockIntrospector(): void
     {
-        $this->mockedIntrospector = $this->createMock(Client\ServerIntrospection::class);
+        $this->mockedIntrospector = $this->createMock(IntrospectInterface::class);
         $this->xmlrpcClient->setIntrospector($this->mockedIntrospector);
     }
 }

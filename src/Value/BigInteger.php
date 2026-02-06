@@ -3,8 +3,9 @@
 namespace Laminas\XmlRpc\Value;
 
 use Brick\Math\BigInteger as BigIntegerMath;
+use Override;
 
-class BigInteger extends Integer
+final class BigInteger extends Integer
 {
     /**
      * @param numeric-string $value
@@ -18,6 +19,7 @@ class BigInteger extends Integer
     /**
      * Return bigint value object
      */
+    #[Override]
     public function getValue(): string|int
     {
         return $this->value;

@@ -32,7 +32,7 @@ use const PHP_INT_MAX;
  * Test case for Value
  */
 #[Group('Laminas_XmlRpc')]
-class ValueTest extends TestCase
+final class ValueTest extends TestCase
 {
     public string $xmlRpcDateFormat = 'Ymd\\TH:i:s';
 

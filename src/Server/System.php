@@ -7,6 +7,7 @@ use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Server;
 use Laminas\XmlRpc\Server\Exception\InvalidArgumentException;
+use Override;
 
 use function array_keys;
 use function is_array;
@@ -15,7 +16,7 @@ use function var_export;
 /**
  * XML-RPC system.* methods
  */
-class System
+final class System implements SystemInterface
 {
     /**
      * Constructor
@@ -31,6 +32,7 @@ class System
      *
      * @return array<int, string>
      */
+    #[Override]
     public function listMethods(): array
     {
         $table = $this->server->getDispatchTable()->getMethods();
@@ -44,6 +46,7 @@ class System
      * @throws InvalidArgumentException
      * @return string Type Is required for PHPUnit
      */
+    #[Override]
     public function methodHelp(string $method): string
     {
         $table = $this->server->getDispatchTable();
@@ -60,6 +63,7 @@ class System
      * @throws InvalidArgumentException
      * @return array<int, array<string, string|array>>
      */
+    #[Override]
     public function methodSignature(string $method): array
     {
         $table = $this->server->getDispatchTable();
@@ -91,6 +95,7 @@ class System
      *
      * @psalm-return list<array{faultCode: mixed, faultString: mixed}|mixed>
      */
+    #[Override]
     public function multicall(array $methods): array
     {
         $responses = [];

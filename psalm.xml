@@ -19,22 +19,14 @@
     </projectFiles>
 
     <issueHandlers>
-        <InternalMethod>
+        <ClassMustBeFinal>
             <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::method"/>
+                <directory name="src/Client/Exception" />
+                <directory name="src/Server/Exception" />
             </errorLevel>
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::willReturn"/>
-            </errorLevel>
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::with"/>
-            </errorLevel>
-            <errorLevel type="suppress">
-                <directory name="test" />
-                <referencedMethod name="Laminas\View\Helper\Escaper\AbstractHelper::__construct"/>
-            </errorLevel>
-        </InternalMethod>
+        </ClassMustBeFinal>
     </issueHandlers>
+    
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>

@@ -26,7 +26,7 @@ namespace LaminasTest\XmlRpc;
  * }
  * </code>
  */
-class PhpInputMock
+final class PhpInputMock
 {
     protected static mixed $data;
 

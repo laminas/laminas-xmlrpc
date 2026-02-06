@@ -6,6 +6,6 @@ namespace LaminasTest\XmlRpc\TestAsset;
 
 use Laminas\XmlRpc\Request;
 
-class TestRequest extends Request
+final class TestRequest extends Request
 {
 }

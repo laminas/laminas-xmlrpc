@@ -4,6 +4,7 @@ namespace Laminas\XmlRpc;
 
 use Laminas\Xml\Exception\RuntimeException;
 use Laminas\Xml\Security as XmlSecurity;
+use Override;
 use Stringable;
 
 use function is_object;
@@ -193,6 +194,7 @@ class Response implements Stringable
     /**
      * Return XML response
      */
+    #[Override]
     public function __toString(): string
     {
         return $this->saveXML();

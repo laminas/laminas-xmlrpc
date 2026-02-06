@@ -6,6 +6,6 @@ namespace LaminasTest\XmlRpc\Server\TestAsset;
 
 use Exception;
 
-class Exception2 extends Exception
+final class Exception2 extends Exception
 {
 }

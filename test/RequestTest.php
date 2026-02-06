@@ -9,6 +9,7 @@ use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Value;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -24,7 +25,7 @@ use function time;
 use function var_export;
 
 #[Group('Laminas_XmlRpc')]
-class RequestTest extends TestCase
+final class RequestTest extends TestCase
 {
     /**
      * \Laminas\XmlRpc\Request object
@@ -34,6 +35,7 @@ class RequestTest extends TestCase
     /**
      * Setup environment
      */
+    #[Override]
     protected function setUp(): void
     {
         $this->request = new Request();
@@ -42,6 +44,7 @@ class RequestTest extends TestCase
     /**
      * Teardown environment
      */
+    #[Override]
     protected function tearDown(): void
     {
         unset($this->request);

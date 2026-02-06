@@ -4,7 +4,7 @@ namespace Laminas\XmlRpc\Value;
 
 use function is_array;
 
-class Struct extends AbstractCollection
+final class Struct extends AbstractCollection
 {
     /**
      * Set the value of a struct native type

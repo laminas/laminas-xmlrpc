@@ -6,6 +6,7 @@ namespace LaminasTest\XmlRpc\Request;
 
 use Laminas\XmlRpc\Request;
 use LaminasTest\XmlRpc\PhpInputMock;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ use function str_starts_with;
 use function strlen;
 
 #[Group('Laminas_XmlRpc')]
-class HttpTest extends TestCase
+final class HttpTest extends TestCase
 {
     private string $xml;
     private Request\Http $request;
@@ -22,6 +23,7 @@ class HttpTest extends TestCase
     /**
      * Setup environment
      */
+    #[Override]
     protected function setUp(): void
     {
         $this->xml     = <<<EOX
@@ -74,6 +76,7 @@ EOX;
     /**
      * Teardown environment
      */
+    #[Override]
     protected function tearDown(): void
     {
         $_SERVER = $this->server;

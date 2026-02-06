@@ -17,7 +17,7 @@ use function fopen;
  * built at construction time using data from STDIN; if no data is available, the
  * request is declared a fault.
  */
-class Stdin extends XmlRpcRequest
+final class Stdin extends XmlRpcRequest
 {
     /**
      * Raw XML as received via request

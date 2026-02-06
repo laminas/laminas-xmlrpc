@@ -3,11 +3,12 @@
 namespace Laminas\XmlRpc\Generator;
 
 use DOMNode;
+use Override;
 
 /**
  * DOMDocument based implementation of a XML/RPC generator
  */
-class DomDocument extends AbstractGenerator
+final class DomDocument extends AbstractGenerator
 {
     protected \DOMDocument $dom;
 
@@ -16,6 +17,7 @@ class DomDocument extends AbstractGenerator
     /**
      * Start XML element
      */
+    #[Override]
     protected function openXmlElement(string $name): void
     {
         $newElement = $this->dom->createElement($name);
@@ -26,6 +28,7 @@ class DomDocument extends AbstractGenerator
     /**
      * Write XML text data into the currently opened XML element
      */
+    #[Override]
     protected function writeTextData(string $text): void
     {
         $this->currentElement->appendChild($this->dom->createTextNode($text));
@@ -36,6 +39,7 @@ class DomDocument extends AbstractGenerator
      *
      * Resets $currentElement to the next parent node in the hierarchy
      */
+    #[Override]
     protected function closeXmlElement(string $name): void
     {
         if (isset($this->currentElement->parentNode)) {
@@ -46,6 +50,7 @@ class DomDocument extends AbstractGenerator
     /**
      * Save XML as a string
      */
+    #[Override]
     public function saveXml(): string
     {
         return $this->dom->saveXml();
@@ -54,6 +59,7 @@ class DomDocument extends AbstractGenerator
     /**
      * Initializes internal objects
      */
+    #[Override]
     protected function init(): void
     {
         $this->dom            = new \DOMDocument('1.0', $this->encoding);

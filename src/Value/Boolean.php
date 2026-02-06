@@ -2,6 +2,8 @@
 
 namespace Laminas\XmlRpc\Value;
 
+use Override;
+
 use function filter_var;
 
 use const FILTER_VALIDATE_BOOLEAN;
@@ -24,6 +26,7 @@ final class Boolean extends AbstractScalar
     /**
      * Return the value of this object, convert the XML-RPC native boolean value into a PHP boolean
      */
+    #[Override]
     public function getValue(): bool
     {
         return $this->value;

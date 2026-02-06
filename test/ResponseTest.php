@@ -8,6 +8,7 @@ use DOMDocument;
 use Laminas\XmlRpc\AbstractValue;
 use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Response;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -20,7 +21,7 @@ use function set_error_handler;
 use function sprintf;
 
 #[Group('Laminas_XmlRpc')]
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     /**
      * Response object
@@ -32,6 +33,7 @@ class ResponseTest extends TestCase
     /**
      * Setup environment
      */
+    #[Override]
     protected function setUp(): void
     {
         $this->response = new Response();
@@ -40,6 +42,7 @@ class ResponseTest extends TestCase
     /**
      * Teardown environment
      */
+    #[Override]
     protected function tearDown(): void
     {
         unset($this->response);

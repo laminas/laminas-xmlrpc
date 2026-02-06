@@ -14,6 +14,7 @@ use Laminas\XmlRpc\Fault;
 use Laminas\XmlRpc\Request;
 use Laminas\XmlRpc\Response;
 use Laminas\XmlRpc\Server;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -27,16 +28,18 @@ use function ob_start;
 use function var_export;
 
 #[Group('Laminas_XmlRpc')]
-class ServerTest extends TestCase
+final class ServerTest extends TestCase
 {
     private Server $server;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->server = new Server();
         $this->server->setReturnResponse(true);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         unset($this->server);

@@ -11,7 +11,7 @@ use function strtolower;
 /**
  * HTTP response
  */
-class Http extends XmlRpcResponse
+final class Http extends XmlRpcResponse
 {
     /**
      * Override __toString() to send HTTP Content-Type header
