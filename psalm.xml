@@ -17,6 +17,15 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="src/Client/Exception" />
+                <directory name="src/Server/Exception" />
+            </errorLevel>
+        </ClassMustBeFinal>
+    </issueHandlers>
     
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

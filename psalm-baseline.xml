@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.14.3@d0b040a91f280f071c1abcb1b77ce3822058725a">
+<files psalm-version="6.15.0@204d06619833a297b402cbc66be7f2df74437db4">
   <file src="src/AbstractValue.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
@@ -353,6 +353,12 @@
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[is_object($definition)]]></code>
     </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Server/Cache.php">
+    <DeprecatedInterface>
+      <code><![CDATA[ServerInterface|Server $server]]></code>
+      <code><![CDATA[ServerInterface|Server $server]]></code>
+    </DeprecatedInterface>
   </file>
   <file src="src/Server/Fault.php">
     <DocblockTypeContradiction>

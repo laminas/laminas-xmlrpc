@@ -18,9 +18,7 @@ interface SystemInterface
     /**
      * Display help message for an XMLRPC method
      *
-     * @param string $method Is required for PHPUnit
      * @throws InvalidArgumentException
-     * @return string Type Is required for PHPUnit
      */
     public function methodHelp(string $method): string;
 
@@ -48,10 +46,7 @@ interface SystemInterface
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
      *
      * @param array<string, mixed> $methods
-     *
-     * @return (array|mixed)[]
-     *
-     * @psalm-return list<array{faultCode: mixed, faultString: mixed}|mixed>
+     * @return list<array{faultCode: mixed, faultString: mixed}|mixed>
      */
     public function multicall(array $methods): array;
 }

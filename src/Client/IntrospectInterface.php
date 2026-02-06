@@ -2,19 +2,14 @@
 
 namespace Laminas\XmlRpc\Client;
 
-use Laminas\XmlRpc\Client as XMLRPCClient;
-
 interface IntrospectInterface
 {
-    public function __construct(XMLRPCClient $client);
-
     /**
      * Returns the signature for each method on the server,
      * autodetecting whether system.multicall() is supported and
      * using it if so.
      *
-     * @return (array|string)[]
-     * @psalm-return array<int, array<int, mixed>|string>
+     * @return array<int, array<int, mixed>|string>
      */
     public function getSignatureForEachMethod(): array;
 
