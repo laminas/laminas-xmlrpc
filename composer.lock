@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c13edf83f805bd4aa1c6b1d2ed1fe0d",
+    "content-hash": "d809e1a64a9231a520b6c7414b4ded7e",
     "packages": [
         {
             "name": "brick/math",
-            "version": "0.14.8",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "63422359a44b7f06cae63c3b429b59e8efcc0629"
+                "reference": "3903230959c97217826e5d8948d2e0fbc86a2ccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/63422359a44b7f06cae63c3b429b59e8efcc0629",
-                "reference": "63422359a44b7f06cae63c3b429b59e8efcc0629",
+                "url": "https://api.github.com/repos/brick/math/zipball/3903230959c97217826e5d8948d2e0fbc86a2ccf",
+                "reference": "3903230959c97217826e5d8948d2e0fbc86a2ccf",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.8"
+                "source": "https://github.com/brick/math/tree/0.15.0"
             },
             "funding": [
                 {
@@ -64,7 +64,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-10T14:33:43+00:00"
+            "time": "2026-02-20T15:19:18+00:00"
         },
         {
             "name": "laminas/laminas-code",
