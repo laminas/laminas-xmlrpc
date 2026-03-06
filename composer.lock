@@ -4,27 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d809e1a64a9231a520b6c7414b4ded7e",
+    "content-hash": "6e95e562a7711c35483dd70c54bda0db",
     "packages": [
         {
             "name": "brick/math",
-            "version": "0.15.0",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "3903230959c97217826e5d8948d2e0fbc86a2ccf"
+                "reference": "f9abcbd068bac8bfa571e8a8a3abbb171163fca1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/3903230959c97217826e5d8948d2e0fbc86a2ccf",
-                "reference": "3903230959c97217826e5d8948d2e0fbc86a2ccf",
+                "url": "https://api.github.com/repos/brick/math/zipball/f9abcbd068bac8bfa571e8a8a3abbb171163fca1",
+                "reference": "f9abcbd068bac8bfa571e8a8a3abbb171163fca1",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.2"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "^2.2",
                 "phpstan/phpstan": "2.1.22",
                 "phpunit/phpunit": "^11.5"
             },
@@ -56,7 +55,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.15.0"
+                "source": "https://github.com/brick/math/tree/0.16.0"
             },
             "funding": [
                 {
@@ -64,7 +63,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-20T15:19:18+00:00"
+            "time": "2026-03-06T13:17:27+00:00"
         },
         {
             "name": "laminas/laminas-code",

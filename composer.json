@@ -34,7 +34,7 @@
         "ext-libxml": "*",
         "ext-simplexml": "*",
 		"ext-xmlwriter": "*",
-        "brick/math": "^0.14.1 || ^0.15.0",
+        "brick/math": "^0.14.1 || ^0.15.0 || ^0.16.0",
         "laminas/laminas-code": "^4.17",
         "laminas/laminas-server": "^2.18",
         "laminas/laminas-stdlib": "^3.21.0",
