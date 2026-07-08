@@ -9,7 +9,7 @@ use function filter_var;
 use const FILTER_VALIDATE_BOOLEAN;
 
 /**
- * @extends AbstractScalar<bool>
+ * @extends AbstractScalar<int<0, 1>>
  */
 final class Boolean extends AbstractScalar
 {
@@ -20,7 +20,7 @@ final class Boolean extends AbstractScalar
     public function __construct(bool|string|int $value)
     {
         $this->type  = self::XMLRPC_TYPE_BOOLEAN;
-        $this->value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        $this->value = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
     }
 
     /**
@@ -29,6 +29,6 @@ final class Boolean extends AbstractScalar
     #[Override]
     public function getValue(): bool
     {
-        return $this->value;
+        return $this->value === 1;
     }
 }
