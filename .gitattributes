@@ -10,3 +10,4 @@
 /.laminas-ci.json export-ignore
 /psalm.xml export-ignore
 /psalm-baseline.xml export-ignore
+/structarmed.php export-ignore
