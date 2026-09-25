@@ -168,7 +168,7 @@ class Fault implements Stringable
         }
         if (! $xml instanceof SimpleXMLElement) {
             $errors = libxml_get_errors();
-            $errors = array_reduce($errors, function ($result, $item) {
+            $errors = array_reduce($errors, static function ($result, $item) {
                 if (empty($result)) {
                     return $item->message;
                 }
