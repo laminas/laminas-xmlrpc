@@ -2,18 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-xmlrpc/</loc>
-         <lastmod>2025-11-11</lastmod>
+         <lastmod>2026-10-09</lastmod>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-xmlrpc/client/</loc>
-         <lastmod>2025-11-11</lastmod>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v2/client/</loc>
+         <lastmod>2026-10-09</lastmod>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-xmlrpc/intro/</loc>
-         <lastmod>2025-11-11</lastmod>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v2/intro/</loc>
+         <lastmod>2026-10-09</lastmod>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-xmlrpc/server/</loc>
-         <lastmod>2025-11-11</lastmod>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v2/server/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v3/client/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v3/intro/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v3/migration/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-xmlrpc/v3/server/</loc>
+         <lastmod>2026-10-09</lastmod>
     </url>
 </urlset>

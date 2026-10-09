@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-xmlrpc">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-xmlrpc/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-xmlrpc/v3/migration/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>laminas-xmlrpc - Laminas Docs</title>
+    <title>Migration to version 3 - laminas-xmlrpc - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -109,7 +109,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">
+            <a href="../..">
                 
                 
     laminas-xmlrpc
@@ -127,7 +127,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v3/intro/" class="subnavigation__link">Introduction</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -138,13 +138,13 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v3/client/" class="subnavigation__link">XML-RPC Clients</a>
+        <a href="../client/" class="subnavigation__link">XML-RPC Clients</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v3/server/" class="subnavigation__link">XML-RPC Servers</a>
+        <a href="../server/" class="subnavigation__link">XML-RPC Servers</a>
     </li>
 
             
@@ -158,8 +158,8 @@
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v3/migration/" class="subnavigation__link">Migration to version 3</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration to version 3</a>
     </li>
 
             
@@ -233,7 +233,7 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="v3/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -241,7 +241,7 @@
                 
             
                 
-                    <a href="v2/intro/" class="dropdown-item">
+                    <a href="../../v2/intro/" class="dropdown-item">
                         
                             v2
                         
@@ -271,6 +271,24 @@
             <div class="col-md-9 col-sm-12 content" role="main">
                 
                 
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#xmlrpc-client" class="toc__link nav-link">XmlRpc Client</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
 
                 
                     <nav aria-label="breadcrumb">
@@ -281,10 +299,28 @@
 
             
                 <li class="breadcrumb-item">
-                    
+                    <a href="../..">
+                        
     laminas-xmlrpc
 
+                    </a>
                 </li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Migration</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Migration to version 3</li>
             
         
     </ol>
@@ -294,29 +330,45 @@
 
 
 
-    <h1>
+
     
     
-    laminas-xmlrpc
+        <h2 class="chapter__headline">Migration</h2>
+    
 
-</h1>
-<p>Fully-featured XML-RPC server and client implementations</p>
+    <h1 id="migration-to-version-3">Migration to Version 3</h1>
+<h2 id="xmlrpc-client">XmlRpc Client</h2>
+<p>Version 3 removes the dependency on <a href="https://docs.laminas.dev/laminas-http/">laminas/laminas-http</a> and replaces it with <a href="https://www.php-fig.org/psr/psr-18/">PSR-18 (HTTP Client)</a>, along with <a href="https://www.php-fig.org/psr/psr-7/">PSR-7 (HTTP Messages)</a> and <a href="https://www.php-fig.org/psr/psr-17/">PSR-17 (HTTP Message Factories)</a>.
+This change gives greater flexibility in how HTTP requests are made, but also changes how the XML-RPC client instance is created, and requires that you provide an HTTP client via the constructor.</p>
+<p>Previously, the following would create a laminas-http client instance implicitly, and use it for making XML-RPC requests:</p>
+<pre class="highlight"><code class="language-php">$client = new Laminas\XmlRpc\Client('http://time.xmlrpc.com/RPC2');</code></pre>
+<p>If you needed to customize the HTTP client, you had the following options:</p>
+<pre class="highlight"><code class="language-php">$httpClient = new Laminas\Http\Client(/* ... */);
 
+// Via constructor injection:
+$xmlrpc = new Laminas\XmlRpc\Client('http://time.xmlrpc.com/RPC2', $httpClient);
 
-
-
-
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre><code class="language-bash">$ composer require laminas/laminas-xmlrpc</code></pre>
-
-
-<h2>Support</h2>
+// Via setter method:
+$xmlrpc = new Laminas\XmlRpc\Client('http://time.xmlrpc.com/RPC2');
+$xmlrpc-&gt;setHttpClient($httpClient);</code></pre>
+<p>With version 3, the HTTP client <strong>must</strong> be a PSR-18 HTTP client implementation, and <strong>must</strong> be passed to the instance via the constructor, along with a <code>Psr\Http\Message\RequestFactoryInterface</code> instance and a <code>Psr\Http\Message\StreamFactoryInterface</code> instance.
+The below example uses the <a href="https://docs.php-http.org/en/latest/clients/curl-client.html">php-http/curl-client package</a> to provide the HTTP client, and <a href="https://docs.laminas.dev/laminas-diatoros/">Laminas Diactoros</a> to provide HTTP message factories:</p>
+<pre class="highlight"><code class="language-php">$xmlrpc = new Laminas\XmlRpc\Client(
+    'http://time.xmlrpc.com/RPC2',
+    $httpClient,
+    $requestFactory,
+    $streamFactory
+);</code></pre>
+<h3 id="methods-removed">Methods Removed</h3>
+<p>The following methods were removed from <code>Laminas\XmlRpc\Client</code> for version 3.</p>
 <ul>
-    <li>Issues: <a href="https://github.com/laminas/laminas-xmlrpc/issues">github.com/laminas/laminas-xmlrpc/issues</a></li>
-    <li>Source: <a href="https://github.com/laminas/laminas-xmlrpc">github.com/laminas/laminas-xmlrpc</a></li>
-    <li>Chat: <a href="https://laminas.dev/chat">laminas.dev/chat</a></li>
-    <li>Forum: <a href="https://discourse.laminas.dev/">discourse.laminas.dev</a></li>
+<li><code>setHttpClient()</code></li>
+<li><code>getHttpClient()</code></li>
+</ul>
+<h3 id="methods-changed">Methods Changed</h3>
+<p>The following methods are changed in <code>Laminas\XmlRpc\Client</code> for version 3.</p>
+<ul>
+<li><code>doRequest()</code> the <code>$response</code> parameter has been removed</li>
 </ul>
 
 
@@ -328,12 +380,18 @@
         
         <li class="page-nav__item">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../server/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="bi bi-arrow-left"></i>
+                    XML-RPC Servers
+                </a>
+            
         </li>
 
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v3/intro/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../../v2/intro/">
                     <small class="page-nav__label">Next</small>
                     Introduction
                     <i class="bi bi-arrow-right"></i>
@@ -368,7 +426,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">
+            <a href="../..">
                 
                 
     laminas-xmlrpc
@@ -386,7 +444,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v3/intro/" class="subnavigation__link">Introduction</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -397,13 +455,13 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v3/client/" class="subnavigation__link">XML-RPC Clients</a>
+        <a href="../client/" class="subnavigation__link">XML-RPC Clients</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v3/server/" class="subnavigation__link">XML-RPC Servers</a>
+        <a href="../server/" class="subnavigation__link">XML-RPC Servers</a>
     </li>
 
             
@@ -417,8 +475,8 @@
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v3/migration/" class="subnavigation__link">Migration to version 3</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration to version 3</a>
     </li>
 
             
@@ -537,13 +595,13 @@
 </footer>
 
     <script>
-        let base_url = '.',
+        let base_url = '../..',
             project  = "components",
             siteName = 'laminas-xmlrpc';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="search/main.js"></script>
+        <script src="../../search/main.js"></script>
     
 
     
@@ -572,8 +630,3 @@
 
 
 </html>
-
-<!--
-MkDocs version : 1.6.1
-Build Date UTC : 2026-10-09 10:42:03.585557+00:00
--->
