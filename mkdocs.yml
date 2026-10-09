@@ -24,7 +24,7 @@ extra:
         - v3
         - v2
 plugins:
-    redirects:
+    - redirects:
         redirect_maps:
             intro.md: v3/intro.md
             client.md: v3/client.md
