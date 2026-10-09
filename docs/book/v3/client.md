@@ -85,19 +85,19 @@ Parameters may be passed to `call()` as native PHP variables, meaning as a `stri
 `float`, `boolean`, `array`, or an `object`. In this case, each PHP native type will be
 auto-detected and converted into one of the XML-RPC types according to this table:
 
-PHP Native Type                   | XML-RPC Type
---------------------------------- | ------------
-`integer`                         | int
-`Laminas\Math\BigInteger\BigInteger` | i8
-`double`                          | double
-`boolean`                         | boolean
-`string`                          | string
-`null`                            | nil
-`array`                           | array
-`associative array`               | struct
-`object`                          | array
-`DateTime`                        | dateTime.iso8601
-`DateTime`                        | dateTime.iso8601
+| PHP Native Type                      | XML-RPC Type     |
+|--------------------------------------|------------------|
+| `integer`                            | int              |
+| `Laminas\Math\BigInteger\BigInteger` | i8               |
+| `double`                             | double           |
+| `boolean`                            | boolean          |
+| `string`                             | string           |
+| `null`                               | nil              |
+| `array`                              | array            |
+| `associative array`                  | struct           |
+| `object`                             | array            |
+| `DateTime`                           | dateTime.iso8601 |
+| `DateTime`                           | dateTime.iso8601 |
 
 > #### What type do empty arrays get cast to?
 >
@@ -139,21 +139,21 @@ There are two ways to create a `Laminas\XmlRpc\Value` object: instantiate one of
 `Laminas\XmlRpc\Value` subclasses directly, or use the static factory method
 `Laminas\XmlRpc\AbstractValue::getXmlRpcValue()`.
 
-XML-RPC Type     | `Laminas\XmlRpc\AbstractValue` Constant               | `Laminas\XmlRpc\Value` Object
----------------- | -------------------------------------------------- | --------------------------
-int              | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_INTEGER`   | `Laminas\XmlRpc\Value\Integer`
-i4               | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_I4`        | `Laminas\XmlRpc\Value\Integer`
-i8               | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_I8`        | `Laminas\XmlRpc\Value\BigInteger` or `Laminas\XmlRpc\Value\Integer` if machine is 64-bit
-ex:i8            | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8`  | `Laminas\XmlRpc\Value\BigInteger` or `Laminas\XmlRpc\Value\Integer` if machine is 64-bit
-double           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_DOUBLE`    | `Laminas\XmlRpc\ValueDouble`
-boolean          | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_BOOLEAN`   | `Laminas\XmlRpc\Value\Boolean`
-string           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_STRING`    | `Laminas\XmlRpc\Value\Text`
-nil              | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_NIL`       | `Laminas\XmlRpc\Value\Nil`
-ex:nil           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHENIL` | `Laminas\XmlRpc\Value\Nil`
-base64           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_BASE64`    | `Laminas\XmlRpc\Value\Base64`
-dateTime.iso8601 | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_DATETIME`  | `Laminas\XmlRpc\Value\DateTime`
-array            | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_ARRAY`     | `Laminas\XmlRpc\Value\Array`
-struct           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_STRUCT`    | `Laminas\XmlRpc\Value\Struct`
+| XML-RPC Type     | `Laminas\XmlRpc\AbstractValue` Constant               | `Laminas\XmlRpc\Value` Object                                                            |
+|------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------|
+| int              | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_INTEGER`   | `Laminas\XmlRpc\Value\Integer`                                                           |
+| i4               | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_I4`        | `Laminas\XmlRpc\Value\Integer`                                                           |
+| i8               | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_I8`        | `Laminas\XmlRpc\Value\BigInteger` or `Laminas\XmlRpc\Value\Integer` if machine is 64-bit |
+| ex:i8            | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHEI8`  | `Laminas\XmlRpc\Value\BigInteger` or `Laminas\XmlRpc\Value\Integer` if machine is 64-bit |
+| double           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_DOUBLE`    | `Laminas\XmlRpc\ValueDouble`                                                             |
+| boolean          | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_BOOLEAN`   | `Laminas\XmlRpc\Value\Boolean`                                                           |
+| string           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_STRING`    | `Laminas\XmlRpc\Value\Text`                                                              |
+| nil              | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_NIL`       | `Laminas\XmlRpc\Value\Nil`                                                               |
+| ex:nil           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_APACHENIL` | `Laminas\XmlRpc\Value\Nil`                                                               |
+| base64           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_BASE64`    | `Laminas\XmlRpc\Value\Base64`                                                            |
+| dateTime.iso8601 | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_DATETIME`  | `Laminas\XmlRpc\Value\DateTime`                                                          |
+| array            | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_ARRAY`     | `Laminas\XmlRpc\Value\Array`                                                             |
+| struct           | `Laminas\XmlRpc\AbstractValue::XMLRPC_TYPE_STRUCT`    | `Laminas\XmlRpc\Value\Struct`                                                            |
 
 > #### Automatic Conversion
 >
