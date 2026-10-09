@@ -47,7 +47,7 @@
         "laminas/laminas-diactoros": "^3.8",
         "php-http/mock-client": "^1.6",
         "phpunit/phpunit": "^11.5.50 || ^12.5.22 || ^13.4.1",
-        "psalm/plugin-phpunit": "^0.19.5",
+        "psalm/plugin-phpunit": "^0.20.0",
         "vimeo/psalm": "^6.14.3"
     },
     "suggest": {
