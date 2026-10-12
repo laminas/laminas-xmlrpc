@@ -1234,16 +1234,16 @@
         },
         {
             "name": "boundwize/jsonrecast",
-            "version": "1.0.36",
+            "version": "1.0.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/jsonrecast.git",
-                "reference": "c7cfac84d68ce0a89babfeb3aab234db80dce790"
+                "reference": "d37e0d808cd5c0a8f6e5d6f36ea363202950e399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/jsonrecast/zipball/c7cfac84d68ce0a89babfeb3aab234db80dce790",
-                "reference": "c7cfac84d68ce0a89babfeb3aab234db80dce790",
+                "url": "https://api.github.com/repos/boundwize/jsonrecast/zipball/d37e0d808cd5c0a8f6e5d6f36ea363202950e399",
+                "reference": "d37e0d808cd5c0a8f6e5d6f36ea363202950e399",
                 "shasum": ""
             },
             "require": {
@@ -1251,7 +1251,7 @@
             },
             "require-dev": {
                 "boundwize/pyrameter": "^0.5",
-                "boundwize/structarmed": "^0.15",
+                "boundwize/structarmed": "^0.19",
                 "laminas/laminas-coding-standard": "^3.1",
                 "phpstan/phpstan": "^2.2",
                 "phpunit/phpunit": "^11.5",
@@ -1291,7 +1291,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/jsonrecast/issues",
-                "source": "https://github.com/boundwize/jsonrecast/tree/1.0.36"
+                "source": "https://github.com/boundwize/jsonrecast/tree/1.0.37"
             },
             "funding": [
                 {
@@ -1299,20 +1299,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-15T00:35:36+00:00"
+            "time": "2026-10-10T08:53:11+00:00"
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.19.3",
+            "version": "0.19.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "ee5b7c0263f870ce4b1daaa7c2815339ad35b86d"
+                "reference": "5188c4c4a790e9237a90491b0596d4669b9944e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/ee5b7c0263f870ce4b1daaa7c2815339ad35b86d",
-                "reference": "ee5b7c0263f870ce4b1daaa7c2815339ad35b86d",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/5188c4c4a790e9237a90491b0596d4669b9944e2",
+                "reference": "5188c4c4a790e9237a90491b0596d4669b9944e2",
                 "shasum": ""
             },
             "require": {
@@ -1369,7 +1369,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.19.3"
+                "source": "https://github.com/boundwize/structarmed/tree/0.19.4"
             },
             "funding": [
                 {
@@ -1377,7 +1377,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-08T19:31:06+00:00"
+            "time": "2026-10-11T11:18:52+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -6359,16 +6359,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.19.2",
+            "version": "6.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "fa716e443b23e6fa35bf58907e67ca692ec3c00a"
+                "reference": "804f03c0c183d149fcd4b8c7c0c9b3fbf836d34c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/fa716e443b23e6fa35bf58907e67ca692ec3c00a",
-                "reference": "fa716e443b23e6fa35bf58907e67ca692ec3c00a",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/804f03c0c183d149fcd4b8c7c0c9b3fbf836d34c",
+                "reference": "804f03c0c183d149fcd4b8c7c0c9b3fbf836d34c",
                 "shasum": ""
             },
             "require": {
@@ -6473,7 +6473,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-10-07T13:43:21+00:00"
+            "time": "2026-10-09T15:20:18+00:00"
         },
         {
             "name": "webimpress/coding-standard",
