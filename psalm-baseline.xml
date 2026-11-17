@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.15.0@204d06619833a297b402cbc66be7f2df74437db4">
+<files psalm-version="6.20.12@56e5217b13db8789c2b8cfcc73d0f902df2cda11">
   <file src="src/AbstractValue.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </ArgumentTypeCoercion>
+    <DocblockTypeContradiction>
+      <code><![CDATA[throw new ValueException('Given type is not a ' . self::class . ' constant')]]></code>
+    </DocblockTypeContradiction>
     <InvalidMethodCall>
       <code><![CDATA[children]]></code>
     </InvalidMethodCall>
@@ -14,9 +17,33 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </InvalidScalarArgument>
+    <MissingClassConstType>
+      <code><![CDATA[AUTO_DETECT_TYPE = 'auto_detect']]></code>
+      <code><![CDATA[XMLRPC_TYPE_APACHEI8  = 'ex:i8']]></code>
+      <code><![CDATA[XMLRPC_TYPE_APACHENIL = 'ex:nil']]></code>
+      <code><![CDATA[XMLRPC_TYPE_ARRAY     = 'array']]></code>
+      <code><![CDATA[XMLRPC_TYPE_BASE64    = 'base64']]></code>
+      <code><![CDATA[XMLRPC_TYPE_BOOLEAN   = 'boolean']]></code>
+      <code><![CDATA[XMLRPC_TYPE_DATETIME  = 'dateTime.iso8601']]></code>
+      <code><![CDATA[XMLRPC_TYPE_DOUBLE    = 'double']]></code>
+      <code><![CDATA[XMLRPC_TYPE_I4        = 'i4']]></code>
+      <code><![CDATA[XMLRPC_TYPE_I8        = 'i8']]></code>
+      <code><![CDATA[XMLRPC_TYPE_INTEGER   = 'int']]></code>
+      <code><![CDATA[XMLRPC_TYPE_NIL       = 'nil']]></code>
+      <code><![CDATA[XMLRPC_TYPE_STRING    = 'string']]></code>
+      <code><![CDATA[XMLRPC_TYPE_STRUCT    = 'struct']]></code>
+      <code><![CDATA[XML_STRING = 'xml']]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[$element]]></code>
       <code><![CDATA[$member->value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
@@ -702,7 +729,7 @@
   </file>
   <file src="test/ResponseTest.php">
     <InvalidArgument>
-      <code><![CDATA[[$this, 'trackError']]]></code>
+      <code><![CDATA[$this->trackError(...)]]></code>
     </InvalidArgument>
     <MixedAssignment>
       <code><![CDATA[$value]]></code>
@@ -726,9 +753,6 @@
       <code><![CDATA[getCode]]></code>
       <code><![CDATA[getCode]]></code>
     </PossiblyNullReference>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[trackError]]></code>
-    </PossiblyUnusedMethod>
     <RedundantCondition>
       <code><![CDATA[assertNotFalse]]></code>
       <code><![CDATA[assertNotFalse]]></code>
