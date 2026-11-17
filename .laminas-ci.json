@@ -2,5 +2,8 @@
     "extensions": [
         "gmp"
     ],
-    "backwardCompatibilityCheck": true
+    "backwardCompatibilityCheck": true,
+    "ignore_php_platform_requirements": {
+        "8.6": true
+    }
 }
