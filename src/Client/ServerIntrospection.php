@@ -13,9 +13,9 @@ use function is_array;
 /**
  * Wraps the XML-RPC system.* introspection methods
  */
-final class ServerIntrospection implements IntrospectInterface
+final readonly class ServerIntrospection implements IntrospectInterface
 {
-    private readonly ProxyInterface $system;
+    private ProxyInterface $system;
 
     public function __construct(XMLRPCClient $client)
     {
@@ -60,9 +60,7 @@ final class ServerIntrospection implements IntrospectInterface
     #[Override]
     public function getSignatureForEachMethodByMulticall(array|null $methods = null): array
     {
-        if ($methods === null) {
-            $methods = $this->listMethods();
-        }
+        $methods ??= $this->listMethods();
 
         $multicallParams = [];
         foreach ($methods as $method) {
@@ -104,9 +102,7 @@ final class ServerIntrospection implements IntrospectInterface
     #[Override]
     public function getSignatureForEachMethodByLooping(array|null $methods = null): array
     {
-        if ($methods === null) {
-            $methods = $this->listMethods();
-        }
+        $methods ??= $this->listMethods();
 
         $signatures = [];
         foreach ($methods as $method) {

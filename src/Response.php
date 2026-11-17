@@ -136,7 +136,7 @@ class Response implements Stringable
 
         try {
             $xml = XmlSecurity::scan($response, null, $libXmlOptions);
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $this->fault = new Fault(651);
             $this->fault->setEncoding($this->getEncoding());
             return false;

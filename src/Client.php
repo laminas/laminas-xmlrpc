@@ -58,7 +58,7 @@ final class Client implements ServerClient
      */
     protected bool $skipSystemLookup = false;
 
-    private const USERAGENT = 'Laminas_XmlRpc_Client';
+    private const string USERAGENT = 'Laminas_XmlRpc_Client';
 
     /**
      * Create a new XML-RPC client to a remote server

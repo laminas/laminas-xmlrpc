@@ -193,54 +193,24 @@ abstract class AbstractValue
         $type = self::AUTO_DETECT_TYPE,
         int $libXmlOptions = 0
     ): AbstractValue {
-        switch ($type) {
-            case self::AUTO_DETECT_TYPE:
-                // Auto detect the XML-RPC native type from the PHP type of $value
-                return static::phpVarToNativeXmlRpc($value);
-
-            case self::XML_STRING:
-                // Parse the XML string given in $value and get the XML-RPC value in it
-                return static::xmlStringToNativeXmlRpc($value, $libXmlOptions);
-
-            case self::XMLRPC_TYPE_I4:
-                // fall through to the next case
-            case self::XMLRPC_TYPE_INTEGER:
-                return new Value\Integer($value);
-
-            case self::XMLRPC_TYPE_I8:
-                // fall through to the next case
-            case self::XMLRPC_TYPE_APACHEI8:
-                return self::$USE_BIGINT_FOR_I8 ? new Value\BigInteger($value) : new Value\Integer($value);
-
-            case self::XMLRPC_TYPE_DOUBLE:
-                return new Value\Double($value);
-
-            case self::XMLRPC_TYPE_BOOLEAN:
-                return new Value\Boolean($value);
-
-            case self::XMLRPC_TYPE_STRING:
-                return new Value\Text($value);
-
-            case self::XMLRPC_TYPE_BASE64:
-                return new Value\Base64($value);
-
-            case self::XMLRPC_TYPE_NIL:
-                // fall through to the next case
-            case self::XMLRPC_TYPE_APACHENIL:
-                return new Value\Nil();
-
-            case self::XMLRPC_TYPE_DATETIME:
-                return new Value\DateTime($value);
-
-            case self::XMLRPC_TYPE_ARRAY:
-                return new Value\ArrayValue($value);
-
-            case self::XMLRPC_TYPE_STRUCT:
-                return new Value\Struct($value);
-
-            default:
-                throw new ValueException('Given type is not a ' . self::class . ' constant');
-        }
+        return match ($type) {
+            // Auto detect the XML-RPC native type from the PHP type of $value
+            self::AUTO_DETECT_TYPE => static::phpVarToNativeXmlRpc($value),
+            // Parse the XML string given in $value and get the XML-RPC value in it
+            self::XML_STRING => static::xmlStringToNativeXmlRpc($value, $libXmlOptions),
+            self::XMLRPC_TYPE_I4, self::XMLRPC_TYPE_INTEGER => new Value\Integer($value),
+            self::XMLRPC_TYPE_I8, self::XMLRPC_TYPE_APACHEI8
+                => self::$USE_BIGINT_FOR_I8 ? new Value\BigInteger($value) : new Value\Integer($value),
+            self::XMLRPC_TYPE_DOUBLE => new Value\Double($value),
+            self::XMLRPC_TYPE_BOOLEAN => new Value\Boolean($value),
+            self::XMLRPC_TYPE_STRING => new Value\Text($value),
+            self::XMLRPC_TYPE_BASE64 => new Value\Base64($value),
+            self::XMLRPC_TYPE_NIL, self::XMLRPC_TYPE_APACHENIL => new Value\Nil(),
+            self::XMLRPC_TYPE_DATETIME => new Value\DateTime($value),
+            self::XMLRPC_TYPE_ARRAY => new Value\ArrayValue($value),
+            self::XMLRPC_TYPE_STRUCT => new Value\Struct($value),
+            default => throw new ValueException('Given type is not a ' . self::class . ' constant'),
+        };
     }
 
     /**
@@ -294,41 +264,23 @@ abstract class AbstractValue
             return $value;
         }
 
-        switch (static::getXmlRpcTypeByValue($value)) {
-            case self::XMLRPC_TYPE_DATETIME:
-                /** @psalm-suppress MixedArgument */
-                return new Value\DateTime($value);
-
-            case self::XMLRPC_TYPE_ARRAY:
-                /** @psalm-suppress MixedArgument */
-                return new Value\ArrayValue($value);
-
-            case self::XMLRPC_TYPE_STRUCT:
-                /** @psalm-suppress MixedArgument */
-                return new Value\Struct($value);
-
-            case self::XMLRPC_TYPE_INTEGER:
-                /** @psalm-suppress MixedArgument */
-                return new Value\Integer($value);
-
-            case self::XMLRPC_TYPE_DOUBLE:
-                /** @psalm-suppress MixedArgument */
-                return new Value\Double($value);
-
-            case self::XMLRPC_TYPE_BOOLEAN:
-                /** @psalm-suppress MixedArgument */
-                return new Value\Boolean($value);
-
-            case self::XMLRPC_TYPE_NIL:
-                return new Value\Nil();
-
-            case self::XMLRPC_TYPE_STRING:
-                // Fall through to the next case
-            default:
-                // If type isn't identified (or identified as string), it treated as string
-                /** @psalm-suppress MixedArgument */
-                return new Value\Text($value);
-        }
+        return match (static::getXmlRpcTypeByValue($value)) {
+            self::XMLRPC_TYPE_DATETIME => new Value\DateTime($value),
+            /** @psalm-suppress MixedArgument */
+            self::XMLRPC_TYPE_ARRAY => new Value\ArrayValue($value),
+            /** @psalm-suppress MixedArgument */
+            self::XMLRPC_TYPE_STRUCT => new Value\Struct($value),
+            /** @psalm-suppress MixedArgument */
+            self::XMLRPC_TYPE_INTEGER => new Value\Integer($value),
+            /** @psalm-suppress MixedArgument */
+            self::XMLRPC_TYPE_DOUBLE => new Value\Double($value),
+            /** @psalm-suppress MixedArgument */
+            self::XMLRPC_TYPE_BOOLEAN => new Value\Boolean($value),
+            self::XMLRPC_TYPE_NIL => new Value\Nil(),
+            // If type isn't identified (or identified as string), it treated as string
+            /** @psalm-suppress MixedArgument */
+            default => new Value\Text($value),
+        };
     }
 
     /**
