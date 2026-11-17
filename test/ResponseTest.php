@@ -120,7 +120,7 @@ final class ResponseTest extends TestCase
     #[Group('Laminas-9039')]
     public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer(): void
     {
-        set_error_handler([$this, 'trackError']);
+        set_error_handler($this->trackError(...));
         $invalidResponse = 'foo';
         $response        = new Response();
         $this->assertFalse($this->errorOccurred);
