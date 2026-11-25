@@ -29,8 +29,6 @@ use function is_string;
  */
 final class Fault extends \Laminas\XmlRpc\Fault
 {
-    protected Exception $exception;
-
     /**
      * Array of exception classes that may define xmlrpc faults
      *
@@ -45,16 +43,15 @@ final class Fault extends \Laminas\XmlRpc\Fault
      */
     protected static array $observers = [];
 
-    public function __construct(Exception $e)
+    public function __construct(protected Exception $exception)
     {
-        $this->exception = $e;
-        $code            = 404;
-        $message         = 'Unknown error';
+        $code    = 404;
+        $message = 'Unknown error';
 
         foreach (array_keys(static::$faultExceptionClasses) as $class) {
-            if ($e instanceof $class) {
-                $code    = $e->getCode();
-                $message = $e->getMessage();
+            if ($this->exception instanceof $class) {
+                $code    = $this->exception->getCode();
+                $message = $this->exception->getMessage();
                 break;
             }
         }
@@ -130,9 +127,7 @@ final class Fault extends \Laminas\XmlRpc\Fault
             return false;
         }
 
-        if (! isset(static::$observers[$class])) {
-            static::$observers[$class] = true;
-        }
+        static::$observers[$class] ??= true;
 
         return true;
     }

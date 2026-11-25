@@ -17,7 +17,7 @@ final class ServerProxy implements ProxyInterface
     /** @var array<string, ProxyInterface> */
     private array $cache = [];
 
-    public function __construct(private XMLRPCClient $client, private string $namespace = '')
+    public function __construct(private readonly XMLRPCClient $client, private readonly string $namespace = '')
     {
     }
 
@@ -27,10 +27,8 @@ final class ServerProxy implements ProxyInterface
     #[Override]
     public function __get(string $namespace): ProxyInterface
     {
-        $namespace = ltrim("$this->namespace.$namespace", '.');
-        if (! isset($this->cache[$namespace])) {
-            $this->cache[$namespace] = new $this($this->client, $namespace);
-        }
+        $namespace                 = ltrim("$this->namespace.$namespace", '.');
+        $this->cache[$namespace] ??= new $this($this->client, $namespace);
         return $this->cache[$namespace];
     }
 

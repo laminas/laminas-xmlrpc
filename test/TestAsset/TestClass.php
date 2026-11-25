@@ -10,7 +10,7 @@ use function implode;
 /**
  * Docblock types are required for testing and parsing
  */
-final class TestClass
+final readonly class TestClass
 {
     /**
      * @psalm-suppress PossiblyUnusedMethod
