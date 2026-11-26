@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ddc4f14cbe8cfda99e90d06e118a695",
+    "content-hash": "6753f82135ff39093c4ba3a13ea9c928",
     "packages": [
         {
             "name": "brick/math",
@@ -1323,16 +1323,16 @@
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.21.24",
+            "version": "0.22.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "92cdf87109046cf703bf04f07b565c241f87c7a4"
+                "reference": "341400f07cd473d76d084faea204a17e2edac241"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/92cdf87109046cf703bf04f07b565c241f87c7a4",
-                "reference": "92cdf87109046cf703bf04f07b565c241f87c7a4",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/341400f07cd473d76d084faea204a17e2edac241",
+                "reference": "341400f07cd473d76d084faea204a17e2edac241",
                 "shasum": ""
             },
             "require": {
@@ -1389,7 +1389,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.21.24"
+                "source": "https://github.com/boundwize/structarmed/tree/0.22.12"
             },
             "funding": [
                 {
@@ -1397,8 +1397,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-17T05:52:19+00:00",
-            "published-time": "2026-11-17T05:52:46+00:00"
+            "time": "2026-11-26T08:29:01+00:00",
+            "published-time": "2026-11-26T08:29:29+00:00"
         },
         {
             "name": "carthage-software/mago",
